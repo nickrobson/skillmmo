@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "dev.nickrobson.minecraft.skillmmo.mixin",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [],
+  "client": [],
+  "server": [
+    "MixinServerPlayNetworkHandler",
+    "MixinServerPlayerEntity"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

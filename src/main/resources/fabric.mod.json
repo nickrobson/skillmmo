@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "${mod_id}",
+  "name": "${mod_name}",
+  "version": "${mod_version}",
+  "license": "MIT",
+
+  "description": "${mod_description}",
+  "authors": [
+    "Nick Robson"
+  ],
+
+  "environment": "server",
+  "entrypoints": {
+    "server": [
+      "dev.nickrobson.minecraft.telegrambridge.SkillMmoMod"
+    ]
+  },
+  "mixins": [
+    "telegrambridge.mixins.json"
+  ],
+
+  "depends": {
+    "java": ">=16",
+    "minecraft": "1.17.x",
+    "fabricloader": ">=0.11.3",
+    "fabric": "*",
+    "cloth-config2": "5.x.x"
+  }
+}
