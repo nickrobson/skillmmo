@@ -3,6 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -96,7 +97,7 @@ public class Skill {
                                 return skillLevels.stream()
                                         .filter(level ->
                                                 level.getUnlocks(key.getUnlockType())
-                                                        .contains(key.getUnlockId())
+                                                        .contains(key.getUnlockIdentifier())
                                         )
                                         .findFirst()
                                         .orElse(null);
@@ -119,9 +120,9 @@ public class Skill {
         );
     }
 
-    public Optional<SkillLevel> getSkillLevelAffecting(SkillLevelUnlockType unlockType, String unlockId) {
+    public Optional<SkillLevel> getSkillLevelAffecting(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
         return Optional.ofNullable(
-                levelsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockId))
+                levelsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockIdentifier))
         );
     }
 }

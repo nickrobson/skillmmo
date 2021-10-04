@@ -3,6 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -36,7 +37,7 @@ public class SkillManager {
                     @Override
                     public Set<Skill> load(SkillUnlockCacheKey key) {
                         return skills.stream()
-                                .filter(skill -> skill.getSkillLevelAffecting(key.getUnlockType(), key.getUnlockId()).isPresent())
+                                .filter(skill -> skill.getSkillLevelAffecting(key.getUnlockType(), key.getUnlockIdentifier()).isPresent())
                                 .collect(Collectors.toSet());
                     }
                 });
@@ -46,7 +47,14 @@ public class SkillManager {
         return Optional.ofNullable(skillMap.get(skillId));
     }
 
-    public Set<Skill> getSkillsAffecting(SkillLevelUnlockType unlockType, String unlockId) {
-        return this.skillsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockId));
+    public Set<Skill> getSkillsAffecting(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
+        return this.skillsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockIdentifier));
+    }
+
+    public Set<SkillLevel> getSkillLevelsAffecting(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
+        Set<Skill> skills = this.getSkillsAffecting(unlockType, unlockIdentifier);
+        return skills.stream()
+                .flatMap(skill -> skill.getSkillLevelAffecting(unlockType, unlockIdentifier).stream())
+                .collect(Collectors.toSet());
     }
 }

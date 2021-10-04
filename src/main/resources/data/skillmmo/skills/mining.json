@@ -1,3 +1,6 @@
 {
-
+  "replace": false,
+  "enabled": true,
+  "id": "mining",
+  "name": "Mining"
 }

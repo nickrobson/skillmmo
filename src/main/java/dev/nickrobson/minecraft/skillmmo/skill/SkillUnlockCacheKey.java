@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -11,19 +12,19 @@ import java.util.Objects;
 @ParametersAreNonnullByDefault
 class SkillUnlockCacheKey {
     private final SkillLevelUnlockType unlockType;
-    private final String unlockId;
+    private final Identifier unlockIdentifier;
 
-    SkillUnlockCacheKey(SkillLevelUnlockType unlockType, String unlockId) {
+    SkillUnlockCacheKey(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
         this.unlockType = unlockType;
-        this.unlockId = unlockId;
+        this.unlockIdentifier = unlockIdentifier;
     }
 
     public SkillLevelUnlockType getUnlockType() {
         return unlockType;
     }
 
-    public String getUnlockId() {
-        return unlockId;
+    public Identifier getUnlockIdentifier() {
+        return unlockIdentifier;
     }
 
     @Override
@@ -31,11 +32,11 @@ class SkillUnlockCacheKey {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SkillUnlockCacheKey that = (SkillUnlockCacheKey) o;
-        return unlockType == that.unlockType && unlockId.equals(that.unlockId);
+        return unlockType == that.unlockType && unlockIdentifier.equals(that.unlockIdentifier);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(unlockType, unlockId);
+        return Objects.hash(unlockType, unlockIdentifier);
     }
 }
