@@ -10,10 +10,10 @@
     "Nick Robson"
   ],
 
-  "environment": "server",
+  "environment": "*",
   "entrypoints": {
-    "server": [
-      "dev.nickrobson.minecraft.telegrambridge.SkillMmoMod"
+    "main": [
+      "dev.nickrobson.minecraft.skillmmo.SkillMmoMod"
     ]
   },
   "mixins": [
