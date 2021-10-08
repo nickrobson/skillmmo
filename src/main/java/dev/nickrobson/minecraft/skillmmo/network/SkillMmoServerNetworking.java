@@ -23,11 +23,10 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
         });
 
         ServerPlayNetworking.registerGlobalReceiver(C2S_PLAYER_SKILL_CHOICE, (server, player, handler, buf, responseSender) -> {
-            // TODO - award the player the level (or deny it if an invalid request)
             String skillId = buf.readString();
             SkillManager.getInstance().getSkill(skillId)
                     .ifPresent(skill ->
-                        PlayerSkillManager.getInstance().chooseSkillLevel(player, skill)
+                            PlayerSkillManager.getInstance().chooseSkillLevel(player, skill)
                     );
         });
     }
