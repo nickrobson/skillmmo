@@ -2,7 +2,6 @@
   "skill": "mining",
   "level": 1,
   "blocks": [
-    "minecraft:dirt",
     "minecraft:stone",
     "minecraft:coal_ore"
   ]

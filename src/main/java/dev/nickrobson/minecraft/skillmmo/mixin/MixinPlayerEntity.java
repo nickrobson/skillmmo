@@ -104,7 +104,8 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
         return entity.interact(player, hand);
     }
 
-    // This mixin checks if the user can harvest the block
+    // This prevents blocks from dropping items when you haven't unlocked them
+    // TODO: check if chests etc. will drop their items or if i need another mixin...
     @Inject(
             method = "canHarvest",
             at = @At("HEAD"),
@@ -117,7 +118,8 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
         }
     }
 
-    // This mixin checks that the player can equip the given item if it's armour
+    // Prevent equipping a given armour item
+    // TODO: check this works or if i need a mixin for equipStack
     @Inject(
             method = "canEquip",
             at = @At("HEAD"),

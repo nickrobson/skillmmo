@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.packet.s2c.play.CustomPayloadS2CPacket;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Map;
@@ -39,8 +38,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
         Set<Skill> skills = SkillManager.getInstance().getSkills();
         packetByteBuf.writeCollection(skills, SkillMmoNetworking::writeSkill);
 
-        CustomPayloadS2CPacket skillsPacket = new CustomPayloadS2CPacket(S2C_SKILLS, packetByteBuf);
-        player.networkHandler.sendPacket(skillsPacket);
+        ServerPlayNetworking.send(player, S2C_SKILLS, packetByteBuf);
     }
 
     public static void sendPlayerSkills(ServerPlayerEntity player) {
@@ -53,15 +51,13 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
                 (BiConsumer<PacketByteBuf, Byte>) PacketByteBuf::writeByte
         );
 
-        CustomPayloadS2CPacket playerSkillsPacket = new CustomPayloadS2CPacket(S2C_PLAYER_SKILLS, packetByteBuf);
-        player.networkHandler.sendPacket(playerSkillsPacket);
+        ServerPlayNetworking.send(player, S2C_PLAYER_SKILLS, packetByteBuf);
     }
 
     public static void sendPlayerXp(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
         // TODO - set xp, level, levels available to spend
 
-        CustomPayloadS2CPacket playerXpPacket = new CustomPayloadS2CPacket(S2C_PLAYER_XP, packetByteBuf);
-        player.networkHandler.sendPacket(playerXpPacket);
+        ServerPlayNetworking.send(player, S2C_PLAYER_XP, packetByteBuf);
     }
 }
