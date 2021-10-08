@@ -1,0 +1,8 @@
+{
+  "skill": "mining",
+  "level": 2,
+  "blocks": [
+    "minecraft:iron_ore",
+    "minecraft:lapis_ore"
+  ]
+}

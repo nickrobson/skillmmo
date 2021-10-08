@@ -2,6 +2,7 @@ package dev.nickrobson.minecraft.skillmmo;
 
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceLoader;
+import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -14,16 +15,21 @@ public class SkillMmoMod implements ModInitializer {
     private static final Logger logger = LogManager.getLogger(SkillMmoMod.class);
 
     public static final String MOD_ID = "skillmmo";
+    public static final String MOD_NAME = "SkillMMO";
+    public static final String MOD_VERSION = "0.0.1";
+    public static final String MOD_VERSION_STRING = MOD_NAME + " v" + MOD_VERSION;
 
     @Override
     public void onInitialize() {
         logger.info("Starting...");
+
+        SkillMmoServerNetworking.init();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
                 .registerReloadListener(new SkillMmoResourceLoader());
 
         AutoConfig.register(SkillMmoConfig.class, JanksonConfigSerializer::new);
 
-        logger.info("Started! Time to test your mettle!");
+        logger.info("Battle stations ready! Time to test your mettle!");
     }
 }

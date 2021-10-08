@@ -1,10 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Generic data shape for unlocks for a skill level in a datapack
@@ -42,4 +44,17 @@ public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
             errors.add(String.format("Level is invalid: %d", level));
         }
     }
+
+    /**
+     * Gets the type of unlock this data represents
+     * @return the unlock type
+     */
+    public abstract SkillLevelUnlockType getUnlockType();
+
+    /**
+     * Gets the list of unlocks added by this list, as raw strings
+     * Each item in the list should be in the identifier form, e.g. minecraft:stone
+     * @return the set of raw unlock identifiers
+     */
+    public abstract Set<String> getRawIdentifiers();
 }

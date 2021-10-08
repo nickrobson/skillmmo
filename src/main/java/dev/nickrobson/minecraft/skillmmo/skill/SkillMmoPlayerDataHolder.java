@@ -13,25 +13,58 @@ public interface SkillMmoPlayerDataHolder {
 
     @MethodsReturnNonnullByDefault
     @ParametersAreNonnullByDefault
-    record SkillMmoPlayerData(
-            long experience,
-            Map<String, Byte> skillLevels
-    ) {
-        public static SkillMmoPlayerData UNINITIALISED = new SkillMmoPlayerData(0, Collections.emptyMap());
+    class SkillMmoPlayerData {
+        public static final SkillMmoPlayerData UNINITIALISED = new SkillMmoPlayerData(0, 0, Collections.emptyMap());
 
-        public SkillMmoPlayerData(long experience, Map<String, Byte> skillLevels) {
+        private long experience;
+        private int availableSkillPoints;
+        private final Map<String, Byte> skillLevels;
+
+        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<String, Byte> skillLevels) {
             this.experience = experience;
+            this.availableSkillPoints = availableSkillPoints;
             this.skillLevels = new HashMap<>(skillLevels);
         }
 
-        public Map<String, Byte> skillLevels() {
+        private void checkInitialised() {
+            if (this == UNINITIALISED) {
+                throw new IllegalStateException("Cannot set skill level - this player data hasn't been loaded");
+            }
+        }
+
+        public long getExperience() {
+            return experience;
+        }
+
+        public void addExperience(long experience) {
+            this.checkInitialised();
+            this.experience += experience;
+        }
+
+        public int getAvailableSkillPoints() {
+            return availableSkillPoints;
+        }
+
+        public void addAvailableSkillPoint() {
+            this.checkInitialised();
+            this.availableSkillPoints++;
+        }
+
+        public boolean consumeAvailableSkillPoints() {
+            this.checkInitialised();
+            if (this.availableSkillPoints > 0) {
+                this.availableSkillPoints--;
+                return true;
+            }
+            return false;
+        }
+
+        public Map<String, Byte> getSkillLevels() {
             return Collections.unmodifiableMap(skillLevels);
         }
 
         public void setSkillLevel(String skillId, byte level) {
-            if (this == UNINITIALISED) {
-                throw new IllegalStateException("Cannot set skill level - this player data hasn't been loaded");
-            }
+            this.checkInitialised();
             this.skillLevels.put(skillId, level);
         }
     }

@@ -1,0 +1,10 @@
+{
+  "skill": "mining",
+  "level": 3,
+  "blocks": [
+    "minecraft:gold_ore",
+    "minecraft:diamond_ore",
+    "minecraft:emerald_ore",
+    "minecraft:redstone_ore"
+  ]
+}

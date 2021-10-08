@@ -7,11 +7,14 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @MethodsReturnNonnullByDefault
@@ -22,13 +25,19 @@ public class SkillManager {
         return instance;
     }
 
+    private final Set<Skill> skillSet = new HashSet<>();
     private final Map<String, Skill> skillMap = new HashMap<>();
 
-    /** @see #registerSkills(Set) */
+    /** @see #initSkills(Set) */
     private LoadingCache<SkillUnlockCacheKey, Set<Skill>> skillsByUnlockCache;
 
-    public void registerSkills(Set<Skill> skills) {
+    public void initSkills(Set<Skill> skills) {
+        this.skillSet.clear();
+        this.skillSet.addAll(skills);
+
         this.skillMap.clear();
+        this.skillMap.putAll(skills.stream().collect(Collectors.toMap(Skill::getId, Function.identity())));
+
         this.skillsByUnlockCache = CacheBuilder.newBuilder()
                 .initialCapacity(100)
                 .maximumSize(1000)
@@ -43,8 +52,12 @@ public class SkillManager {
                 });
     }
 
+    public Set<Skill> getSkills() {
+        return Collections.unmodifiableSet(this.skillSet);
+    }
+
     public Optional<Skill> getSkill(String skillId) {
-        return Optional.ofNullable(skillMap.get(skillId));
+        return Optional.ofNullable(this.skillMap.get(skillId));
     }
 
     public Set<Skill> getSkillsAffecting(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {

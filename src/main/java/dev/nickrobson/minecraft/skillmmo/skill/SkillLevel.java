@@ -1,5 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import net.minecraft.util.Identifier;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -8,12 +10,12 @@ import java.util.Set;
 public class SkillLevel {
     private final String skillId;
     private final byte level;
-    private final Map<SkillLevelUnlockType, Set<String>> unlocks;
+    private final Map<SkillLevelUnlockType, Set<Identifier>> unlocks;
 
     /** @see #initSkill(Skill)  */
     private Skill skill;
 
-    public SkillLevel(String skillId, byte level, Map<SkillLevelUnlockType, Set<String>> unlocks) {
+    public SkillLevel(String skillId, byte level, Map<SkillLevelUnlockType, Set<Identifier>> unlocks) {
         this.skillId = skillId;
         this.level = level;
         this.unlocks = unlocks;
@@ -35,7 +37,11 @@ public class SkillLevel {
         return level;
     }
 
-    public Set<String> getUnlocks(SkillLevelUnlockType unlockType) {
+    public Map<SkillLevelUnlockType, Set<Identifier>> getUnlocks() {
+        return Collections.unmodifiableMap(unlocks);
+    }
+
+    public Set<Identifier> getUnlocks(SkillLevelUnlockType unlockType) {
         return unlocks.getOrDefault(unlockType, Collections.emptySet());
     }
 }

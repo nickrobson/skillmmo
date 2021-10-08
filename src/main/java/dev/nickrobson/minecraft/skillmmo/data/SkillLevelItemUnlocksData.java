@@ -1,13 +1,14 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 /**
  * Data shape for a skill level in a datapack
@@ -19,7 +20,7 @@ public class SkillLevelItemUnlocksData extends AbstractSkillLevelUnlocksData {
      * This should be a list of item IDs
      */
     @SerializedName("items")
-    public List<String> items;
+    public Set<String> items;
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
@@ -31,12 +32,17 @@ public class SkillLevelItemUnlocksData extends AbstractSkillLevelUnlocksData {
             items.removeIf(Objects::isNull);
             if (items.isEmpty()) {
                 errors.add("No items have been set");
-            } else {
-                items = items.stream()
-                        .distinct()
-                        .sorted()
-                        .collect(Collectors.toList());
             }
         }
+    }
+
+    @Override
+    public SkillLevelUnlockType getUnlockType() {
+        return SkillLevelUnlockType.ITEM;
+    }
+
+    @Override
+    public Set<String> getRawIdentifiers() {
+        return Collections.unmodifiableSet(items);
     }
 }
