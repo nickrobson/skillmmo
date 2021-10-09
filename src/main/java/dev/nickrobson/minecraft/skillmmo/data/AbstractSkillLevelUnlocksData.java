@@ -38,7 +38,7 @@ public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
      * Please note that all levels from 1 to the maximum level for a skill MUST be defined.
      */
     @SerializedName("level")
-    public byte level;
+    public int level;
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {

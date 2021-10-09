@@ -12,7 +12,6 @@ import net.minecraft.util.Identifier;
 
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 public class SkillMmoServerNetworking implements SkillMmoNetworking {
     public static void register() {
@@ -44,11 +43,11 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
     public static void sendPlayerSkills(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
-        Map<Identifier, Byte> playerSkillLevels = PlayerSkillManager.getInstance().getSkills(player);
+        Map<Identifier, Integer> playerSkillLevels = PlayerSkillManager.getInstance().getSkills(player);
         packetByteBuf.writeMap(
                 playerSkillLevels,
                 PacketByteBuf::writeIdentifier,
-                (BiConsumer<PacketByteBuf, Byte>) PacketByteBuf::writeByte
+                PacketByteBuf::writeVarInt
         );
 
         ServerPlayNetworking.send(player, S2C_PLAYER_SKILLS, packetByteBuf);

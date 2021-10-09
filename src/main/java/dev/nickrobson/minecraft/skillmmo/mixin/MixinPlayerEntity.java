@@ -49,13 +49,13 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
                 ? skillMmoNbt.getInt(AVAILABLE_SKILL_POINTS_NBT_KEY)
                 : 0;
 
-        Map<Identifier, Byte> skillLevels = new HashMap<>();
+        Map<Identifier, Integer> skillLevels = new HashMap<>();
         if (skillMmoNbt.contains(SKILL_LEVELS_NBT_KEY, NbtElement.COMPOUND_TYPE)) {
             NbtCompound skillLevelsNbt = skillMmoNbt.getCompound(SKILL_LEVELS_NBT_KEY);
             for (String skillLevelKey : skillLevelsNbt.getKeys()) {
                 if (skillLevelsNbt.contains(skillLevelKey, NbtElement.NUMBER_TYPE)) {
                     Identifier skillId = Identifier.tryParse(skillLevelKey);
-                    byte level = skillLevelsNbt.getByte(skillLevelKey);
+                    int level = skillLevelsNbt.getInt(skillLevelKey);
 
                     if (skillId == null) {
                         continue;
@@ -89,7 +89,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
         {
             NbtCompound skillLevelsNbt = new NbtCompound();
             playerData.getSkillLevels().forEach((skillId, level) ->
-                    skillLevelsNbt.putByte(skillId.toString(), level));
+                    skillLevelsNbt.putInt(skillId.toString(), level));
             skillMmoNbt.put(SKILL_LEVELS_NBT_KEY, skillLevelsNbt);
         }
 

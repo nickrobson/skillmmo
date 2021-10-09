@@ -51,7 +51,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                         return skillData;
                     }
                     v.replace = false;
-                    v.translationKey = skillData.translationKey;
+                    v.nameKey = skillData.nameKey;
                     v.enabled = skillData.enabled;
                     return v;
                 }));
@@ -66,7 +66,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
 
                     return new Skill(
                             skillData.id,
-                            skillData.translationKey,
+                            skillData.nameKey,
                             skillLevels
                     );
                 })
@@ -83,11 +83,11 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
 
         Map<Identifier, Set<SkillLevel>> skillLevelsBySkillId = new HashMap<>();
         unlocksDataBySkillId.forEach((skillId, unlocksDataForSkill) -> {
-            Map<Byte, List<AbstractSkillLevelUnlocksData>> unlocksDataByLevel = unlocksDataForSkill
+            Map<Integer, List<AbstractSkillLevelUnlocksData>> unlocksDataByLevel = unlocksDataForSkill
                     .stream()
                     .collect(Collectors.groupingBy(data -> data.level, Collectors.toList()));
 
-            Map<Byte, SkillLevel> skillLevelsByLevel = new HashMap<>();
+            Map<Integer, SkillLevel> skillLevelsByLevel = new HashMap<>();
             unlocksDataByLevel.forEach((level, unlocksDataForSkillLevel) -> {
                 Map<SkillLevelUnlockType, Set<Identifier>> unlockIdentifiersByUnlockType = new HashMap<>();
                 unlocksDataForSkillLevel.forEach(unlockData ->

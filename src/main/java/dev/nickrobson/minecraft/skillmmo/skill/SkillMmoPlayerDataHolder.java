@@ -18,13 +18,13 @@ public interface SkillMmoPlayerDataHolder {
 
         private long experience;
         private int availableSkillPoints;
-        private final Map<Identifier, Byte> skillLevels;
+        private final Map<Identifier, Integer> skillLevels;
 
         public SkillMmoPlayerData() {
             this(0L, 0, new HashMap<>());
         }
 
-        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<Identifier, Byte> skillLevels) {
+        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<Identifier, Integer> skillLevels) {
             this.experience = experience;
             this.availableSkillPoints = availableSkillPoints;
             this.skillLevels = new HashMap<>(skillLevels);
@@ -63,11 +63,11 @@ public interface SkillMmoPlayerDataHolder {
             return false;
         }
 
-        public Map<Identifier, Byte> getSkillLevels() {
+        public Map<Identifier, Integer> getSkillLevels() {
             return Collections.unmodifiableMap(skillLevels);
         }
 
-        public void setSkillLevel(Identifier skillId, byte level) {
+        public void setSkillLevel(Identifier skillId, int level) {
             this.checkInitialised();
             this.skillLevels.put(skillId, level);
         }

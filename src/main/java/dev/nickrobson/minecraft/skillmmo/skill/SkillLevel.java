@@ -8,14 +8,17 @@ import java.util.Objects;
 import java.util.Set;
 
 public class SkillLevel {
+    public static final int MIN_LEVEL = 0;
+    public static final int MAX_LEVEL = 100;
+
     private final Identifier skillId;
-    private final byte level;
+    private final int level;
     private final Map<SkillLevelUnlockType, Set<Identifier>> unlocks;
 
     /** @see #initSkill(Skill)  */
     private Skill skill;
 
-    public SkillLevel(Identifier skillId, byte level, Map<SkillLevelUnlockType, Set<Identifier>> unlocks) {
+    public SkillLevel(Identifier skillId, int level, Map<SkillLevelUnlockType, Set<Identifier>> unlocks) {
         this.skillId = skillId;
         this.level = level;
         this.unlocks = unlocks;
@@ -33,7 +36,7 @@ public class SkillLevel {
         return skillId;
     }
 
-    public byte getLevel() {
+    public int getLevel() {
         return level;
     }
 

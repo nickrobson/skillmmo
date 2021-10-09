@@ -39,8 +39,8 @@ public class SkillData implements DataValidatable {
     /**
      * Translation key for this skill's name
      */
-    @SerializedName("translationKey")
-    public String translationKey;
+    @SerializedName("nameKey")
+    public String nameKey;
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
@@ -53,8 +53,8 @@ public class SkillData implements DataValidatable {
             }
         }
 
-        if (translationKey == null) {
-            errors.add("'translationKey' is not defined");
+        if (nameKey == null) {
+            errors.add("'nameKey' is not defined");
         }
     }
 }

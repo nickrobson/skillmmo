@@ -28,21 +28,21 @@ public class PlayerSkillManager {
 
     private PlayerSkillManager() {}
 
-    public Map<Identifier, Byte> getSkills(PlayerEntity player) {
+    public Map<Identifier, Integer> getSkills(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getSkillLevels();
     }
 
-    public byte getSkillLevel(PlayerEntity player, Skill skill) {
-        return getSkills(player).getOrDefault(skill.getId(), (byte) 0);
+    public int getSkillLevel(PlayerEntity player, Skill skill) {
+        return getSkills(player).getOrDefault(skill.getId(), SkillLevel.MIN_LEVEL);
     }
 
-    public boolean hasSkillLevel(PlayerEntity player, Skill skill, byte level) {
+    public boolean hasSkillLevel(PlayerEntity player, Skill skill, int level) {
         int playerSkillLevel = getSkillLevel(player, skill);
         return playerSkillLevel >= level;
     }
 
-    public void setSkillLevels(PlayerEntity player, Map<Identifier, Byte> playerSkillLevels) {
+    public void setSkillLevels(PlayerEntity player, Map<Identifier, Integer> playerSkillLevels) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         playerSkillLevels.forEach((skillId, level) ->
                 skillMmoPlayerDataHolder.getSkillMmoPlayerData().setSkillLevel(skillId, level));
@@ -53,7 +53,7 @@ public class PlayerSkillManager {
         }
     }
 
-    public void setSkillLevel(PlayerEntity player, Skill skill, byte level) {
+    public void setSkillLevel(PlayerEntity player, Skill skill, int level) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         skillMmoPlayerDataHolder.getSkillMmoPlayerData().setSkillLevel(skill.getId(), level);
 
@@ -64,8 +64,8 @@ public class PlayerSkillManager {
     }
 
     public boolean chooseSkillLevel(PlayerEntity player, Skill skill) {
-        byte currentLevel = getSkillLevel(player, skill);
-        if (currentLevel == Byte.MAX_VALUE) {
+        int currentLevel = getSkillLevel(player, skill);
+        if (currentLevel >= SkillLevel.MAX_LEVEL) {
             return false;
         }
 
@@ -74,7 +74,7 @@ public class PlayerSkillManager {
             return false;
         }
 
-        setSkillLevel(player, skill, (byte) (currentLevel + 1));
+        setSkillLevel(player, skill, currentLevel + 1);
         return true;
     }
 

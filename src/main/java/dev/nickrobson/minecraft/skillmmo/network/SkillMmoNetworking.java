@@ -22,20 +22,20 @@ public interface SkillMmoNetworking {
 
     static Skill readSkill(@Nonnull PacketByteBuf packetByteBuf) {
         Identifier id = packetByteBuf.readIdentifier();
-        String translationKey = packetByteBuf.readString();
+        String nameKey = packetByteBuf.readString();
         Set<SkillLevel> skillLevels = packetByteBuf.readCollection(HashSet::new, buf -> readSkillLevel(id, buf));
 
-        return new Skill(id, translationKey, skillLevels);
+        return new Skill(id, nameKey, skillLevels);
     }
 
     static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
         packetByteBuf.writeIdentifier(skill.getId());
-        packetByteBuf.writeString(skill.getTranslationKey());
+        packetByteBuf.writeString(skill.getNameKey());
         packetByteBuf.writeCollection(skill.getSkillLevels(), SkillMmoNetworking::writeSkillLevel);
     }
 
     static SkillLevel readSkillLevel(Identifier skillId, @Nonnull PacketByteBuf packetByteBuf) {
-        byte level = packetByteBuf.readByte();
+        int level = packetByteBuf.readVarInt();
         Map<SkillLevelUnlockType, Set<Identifier>> unlocks = packetByteBuf.readMap(
                 HashMap::new,
                 buf -> buf.readEnumConstant(SkillLevelUnlockType.class),
@@ -46,7 +46,7 @@ public interface SkillMmoNetworking {
     }
 
     static void writeSkillLevel(@Nonnull PacketByteBuf packetByteBuf, @Nonnull SkillLevel skillLevel) {
-        packetByteBuf.writeByte(skillLevel.getLevel());
+        packetByteBuf.writeVarInt(skillLevel.getLevel());
         packetByteBuf.writeMap(
                 skillLevel.getUnlocks(),
                 PacketByteBuf::writeEnumConstant,
