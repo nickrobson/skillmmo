@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.function.BiConsumer;
 
 public class SkillMmoServerNetworking implements SkillMmoNetworking {
-    public static void init() {
+    public static void register() {
         ServerPlayConnectionEvents.JOIN.register((handler, packetSender, server) -> {
             ServerPlayerEntity player = handler.getPlayer();
             sendSkills(player);

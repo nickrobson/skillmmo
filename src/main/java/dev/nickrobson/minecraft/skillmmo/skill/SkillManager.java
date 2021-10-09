@@ -28,6 +28,8 @@ public class SkillManager {
     private final Set<Skill> skillSet = new HashSet<>();
     private final Map<String, Skill> skillMap = new HashMap<>();
 
+    private SkillManager() {}
+
     /** @see #initSkills(Set) */
     private LoadingCache<SkillUnlockCacheKey, Set<Skill>> skillsByUnlockCache;
 

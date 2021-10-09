@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo;
 
+import dev.nickrobson.minecraft.skillmmo.command.SkillMmoCommand;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceLoader;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
@@ -23,12 +24,14 @@ public class SkillMmoMod implements ModInitializer {
     public void onInitialize() {
         logger.info("Starting...");
 
-        SkillMmoServerNetworking.init();
+        AutoConfig.register(SkillMmoConfig.class, JanksonConfigSerializer::new);
+
+        SkillMmoServerNetworking.register();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
                 .registerReloadListener(new SkillMmoResourceLoader());
 
-        AutoConfig.register(SkillMmoConfig.class, JanksonConfigSerializer::new);
+        SkillMmoCommand.register(); // must be after resource loading
 
         logger.info("Battle stations ready! Time to test your mettle!");
     }

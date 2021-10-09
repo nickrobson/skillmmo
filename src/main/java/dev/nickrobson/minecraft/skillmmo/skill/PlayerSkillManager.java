@@ -22,10 +22,11 @@ import java.util.function.Predicate;
 @ParametersAreNonnullByDefault
 public class PlayerSkillManager {
     private static final PlayerSkillManager instance = new PlayerSkillManager();
-
     public static PlayerSkillManager getInstance() {
         return instance;
     }
+
+    private PlayerSkillManager() {}
 
     public Map<String, Byte> getSkills(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;

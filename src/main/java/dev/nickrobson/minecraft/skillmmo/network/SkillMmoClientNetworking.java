@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class SkillMmoClientNetworking implements SkillMmoNetworking {
-    public static void init() {
+    public static void register() {
         ClientPlayNetworking.registerGlobalReceiver(S2C_SKILLS, (client, handler, buf, responseSender) -> {
             Set<Skill> skillSet = buf.readCollection(HashSet::new, SkillMmoNetworking::readSkill);
             SkillManager.getInstance().initSkills(skillSet);

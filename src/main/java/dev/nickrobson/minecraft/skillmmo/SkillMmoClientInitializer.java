@@ -10,7 +10,7 @@ public class SkillMmoClientInitializer implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        SkillMmoClientNetworking.init();
+        SkillMmoClientNetworking.register();
 
         logger.info("Client ready!");
     }
