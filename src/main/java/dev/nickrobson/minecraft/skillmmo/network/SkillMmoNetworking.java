@@ -8,11 +8,9 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 public interface SkillMmoNetworking {
@@ -22,33 +20,17 @@ public interface SkillMmoNetworking {
     Identifier S2C_PLAYER_SKILLS = new Identifier(SkillMmoMod.MOD_ID, "player_skills");
     Identifier S2C_PLAYER_XP = new Identifier(SkillMmoMod.MOD_ID, "player_xp");
 
-    @Nullable
-    static String readNullableString(@Nonnull PacketByteBuf packetByteBuf) {
-        return packetByteBuf
-                .readOptional(PacketByteBuf::readString)
-                .orElse(null);
-    }
-
-    static void writeNullableString(@Nonnull PacketByteBuf packetByteBuf, @Nullable String string) {
-        packetByteBuf.writeOptional(
-                Optional.ofNullable(string),
-                PacketByteBuf::writeString
-        );
-    }
-
     static Skill readSkill(@Nonnull PacketByteBuf packetByteBuf) {
         String id = packetByteBuf.readString();
-        String translationKey = readNullableString(packetByteBuf);
-        String untranslatedName = readNullableString(packetByteBuf);
+        String translationKey = packetByteBuf.readString();
         Set<SkillLevel> skillLevels = packetByteBuf.readCollection(HashSet::new, buf -> readSkillLevel(id, buf));
 
-        return new Skill(id, translationKey, untranslatedName, skillLevels);
+        return new Skill(id, translationKey, skillLevels);
     }
 
     static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
         packetByteBuf.writeString(skill.getId());
-        writeNullableString(packetByteBuf, skill.getTranslationKey());
-        writeNullableString(packetByteBuf, skill.getUntranslatedName());
+        packetByteBuf.writeString(skill.getTranslationKey());
         packetByteBuf.writeCollection(skill.getSkillLevels(), SkillMmoNetworking::writeSkillLevel);
     }
 

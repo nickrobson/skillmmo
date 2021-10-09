@@ -1,14 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
@@ -17,8 +12,6 @@ import java.util.regex.Pattern;
  */
 @FieldsAreNonnullByDefault
 public class SkillData implements DataValidatable {
-    private static final Logger logger = LoggerFactory.getLogger(SkillData.class);
-
     private static final Pattern ID_REGEX = Pattern.compile("[A-Za-z0-9_]+");
 
     /**
@@ -43,31 +36,8 @@ public class SkillData implements DataValidatable {
     /**
      * Translation key for this skill's name
      */
-    @Nullable
     @SerializedName("translationKey")
     public String translationKey;
-
-    /**
-     * The untranslated name of the skill. <br/>
-     * Note: This is only used if the translation key is unset.
-     *
-     * @see #translationKey
-     */
-    @Nullable
-    @SerializedName("name")
-    public String untranslatedName;
-
-    @Environment(EnvType.CLIENT)
-    public String getName() {
-        if (translationKey != null) {
-            String translation = net.minecraft.client.resource.language.TranslationStorage.getInstance().get(translationKey);
-            if (translation != null) {
-                return translation;
-            }
-            logger.warn("Translation key {} requested but no translation found for {}", translationKey, net.minecraft.client.resource.language.TranslationStorage.getInstance());
-        }
-        return untranslatedName;
-    }
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
@@ -77,8 +47,8 @@ public class SkillData implements DataValidatable {
             errors.add(String.format("ID '%s' is invalid. must contain only A-Z, a-z, 0-9, or _", id));
         }
 
-        if (translationKey == null && untranslatedName == null) {
-            errors.add("Neither 'translationKey' nor 'name' are defined");
+        if (translationKey == null) {
+            errors.add("'translationKey' is not defined");
         }
     }
 }

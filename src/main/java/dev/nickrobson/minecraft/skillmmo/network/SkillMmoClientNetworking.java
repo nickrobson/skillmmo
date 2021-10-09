@@ -25,7 +25,7 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
                 String message = new StringFormattedMessage(
                         "- %s: %s (%d levels)",
                         skill.getId(),
-                        skill.getUntranslatedName(),
+                        skill.getTranslationKey(),
                         skill.getMaxLevel().getLevel()
                 ).getFormattedMessage();
                 client.inGameHud.getChatHud().addMessage(new LiteralText(message));

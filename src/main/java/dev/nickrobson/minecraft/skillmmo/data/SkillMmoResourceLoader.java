@@ -52,7 +52,6 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 }
                 v.replace = false;
                 v.translationKey = skillData.translationKey;
-                v.untranslatedName = skillData.untranslatedName;
                 v.enabled = skillData.enabled;
                 return v;
             });
@@ -69,7 +68,6 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                     return new Skill(
                             skillData.id,
                             skillData.translationKey,
-                            skillData.untranslatedName,
                             skillLevels
                     );
                 })

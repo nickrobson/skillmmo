@@ -9,7 +9,6 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
-import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.Comparator;
@@ -24,8 +23,7 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 public class Skill {
     private final String id;
-    private final @Nullable String translationKey;
-    private final @Nullable String untranslatedName;
+    private final String translationKey;
     private final Set<SkillLevel> skillLevelSet;
     private final Map<Byte, SkillLevel> skillLevelMap;
 
@@ -34,16 +32,8 @@ public class Skill {
 
     public Skill(
             String id,
-            @Nullable String translationKey,
-            @Nullable String untranslatedName,
+            String translationKey,
             Set<SkillLevel> skillLevels) {
-        // Validate we have at least the translation key or the untranslated name
-        if (translationKey == null && untranslatedName == null) {
-            throw new IllegalStateException(
-                    String.format("Neither translation key nor name supplied for skill '%s'", id)
-            );
-        }
-
         {
             // Validate skill levels
             if (skillLevels.isEmpty()) {
@@ -70,7 +60,6 @@ public class Skill {
 
         this.id = id;
         this.translationKey = translationKey;
-        this.untranslatedName = untranslatedName;
         this.skillLevelSet = skillLevels;
         this.skillLevelMap = skillLevels.stream()
                 .collect(Collectors.toMap(SkillLevel::getLevel, Function.identity()));
@@ -105,32 +94,18 @@ public class Skill {
         return id;
     }
 
-    @Nullable
     public String getTranslationKey() {
         return translationKey;
     }
 
-    @Nullable
-    public String getUntranslatedName() {
-        return untranslatedName;
-    }
-
-    public String getReadableName() {
-        if (translationKey != null && FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
+    public String getName() {
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT) {
             return net.minecraft.client.resource.language.TranslationStorage
                     .getInstance()
                     .get(translationKey);
         }
 
-        if (untranslatedName != null) {
-            return untranslatedName;
-        }
-
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
-            return String.format("Skill[%s]", translationKey);
-        }
-
-        throw new IllegalStateException("No translation key or name");
+        return String.format("Skill[%s]", translationKey);
     }
 
     public Set<SkillLevel> getSkillLevels() {
