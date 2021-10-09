@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class Skill {
-    private final String id;
+    private final Identifier id;
     private final String translationKey;
     private final Set<SkillLevel> skillLevelSet;
     private final Map<Byte, SkillLevel> skillLevelMap;
@@ -31,7 +31,7 @@ public class Skill {
     private final LoadingCache<SkillUnlockCacheKey, Optional<SkillLevel>> levelsByUnlockCache;
 
     public Skill(
-            String id,
+            Identifier id,
             String translationKey,
             Set<SkillLevel> skillLevels) {
         {
@@ -90,7 +90,7 @@ public class Skill {
         skillLevels.forEach(skillLevel -> skillLevel.initSkill(this));
     }
 
-    public String getId() {
+    public Identifier getId() {
         return id;
     }
 

@@ -2,6 +2,7 @@ package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
@@ -20,17 +21,20 @@ public class SkillLevelItemUnlocksData extends AbstractSkillLevelUnlocksData {
      * This should be a list of item IDs
      */
     @SerializedName("items")
-    public Set<String> items;
+    public Set<String> rawItemIds;
+
+    public transient Set<Identifier> itemIds;
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
         super.validate(errors);
 
-        if (items == null) {
+        if (rawItemIds == null) {
             errors.add("'items' is not defined");
         } else {
-            items.removeIf(Objects::isNull);
-            if (items.isEmpty()) {
+            rawItemIds.removeIf(Objects::isNull);
+            itemIds = parseIdentifiers(rawItemIds, errors);
+            if (itemIds.isEmpty()) {
                 errors.add("No items have been set");
             }
         }
@@ -42,7 +46,7 @@ public class SkillLevelItemUnlocksData extends AbstractSkillLevelUnlocksData {
     }
 
     @Override
-    public Set<String> getRawIdentifiers() {
-        return Collections.unmodifiableSet(items);
+    public Set<Identifier> getIdentifiers() {
+        return Collections.unmodifiableSet(itemIds);
     }
 }

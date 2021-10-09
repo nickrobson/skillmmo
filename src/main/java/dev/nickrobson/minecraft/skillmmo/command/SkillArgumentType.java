@@ -12,6 +12,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.text.LiteralText;
+import net.minecraft.util.Identifier;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -21,7 +22,7 @@ import java.util.concurrent.CompletableFuture;
 public class SkillArgumentType implements ArgumentType<Skill> {
     @Override
     public Skill parse(StringReader reader) throws CommandSyntaxException {
-        String skillId = reader.readString();
+        Identifier skillId = Identifier.fromCommandInput(reader);
         return SkillManager.getInstance().getSkill(skillId)
                 .orElseThrow(() -> new SimpleCommandExceptionType(new LiteralText("No such skill!")).createWithContext(reader));
     }
@@ -32,6 +33,7 @@ public class SkillArgumentType implements ArgumentType<Skill> {
         return CommandSource.suggestMatching(
                 skillSet.stream()
                         .map(Skill::getId)
+                        .map(Identifier::toString)
                         .sorted(),
                 builder
         );
@@ -45,6 +47,7 @@ public class SkillArgumentType implements ArgumentType<Skill> {
         }
         return skillSet.stream()
                 .map(Skill::getId)
+                .map(Identifier::toString)
                 .sorted()
                 .toList()
                 .subList(0, 2);

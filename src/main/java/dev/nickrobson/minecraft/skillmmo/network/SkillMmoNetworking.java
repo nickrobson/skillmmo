@@ -21,7 +21,7 @@ public interface SkillMmoNetworking {
     Identifier S2C_PLAYER_XP = new Identifier(SkillMmoMod.MOD_ID, "player_xp");
 
     static Skill readSkill(@Nonnull PacketByteBuf packetByteBuf) {
-        String id = packetByteBuf.readString();
+        Identifier id = packetByteBuf.readIdentifier();
         String translationKey = packetByteBuf.readString();
         Set<SkillLevel> skillLevels = packetByteBuf.readCollection(HashSet::new, buf -> readSkillLevel(id, buf));
 
@@ -29,12 +29,12 @@ public interface SkillMmoNetworking {
     }
 
     static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
-        packetByteBuf.writeString(skill.getId());
+        packetByteBuf.writeIdentifier(skill.getId());
         packetByteBuf.writeString(skill.getTranslationKey());
         packetByteBuf.writeCollection(skill.getSkillLevels(), SkillMmoNetworking::writeSkillLevel);
     }
 
-    static SkillLevel readSkillLevel(String skillId, @Nonnull PacketByteBuf packetByteBuf) {
+    static SkillLevel readSkillLevel(Identifier skillId, @Nonnull PacketByteBuf packetByteBuf) {
         byte level = packetByteBuf.readByte();
         Map<SkillLevelUnlockType, Set<Identifier>> unlocks = packetByteBuf.readMap(
                 HashMap::new,

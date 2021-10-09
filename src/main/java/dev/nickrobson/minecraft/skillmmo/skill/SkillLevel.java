@@ -8,14 +8,14 @@ import java.util.Objects;
 import java.util.Set;
 
 public class SkillLevel {
-    private final String skillId;
+    private final Identifier skillId;
     private final byte level;
     private final Map<SkillLevelUnlockType, Set<Identifier>> unlocks;
 
     /** @see #initSkill(Skill)  */
     private Skill skill;
 
-    public SkillLevel(String skillId, byte level, Map<SkillLevelUnlockType, Set<Identifier>> unlocks) {
+    public SkillLevel(Identifier skillId, byte level, Map<SkillLevelUnlockType, Set<Identifier>> unlocks) {
         this.skillId = skillId;
         this.level = level;
         this.unlocks = unlocks;
@@ -29,7 +29,7 @@ public class SkillLevel {
         return Objects.requireNonNull(skill, () -> String.format("Skill not yet initialised (skill '%s', level %d)", skillId, level));
     }
 
-    public String getSkillId() {
+    public Identifier getSkillId() {
         return skillId;
     }
 

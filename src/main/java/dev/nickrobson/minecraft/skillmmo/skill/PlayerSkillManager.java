@@ -28,7 +28,7 @@ public class PlayerSkillManager {
 
     private PlayerSkillManager() {}
 
-    public Map<String, Byte> getSkills(PlayerEntity player) {
+    public Map<Identifier, Byte> getSkills(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getSkillLevels();
     }
@@ -42,7 +42,7 @@ public class PlayerSkillManager {
         return playerSkillLevel >= level;
     }
 
-    public void setSkillLevels(PlayerEntity player, Map<String, Byte> playerSkillLevels) {
+    public void setSkillLevels(PlayerEntity player, Map<Identifier, Byte> playerSkillLevels) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         playerSkillLevels.forEach((skillId, level) ->
                 skillMmoPlayerDataHolder.getSkillMmoPlayerData().setSkillLevel(skillId, level));

@@ -12,6 +12,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -48,13 +49,18 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
                 ? skillMmoNbt.getInt(AVAILABLE_SKILL_POINTS_NBT_KEY)
                 : 0;
 
-        Map<String, Byte> skillLevels = new HashMap<>();
+        Map<Identifier, Byte> skillLevels = new HashMap<>();
         if (skillMmoNbt.contains(SKILL_LEVELS_NBT_KEY, NbtElement.COMPOUND_TYPE)) {
             NbtCompound skillLevelsNbt = skillMmoNbt.getCompound(SKILL_LEVELS_NBT_KEY);
             for (String skillLevelKey : skillLevelsNbt.getKeys()) {
                 if (skillLevelsNbt.contains(skillLevelKey, NbtElement.NUMBER_TYPE)) {
+                    Identifier skillId = Identifier.tryParse(skillLevelKey);
                     byte level = skillLevelsNbt.getByte(skillLevelKey);
-                    skillLevels.put(skillLevelKey, level);
+
+                    if (skillId == null) {
+                        continue;
+                    }
+                    skillLevels.put(skillId, level);
                 }
             }
         }
@@ -82,7 +88,8 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
 
         {
             NbtCompound skillLevelsNbt = new NbtCompound();
-            playerData.getSkillLevels().forEach(skillLevelsNbt::putByte);
+            playerData.getSkillLevels().forEach((skillId, level) ->
+                    skillLevelsNbt.putByte(skillId.toString(), level));
             skillMmoNbt.put(SKILL_LEVELS_NBT_KEY, skillLevelsNbt);
         }
 

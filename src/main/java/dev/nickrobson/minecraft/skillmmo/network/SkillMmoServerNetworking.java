@@ -8,6 +8,7 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.Identifier;
 
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +24,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
         });
 
         ServerPlayNetworking.registerGlobalReceiver(C2S_PLAYER_SKILL_CHOICE, (server, player, handler, buf, responseSender) -> {
-            String skillId = buf.readString();
+            Identifier skillId = buf.readIdentifier();
             SkillManager.getInstance().getSkill(skillId)
                     .ifPresent(skill ->
                             PlayerSkillManager.getInstance().chooseSkillLevel(player, skill)
@@ -43,10 +44,10 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
     public static void sendPlayerSkills(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
-        Map<String, Byte> playerSkillLevels = PlayerSkillManager.getInstance().getSkills(player);
+        Map<Identifier, Byte> playerSkillLevels = PlayerSkillManager.getInstance().getSkills(player);
         packetByteBuf.writeMap(
                 playerSkillLevels,
-                PacketByteBuf::writeString,
+                PacketByteBuf::writeIdentifier,
                 (BiConsumer<PacketByteBuf, Byte>) PacketByteBuf::writeByte
         );
 

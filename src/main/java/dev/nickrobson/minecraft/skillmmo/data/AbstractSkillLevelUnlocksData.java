@@ -2,11 +2,14 @@ package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Generic data shape for unlocks for a skill level in a datapack
@@ -25,7 +28,10 @@ public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
      * The ID of the skill, e.g. "mining"
      */
     @SerializedName("skill")
-    public String skillId;
+    public String rawSkillId;
+
+    // The parsed skill ID as an identifier
+    public transient Identifier skillId;
 
     /**
      * The level number.
@@ -36,8 +42,13 @@ public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
-        if (skillId == null) {
+        if (rawSkillId == null) {
             errors.add("'skill' is not defined. It should be set to the skill's ID.");
+        } else {
+            this.skillId = Identifier.tryParse(rawSkillId);
+            if (this.skillId == null) {
+                errors.add(String.format("Skill ID '%s' is invalid", rawSkillId));
+            }
         }
 
         if (level < 1) {
@@ -56,5 +67,19 @@ public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
      * Each item in the list should be in the identifier form, e.g. minecraft:stone
      * @return the set of raw unlock identifiers
      */
-    public abstract Set<String> getRawIdentifiers();
+    public abstract Set<Identifier> getIdentifiers();
+
+    @Nonnull
+    protected final Set<Identifier> parseIdentifiers(@Nonnull Set<String> ids, @Nonnull Collection<String> errors) {
+        return ids.stream()
+                .map(id -> {
+                    Identifier identifier = Identifier.tryParse(id);
+                    if (identifier == null) {
+                        errors.add(String.format("Invalid ID '%s', should be an identifier", id));
+                    }
+                    return identifier;
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+    }
 }

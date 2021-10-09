@@ -26,7 +26,7 @@ public class SkillManager {
     }
 
     private final Set<Skill> skillSet = new HashSet<>();
-    private final Map<String, Skill> skillMap = new HashMap<>();
+    private final Map<Identifier, Skill> skillMap = new HashMap<>();
 
     private SkillManager() {}
 
@@ -58,7 +58,7 @@ public class SkillManager {
         return Collections.unmodifiableSet(this.skillSet);
     }
 
-    public Optional<Skill> getSkill(String skillId) {
+    public Optional<Skill> getSkill(Identifier skillId) {
         return Optional.ofNullable(this.skillMap.get(skillId));
     }
 

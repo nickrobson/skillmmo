@@ -42,20 +42,19 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
         List<SkillLevelItemUnlocksData> itemUnlocksData = loadResources(manager, SkillMmoDataType.ITEMS);
         // TODO - entities
 
-        Map<String, Set<SkillLevel>> skillLevelsBySkill = loadSkillLevels(blockUnlocksData, itemUnlocksData);
+        Map<Identifier, Set<SkillLevel>> skillLevelsBySkill = loadSkillLevels(blockUnlocksData, itemUnlocksData);
 
-        Map<String, SkillData> skillDataBySkillId = new HashMap<>();
-        skillsData.forEach((skillData) -> {
-            skillDataBySkillId.compute(skillData.id, (k, v) -> {
-                if (v == null || skillData.replace) {
-                    return skillData;
-                }
-                v.replace = false;
-                v.translationKey = skillData.translationKey;
-                v.enabled = skillData.enabled;
-                return v;
-            });
-        });
+        Map<Identifier, SkillData> skillDataBySkillId = new HashMap<>();
+        skillsData.forEach((skillData) ->
+                skillDataBySkillId.compute(skillData.id, (k, v) -> {
+                    if (v == null || skillData.replace) {
+                        return skillData;
+                    }
+                    v.replace = false;
+                    v.translationKey = skillData.translationKey;
+                    v.enabled = skillData.enabled;
+                    return v;
+                }));
         Set<Skill> skills = skillDataBySkillId.values()
                 .stream()
                 .filter(skillData -> skillData.enabled)
@@ -77,12 +76,12 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
         SkillManager.getInstance().initSkills(skills);
     }
 
-    private Map<String, Set<SkillLevel>> loadSkillLevels(List<SkillLevelBlockUnlocksData> blockUnlocksData, List<SkillLevelItemUnlocksData> itemUnlocksData) {
-        Map<String, List<AbstractSkillLevelUnlocksData>> unlocksDataBySkillId = Stream
+    private Map<Identifier, Set<SkillLevel>> loadSkillLevels(List<SkillLevelBlockUnlocksData> blockUnlocksData, List<SkillLevelItemUnlocksData> itemUnlocksData) {
+        Map<Identifier, List<AbstractSkillLevelUnlocksData>> unlocksDataBySkillId = Stream
                 .concat(blockUnlocksData.stream(), itemUnlocksData.stream())
                 .collect(Collectors.groupingBy(data -> data.skillId, Collectors.toList()));
 
-        Map<String, Set<SkillLevel>> skillLevelsBySkillId = new HashMap<>();
+        Map<Identifier, Set<SkillLevel>> skillLevelsBySkillId = new HashMap<>();
         unlocksDataBySkillId.forEach((skillId, unlocksDataForSkill) -> {
             Map<Byte, List<AbstractSkillLevelUnlocksData>> unlocksDataByLevel = unlocksDataForSkill
                     .stream()
@@ -96,18 +95,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                             if (v == null || unlockData.replace) {
                                 v = new HashSet<>();
                             }
-                            Set<Identifier> identifiers = unlockData.getRawIdentifiers()
-                                    .stream()
-                                    .map(id -> {
-                                        try {
-                                            return new Identifier(id);
-                                        } catch (Exception ex) {
-                                            logger.warn(String.format("Failed to parse identifier '%s'", id), ex);
-                                            return null;
-                                        }
-                                    })
-                                    .filter(Objects::nonNull)
-                                    .collect(Collectors.toSet());
+                            Set<Identifier> identifiers = unlockData.getIdentifiers();
                             v.addAll(identifiers);
                             return v;
                         })

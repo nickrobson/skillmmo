@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
@@ -12,7 +13,7 @@ import java.util.regex.Pattern;
  */
 @FieldsAreNonnullByDefault
 public class SkillData implements DataValidatable {
-    private static final Pattern ID_REGEX = Pattern.compile("[A-Za-z0-9_]+");
+    private static final Pattern ID_REGEX = Pattern.compile("[a-z0-9_]+:[a-z0-9_]+");
 
     /**
      * Whether this skill definition should replace an existing skill with the same ID
@@ -25,7 +26,9 @@ public class SkillData implements DataValidatable {
      * This should never be changed as it's used to save player data.
      */
     @SerializedName("id")
-    public String id;
+    public String rawId;
+
+    public transient Identifier id;
 
     /**
      * Whether this skill is enabled
@@ -41,10 +44,13 @@ public class SkillData implements DataValidatable {
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
-        if (id == null) {
+        if (rawId == null) {
             errors.add("'id' is not defined");
-        } else if (!ID_REGEX.matcher(id).matches()) {
-            errors.add(String.format("ID '%s' is invalid. must contain only A-Z, a-z, 0-9, or _", id));
+        } else {
+            this.id = Identifier.tryParse(rawId);
+            if (this.id == null) {
+                errors.add(String.format("ID '%s' is invalid. Must be in the identifier format, e.g. skillmmo:mining", rawId));
+            }
         }
 
         if (translationKey == null) {

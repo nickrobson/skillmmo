@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -17,13 +18,13 @@ public interface SkillMmoPlayerDataHolder {
 
         private long experience;
         private int availableSkillPoints;
-        private final Map<String, Byte> skillLevels;
+        private final Map<Identifier, Byte> skillLevels;
 
         public SkillMmoPlayerData() {
             this(0L, 0, new HashMap<>());
         }
 
-        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<String, Byte> skillLevels) {
+        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<Identifier, Byte> skillLevels) {
             this.experience = experience;
             this.availableSkillPoints = availableSkillPoints;
             this.skillLevels = new HashMap<>(skillLevels);
@@ -62,11 +63,11 @@ public interface SkillMmoPlayerDataHolder {
             return false;
         }
 
-        public Map<String, Byte> getSkillLevels() {
+        public Map<Identifier, Byte> getSkillLevels() {
             return Collections.unmodifiableMap(skillLevels);
         }
 
-        public void setSkillLevel(String skillId, byte level) {
+        public void setSkillLevel(Identifier skillId, byte level) {
             this.checkInitialised();
             this.skillLevels.put(skillId, level);
         }
