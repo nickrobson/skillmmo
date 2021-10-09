@@ -1,5 +1,5 @@
 {
-  "skill": "mining",
+  "skill": "skillmmo:mining",
   "level": 2,
   "blocks": [
     "minecraft:iron_ore",
