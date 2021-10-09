@@ -3,10 +3,13 @@ package dev.nickrobson.minecraft.skillmmo.command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.minecraft.command.EntitySelector;
+import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
@@ -15,6 +18,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 
 import java.util.Set;
 
@@ -23,6 +27,12 @@ import static net.minecraft.server.command.CommandManager.literal;
 
 public class SkillMmoCommand {
     public static void register() {
+        ArgumentTypes.register(
+                new Identifier(SkillMmoMod.MOD_ID, "skill").toString(),
+                SkillArgumentType.class,
+                new SkillArgumentType.Serializer()
+        );
+
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
             LiteralArgumentBuilder<ServerCommandSource> command =
                     literal("skillmmo")
@@ -62,7 +72,7 @@ public class SkillMmoCommand {
                         .then(argument("player", EntityArgumentType.player())
                                 .executes(ctx -> {
                                     Skill skill = ctx.getArgument("skill", Skill.class);
-                                    PlayerEntity player = ctx.getArgument("player", PlayerEntity.class);
+                                    PlayerEntity player = ctx.getArgument("player", EntitySelector.class).getPlayer(ctx.getSource());
 
                                     byte level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
 
@@ -82,10 +92,11 @@ public class SkillMmoCommand {
                                 .then(argument("level", IntegerArgumentType.integer(1, Byte.MAX_VALUE))
                                         .executes(ctx -> {
                                             Skill skill = ctx.getArgument("skill", Skill.class);
-                                            PlayerEntity player = ctx.getArgument("player", PlayerEntity.class);
-                                            byte level = ctx.getArgument("player", Integer.class).byteValue();
+                                            PlayerEntity player = ctx.getArgument("player", EntitySelector.class).getPlayer(ctx.getSource());
+                                            byte level = ctx.getArgument("level", Integer.class).byteValue();
 
                                             PlayerSkillManager.getInstance().setSkillLevel(player, skill, level);
+
                                             ctx.getSource().sendFeedback(
                                                     new LiteralText(String.format(
                                                             "%s is now level %d in %s",

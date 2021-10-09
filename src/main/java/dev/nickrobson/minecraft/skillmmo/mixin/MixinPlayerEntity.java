@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,6 +94,11 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
         return skillMmo$playerData != null
                 ? skillMmo$playerData
                 : SkillMmoPlayerData.UNINITIALISED;
+    }
+
+    @Override
+    public void setSkillMmoPlayerData(@Nonnull SkillMmoPlayerData playerData) {
+        this.skillMmo$playerData = playerData;
     }
 
     @Redirect(

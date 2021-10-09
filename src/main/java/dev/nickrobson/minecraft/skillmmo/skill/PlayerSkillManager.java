@@ -49,7 +49,7 @@ public class PlayerSkillManager {
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER
                 && player instanceof ServerPlayerEntity) {
-            SkillMmoServerNetworking.sendPlayerXp((ServerPlayerEntity) player);
+            SkillMmoServerNetworking.sendPlayerSkills((ServerPlayerEntity) player);
         }
     }
 
@@ -59,7 +59,7 @@ public class PlayerSkillManager {
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER
                 && player instanceof ServerPlayerEntity) {
-            SkillMmoServerNetworking.sendPlayerXp((ServerPlayerEntity) player);
+            SkillMmoServerNetworking.sendPlayerSkills((ServerPlayerEntity) player);
         }
     }
 

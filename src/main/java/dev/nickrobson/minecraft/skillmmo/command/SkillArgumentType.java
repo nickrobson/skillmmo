@@ -10,6 +10,7 @@ import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.minecraft.command.CommandSource;
+import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
 import net.minecraft.text.LiteralText;
 
 import java.util.Collection;
@@ -47,5 +48,11 @@ public class SkillArgumentType implements ArgumentType<Skill> {
                 .sorted()
                 .toList()
                 .subList(0, 2);
+    }
+
+    public static class Serializer extends ConstantArgumentSerializer<SkillArgumentType> {
+        public Serializer() {
+            super(SkillArgumentType::new);
+        }
     }
 }

@@ -10,7 +10,6 @@ import java.util.Map;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public interface SkillMmoPlayerDataHolder {
-
     @MethodsReturnNonnullByDefault
     @ParametersAreNonnullByDefault
     class SkillMmoPlayerData {
@@ -19,6 +18,10 @@ public interface SkillMmoPlayerDataHolder {
         private long experience;
         private int availableSkillPoints;
         private final Map<String, Byte> skillLevels;
+
+        public SkillMmoPlayerData() {
+            this(0L, 0, new HashMap<>());
+        }
 
         public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<String, Byte> skillLevels) {
             this.experience = experience;
@@ -70,4 +73,5 @@ public interface SkillMmoPlayerDataHolder {
     }
 
     SkillMmoPlayerData getSkillMmoPlayerData();
+    void setSkillMmoPlayerData(SkillMmoPlayerData playerData);
 }
