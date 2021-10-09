@@ -89,7 +89,7 @@ public class SkillMmoCommand {
                         ))
                 .then(literal("set")
                         .then(argument("player", EntityArgumentType.player())
-                                .then(argument("level", IntegerArgumentType.integer(1, Byte.MAX_VALUE))
+                                .then(argument("level", IntegerArgumentType.integer(0, Byte.MAX_VALUE))
                                         .executes(ctx -> {
                                             Skill skill = ctx.getArgument("skill", Skill.class);
                                             PlayerEntity player = ctx.getArgument("player", EntitySelector.class).getPlayer(ctx.getSource());
