@@ -4,6 +4,7 @@
   "command.skillmmo.skills.heading": "Skills (%d)",
   "command.skillmmo.skills.skill_line": "- %s",
   "command.skillmmo.skills.skill_line_with_level": "- %s (level %d)",
+  "command.skillmmo.skills.available_points": "You have %d available skill points.",
 
   "command.skillmmo.skill.player_is_level": "%s is level %d in %s",
   "command.skillmmo.skill.player_is_now_level": "%s is now level %d in %s"

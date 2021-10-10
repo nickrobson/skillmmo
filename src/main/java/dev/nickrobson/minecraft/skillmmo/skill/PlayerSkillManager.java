@@ -63,6 +63,11 @@ public class PlayerSkillManager {
         }
     }
 
+    public int getAvailableSkillPoints(PlayerEntity player) {
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getAvailableSkillPoints();
+    }
+
     public boolean chooseSkillLevel(PlayerEntity player, Skill skill) {
         int currentLevel = getSkillLevel(player, skill);
         if (currentLevel >= SkillLevel.MAX_LEVEL) {
