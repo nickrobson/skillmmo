@@ -23,7 +23,7 @@ public class SkillMmoMod implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        logger.info("Starting...");
+        logger.info("Starting {}...", MOD_VERSION_STRING);
 
         AutoConfig.register(SkillMmoConfig.class, JanksonConfigSerializer::new);
 
@@ -36,6 +36,6 @@ public class SkillMmoMod implements ModInitializer {
 
         PlayerSkillManager.register();
 
-        logger.info("Battle stations ready! Time to test your mettle!");
+        logger.info("Ready! Time to test your mettle!");
     }
 }
