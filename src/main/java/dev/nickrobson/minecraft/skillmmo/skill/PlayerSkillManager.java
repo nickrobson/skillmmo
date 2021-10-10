@@ -4,8 +4,10 @@ import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -103,7 +105,11 @@ public class PlayerSkillManager {
     }
 
     public boolean hasBlockUnlock(@Nullable PlayerEntity player, BlockState blockState) {
-        Identifier blockIdentifier = Registry.BLOCK.getId(blockState.getBlock());
+        return hasBlockUnlock(player, blockState.getBlock());
+    }
+
+    public boolean hasBlockUnlock(@Nullable PlayerEntity player, Block block) {
+        Identifier blockIdentifier = Registry.BLOCK.getId(block);
         return PlayerSkillManager.getInstance().hasUnlock(
                 player,
                 SkillLevelUnlockType.BLOCK,
@@ -112,6 +118,11 @@ public class PlayerSkillManager {
     }
 
     public boolean hasItemUnlock(@Nullable PlayerEntity player, ItemStack itemStack) {
+        if (itemStack.getItem() instanceof BlockItem) {
+            Block block = ((BlockItem) itemStack.getItem()).getBlock();
+            return hasBlockUnlock(player, block);
+        }
+
         Identifier itemIdentifier = Registry.ITEM.getId(itemStack.getItem());
         return PlayerSkillManager.getInstance().hasUnlock(
                 player,
