@@ -13,7 +13,7 @@ import java.util.Map;
 public interface SkillMmoPlayerDataHolder {
     @MethodsReturnNonnullByDefault
     @ParametersAreNonnullByDefault
-    class SkillMmoPlayerData {
+    class SkillMmoPlayerData implements Cloneable {
         public static final SkillMmoPlayerData UNINITIALISED = new SkillMmoPlayerData(0, 0, Collections.emptyMap());
 
         private long experience;
@@ -70,6 +70,15 @@ public interface SkillMmoPlayerDataHolder {
         public void setSkillLevel(Identifier skillId, int level) {
             this.checkInitialised();
             this.skillLevels.put(skillId, level);
+        }
+
+        @Override
+        public SkillMmoPlayerData clone() {
+            try {
+                return (SkillMmoPlayerData) super.clone();
+            } catch (CloneNotSupportedException ex) {
+                throw new RuntimeException(ex);
+            }
         }
     }
 
