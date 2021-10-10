@@ -45,7 +45,7 @@ Skills based on proficiencies:
 
 | Skill | Blocks | Items | Entities |
 |---|---|---|---|
-| Melee | b | c | - |
+| - | - | - | - |
 
 ---
 

@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo;
 
-import dev.nickrobson.minecraft.skillmmo.command.SkillMmoCommand;
+import dev.nickrobson.minecraft.skillmmo.command.SkillMmoCommands;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceLoader;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
@@ -8,7 +8,6 @@ import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import org.apache.logging.log4j.LogManager;
@@ -33,10 +32,9 @@ public class SkillMmoMod implements ModInitializer {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
                 .registerReloadListener(new SkillMmoResourceLoader());
 
-        SkillMmoCommand.register(); // must be after resource loading
+        SkillMmoCommands.register(); // must be after resource loading
 
-        ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) ->
-                PlayerSkillManager.getInstance().setSkillLevels(newPlayer, PlayerSkillManager.getInstance().getSkills(oldPlayer)));
+        PlayerSkillManager.register();
 
         logger.info("Battle stations ready! Time to test your mettle!");
     }

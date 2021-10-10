@@ -5,7 +5,7 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.minecraft.command.argument.ArgumentTypes;
 import net.minecraft.util.Identifier;
 
-public class SkillMmoCommand {
+public class SkillMmoCommands {
     public static void register() {
         ArgumentTypes.register(
                 new Identifier(SkillMmoMod.MOD_ID, "skill").toString(),

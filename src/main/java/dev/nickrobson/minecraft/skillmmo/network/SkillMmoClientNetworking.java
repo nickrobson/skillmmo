@@ -8,6 +8,8 @@ import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,6 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class SkillMmoClientNetworking implements SkillMmoNetworking {
+    private static final Logger logger = LoggerFactory.getLogger(SkillMmoClientNetworking.class);
     public static void register() {
         ClientPlayNetworking.registerGlobalReceiver(S2C_SKILLS, (client, handler, buf, responseSender) -> {
             Set<Skill> skillSet = buf.readCollection(HashSet::new, SkillMmoNetworking::readSkill);
@@ -28,14 +31,25 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
                     PacketByteBuf::readVarInt
             );
 
-            // TODO: find where this should be initialised, since client.player is null atm on login
-            if (client.player != null) {
-                PlayerSkillManager.getInstance().setSkillLevels(client.player, playerSkillLevels);
+            if (client.player == null) {
+                logger.warn("Client player is null on {}", S2C_PLAYER_SKILLS);
+                return;
             }
+
+            PlayerSkillManager.getInstance().setSkillLevels(client.player, playerSkillLevels);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(S2C_PLAYER_XP, (client, handler, buf, responseSender) -> {
+            long experience = buf.readLong();
+            int availableSkillPoints = buf.readVarInt();
 
+            if (client.player == null) {
+                logger.warn("Client player is null on {}", S2C_PLAYER_SKILLS);
+                return;
+            }
+
+            PlayerSkillManager.getInstance().setExperience(client.player, experience);
+            PlayerSkillManager.getInstance().setAvailableSkillPoints(client.player, availableSkillPoints);
         });
     }
 

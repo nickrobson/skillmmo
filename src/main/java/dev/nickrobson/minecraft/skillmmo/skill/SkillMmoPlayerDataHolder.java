@@ -45,8 +45,17 @@ public interface SkillMmoPlayerDataHolder {
             this.experience += experience;
         }
 
+        public void setExperience(long experience) {
+            this.checkInitialised();
+            this.experience = experience;
+        }
+
         public int getAvailableSkillPoints() {
             return availableSkillPoints;
+        }
+
+        public void setAvailableSkillPoints(int availableSkillPoints) {
+            this.availableSkillPoints = availableSkillPoints;
         }
 
         public void addAvailableSkillPoint() {

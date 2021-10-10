@@ -3,9 +3,11 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import net.fabricmc.api.EnvType;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
@@ -26,6 +28,16 @@ public class PlayerSkillManager {
     private static final PlayerSkillManager instance = new PlayerSkillManager();
     public static PlayerSkillManager getInstance() {
         return instance;
+    }
+
+    public static void register() {
+        // When players respawn, we need to copy over all their data
+        ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
+            SkillMmoPlayerDataHolder oldPlayerDataHolder = (SkillMmoPlayerDataHolder) oldPlayer;
+            SkillMmoPlayerDataHolder newPlayerDataHolder = (SkillMmoPlayerDataHolder) newPlayer;
+            newPlayerDataHolder.setSkillMmoPlayerData(oldPlayerDataHolder.getSkillMmoPlayerData().clone());
+            SkillMmoServerNetworking.sendPlayerData(newPlayer);
+        });
     }
 
     private PlayerSkillManager() {}
@@ -65,9 +77,33 @@ public class PlayerSkillManager {
         }
     }
 
+    public long getExperience(PlayerEntity player) {
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getExperience();
+    }
+
+    public void setExperience(ClientPlayerEntity player, long experience) {
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        skillMmoPlayerDataHolder.getSkillMmoPlayerData().setExperience(experience);
+    }
+
+    public void giveExperience(ServerPlayerEntity player, long experience) {
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        skillMmoPlayerDataHolder.getSkillMmoPlayerData().addExperience(experience);
+
+        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
+            SkillMmoServerNetworking.sendPlayerXp(player);
+        }
+    }
+
     public int getAvailableSkillPoints(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getAvailableSkillPoints();
+    }
+
+    public void setAvailableSkillPoints(ClientPlayerEntity player, int availableSkillPoints) {
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        skillMmoPlayerDataHolder.getSkillMmoPlayerData().setAvailableSkillPoints(availableSkillPoints);
     }
 
     public boolean chooseSkillLevel(PlayerEntity player, Skill skill) {
