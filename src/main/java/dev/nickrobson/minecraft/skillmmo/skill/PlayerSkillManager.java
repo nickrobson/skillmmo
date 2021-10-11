@@ -126,6 +126,10 @@ public class PlayerSkillManager {
             return false;
         }
 
+        if (player.isCreative()) {
+            return true;
+        }
+
         Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlockType, unlockIdentifier);
         if (skillLevelSet.isEmpty()) {
             // If no skill levels affect the item, it's allowed!
