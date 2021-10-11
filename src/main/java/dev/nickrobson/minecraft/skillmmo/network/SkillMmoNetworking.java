@@ -57,14 +57,14 @@ public interface SkillMmoNetworking {
     }
 
     static ExperienceLevelEquation readExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf) {
-        double baseCost = packetByteBuf.readDouble();
+        long baseCost = packetByteBuf.readLong();
         double multiplier = packetByteBuf.readDouble();
         double levelExponent = packetByteBuf.readDouble();
         return new ExperienceLevelEquation(baseCost, multiplier, levelExponent);
     }
 
     static void writeExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf, @Nonnull ExperienceLevelEquation equation) {
-        packetByteBuf.writeDouble(equation.getBaseCost());
+        packetByteBuf.writeLong(equation.getBaseCost());
         packetByteBuf.writeDouble(equation.getMultiplier());
         packetByteBuf.writeDouble(equation.getLevelExponent());
     }

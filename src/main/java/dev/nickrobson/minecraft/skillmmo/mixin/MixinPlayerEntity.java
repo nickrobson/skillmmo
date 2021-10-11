@@ -108,6 +108,14 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
         this.skillMmo$playerData = playerData;
     }
 
+    @Inject(
+            method = "addExperience",
+            at = @At("TAIL")
+    )
+    public void onAddExperience(int experience, CallbackInfo ci) {
+        this.skillMmo$playerData.addExperience(experience);
+    }
+
     @Redirect(
             method = "interact",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/Entity;interact(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/util/Hand;)Lnet/minecraft/util/ActionResult;")
