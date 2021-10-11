@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
@@ -17,6 +18,7 @@ public interface SkillMmoNetworking {
     Identifier C2S_PLAYER_SKILL_CHOICE = new Identifier(SkillMmoMod.MOD_ID, "player_skill_choice");
 
     Identifier S2C_SKILLS = new Identifier(SkillMmoMod.MOD_ID, "skills");
+    Identifier S2C_EXPERIENCE_LEVEL_EQUATION = new Identifier(SkillMmoMod.MOD_ID, "experience_level_equation");
     Identifier S2C_PLAYER_SKILLS = new Identifier(SkillMmoMod.MOD_ID, "player_skills");
     Identifier S2C_PLAYER_XP = new Identifier(SkillMmoMod.MOD_ID, "player_xp");
 
@@ -52,5 +54,18 @@ public interface SkillMmoNetworking {
                 PacketByteBuf::writeEnumConstant,
                 (buf, ids) -> buf.writeCollection(ids, PacketByteBuf::writeIdentifier)
         );
+    }
+
+    static ExperienceLevelEquation readExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf) {
+        double baseCost = packetByteBuf.readDouble();
+        double multiplier = packetByteBuf.readDouble();
+        double levelExponent = packetByteBuf.readDouble();
+        return new ExperienceLevelEquation(baseCost, multiplier, levelExponent);
+    }
+
+    static void writeExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf, @Nonnull ExperienceLevelEquation equation) {
+        packetByteBuf.writeDouble(equation.getBaseCost());
+        packetByteBuf.writeDouble(equation.getMultiplier());
+        packetByteBuf.writeDouble(equation.getLevelExponent());
     }
 }

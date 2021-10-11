@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
@@ -32,12 +33,25 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
         ServerPlayNetworking.send(player, S2C_SKILLS, packetByteBuf);
     }
 
+    public static void sendExperienceLevelEquation(ServerPlayerEntity player) {
+        PacketByteBuf packetByteBuf = PacketByteBufs.create();
+
+        ExperienceLevelEquation experienceLevelEquation = ExperienceLevelEquation.getInstance();
+        SkillMmoNetworking.writeExperienceLevelEquation(packetByteBuf, experienceLevelEquation);
+
+        ServerPlayNetworking.send(player, S2C_EXPERIENCE_LEVEL_EQUATION, packetByteBuf);
+    }
+
+    public static void sendGenericData(ServerPlayerEntity player) {
+        sendSkills(player);
+        sendExperienceLevelEquation(player);
+    }
+
     public static void sendPlayerXp(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
         long experience = PlayerSkillManager.getInstance().getExperience(player);
         packetByteBuf.writeLong(experience);
-        // TODO: send player level here? (how will levels work..?)
 
         int availableSkillPoints = PlayerSkillManager.getInstance().getAvailableSkillPoints(player);
         packetByteBuf.writeVarInt(availableSkillPoints);

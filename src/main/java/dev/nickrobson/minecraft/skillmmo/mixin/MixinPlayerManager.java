@@ -35,7 +35,7 @@ public class MixinPlayerManager {
             at = @At("TAIL")
     )
     public void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
-        SkillMmoServerNetworking.sendSkills(player);
+        SkillMmoServerNetworking.sendGenericData(player);
         SkillMmoServerNetworking.sendPlayerData(player);
     }
 }

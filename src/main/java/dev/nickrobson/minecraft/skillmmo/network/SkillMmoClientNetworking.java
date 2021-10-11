@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
@@ -22,6 +23,11 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
         ClientPlayNetworking.registerGlobalReceiver(S2C_SKILLS, (client, handler, buf, responseSender) -> {
             Set<Skill> skillSet = buf.readCollection(HashSet::new, SkillMmoNetworking::readSkill);
             SkillManager.getInstance().initSkills(skillSet);
+        });
+
+        ClientPlayNetworking.registerGlobalReceiver(S2C_EXPERIENCE_LEVEL_EQUATION, (client, handler, buf, responseSender) -> {
+            ExperienceLevelEquation experienceLevelEquation = SkillMmoNetworking.readExperienceLevelEquation(buf);
+            ExperienceLevelEquation.setInstance(experienceLevelEquation);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(S2C_PLAYER_SKILLS, (client, handler, buf, responseSender) -> {

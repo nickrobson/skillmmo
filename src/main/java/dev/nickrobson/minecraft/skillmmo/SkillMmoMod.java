@@ -4,6 +4,7 @@ import dev.nickrobson.minecraft.skillmmo.command.SkillMmoCommands;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceLoader;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
@@ -25,7 +26,9 @@ public class SkillMmoMod implements ModInitializer {
     public void onInitialize() {
         logger.info("Starting {}...", MOD_VERSION_STRING);
 
-        AutoConfig.register(SkillMmoConfig.class, JanksonConfigSerializer::new);
+        SkillMmoConfig config = AutoConfig.register(SkillMmoConfig.class, JanksonConfigSerializer::new).getConfig();
+
+        ExperienceLevelEquation.setInstance(new ExperienceLevelEquation(config.expBaseCost, config.expMultiplier, config.expLevelExponent));
 
         SkillMmoServerNetworking.register();
 

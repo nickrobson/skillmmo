@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class SkillLevel {
     public static final int MIN_LEVEL = 0;
-    public static final int MAX_LEVEL = 100;
+    public static final int MAX_LEVEL = 25;
 
     private final Identifier skillId;
     private final int level;
