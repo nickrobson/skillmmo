@@ -37,25 +37,27 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
                     PacketByteBuf::readVarInt
             );
 
-            if (client.player == null) {
-                logger.warn("Client player is null on {}", S2C_PLAYER_SKILLS);
-                return;
-            }
-
-            PlayerSkillManager.getInstance().setSkillLevels(client.player, playerSkillLevels);
+            client.execute(() -> {
+                if (client.player == null) {
+                    logger.warn("Client player is null on {}", S2C_PLAYER_SKILLS);
+                } else {
+                    PlayerSkillManager.getInstance().setSkillLevels(client.player, playerSkillLevels);
+                }
+            });
         });
 
         ClientPlayNetworking.registerGlobalReceiver(S2C_PLAYER_XP, (client, handler, buf, responseSender) -> {
             long experience = buf.readLong();
             int availableSkillPoints = buf.readVarInt();
 
-            if (client.player == null) {
-                logger.warn("Client player is null on {}", S2C_PLAYER_SKILLS);
-                return;
-            }
-
-            PlayerSkillManager.getInstance().setExperience(client.player, experience);
-            PlayerSkillManager.getInstance().setAvailableSkillPoints(client.player, availableSkillPoints);
+            client.execute(() -> {
+                if (client.player == null) {
+                    logger.warn("Client player is null on {}", S2C_PLAYER_XP);
+                } else {
+                    PlayerSkillManager.getInstance().setExperience(client.player, experience);
+                    PlayerSkillManager.getInstance().setAvailableSkillPoints(client.player, availableSkillPoints);
+                }
+            });
         });
     }
 
