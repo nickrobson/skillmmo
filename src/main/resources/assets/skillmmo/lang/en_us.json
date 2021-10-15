@@ -1,12 +1,14 @@
 {
   "command.skillmmo.skills.heading": "Skills (%d)",
   "command.skillmmo.skills.skill_line": "- %s",
-  "command.skillmmo.skills.skill_line_with_level": "- %s (level %d)",
+  "command.skillmmo.skills.skill_line_with_level": "- %s (level %d/%d)",
   "command.skillmmo.skills.available_points_self": "You have %d available skill points.",
   "command.skillmmo.skills.available_points_other": "%s has %d available skill points.",
   "command.skillmmo.skills.player_experience_self": "You are level %d overall (%d%% to level %d)",
   "command.skillmmo.skills.player_experience_other": "%s is level %d overall (%d%% to level %d)",
 
+  "command.skillmmo.skill.info.skill": "%s (%d levels)",
+  "command.skillmmo.skill.info.description": "%s",
   "command.skillmmo.skill.player_is_level": "%s is level %d in %s",
   "command.skillmmo.skill.player_is_now_level": "%s is now level %d in %s",
 

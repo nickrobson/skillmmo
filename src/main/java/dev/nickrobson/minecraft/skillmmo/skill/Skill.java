@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class Skill {
     private final Identifier id;
     private final String nameKey;
+    private final String descriptionKey;
     private final Set<SkillLevel> skillLevelSet;
     private final Map<Integer, SkillLevel> skillLevelMap;
 
@@ -32,6 +33,7 @@ public class Skill {
     public Skill(
             Identifier id,
             String nameKey,
+            String descriptionKey,
             Set<SkillLevel> skillLevels) {
         {
             // Validate skill levels
@@ -63,6 +65,7 @@ public class Skill {
 
         this.id = id;
         this.nameKey = nameKey;
+        this.descriptionKey = descriptionKey;
         this.skillLevelSet = skillLevels;
         this.skillLevelMap = skillLevels.stream()
                 .collect(Collectors.toMap(SkillLevel::getLevel, Function.identity()));
@@ -103,6 +106,14 @@ public class Skill {
 
     public TranslatableText getNameText() {
         return new TranslatableText(nameKey);
+    }
+
+    public String getDescriptionKey() {
+        return descriptionKey;
+    }
+
+    public TranslatableText getDescriptionText() {
+        return new TranslatableText(descriptionKey);
     }
 
     public Set<SkillLevel> getSkillLevels() {

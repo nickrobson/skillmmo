@@ -47,11 +47,14 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                     if (v == null || skillData.replace) {
                         return skillData;
                     }
+                    if (skillData.enabled != null) {
+                        v.enabled = skillData.enabled;
+                    }
                     if (skillData.nameKey != null) {
                         v.nameKey = skillData.nameKey;
                     }
-                    if (skillData.enabled != null) {
-                        v.enabled = skillData.enabled;
+                    if (skillData.descriptionKey != null) {
+                        v.descriptionKey = skillData.descriptionKey;
                     }
                     return v;
                 }));
@@ -67,6 +70,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                     return new Skill(
                             skillData.id,
                             skillData.nameKey,
+                            skillData.descriptionKey,
                             skillLevels
                     );
                 })

@@ -25,14 +25,16 @@ public interface SkillMmoNetworking {
     static Skill readSkill(@Nonnull PacketByteBuf packetByteBuf) {
         Identifier id = packetByteBuf.readIdentifier();
         String nameKey = packetByteBuf.readString();
+        String descriptionKey = packetByteBuf.readString();
         Set<SkillLevel> skillLevels = packetByteBuf.readCollection(HashSet::new, buf -> readSkillLevel(id, buf));
 
-        return new Skill(id, nameKey, skillLevels);
+        return new Skill(id, nameKey, descriptionKey, skillLevels);
     }
 
     static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
         packetByteBuf.writeIdentifier(skill.getId());
         packetByteBuf.writeString(skill.getNameKey());
+        packetByteBuf.writeString(skill.getDescriptionKey());
         packetByteBuf.writeCollection(skill.getSkillLevels(), SkillMmoNetworking::writeSkillLevel);
     }
 

@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.command;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevel;
@@ -60,7 +61,8 @@ public class SkillsCommand {
                 Text text = new TranslatableText(
                         "command.skillmmo.skills.skill_line_with_level",
                         skill.getNameText(),
-                        PlayerSkillManager.getInstance().getSkillLevel(player, skill)
+                        PlayerSkillManager.getInstance().getSkillLevel(player, skill),
+                        skill.getMaxLevel().getLevel()
                 );
                 ctx.getSource().sendFeedback(text, false);
             }
@@ -94,6 +96,6 @@ public class SkillsCommand {
             }
         }
 
-        return 0;
+        return Command.SINGLE_SUCCESS;
     }
 }
