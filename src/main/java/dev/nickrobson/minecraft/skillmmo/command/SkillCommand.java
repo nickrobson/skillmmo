@@ -51,7 +51,7 @@ public class SkillCommand {
 
         ctx.getSource().sendFeedback(
                 new TranslatableText(
-                        "command.skillmmo.skill.info.skill",
+                        "skillmmo.command.skill.info.skill",
                         skill.getNameText().setStyle(Style.EMPTY.withColor(Formatting.BLUE)),
                         skill.getMaxLevel().getLevel()
                 ),
@@ -59,7 +59,7 @@ public class SkillCommand {
         );
         ctx.getSource().sendFeedback(
                 new TranslatableText(
-                        "command.skillmmo.skill.info.description",
+                        "skillmmo.command.skill.info.description",
                         skill.getDescriptionText()
                 ),
                 false
@@ -75,7 +75,7 @@ public class SkillCommand {
 
         ctx.getSource().sendFeedback(
                 new TranslatableText(
-                        "command.skillmmo.skill.player_is_level",
+                        "skillmmo.command.skill.player_is_level",
                         player.getName(),
                         level,
                         skill.getNameText()
@@ -94,7 +94,7 @@ public class SkillCommand {
 
         ctx.getSource().sendFeedback(
                 new TranslatableText(
-                        "command.skillmmo.skill.player_is_now_level",
+                        "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         level,
                         skill.getNameText()

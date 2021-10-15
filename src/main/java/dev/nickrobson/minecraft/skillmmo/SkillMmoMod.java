@@ -6,6 +6,7 @@ import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceLoader;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillUnlockManager;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -37,7 +38,8 @@ public class SkillMmoMod implements ModInitializer {
 
         SkillMmoCommands.register(); // must be after resource loading
 
-        PlayerSkillManager.register();
+        PlayerSkillManager.getInstance().register();
+        PlayerSkillUnlockManager.getInstance().register();
 
         logger.info("Ready! Time to test your mettle!");
     }

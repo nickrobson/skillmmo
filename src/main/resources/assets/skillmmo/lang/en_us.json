@@ -1,19 +1,23 @@
 {
-  "command.skillmmo.skills.heading": "Skills (%d)",
-  "command.skillmmo.skills.skill_line": "- %s",
-  "command.skillmmo.skills.skill_line_with_level": "- %s (level %d/%d)",
-  "command.skillmmo.skills.available_points_self": "You have %d available skill points.",
-  "command.skillmmo.skills.available_points_other": "%s has %d available skill points.",
-  "command.skillmmo.skills.player_experience_self": "You are level %d overall (%d%% to level %d)",
-  "command.skillmmo.skills.player_experience_other": "%s is level %d overall (%d%% to level %d)",
+  "skillmmo.command.skills.heading": "Skills (%d)",
+  "skillmmo.command.skills.skill_line": "- %s",
+  "skillmmo.command.skills.skill_line_with_level": "- %s (level %d/%d)",
+  "skillmmo.command.skills.available_points_self": "You have %d available skill points.",
+  "skillmmo.command.skills.available_points_other": "%s has %d available skill points.",
+  "skillmmo.command.skills.player_experience_self": "You are level %d overall (%d%% to level %d)",
+  "skillmmo.command.skills.player_experience_other": "%s is level %d overall (%d%% to level %d)",
 
-  "command.skillmmo.skill.info.skill": "%s (%d levels)",
-  "command.skillmmo.skill.info.description": "%s",
-  "command.skillmmo.skill.player_is_level": "%s is level %d in %s",
-  "command.skillmmo.skill.player_is_now_level": "%s is now level %d in %s",
+  "skillmmo.command.skill.info.skill": "%s (%d levels)",
+  "skillmmo.command.skill.info.description": "%s",
+  "skillmmo.command.skill.player_is_level": "%s is level %d in %s",
+  "skillmmo.command.skill.player_is_now_level": "%s is now level %d in %s",
 
-  "skill.skillmmo.mining.name": "Mining",
-  "skill.skillmmo.mining.description": "Everything under the earth!",
-  "skill.skillmmo.testing_skill.name": "Testing Skill",
-  "skill.skillmmo.testing_skill.description": "Testing some of the more interesting things..."
+  "skillmmo.feedback.deny.block": "You need %s %d to interact with a %s",
+  "skillmmo.feedback.deny.item": "You need %s %d to use a %s",
+  "skillmmo.feedback.deny.entity": "You need %s %d to interact with a %s",
+
+  "skillmmo.skill.mining.name": "Mining",
+  "skillmmo.skill.mining.description": "Everything under the earth!",
+  "skillmmo.skill.testing_skill.name": "Testing Skill",
+  "skillmmo.skill.testing_skill.description": "Testing some of the more interesting things..."
 }

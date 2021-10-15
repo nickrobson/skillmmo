@@ -1,7 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
@@ -54,8 +56,8 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
                 if (client.player == null) {
                     logger.warn("Client player is null on {}", S2C_PLAYER_XP);
                 } else {
-                    PlayerSkillManager.getInstance().setExperience(client.player, experience);
-                    PlayerSkillManager.getInstance().setAvailableSkillPoints(client.player, availableSkillPoints);
+                    PlayerExperienceManager.getInstance().setExperience(client.player, experience);
+                    PlayerSkillPointManager.getInstance().setAvailableSkillPoints(client.player, availableSkillPoints);
                 }
             });
         });

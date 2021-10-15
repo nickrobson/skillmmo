@@ -1,7 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -50,10 +52,10 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
     public static void sendPlayerXp(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
-        long experience = PlayerSkillManager.getInstance().getExperience(player);
+        long experience = PlayerExperienceManager.getInstance().getExperience(player);
         packetByteBuf.writeLong(experience);
 
-        int availableSkillPoints = PlayerSkillManager.getInstance().getAvailableSkillPoints(player);
+        int availableSkillPoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
         packetByteBuf.writeVarInt(availableSkillPoints);
 
         ServerPlayNetworking.send(player, S2C_PLAYER_XP, packetByteBuf);

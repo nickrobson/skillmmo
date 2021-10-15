@@ -5,7 +5,9 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevel;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.minecraft.command.argument.EntityArgumentType;
@@ -39,19 +41,19 @@ public class SkillsCommand {
         Set<Skill> skills = SkillManager.getInstance().getSkills();
 
         {
-            Text heading = new TranslatableText("command.skillmmo.skills.heading", skills.size())
+            Text heading = new TranslatableText("skillmmo.command.skills.heading", skills.size())
                     .setStyle(Style.EMPTY.withColor(Formatting.BLUE));
             ctx.getSource().sendFeedback(heading, false);
         }
 
-        if (player == null && ctx.getSource().getEntity() instanceof PlayerEntity) {
-            player = (PlayerEntity) ctx.getSource().getEntity();
+        if (player == null && ctx.getSource().getEntity() instanceof PlayerEntity sourcePlayer) {
+            player = sourcePlayer;
         }
 
         if (player == null) {
             for (Skill skill : skills) {
                 Text text = new TranslatableText(
-                        "command.skillmmo.skills.skill_line",
+                        "skillmmo.command.skills.skill_line",
                         skill.getNameText()
                 );
                 ctx.getSource().sendFeedback(text, false);
@@ -59,7 +61,7 @@ public class SkillsCommand {
         } else {
             for (Skill skill : skills) {
                 Text text = new TranslatableText(
-                        "command.skillmmo.skills.skill_line_with_level",
+                        "skillmmo.command.skills.skill_line_with_level",
                         skill.getNameText(),
                         PlayerSkillManager.getInstance().getSkillLevel(player, skill),
                         skill.getMaxLevel().getLevel()
@@ -67,30 +69,30 @@ public class SkillsCommand {
                 ctx.getSource().sendFeedback(text, false);
             }
 
-            int availablePoints = PlayerSkillManager.getInstance().getAvailableSkillPoints(player);
+            int availablePoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
             if (player == ctx.getSource().getEntity()) {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("command.skillmmo.skills.available_points_self", availablePoints),
+                        new TranslatableText("skillmmo.command.skills.available_points_self", availablePoints),
                         false
                 );
             } else {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("command.skillmmo.skills.available_points_other", player.getName(), availablePoints),
+                        new TranslatableText("skillmmo.command.skills.available_points_other", player.getName(), availablePoints),
                         false
                 );
             }
 
-            long experience = PlayerSkillManager.getInstance().getExperience(player);
+            long experience = PlayerExperienceManager.getInstance().getExperience(player);
             ExperienceLevel experienceLevel = ExperienceLevelEquation.getInstance().getExperienceLevel(experience);
 
             if (player == ctx.getSource().getEntity()) {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("command.skillmmo.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                        new TranslatableText("skillmmo.command.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             } else {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("command.skillmmo.skills.player_experience_other", player.getName(), experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                        new TranslatableText("skillmmo.command.skills.player_experience_other", player.getName(), experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             }

@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillUnlockManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -29,7 +29,7 @@ public class MixinPlayerInventory {
     )
     public <T extends LivingEntity> void redirectDamageArmor(ItemStack instance, int amount, T entity, Consumer<T> breakCallback) {
         // Multiply armor damage if the player is unfamiliar with the item
-        if (!PlayerSkillManager.getInstance().hasItemUnlock(player, instance)) {
+        if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, instance)) {
             amount *= SkillMmoConfig.getConfig().armorDamageMultiplier;
         }
         instance.damage(amount, entity, breakCallback);

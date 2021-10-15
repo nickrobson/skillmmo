@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillUnlockManager;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -15,7 +15,8 @@ public class MixinLivingEntity {
         // If the player is trying to use a totem but doesn't have the necessary level, pretend they're not using a totem!
         //noinspection ConstantConditions
         if ((Object) this instanceof PlayerEntity player
-                && !PlayerSkillManager.getInstance().hasItemUnlock(player, original)) {
+                && !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, original)) {
+            PlayerSkillUnlockManager.getInstance().reportLocked(player, original.getItem());
             return ItemStack.EMPTY;
         }
         return original;

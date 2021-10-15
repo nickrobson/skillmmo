@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -117,7 +117,8 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     )
     public void checkCanHarvest(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
-        if (!PlayerSkillManager.getInstance().hasBlockUnlock(player, state)) {
+        if (!PlayerSkillUnlockManager.getInstance().hasBlockUnlock(player, state)) {
+            PlayerSkillUnlockManager.getInstance().reportLocked(player, state.getBlock());
             cir.setReturnValue(false);
         }
     }
