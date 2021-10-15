@@ -11,15 +11,15 @@ import java.util.Objects;
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 class SkillUnlockCacheKey {
-    private final SkillLevelUnlockType unlockType;
+    private final UnlockType unlockType;
     private final Identifier unlockIdentifier;
 
-    SkillUnlockCacheKey(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
+    SkillUnlockCacheKey(UnlockType unlockType, Identifier unlockIdentifier) {
         this.unlockType = unlockType;
         this.unlockIdentifier = unlockIdentifier;
     }
 
-    public SkillLevelUnlockType getUnlockType() {
+    public UnlockType getUnlockType() {
         return unlockType;
     }
 

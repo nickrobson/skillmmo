@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
+import dev.nickrobson.minecraft.skillmmo.skill.UnlockType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
@@ -94,10 +94,10 @@ public class SkillLevelUnlocksData implements DataValidatable {
         }
     }
 
-    public Map<SkillLevelUnlockType, Set<Identifier>> getIdentifiers() {
+    public Map<UnlockType, Set<Identifier>> getIdentifiers() {
         return Map.of(
-                SkillLevelUnlockType.BLOCK, blockIds,
-                SkillLevelUnlockType.ITEM, itemIds
+                UnlockType.BLOCK, blockIds,
+                UnlockType.ITEM, itemIds
         );
     }
 

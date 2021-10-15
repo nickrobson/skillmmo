@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
+import dev.nickrobson.minecraft.skillmmo.skill.UnlockType;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
@@ -93,13 +93,13 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
 
             Map<Integer, SkillLevel> skillLevelsByLevel = new HashMap<>();
             unlocksDataByLevel.forEach((level, unlocksDataForSkillLevel) -> {
-                Map<SkillLevelUnlockType, Set<Identifier>> unlockIdentifiersByUnlockType = new HashMap<>();
+                Map<UnlockType, Set<Identifier>> unlockIdentifiersByUnlockType = new HashMap<>();
                 unlocksDataForSkillLevel.forEach(unlockData -> {
                     if (unlockData.replace) {
                         unlockIdentifiersByUnlockType.clear();
                     }
 
-                    Map<SkillLevelUnlockType, Set<Identifier>> levelUnlocks = unlockData.getIdentifiers();
+                    Map<UnlockType, Set<Identifier>> levelUnlocks = unlockData.getIdentifiers();
                     levelUnlocks.forEach((unlockType, identifiers) ->
                             unlockIdentifiersByUnlockType.compute(unlockType, (k, v) -> {
                                 if (v == null || unlockData.replace) {

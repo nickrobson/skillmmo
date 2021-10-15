@@ -16,7 +16,7 @@ public class MixinLivingEntity {
         //noinspection ConstantConditions
         if ((Object) this instanceof PlayerEntity player
                 && !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, original)) {
-            PlayerSkillUnlockManager.getInstance().reportLocked(player, original.getItem());
+            PlayerSkillUnlockManager.getInstance().reportItemUseLocked(player, original.getItem());
             return ItemStack.EMPTY;
         }
         return original;

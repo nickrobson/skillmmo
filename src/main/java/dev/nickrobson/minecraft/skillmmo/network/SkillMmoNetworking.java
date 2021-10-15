@@ -4,7 +4,7 @@ import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevelUnlockType;
+import dev.nickrobson.minecraft.skillmmo.skill.UnlockType;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
@@ -40,9 +40,9 @@ public interface SkillMmoNetworking {
 
     static SkillLevel readSkillLevel(Identifier skillId, @Nonnull PacketByteBuf packetByteBuf) {
         int level = packetByteBuf.readVarInt();
-        Map<SkillLevelUnlockType, Set<Identifier>> unlocks = packetByteBuf.readMap(
+        Map<UnlockType, Set<Identifier>> unlocks = packetByteBuf.readMap(
                 HashMap::new,
-                buf -> buf.readEnumConstant(SkillLevelUnlockType.class),
+                buf -> buf.readEnumConstant(UnlockType.class),
                 buf -> buf.readCollection(HashSet::new, PacketByteBuf::readIdentifier)
         );
 

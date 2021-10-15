@@ -46,13 +46,13 @@ public class PlayerSkillUnlockManager {
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!hasItemUnlock(player, itemStack)) {
-                reportLocked(player, itemStack.getItem());
+                reportItemUseLocked(player, itemStack.getItem());
                 return ActionResult.FAIL;
             }
 
             // If the block has a block entity, and the player doesn't have the necessary skill for the block, deny the interaction
             if (blockState.hasBlockEntity() && !hasBlockUnlock(player, blockState)) {
-                reportLocked(player, blockState.getBlock());
+                reportBlockInteractLocked(player, blockState.getBlock());
                 return ActionResult.FAIL;
             }
 
@@ -64,7 +64,7 @@ public class PlayerSkillUnlockManager {
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!hasItemUnlock(player, itemStack)) {
-                reportLocked(player, itemStack.getItem());
+                reportItemUseLocked(player, itemStack.getItem());
                 return TypedActionResult.fail(itemStack);
             }
 
@@ -76,13 +76,13 @@ public class PlayerSkillUnlockManager {
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack)) {
-                reportLocked(player, itemStack.getItem());
+                reportItemUseLocked(player, itemStack.getItem());
                 return ActionResult.FAIL;
             }
 
             // If the player doesn't have the necessary skill for the entity, deny the interaction
             if (!PlayerSkillUnlockManager.getInstance().hasEntityUnlock(player, entity)) {
-                reportLocked(player, entity);
+                reportEntityInteractLocked(player, entity);
                 return ActionResult.FAIL;
             }
 
@@ -98,7 +98,7 @@ public class PlayerSkillUnlockManager {
         Identifier blockIdentifier = Registry.BLOCK.getId(block);
         return PlayerSkillUnlockManager.getInstance().hasUnlock(
                 player,
-                SkillLevelUnlockType.BLOCK,
+                UnlockType.BLOCK,
                 blockIdentifier
         );
     }
@@ -115,7 +115,7 @@ public class PlayerSkillUnlockManager {
         Identifier itemIdentifier = Registry.ITEM.getId(itemStack.getItem());
         return PlayerSkillUnlockManager.getInstance().hasUnlock(
                 player,
-                SkillLevelUnlockType.ITEM,
+                UnlockType.ITEM,
                 itemIdentifier
         );
     }
@@ -124,12 +124,12 @@ public class PlayerSkillUnlockManager {
         Identifier entityIdentifier = Registry.ENTITY_TYPE.getId(entity.getType());
         return PlayerSkillUnlockManager.getInstance().hasUnlock(
                 player,
-                SkillLevelUnlockType.ENTITY,
+                UnlockType.ENTITY,
                 entityIdentifier
         );
     }
 
-    private boolean hasUnlock(@Nullable PlayerEntity player, @Nonnull SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
+    private boolean hasUnlock(@Nullable PlayerEntity player, @Nonnull UnlockType unlockType, Identifier unlockIdentifier) {
         if (player == null) {
             return false;
         }
@@ -153,31 +153,36 @@ public class PlayerSkillUnlockManager {
                 : skillLevelSet.stream().anyMatch(hasSkillLevel);
     }
 
-    public void reportLocked(@Nullable PlayerEntity player, @Nonnull Block block) {
+    public void reportBlockBreakLocked(@Nullable PlayerEntity player, @Nonnull Block block) {
         Identifier identifier = Registry.BLOCK.getId(block);
-        reportLocked(player, SkillLevelUnlockType.BLOCK, identifier, block);
+        reportInteractLocked(player, Interaction.BLOCK_BREAK, identifier, block);
     }
 
-    public void reportLocked(@Nullable PlayerEntity player, @Nonnull Item item) {
+    public void reportBlockInteractLocked(@Nullable PlayerEntity player, @Nonnull Block block) {
+        Identifier identifier = Registry.BLOCK.getId(block);
+        reportInteractLocked(player, Interaction.BLOCK_INTERACT, identifier, block);
+    }
+
+    public void reportItemUseLocked(@Nullable PlayerEntity player, @Nonnull Item item) {
         Identifier identifier = Registry.ITEM.getId(item);
-        reportLocked(player, SkillLevelUnlockType.ITEM, identifier, item);
+        reportInteractLocked(player, Interaction.ITEM_USE, identifier, item);
     }
 
-    public void reportLocked(@Nullable PlayerEntity player, @Nonnull Entity entity) {
+    public void reportEntityInteractLocked(@Nullable PlayerEntity player, @Nonnull Entity entity) {
         Identifier identifier = Registry.ENTITY_TYPE.getId(entity.getType());
-        reportLocked(player, SkillLevelUnlockType.ENTITY, identifier, entity);
+        reportInteractLocked(player, Interaction.ENTITY_INTERACT, identifier, entity);
     }
 
-    private void reportLocked(
+    private void reportInteractLocked(
             @Nullable PlayerEntity player,
-            @Nonnull SkillLevelUnlockType unlockType,
+            @Nonnull Interaction interaction,
             @Nonnull Identifier identifier,
             @Nullable Object maybeSkillDenyCustomizable) {
         if (player == null) {
             return;
         }
 
-        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlockType, identifier);
+        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(interaction.unlockType, identifier);
         if (skillLevelSet.isEmpty()) {
             return;
         }
@@ -186,12 +191,14 @@ public class PlayerSkillUnlockManager {
         SkillLevel skillLevel = getClosestLevel(player, skillLevelSet);
         int playerLevel = PlayerSkillManager.getInstance().getSkillLevel(player, skillLevel.getSkill());
 
-        Text text = getDenyText(skillLevel, unlockType, identifier);
-        player.sendMessage(text, true);
-
+        Text text = null;
         if (maybeSkillDenyCustomizable instanceof SkillDenyCustomizable skillDenyCustomizable) {
-            skillDenyCustomizable.onDeny(player, skillLevel, playerLevel);
+            text = skillDenyCustomizable.onDeny(player, skillLevel, playerLevel);
         }
+        if (text == null) {
+            text = getDenyText(skillLevel, interaction, identifier);
+        }
+        player.sendMessage(text, true);
     }
 
     private SkillLevel getClosestLevel(PlayerEntity player, Collection<SkillLevel> skillLevelSet) {
@@ -205,23 +212,37 @@ public class PlayerSkillUnlockManager {
                 .orElse(null);
     }
 
-    private Text getDenyText(SkillLevel skillLevel, SkillLevelUnlockType unlockType, Identifier identifier) {
+    private Text getDenyText(SkillLevel skillLevel, Interaction interaction, Identifier identifier) {
         Text skillName = skillLevel.getSkill().getNameText();
         int level = skillLevel.getLevel();
-        Text thingText = getThingText(unlockType, identifier);
+        Text thingName = getThingName(interaction.unlockType, identifier);
 
-        return switch (unlockType) {
-            case BLOCK -> new TranslatableText("skillmmo.feedback.deny.block", skillName, level, thingText);
-            case ITEM -> new TranslatableText("skillmmo.feedback.deny.item", skillName, level, thingText);
-            case ENTITY -> new TranslatableText("skillmmo.feedback.deny.entity", skillName, level, thingText);
+        return switch (interaction) {
+            case BLOCK_BREAK -> new TranslatableText("skillmmo.feedback.deny.block.break", skillName, level, thingName);
+            case BLOCK_INTERACT -> new TranslatableText("skillmmo.feedback.deny.block.interact", skillName, level, thingName);
+            case ITEM_USE -> new TranslatableText("skillmmo.feedback.deny.item.use", skillName, level, thingName);
+            case ENTITY_INTERACT -> new TranslatableText("skillmmo.feedback.deny.entity.interact", skillName, level, thingName);
         };
     }
 
-    private Text getThingText(SkillLevelUnlockType unlockType, Identifier identifier) {
+    private Text getThingName(UnlockType unlockType, Identifier identifier) {
         return switch (unlockType) {
             case BLOCK -> Registry.BLOCK.get(identifier).getName();
             case ITEM -> Registry.ITEM.get(identifier).getName();
             case ENTITY -> Registry.ENTITY_TYPE.get(identifier).getName();
         };
+    }
+
+    public enum Interaction {
+        BLOCK_BREAK(UnlockType.BLOCK),
+        BLOCK_INTERACT(UnlockType.BLOCK),
+        ITEM_USE(UnlockType.ITEM),
+        ENTITY_INTERACT(UnlockType.ENTITY);
+
+        public final UnlockType unlockType;
+
+        Interaction(UnlockType unlockType) {
+            this.unlockType = unlockType;
+        }
     }
 }

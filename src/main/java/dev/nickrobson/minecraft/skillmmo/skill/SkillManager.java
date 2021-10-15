@@ -62,11 +62,11 @@ public class SkillManager {
         return Optional.ofNullable(this.skillMap.get(skillId));
     }
 
-    public Set<Skill> getSkillsAffecting(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
+    public Set<Skill> getSkillsAffecting(UnlockType unlockType, Identifier unlockIdentifier) {
         return this.skillsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockIdentifier));
     }
 
-    public Set<SkillLevel> getSkillLevelsAffecting(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
+    public Set<SkillLevel> getSkillLevelsAffecting(UnlockType unlockType, Identifier unlockIdentifier) {
         Set<Skill> skills = this.getSkillsAffecting(unlockType, unlockIdentifier);
         return skills.stream()
                 .flatMap(skill -> skill.getSkillLevelAffecting(unlockType, unlockIdentifier).stream())

@@ -128,7 +128,7 @@ public class Skill {
         return Optional.ofNullable(skillLevelMap.get(skillLevel));
     }
 
-    public Optional<SkillLevel> getSkillLevelAffecting(SkillLevelUnlockType unlockType, Identifier unlockIdentifier) {
+    public Optional<SkillLevel> getSkillLevelAffecting(UnlockType unlockType, Identifier unlockIdentifier) {
         return levelsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockIdentifier));
     }
 }

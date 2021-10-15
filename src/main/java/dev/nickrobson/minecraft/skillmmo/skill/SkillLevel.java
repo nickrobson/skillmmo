@@ -13,12 +13,12 @@ public class SkillLevel {
 
     private final Identifier skillId;
     private final int level;
-    private final Map<SkillLevelUnlockType, Set<Identifier>> unlocks;
+    private final Map<UnlockType, Set<Identifier>> unlocks;
 
     /** @see #initSkill(Skill)  */
     private Skill skill;
 
-    public SkillLevel(Identifier skillId, int level, Map<SkillLevelUnlockType, Set<Identifier>> unlocks) {
+    public SkillLevel(Identifier skillId, int level, Map<UnlockType, Set<Identifier>> unlocks) {
         this.skillId = skillId;
         this.level = level;
         this.unlocks = unlocks;
@@ -40,11 +40,11 @@ public class SkillLevel {
         return level;
     }
 
-    public Map<SkillLevelUnlockType, Set<Identifier>> getUnlocks() {
+    public Map<UnlockType, Set<Identifier>> getUnlocks() {
         return Collections.unmodifiableMap(unlocks);
     }
 
-    public Set<Identifier> getUnlocks(SkillLevelUnlockType unlockType) {
+    public Set<Identifier> getUnlocks(UnlockType unlockType) {
         return unlocks.getOrDefault(unlockType, Collections.emptySet());
     }
 }

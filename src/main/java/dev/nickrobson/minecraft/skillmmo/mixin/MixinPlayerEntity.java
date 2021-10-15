@@ -118,7 +118,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     public void checkCanHarvest(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
         if (!PlayerSkillUnlockManager.getInstance().hasBlockUnlock(player, state)) {
-            PlayerSkillUnlockManager.getInstance().reportLocked(player, state.getBlock());
+            PlayerSkillUnlockManager.getInstance().reportBlockBreakLocked(player, state.getBlock());
             cir.setReturnValue(false);
         }
     }

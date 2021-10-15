@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-public enum SkillLevelUnlockType {
+public enum UnlockType {
     BLOCK,
     ITEM,
     ENTITY
