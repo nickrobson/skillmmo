@@ -22,6 +22,9 @@ public class SkillMmoConfig implements ConfigData {
     @Comment("If an block/item/etc. is locked by multiple skills, should the player need to unlock all of them or just one?")
     public boolean requireAllLockingSkillsToBeUnlocked = false;
 
+    @Comment("Amount to multiply armor damage by when the player doesn't know how to use a certain type of armor")
+    public float armorDamageMultiplier = 2.5F;
+
     @ConfigEntry.Category("experience")
     @Comment("Base cost for an experience level. Experience is calculated as (base + multiplier * ((level - 1) ^ exponent))")
     public long expBaseCost = 100;

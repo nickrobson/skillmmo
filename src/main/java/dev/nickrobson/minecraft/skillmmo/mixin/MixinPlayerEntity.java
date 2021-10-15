@@ -139,8 +139,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
         }
     }
 
-    // Prevent equipping a given armour item
-    // TODO: check this works or if i need a mixin for equipStack
+    // Prevent equipping a given armour item from a dispenser (or similar)
     @Inject(
             method = "canEquip",
             at = @At("HEAD"),
