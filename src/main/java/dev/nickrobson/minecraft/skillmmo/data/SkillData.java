@@ -6,15 +6,12 @@ import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import java.util.regex.Pattern;
 
 /**
  * Data shape for a skill in a datapack
  */
 @FieldsAreNonnullByDefault
 public class SkillData implements DataValidatable {
-    private static final Pattern ID_REGEX = Pattern.compile("[a-z0-9_]+:[a-z0-9_]+");
-
     /**
      * Whether this skill definition should replace an existing skill with the same ID
      */

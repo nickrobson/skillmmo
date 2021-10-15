@@ -1,0 +1,8 @@
+{
+  "skill": "skillmmo:testing_skill",
+  "level": 1,
+  "blocks": [
+    "minecraft:chest",
+    "minecraft:crafting_table"
+  ]
+}

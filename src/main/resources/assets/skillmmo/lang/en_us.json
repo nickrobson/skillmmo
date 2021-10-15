@@ -1,5 +1,6 @@
 {
   "skill.skillmmo.mining": "Mining",
+  "skill.skillmmo.testing_skill": "Testing Skill",
 
   "command.skillmmo.skills.heading": "Skills (%d)",
   "command.skillmmo.skills.skill_line": "- %s",

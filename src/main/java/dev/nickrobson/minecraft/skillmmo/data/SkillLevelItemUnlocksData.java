@@ -24,6 +24,7 @@ public class SkillLevelItemUnlocksData extends AbstractSkillLevelUnlocksData {
     public Set<String> rawItemIds;
 
     public transient Set<Identifier> itemIds;
+    // TODO: add support for tags?
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {

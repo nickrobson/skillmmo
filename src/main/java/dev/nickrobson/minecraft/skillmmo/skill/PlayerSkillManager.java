@@ -4,15 +4,21 @@ import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 import net.minecraft.util.registry.Registry;
 
@@ -37,6 +43,50 @@ public class PlayerSkillManager {
             SkillMmoPlayerDataHolder newPlayerDataHolder = (SkillMmoPlayerDataHolder) newPlayer;
             newPlayerDataHolder.setSkillMmoPlayerData(oldPlayerDataHolder.getSkillMmoPlayerData().clone());
             SkillMmoServerNetworking.sendPlayerData(newPlayer);
+        });
+
+        UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
+            BlockState blockState = world.getBlockState(hitResult.getBlockPos());
+            ItemStack itemStack = player.getStackInHand(hand);
+
+            // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
+            if (!PlayerSkillManager.getInstance().hasItemUnlock(player, itemStack)) {
+                return ActionResult.FAIL;
+            }
+
+            // If the block has a block entity, and the player doesn't have the necessary skill for the block, deny the interaction
+            if (blockState.hasBlockEntity() && !PlayerSkillManager.getInstance().hasBlockUnlock(player, blockState)) {
+                return ActionResult.FAIL;
+            }
+
+            return ActionResult.PASS;
+        });
+
+        UseItemCallback.EVENT.register((player, world, hand) -> {
+            ItemStack itemStack = player.getStackInHand(hand);
+
+            // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
+            if (!PlayerSkillManager.getInstance().hasItemUnlock(player, itemStack)) {
+                return TypedActionResult.fail(itemStack);
+            }
+
+            return TypedActionResult.pass(itemStack);
+        });
+
+        UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
+            ItemStack itemStack = player.getStackInHand(hand);
+
+            // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
+            if (!PlayerSkillManager.getInstance().hasItemUnlock(player, itemStack)) {
+                return ActionResult.FAIL;
+            }
+
+            // If the player doesn't have the necessary skill for the entity, deny the interaction
+            if (!PlayerSkillManager.getInstance().hasEntityUnlock(player, entity)) {
+                return ActionResult.FAIL;
+            }
+
+            return ActionResult.PASS;
         });
     }
 
@@ -168,6 +218,15 @@ public class PlayerSkillManager {
                 player,
                 SkillLevelUnlockType.ITEM,
                 itemIdentifier
+        );
+    }
+
+    public boolean hasEntityUnlock(@Nullable PlayerEntity player, Entity entity) {
+        Identifier entityIdentifier = Registry.ENTITY_TYPE.getId(entity.getType());
+        return PlayerSkillManager.getInstance().hasUnlock(
+                player,
+                SkillLevelUnlockType.ENTITY,
+                entityIdentifier
         );
     }
 }

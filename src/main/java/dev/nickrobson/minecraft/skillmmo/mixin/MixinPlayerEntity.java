@@ -126,7 +126,6 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     }
 
     // This prevents blocks from dropping items when you haven't unlocked them
-    // TODO: check if chests etc. will drop their items or if i need another mixin...
     @Inject(
             method = "canHarvest",
             at = @At("HEAD"),
