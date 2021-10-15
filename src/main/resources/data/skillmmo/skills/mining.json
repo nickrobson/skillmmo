@@ -2,5 +2,6 @@
   "replace": false,
   "enabled": true,
   "id": "skillmmo:mining",
-  "nameKey": "skill.skillmmo.mining"
+  "nameKey": "skill.skillmmo.mining.name",
+  "descriptionKey": "skill.skillmmo.mining.description"
 }

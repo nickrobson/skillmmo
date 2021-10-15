@@ -1,6 +1,10 @@
 {
   "skill": "skillmmo:mining",
   "level": 2,
+  "blocks": [
+    "minecraft:iron_ore",
+    "minecraft:lapis_ore"
+  ],
   "items": [
     "minecraft:stone_pickaxe"
   ]

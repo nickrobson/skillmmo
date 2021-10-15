@@ -2,5 +2,6 @@
   "replace": false,
   "enabled": true,
   "id": "skillmmo:testing_skill",
-  "nameKey": "skill.skillmmo.testing_skill"
+  "nameKey": "skill.skillmmo.testing_skill.name",
+  "descriptionKey": "skill.skillmmo.testing_skill.description"
 }

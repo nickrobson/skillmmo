@@ -7,22 +7,21 @@ import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Generic data shape for unlocks for a skill level in a datapack
- *
- * @see SkillLevelBlockUnlocksData
+ * Data shape for a skill level in a datapack
  */
 @FieldsAreNonnullByDefault
-public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
+public class SkillLevelUnlocksData implements DataValidatable {
     /**
      * Whether this unlocks definition replaces an existing set of unlocks of this type for the same skill level
      */
     @SerializedName("replace")
-    public boolean replace = true;
+    public boolean replace = false;
 
     /**
      * The ID of the skill, e.g. "mining"
@@ -40,6 +39,25 @@ public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
     @SerializedName("level")
     public int level;
 
+    /**
+     * The blocks that are unlocked when this skill level is acquired
+     * This should be a list of block IDs
+     */
+    @SerializedName("blocks")
+    public Set<String> rawBlockIds;
+
+    public transient Set<Identifier> blockIds;
+
+    /**
+     * The items that are unlocked when this skill level is acquired
+     * This should be a list of item IDs
+     */
+    @SerializedName("items")
+    public Set<String> rawItemIds;
+
+    public transient Set<Identifier> itemIds;
+    // TODO: add support for tags?
+
     @Override
     public void validate(@Nonnull Collection<String> errors) {
         if (rawSkillId == null) {
@@ -54,23 +72,37 @@ public abstract class AbstractSkillLevelUnlocksData implements DataValidatable {
         if (level < 1) {
             errors.add(String.format("Level is invalid: %d", level));
         }
+
+        if (rawBlockIds == null && rawItemIds == null) {
+            errors.add("Neither 'blocks' nor 'items' are defined");
+        }
+
+        if (rawBlockIds != null) {
+            rawBlockIds.removeIf(Objects::isNull);
+            blockIds = parseIdentifiers(rawBlockIds, errors);
+            if (rawBlockIds.isEmpty()) {
+                errors.add("No blocks have been set");
+            }
+        }
+
+        if (rawItemIds != null) {
+            rawItemIds.removeIf(Objects::isNull);
+            itemIds = parseIdentifiers(rawItemIds, errors);
+            if (itemIds.isEmpty()) {
+                errors.add("No items have been set");
+            }
+        }
     }
 
-    /**
-     * Gets the type of unlock this data represents
-     * @return the unlock type
-     */
-    public abstract SkillLevelUnlockType getUnlockType();
-
-    /**
-     * Gets the list of unlocks added by this list, as raw strings
-     * Each item in the list should be in the identifier form, e.g. minecraft:stone
-     * @return the set of raw unlock identifiers
-     */
-    public abstract Set<Identifier> getIdentifiers();
+    public Map<SkillLevelUnlockType, Set<Identifier>> getIdentifiers() {
+        return Map.of(
+                SkillLevelUnlockType.BLOCK, blockIds,
+                SkillLevelUnlockType.ITEM, itemIds
+        );
+    }
 
     @Nonnull
-    protected final Set<Identifier> parseIdentifiers(@Nonnull Set<String> ids, @Nonnull Collection<String> errors) {
+    private static Set<Identifier> parseIdentifiers(@Nonnull Set<String> ids, @Nonnull Collection<String> errors) {
         return ids.stream()
                 .map(id -> {
                     Identifier identifier = Identifier.tryParse(id);

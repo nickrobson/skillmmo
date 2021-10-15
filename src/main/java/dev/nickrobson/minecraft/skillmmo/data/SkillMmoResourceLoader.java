@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadListener {
     private static final Logger logger = LoggerFactory.getLogger(SkillMmoResourceLoader.class);
@@ -38,11 +37,9 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
     @Override
     public void reload(ResourceManager manager) {
         List<SkillData> skillsData = loadResources(manager, SkillMmoDataType.SKILLS);
-        List<SkillLevelBlockUnlocksData> blockUnlocksData = loadResources(manager, SkillMmoDataType.BLOCKS);
-        List<SkillLevelItemUnlocksData> itemUnlocksData = loadResources(manager, SkillMmoDataType.ITEMS);
-        // TODO - entities
+        List<SkillLevelUnlocksData> skillUnlocksData = loadResources(manager, SkillMmoDataType.SKILL_UNLOCKS);
 
-        Map<Identifier, Set<SkillLevel>> skillLevelsBySkill = loadSkillLevels(blockUnlocksData, itemUnlocksData);
+        Map<Identifier, Set<SkillLevel>> skillLevelsBySkill = loadSkillLevels(skillUnlocksData);
 
         Map<Identifier, SkillData> skillDataBySkillId = new HashMap<>();
         skillsData.forEach((skillData) ->
@@ -50,14 +47,17 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                     if (v == null || skillData.replace) {
                         return skillData;
                     }
-                    v.replace = false;
-                    v.nameKey = skillData.nameKey;
-                    v.enabled = skillData.enabled;
+                    if (skillData.nameKey != null) {
+                        v.nameKey = skillData.nameKey;
+                    }
+                    if (skillData.enabled != null) {
+                        v.enabled = skillData.enabled;
+                    }
                     return v;
                 }));
         Set<Skill> skills = skillDataBySkillId.values()
                 .stream()
-                .filter(skillData -> skillData.enabled)
+                .filter(skillData -> skillData.enabled == null || skillData.enabled)
                 .map(skillData -> {
                     Set<SkillLevel> skillLevels = skillLevelsBySkill.get(skillData.id);
                     if (skillLevels == null || skillLevels.isEmpty()) {
@@ -76,39 +76,44 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
         SkillManager.getInstance().initSkills(skills);
     }
 
-    private Map<Identifier, Set<SkillLevel>> loadSkillLevels(List<SkillLevelBlockUnlocksData> blockUnlocksData, List<SkillLevelItemUnlocksData> itemUnlocksData) {
-        Map<Identifier, List<AbstractSkillLevelUnlocksData>> unlocksDataBySkillId = Stream
-                .concat(blockUnlocksData.stream(), itemUnlocksData.stream())
+    private Map<Identifier, Set<SkillLevel>> loadSkillLevels(List<SkillLevelUnlocksData> skillLevelUnlocksData) {
+        Map<Identifier, List<SkillLevelUnlocksData>> unlocksDataBySkillId = skillLevelUnlocksData
+                .stream()
                 .collect(Collectors.groupingBy(data -> data.skillId, Collectors.toList()));
 
         Map<Identifier, Set<SkillLevel>> skillLevelsBySkillId = new HashMap<>();
         unlocksDataBySkillId.forEach((skillId, unlocksDataForSkill) -> {
-            Map<Integer, List<AbstractSkillLevelUnlocksData>> unlocksDataByLevel = unlocksDataForSkill
+            Map<Integer, List<SkillLevelUnlocksData>> unlocksDataByLevel = unlocksDataForSkill
                     .stream()
                     .collect(Collectors.groupingBy(data -> data.level, Collectors.toList()));
 
             Map<Integer, SkillLevel> skillLevelsByLevel = new HashMap<>();
             unlocksDataByLevel.forEach((level, unlocksDataForSkillLevel) -> {
                 Map<SkillLevelUnlockType, Set<Identifier>> unlockIdentifiersByUnlockType = new HashMap<>();
-                unlocksDataForSkillLevel.forEach(unlockData ->
-                        unlockIdentifiersByUnlockType.compute(unlockData.getUnlockType(), (k, v) -> {
-                            if (v == null || unlockData.replace) {
-                                v = new HashSet<>();
-                            }
-                            Set<Identifier> identifiers = unlockData.getIdentifiers();
-                            v.addAll(identifiers);
-                            return v;
-                        })
-                );
+                unlocksDataForSkillLevel.forEach(unlockData -> {
+                    if (unlockData.replace) {
+                        unlockIdentifiersByUnlockType.clear();
+                    }
+
+                    Map<SkillLevelUnlockType, Set<Identifier>> levelUnlocks = unlockData.getIdentifiers();
+                    levelUnlocks.forEach((unlockType, identifiers) ->
+                            unlockIdentifiersByUnlockType.compute(unlockType, (k, v) -> {
+                                if (v == null || unlockData.replace) {
+                                    v = new HashSet<>();
+                                }
+                                v.addAll(identifiers);
+                                return v;
+                            }));
+                });
 
                 skillLevelsByLevel.put(
-                        level,
-                        new SkillLevel(skillId, level, unlockIdentifiersByUnlockType)
+                        level, new SkillLevel(skillId, level, unlockIdentifiersByUnlockType)
                 );
             });
 
             skillLevelsBySkillId.put(skillId, new HashSet<>(skillLevelsByLevel.values()));
         });
+
         return skillLevelsBySkillId;
     }
 

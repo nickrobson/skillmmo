@@ -2,8 +2,7 @@ package dev.nickrobson.minecraft.skillmmo.data;
 
 public final class SkillMmoDataType<T extends DataValidatable> {
     public static final SkillMmoDataType<SkillData> SKILLS = new SkillMmoDataType<>("skills", SkillData.class);
-    public static final SkillMmoDataType<SkillLevelBlockUnlocksData> BLOCKS = new SkillMmoDataType<>("skillunlocks/blocks", SkillLevelBlockUnlocksData.class);
-    public static final SkillMmoDataType<SkillLevelItemUnlocksData> ITEMS = new SkillMmoDataType<>("skillunlocks/items", SkillLevelItemUnlocksData.class);
+    public static final SkillMmoDataType<SkillLevelUnlocksData> SKILL_UNLOCKS = new SkillMmoDataType<>("skillunlocks", SkillLevelUnlocksData.class);
 
     private final String resourceCategory;
     private final Class<T> resourceClass;

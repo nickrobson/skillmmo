@@ -16,7 +16,13 @@ public class SkillData implements DataValidatable {
      * Whether this skill definition should replace an existing skill with the same ID
      */
     @SerializedName("replace")
-    public boolean replace = true;
+    public boolean replace = false;
+
+    /**
+     * Whether this skill is enabled
+     */
+    @SerializedName("enabled")
+    public Boolean enabled = null;
 
     /**
      * The ID of this skill, e.g. "mining"
@@ -28,16 +34,16 @@ public class SkillData implements DataValidatable {
     public transient Identifier id;
 
     /**
-     * Whether this skill is enabled
-     */
-    @SerializedName("enabled")
-    public boolean enabled = true;
-
-    /**
      * Translation key for this skill's name
      */
     @SerializedName("nameKey")
     public String nameKey;
+
+    /**
+     * Translation key for this skill's description
+     */
+    @SerializedName("descriptionKey")
+    public String descriptionKey;
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
@@ -52,6 +58,10 @@ public class SkillData implements DataValidatable {
 
         if (nameKey == null) {
             errors.add("'nameKey' is not defined");
+        }
+
+        if (descriptionKey == null) {
+            errors.add("'descriptionKey' is not defined");
         }
     }
 }

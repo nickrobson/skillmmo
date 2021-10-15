@@ -6,5 +6,8 @@
     "minecraft:diamond_ore",
     "minecraft:emerald_ore",
     "minecraft:redstone_ore"
+  ],
+  "items": [
+    "minecraft:iron_pickaxe"
   ]
 }

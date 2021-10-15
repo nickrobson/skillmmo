@@ -16,7 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerManager.class)
 public abstract class MixinPlayerManager {
-    @Shadow public abstract void addToOperators(GameProfile profile);
+    @Shadow
+    public abstract void addToOperators(GameProfile profile);
 
     @Redirect(
             method = "onPlayerConnect",

@@ -4,5 +4,8 @@
   "blocks": [
     "minecraft:stone",
     "minecraft:coal_ore"
+  ],
+  "items": [
+    "minecraft:wooden_pickaxe"
   ]
 }
