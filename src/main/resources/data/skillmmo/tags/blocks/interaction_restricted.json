@@ -1,0 +1,59 @@
+{
+  "replace": false,
+  "values": [
+    "#shulker_boxes",
+    "minecraft:barrel",
+    "minecraft:chest",
+    "minecraft:ender_chest",
+    "minecraft:trapped_chest",
+
+    "minecraft:blast_furnace",
+    "minecraft:furnace",
+    "minecraft:smoker",
+
+    "minecraft:dispenser",
+    "minecraft:dropper",
+
+    "minecraft:crafting_table",
+
+    "#cauldrons",
+    "minecraft:beacon",
+    "minecraft:brewing_stand",
+    "minecraft:enchanting_table",
+
+    "minecraft:dragon_egg",
+    "minecraft:end_portal_frame",
+    "minecraft:lodestone",
+    "minecraft:respawn_anchor",
+
+    "#buttons",
+    "minecraft:comparator",
+    "minecraft:daylight_detector",
+    "minecraft:jukebox",
+    "minecraft:lever",
+    "minecraft:repeater",
+
+    "#campfires",
+    "#candles",
+    "#candle_cakes",
+    "minecraft:cake",
+
+    "#beds",
+    "minecraft:flower_pot",
+    "minecraft:note_block",
+    "minecraft:scaffolding",
+
+    "minecraft:beehive",
+    "minecraft:bee_nest",
+
+    "minecraft:bell",
+    "minecraft:cartography_table",
+    "minecraft:composter",
+    "minecraft:fletching_table",
+    "minecraft:grindstone",
+    "minecraft:lectern",
+    "minecraft:loom",
+    "minecraft:smithing_table",
+    "minecraft:stonecutter"
+  ]
+}

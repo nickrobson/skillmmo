@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
@@ -19,7 +20,6 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 import net.minecraft.util.registry.Registry;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -50,8 +50,23 @@ public class PlayerSkillUnlockManager {
                 return ActionResult.FAIL;
             }
 
-            // If the block has a block entity, and the player doesn't have the necessary skill for the block, deny the interaction
-            if (blockState.hasBlockEntity() && !hasBlockUnlock(player, blockState)) {
+            // If the player doesn't have the necessary skill for the block, check what the player is trying to do
+            if (!hasBlockUnlock(player, blockState)) {
+                if (itemStack.getItem() instanceof BlockItem) {
+                    // If the player is trying to place a block against a block, allow the interaction
+                    if (player.shouldCancelInteraction()) {
+                        return ActionResult.PASS;
+                    }
+
+                    // Deny interaction with blocks that have been marked as interaction-restricted
+                    if (blockState.isIn(SkillMmoTags.interactionRestrictedBlocks)) {
+                        reportBlockInteractLocked(player, blockState.getBlock());
+                        return ActionResult.FAIL;
+                    }
+
+                    return ActionResult.PASS;
+                }
+
                 reportBlockInteractLocked(player, blockState.getBlock());
                 return ActionResult.FAIL;
             }
@@ -129,7 +144,7 @@ public class PlayerSkillUnlockManager {
         );
     }
 
-    private boolean hasUnlock(@Nullable PlayerEntity player, @Nonnull UnlockType unlockType, Identifier unlockIdentifier) {
+    private boolean hasUnlock(@Nullable PlayerEntity player, UnlockType unlockType, Identifier unlockIdentifier) {
         if (player == null) {
             return false;
         }
@@ -153,30 +168,30 @@ public class PlayerSkillUnlockManager {
                 : skillLevelSet.stream().anyMatch(hasSkillLevel);
     }
 
-    public void reportBlockBreakLocked(@Nullable PlayerEntity player, @Nonnull Block block) {
+    public void reportBlockBreakLocked(@Nullable PlayerEntity player, Block block) {
         Identifier identifier = Registry.BLOCK.getId(block);
         reportInteractLocked(player, Interaction.BLOCK_BREAK, identifier, block);
     }
 
-    public void reportBlockInteractLocked(@Nullable PlayerEntity player, @Nonnull Block block) {
+    public void reportBlockInteractLocked(@Nullable PlayerEntity player, Block block) {
         Identifier identifier = Registry.BLOCK.getId(block);
         reportInteractLocked(player, Interaction.BLOCK_INTERACT, identifier, block);
     }
 
-    public void reportItemUseLocked(@Nullable PlayerEntity player, @Nonnull Item item) {
+    public void reportItemUseLocked(@Nullable PlayerEntity player, Item item) {
         Identifier identifier = Registry.ITEM.getId(item);
         reportInteractLocked(player, Interaction.ITEM_USE, identifier, item);
     }
 
-    public void reportEntityInteractLocked(@Nullable PlayerEntity player, @Nonnull Entity entity) {
+    public void reportEntityInteractLocked(@Nullable PlayerEntity player, Entity entity) {
         Identifier identifier = Registry.ENTITY_TYPE.getId(entity.getType());
         reportInteractLocked(player, Interaction.ENTITY_INTERACT, identifier, entity);
     }
 
     private void reportInteractLocked(
             @Nullable PlayerEntity player,
-            @Nonnull Interaction interaction,
-            @Nonnull Identifier identifier,
+            Interaction interaction,
+            Identifier identifier,
             @Nullable Object maybeSkillDenyCustomizable) {
         if (player == null) {
             return;
