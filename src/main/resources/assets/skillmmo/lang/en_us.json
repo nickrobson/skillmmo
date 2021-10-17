@@ -13,7 +13,7 @@
   "skillmmo.command.skill.player_is_now_level": "%s is now level %d in %s",
 
   "skillmmo.feedback.deny.block.break": "You need %s %d to break %s",
-  "skillmmo.feedback.deny.block.interact": "You need %s %d to interact with a %s",
+  "skillmmo.feedback.deny.block.interact": "You need %s %d to use a %s",
   "skillmmo.feedback.deny.item.use": "You need %s %d to use a %s",
   "skillmmo.feedback.deny.entity.interact": "You need %s %d to interact with a %s",
   "skillmmo.feedback.deny.villager.interact": "You need %s %d to trade with a Villager",

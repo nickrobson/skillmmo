@@ -11,9 +11,6 @@
     "minecraft:furnace",
     "minecraft:smoker",
 
-    "minecraft:dispenser",
-    "minecraft:dropper",
-
     "minecraft:crafting_table",
 
     "#cauldrons",
@@ -29,6 +26,8 @@
     "#buttons",
     "minecraft:comparator",
     "minecraft:daylight_detector",
+    "minecraft:dispenser",
+    "minecraft:dropper",
     "minecraft:jukebox",
     "minecraft:lever",
     "minecraft:repeater",
