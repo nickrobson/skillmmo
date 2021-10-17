@@ -44,7 +44,15 @@ public class PlayerSkillUnlockManager {
             BlockState blockState = world.getBlockState(hitResult.getBlockPos());
             ItemStack itemStack = player.getStackInHand(hand);
 
-            // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
+            // If the player doesn't have the necessary skill for the item they're holding, deny the interaction.
+            // This isn't the most correct check for this, since there's no reason why you shouldn't able to
+            //     right-click stone with an iron axe, but it's one of those things where it's incredibly difficult
+            //     to get this right due to all the quirks around shift-right-click, interactable items,
+            //     tools (e.g. stripping logs, making paths, and using a shield), etc., and it'd probably require
+            //     implementing fake player/world interactions to create a truly correct solution, so... doing it
+            //     like this is fine. In theory, players probably won't be able to acquire the locked tools anyway,
+            //     unless they find them in chests, so this is the lesser of the two evils between
+            //     blocking everything (this solution) and aiming for perfect correctness with weird edge cases.
             if (!hasItemUnlock(player, itemStack)) {
                 reportItemUseLocked(player, itemStack.getItem());
                 return ActionResult.FAIL;
