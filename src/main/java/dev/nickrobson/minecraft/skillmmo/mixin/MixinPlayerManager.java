@@ -23,7 +23,7 @@ public abstract class MixinPlayerManager {
             method = "onPlayerConnect",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;loadPlayerData(Lnet/minecraft/server/network/ServerPlayerEntity;)Lnet/minecraft/nbt/NbtCompound;")
     )
-    public NbtCompound loadPlayerData(PlayerManager playerManager, ServerPlayerEntity player) {
+    public NbtCompound skillMmo$loadPlayerData(PlayerManager playerManager, ServerPlayerEntity player) {
         NbtCompound nbt = playerManager.loadPlayerData(player);
         if (nbt == null) {
             // This is the first time the player has joined the server,
@@ -39,7 +39,7 @@ public abstract class MixinPlayerManager {
             method = "onPlayerConnect",
             at = @At("TAIL")
     )
-    public void onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
+    public void skillMmo$onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
         SkillMmoServerNetworking.sendGenericData(player);
         SkillMmoServerNetworking.sendPlayerData(player);
 

@@ -1,11 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -24,17 +25,28 @@ public class PlayerExperienceManager {
         return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getExperience();
     }
 
-    public void setExperience(ClientPlayerEntity player, long experience) {
+    public void setExperience(PlayerEntity player, long experience) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         skillMmoPlayerDataHolder.getSkillMmoPlayerData().setExperience(experience);
     }
 
     public void giveExperience(ServerPlayerEntity player, long experience) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        skillMmoPlayerDataHolder.getSkillMmoPlayerData().addExperience(experience);
+        SkillMmoPlayerDataHolder.SkillMmoPlayerData playerData = skillMmoPlayerDataHolder.getSkillMmoPlayerData();
+        long oldExperience = playerData.getExperience();
+        long newExperience = playerData.addExperience(experience);
+
+        int oldLevel = ExperienceLevelEquation.getInstance().getExperienceLevel(oldExperience).level();
+        int newLevel = ExperienceLevelEquation.getInstance().getExperienceLevel(newExperience).level();
+
+        if (oldLevel < newLevel) {
+            int availableSkillPoints = playerData.addAvailableSkillPoints(newLevel - oldLevel);
+
+            player.sendMessage(new TranslatableText("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
+        }
 
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
-            SkillMmoServerNetworking.sendPlayerXp(player);
+            SkillMmoServerNetworking.sendPlayerXpInfo(player);
         }
     }
 }

@@ -49,8 +49,7 @@ public class SkillArgumentType implements ArgumentType<Skill> {
                 .map(Skill::getId)
                 .map(Identifier::toString)
                 .sorted()
-                .toList()
-                .subList(0, 2);
+                .toList();
     }
 
     public static class Serializer extends ConstantArgumentSerializer<SkillArgumentType> {

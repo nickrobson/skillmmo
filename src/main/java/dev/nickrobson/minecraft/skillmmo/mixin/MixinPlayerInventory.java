@@ -27,7 +27,7 @@ public class MixinPlayerInventory {
                     target = "Lnet/minecraft/item/ItemStack;damage(ILnet/minecraft/entity/LivingEntity;Ljava/util/function/Consumer;)V"
             )
     )
-    public <T extends LivingEntity> void redirectDamageArmor(ItemStack instance, int amount, T entity, Consumer<T> breakCallback) {
+    public <T extends LivingEntity> void skillMmo$damageArmor(ItemStack instance, int amount, T entity, Consumer<T> breakCallback) {
         // Multiply armor damage if the player is unfamiliar with the item
         if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, instance)) {
             amount *= SkillMmoConfig.getConfig().unskilledArmorDamageMultiplier;

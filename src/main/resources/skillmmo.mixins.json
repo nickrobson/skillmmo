@@ -8,6 +8,7 @@
     "MixinPlayerEntity",
     "MixinPlayerInventory",
     "MixinPlayerManager",
+    "MixinServerPlayerEntity",
     "MixinVillagerEntity"
   ],
   "client": [

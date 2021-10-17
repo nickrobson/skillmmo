@@ -5,7 +5,6 @@ import dev.nickrobson.minecraft.skillmmo.skill.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -68,10 +67,11 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
         });
     }
 
-    public static void sendChoosePlayerSkill(SkillLevel level) {
+    public static void sendChoosePlayerSkill(Skill skill) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
-        packetByteBuf.writeIdentifier(level.getSkillId());
+        packetByteBuf.writeIdentifier(skill.getId());
 
         ClientPlayNetworking.send(C2S_PLAYER_SKILL_CHOICE, packetByteBuf);
+        logger.debug("Sent player skill choice: {}", skill.getId());
     }
 }

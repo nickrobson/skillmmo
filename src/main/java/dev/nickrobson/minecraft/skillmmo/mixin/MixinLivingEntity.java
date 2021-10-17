@@ -10,8 +10,15 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(LivingEntity.class)
 public class MixinLivingEntity {
-    @ModifyVariable(method = "tryUseTotem", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/entity/LivingEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;", ordinal = 0))
-    private ItemStack tryUseTotemMixin(ItemStack original) {
+    @ModifyVariable(
+            method = "tryUseTotem",
+            at = @At(
+                    value = "INVOKE_ASSIGN",
+                    target = "Lnet/minecraft/entity/LivingEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;",
+                    ordinal = 0
+            )
+    )
+    private ItemStack skillMmo$tryUseTotem(ItemStack original) {
         // If the player is trying to use a totem but doesn't have the necessary level, pretend they're not using a totem!
         //noinspection ConstantConditions
         if ((Object) this instanceof PlayerEntity player

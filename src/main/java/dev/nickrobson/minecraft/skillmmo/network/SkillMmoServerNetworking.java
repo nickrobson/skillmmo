@@ -56,7 +56,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
         sendExperienceLevelEquation(player);
     }
 
-    public static void sendPlayerXp(ServerPlayerEntity player) {
+    public static void sendPlayerXpInfo(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
         long experience = PlayerExperienceManager.getInstance().getExperience(player);
@@ -84,7 +84,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
     }
 
     public static void sendPlayerData(ServerPlayerEntity player) {
-        sendPlayerXp(player);
+        sendPlayerXpInfo(player);
         sendPlayerSkills(player);
     }
 }

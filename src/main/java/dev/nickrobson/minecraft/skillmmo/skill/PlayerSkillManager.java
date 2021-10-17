@@ -1,9 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
-import net.fabricmc.api.EnvType;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
@@ -48,39 +46,37 @@ public class PlayerSkillManager {
         return playerSkillLevel >= level;
     }
 
+    public void setSkillLevel(PlayerEntity player, Skill skill, int level) {
+        this.setSkillLevels(player, Map.of(skill.getId(), level));
+    }
+
     public void setSkillLevels(PlayerEntity player, Map<Identifier, Integer> playerSkillLevels) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         playerSkillLevels.forEach((skillId, level) ->
                 skillMmoPlayerDataHolder.getSkillMmoPlayerData().setSkillLevel(skillId, level));
 
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER
-                && player instanceof ServerPlayerEntity serverPlayer) {
+        if (player instanceof ServerPlayerEntity serverPlayer) {
             SkillMmoServerNetworking.sendPlayerSkills(serverPlayer);
         }
     }
 
-    public void setSkillLevel(PlayerEntity player, Skill skill, int level) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        skillMmoPlayerDataHolder.getSkillMmoPlayerData().setSkillLevel(skill.getId(), level);
-
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER
-                && player instanceof ServerPlayerEntity serverPlayer) {
-            SkillMmoServerNetworking.sendPlayerSkills(serverPlayer);
-        }
-    }
-
-    public boolean chooseSkillLevel(PlayerEntity player, Skill skill) {
+    public ChooseSkillLevelResult chooseSkillLevel(PlayerEntity player, Skill skill) {
         int currentLevel = getSkillLevel(player, skill);
-        if (currentLevel >= SkillLevel.MAX_LEVEL) {
-            return false;
+        if (currentLevel >= skill.getMaxLevel().getLevel()) {
+            return ChooseSkillLevelResult.FAILURE_AT_MAX_LEVEL;
         }
 
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        if (!skillMmoPlayerDataHolder.getSkillMmoPlayerData().consumeAvailableSkillPoints()) {
-            return false;
+        if (!PlayerSkillPointManager.getInstance().consumeAvailableSkillPoint(player)) {
+            return ChooseSkillLevelResult.FAILURE_NO_AVAILABLE_POINTS;
         }
 
         setSkillLevel(player, skill, currentLevel + 1);
-        return true;
+        return ChooseSkillLevelResult.SUCCESS;
+    }
+
+    public enum ChooseSkillLevelResult {
+        SUCCESS,
+        FAILURE_AT_MAX_LEVEL,
+        FAILURE_NO_AVAILABLE_POINTS
     }
 }

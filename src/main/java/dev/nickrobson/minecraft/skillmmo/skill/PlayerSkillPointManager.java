@@ -1,6 +1,5 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -20,8 +19,13 @@ public class PlayerSkillPointManager {
         return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getAvailableSkillPoints();
     }
 
-    public void setAvailableSkillPoints(ClientPlayerEntity player, int availableSkillPoints) {
+    public void setAvailableSkillPoints(PlayerEntity player, int availableSkillPoints) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         skillMmoPlayerDataHolder.getSkillMmoPlayerData().setAvailableSkillPoints(availableSkillPoints);
+    }
+
+    public boolean consumeAvailableSkillPoint(PlayerEntity player) {
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        return skillMmoPlayerDataHolder.getSkillMmoPlayerData().consumeAvailableSkillPoint();
     }
 }

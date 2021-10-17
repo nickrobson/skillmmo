@@ -40,9 +40,16 @@ public interface SkillMmoPlayerDataHolder {
             return experience;
         }
 
-        public void addExperience(long experience) {
+        public long addExperience(long experience) {
             this.checkInitialised();
-            this.experience += experience;
+            if (experience > 0) {
+                if (Long.MAX_VALUE - this.experience < experience) {
+                    this.experience = Long.MAX_VALUE;
+                } else {
+                    this.experience += experience;
+                }
+            }
+            return this.experience;
         }
 
         public void setExperience(long experience) {
@@ -58,12 +65,19 @@ public interface SkillMmoPlayerDataHolder {
             this.availableSkillPoints = availableSkillPoints;
         }
 
-        public void addAvailableSkillPoint() {
+        public int addAvailableSkillPoints(int availableSkillPoints) {
             this.checkInitialised();
-            this.availableSkillPoints++;
+            if (availableSkillPoints > 0) {
+                if (Integer.MAX_VALUE - this.availableSkillPoints < availableSkillPoints) {
+                    this.availableSkillPoints = Integer.MAX_VALUE;
+                } else {
+                    this.availableSkillPoints += availableSkillPoints;
+                }
+            }
+            return this.availableSkillPoints;
         }
 
-        public boolean consumeAvailableSkillPoints() {
+        public boolean consumeAvailableSkillPoint() {
             this.checkInitialised();
             if (this.availableSkillPoints > 0) {
                 this.availableSkillPoints--;
