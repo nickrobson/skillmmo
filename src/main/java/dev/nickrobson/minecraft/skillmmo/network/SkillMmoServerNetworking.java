@@ -11,11 +11,14 @@ import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Set;
 
 public class SkillMmoServerNetworking implements SkillMmoNetworking {
+    private static final Logger logger = LoggerFactory.getLogger(SkillMmoServerNetworking.class);
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(C2S_PLAYER_SKILL_CHOICE, (server, player, handler, buf, responseSender) -> {
             Identifier skillId = buf.readIdentifier();
@@ -23,25 +26,29 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
                     .ifPresent(skill ->
                             PlayerSkillManager.getInstance().chooseSkillLevel(player, skill)
                     );
+
+            logger.debug("Received skill choice from {}: {}", player.getGameProfile().getName(), skillId);
         });
     }
 
-    public static void sendSkills(ServerPlayerEntity player) {
+    private static void sendSkills(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
         Set<Skill> skills = SkillManager.getInstance().getSkills();
         packetByteBuf.writeCollection(skills, SkillMmoNetworking::writeSkill);
 
         ServerPlayNetworking.send(player, S2C_SKILLS, packetByteBuf);
+        logger.debug("Sent skills to player '{}': {}", player.getGameProfile().getName(), skills);
     }
 
-    public static void sendExperienceLevelEquation(ServerPlayerEntity player) {
+    private static void sendExperienceLevelEquation(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
         ExperienceLevelEquation experienceLevelEquation = ExperienceLevelEquation.getInstance();
         SkillMmoNetworking.writeExperienceLevelEquation(packetByteBuf, experienceLevelEquation);
 
         ServerPlayNetworking.send(player, S2C_EXPERIENCE_LEVEL_EQUATION, packetByteBuf);
+        logger.debug("Sent experience level equation to player '{}': {}", player.getGameProfile().getName(), experienceLevelEquation);
     }
 
     public static void sendGenericData(ServerPlayerEntity player) {
@@ -59,6 +66,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
         packetByteBuf.writeVarInt(availableSkillPoints);
 
         ServerPlayNetworking.send(player, S2C_PLAYER_XP, packetByteBuf);
+        logger.debug("Sent player xp to player '{}': {}, available skill points: {}", player.getGameProfile().getName(), experience, availableSkillPoints);
     }
 
     public static void sendPlayerSkills(ServerPlayerEntity player) {
@@ -72,6 +80,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
         );
 
         ServerPlayNetworking.send(player, S2C_PLAYER_SKILLS, packetByteBuf);
+        logger.debug("Sent player skills to player '{}': {}", player.getGameProfile().getName(), playerSkillLevels);
     }
 
     public static void sendPlayerData(ServerPlayerEntity player) {

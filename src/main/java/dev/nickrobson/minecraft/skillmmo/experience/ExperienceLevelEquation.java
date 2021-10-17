@@ -4,6 +4,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 public class ExperienceLevelEquation {
     private static final int ENTRY_COUNT = SkillLevel.MAX_LEVEL - SkillLevel.MIN_LEVEL + 1;
@@ -99,5 +100,14 @@ public class ExperienceLevelEquation {
         if (level < SkillLevel.MIN_LEVEL || level > SkillLevel.MAX_LEVEL) {
             throw new IllegalArgumentException("Only level numbers between " + SkillLevel.MIN_LEVEL + " and " + SkillLevel.MAX_LEVEL + " (inclusive) are supported. Supplied: " + level);
         }
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", ExperienceLevelEquation.class.getSimpleName() + "[", "]")
+                .add("baseCost=" + baseCost)
+                .add("multiplier=" + multiplier)
+                .add("levelExponent=" + levelExponent)
+                .toString();
     }
 }

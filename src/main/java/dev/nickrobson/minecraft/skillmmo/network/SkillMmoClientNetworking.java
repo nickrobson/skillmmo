@@ -25,11 +25,13 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
         ClientPlayNetworking.registerGlobalReceiver(S2C_SKILLS, (client, handler, buf, responseSender) -> {
             Set<Skill> skillSet = buf.readCollection(HashSet::new, SkillMmoNetworking::readSkill);
             SkillManager.getInstance().initSkills(skillSet);
+            logger.debug("Received skills: {}", skillSet);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(S2C_EXPERIENCE_LEVEL_EQUATION, (client, handler, buf, responseSender) -> {
             ExperienceLevelEquation experienceLevelEquation = SkillMmoNetworking.readExperienceLevelEquation(buf);
             ExperienceLevelEquation.setInstance(experienceLevelEquation);
+            logger.debug("Received experience level equation: {}", experienceLevelEquation);
         });
 
         ClientPlayNetworking.registerGlobalReceiver(S2C_PLAYER_SKILLS, (client, handler, buf, responseSender) -> {
@@ -38,6 +40,7 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
                     PacketByteBuf::readIdentifier,
                     PacketByteBuf::readVarInt
             );
+            logger.debug("Received player skills: {}", playerSkillLevels);
 
             client.execute(() -> {
                 if (client.player == null) {
@@ -51,6 +54,8 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
         ClientPlayNetworking.registerGlobalReceiver(S2C_PLAYER_XP, (client, handler, buf, responseSender) -> {
             long experience = buf.readLong();
             int availableSkillPoints = buf.readVarInt();
+
+            logger.debug("Received player xp: {}, available skill points: {}", experience, availableSkillPoints);
 
             client.execute(() -> {
                 if (client.player == null) {

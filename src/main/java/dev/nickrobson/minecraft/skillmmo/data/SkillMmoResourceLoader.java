@@ -135,7 +135,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 unlocks.validate(errors);
                 if (errors.isEmpty()) {
                     unlocksList.add(unlocks);
-                    logger.info("Loaded resource for {}: '{}'", type.getResourceCategory(), resourceIdentifier);
+                    logger.debug("Loaded resource for {}: '{}'", type.getResourceCategory(), resourceIdentifier);
                 } else {
                     logger.warn("Ignoring resource '{}' for {} due to errors:\n\t- {}", resourceIdentifier, type.getResourceCategory(), String.join("\n\t- ", errors));
                 }

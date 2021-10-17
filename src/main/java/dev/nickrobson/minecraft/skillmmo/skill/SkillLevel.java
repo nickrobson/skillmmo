@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.StringJoiner;
 
 public class SkillLevel {
     public static final int MIN_LEVEL = 0;
@@ -46,5 +47,13 @@ public class SkillLevel {
 
     public Set<Identifier> getUnlocks(UnlockType unlockType) {
         return unlocks.getOrDefault(unlockType, Collections.emptySet());
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", SkillLevel.class.getSimpleName() + "[", "]")
+                .add("skill=" + skillId)
+                .add("level=" + level)
+                .toString();
     }
 }

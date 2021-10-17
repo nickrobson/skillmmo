@@ -90,13 +90,13 @@ public class PlayerSkillUnlockManager {
             ItemStack itemStack = player.getStackInHand(hand);
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
-            if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack)) {
+            if (!hasItemUnlock(player, itemStack)) {
                 reportItemUseLocked(player, itemStack.getItem());
                 return ActionResult.FAIL;
             }
 
             // If the player doesn't have the necessary skill for the entity, deny the interaction
-            if (!PlayerSkillUnlockManager.getInstance().hasEntityUnlock(player, entity)) {
+            if (!hasEntityUnlock(player, entity)) {
                 reportEntityInteractLocked(player, entity);
                 return ActionResult.FAIL;
             }
@@ -179,8 +179,13 @@ public class PlayerSkillUnlockManager {
     }
 
     public void reportItemUseLocked(@Nullable PlayerEntity player, Item item) {
-        Identifier identifier = Registry.ITEM.getId(item);
-        reportInteractLocked(player, Interaction.ITEM_USE, identifier, item);
+        if (item instanceof BlockItem blockItem) {
+            Identifier identifier = Registry.BLOCK.getId(blockItem.getBlock());
+            reportInteractLocked(player, Interaction.BLOCK_PLACE, identifier, item);
+        } else {
+            Identifier identifier = Registry.ITEM.getId(item);
+            reportInteractLocked(player, Interaction.ITEM_USE, identifier, item);
+        }
     }
 
     public void reportEntityInteractLocked(@Nullable PlayerEntity player, Entity entity) {
@@ -219,6 +224,7 @@ public class PlayerSkillUnlockManager {
     private SkillLevel getClosestLevel(PlayerEntity player, Collection<SkillLevel> skillLevelSet) {
         return skillLevelSet
                 .stream()
+                .filter(lvl -> !PlayerSkillManager.getInstance().hasSkillLevel(player, lvl.getSkill(), lvl.getLevel()))
                 .min(Comparator.comparing(lvl -> {
                     int level = lvl.getLevel();
                     int playerLevel = PlayerSkillManager.getInstance().getSkillLevel(player, lvl.getSkill());
@@ -235,6 +241,7 @@ public class PlayerSkillUnlockManager {
         return switch (interaction) {
             case BLOCK_BREAK -> new TranslatableText("skillmmo.feedback.deny.block.break", skillName, level, thingName);
             case BLOCK_INTERACT -> new TranslatableText("skillmmo.feedback.deny.block.interact", skillName, level, thingName);
+            case BLOCK_PLACE -> new TranslatableText("skillmmo.feedback.deny.block.place", skillName, level, thingName);
             case ITEM_USE -> new TranslatableText("skillmmo.feedback.deny.item.use", skillName, level, thingName);
             case ENTITY_INTERACT -> new TranslatableText("skillmmo.feedback.deny.entity.interact", skillName, level, thingName);
         };
@@ -251,6 +258,7 @@ public class PlayerSkillUnlockManager {
     public enum Interaction {
         BLOCK_BREAK(UnlockType.BLOCK),
         BLOCK_INTERACT(UnlockType.BLOCK),
+        BLOCK_PLACE(UnlockType.BLOCK),
         ITEM_USE(UnlockType.ITEM),
         ENTITY_INTERACT(UnlockType.ENTITY);
 

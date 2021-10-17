@@ -14,6 +14,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -130,5 +131,14 @@ public class Skill {
 
     public Optional<SkillLevel> getSkillLevelAffecting(UnlockType unlockType, Identifier unlockIdentifier) {
         return levelsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockIdentifier));
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Skill.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("nameKey='" + nameKey + "'")
+                .add("descriptionKey='" + descriptionKey + "'")
+                .toString();
     }
 }
