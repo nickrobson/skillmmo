@@ -22,7 +22,7 @@ public class SkillData implements DataValidatable {
      * Whether this skill is enabled
      */
     @SerializedName("enabled")
-    public Boolean enabled = null;
+    public Boolean enabled = true;
 
     /**
      * The ID of this skill, e.g. "mining"

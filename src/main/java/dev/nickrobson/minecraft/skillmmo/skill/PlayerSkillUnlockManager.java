@@ -59,7 +59,7 @@ public class PlayerSkillUnlockManager {
                     }
 
                     // Deny interaction with blocks that have been marked as interaction-restricted
-                    if (blockState.isIn(SkillMmoTags.interactionRestrictedBlocks)) {
+                    if (blockState.isIn(SkillMmoTags.interactableBlocks)) {
                         reportBlockInteractLocked(player, blockState.getBlock());
                         return ActionResult.FAIL;
                     }

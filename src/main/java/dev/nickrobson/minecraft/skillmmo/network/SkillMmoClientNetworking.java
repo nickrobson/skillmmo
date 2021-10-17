@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerExperienceManager;
+import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;

@@ -10,8 +10,9 @@ public class SkillMmoTags {
      * This tag contains blocks that should be blocked from being clicked on
      * by another block.
      * That is, a block should be in this tag if a player can interact with it
-     * in some way while holding another block. (Such as opening an inventory or GUI.)
+     * in some way while holding another block.
+     * This includes any form of right-click interaction like opening an inventory or GUI, sleeping in a bed, etc.
      */
-    public static final Tag<Block> interactionRestrictedBlocks =
-            TagFactory.BLOCK.create(new Identifier(SkillMmoMod.MOD_ID, "interaction_restricted"));
+    public static final Tag<Block> interactableBlocks =
+            TagFactory.BLOCK.create(new Identifier(SkillMmoMod.MOD_ID, "interactable"));
 }

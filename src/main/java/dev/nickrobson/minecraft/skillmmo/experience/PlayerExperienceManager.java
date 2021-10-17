@@ -1,7 +1,7 @@
-package dev.nickrobson.minecraft.skillmmo.skill;
+package dev.nickrobson.minecraft.skillmmo.experience;
 
-import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;

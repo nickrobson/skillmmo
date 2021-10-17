@@ -24,6 +24,9 @@
     "minecraft:respawn_anchor",
 
     "#buttons",
+    "#doors",
+    "#fence_gates",
+    "#trapdoors",
     "minecraft:comparator",
     "minecraft:daylight_detector",
     "minecraft:dispenser",
@@ -38,7 +41,7 @@
     "minecraft:cake",
 
     "#beds",
-    "minecraft:flower_pot",
+    "#flower_pots",
     "minecraft:note_block",
     "minecraft:scaffolding",
 

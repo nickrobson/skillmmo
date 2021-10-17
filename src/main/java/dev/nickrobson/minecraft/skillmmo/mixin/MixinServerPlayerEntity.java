@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerExperienceManager;
+import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
