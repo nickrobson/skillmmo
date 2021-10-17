@@ -30,7 +30,7 @@ public class MixinPlayerInventory {
     public <T extends LivingEntity> void redirectDamageArmor(ItemStack instance, int amount, T entity, Consumer<T> breakCallback) {
         // Multiply armor damage if the player is unfamiliar with the item
         if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, instance)) {
-            amount *= SkillMmoConfig.getConfig().armorDamageMultiplier;
+            amount *= SkillMmoConfig.getConfig().unskilledArmorDamageMultiplier;
         }
         instance.damage(amount, entity, breakCallback);
     }

@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
+import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import net.minecraft.block.BlockState;
@@ -118,7 +119,10 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     public void checkCanHarvest(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
         if (!PlayerSkillUnlockManager.getInstance().hasBlockUnlock(player, state)) {
-            PlayerSkillUnlockManager.getInstance().reportBlockBreakLocked(player, state.getBlock());
+            if (SkillMmoConfig.getConfig().announceRequiredSkillWhenBreakingBlock) {
+                // Only announce what skill is required to break a certain block if configured – it can be quite verbose
+                PlayerSkillUnlockManager.getInstance().reportBlockBreakLocked(player, state.getBlock());
+            }
             cir.setReturnValue(false);
         }
     }
