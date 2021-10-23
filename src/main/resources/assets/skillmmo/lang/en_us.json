@@ -21,6 +21,11 @@
   "skillmmo.feedback.deny.item.use": "You need %s %d to use this %s",
   "skillmmo.feedback.deny.entity.interact": "You need %s %d to interact with a %s",
   "skillmmo.feedback.deny.villager.interact": "You need %s %d to trade with a Villager",
+  "skillmmo.feedback.item.locked": "Locked",
+  "skillmmo.feedback.item.locked.basic": "Locked - %s %d",
+  "skillmmo.feedback.item.locked.advanced.heading.all": "Locked - requires:",
+  "skillmmo.feedback.item.locked.advanced.heading.any": "Locked - requires one of:",
+  "skillmmo.feedback.item.locked.advanced.line": "- %s %d",
   "skillmmo.feedback.player.level_up": "You've reached level %d! You have %d available skill points.",
 
   "skillmmo.skill.mining.name": "Mining",

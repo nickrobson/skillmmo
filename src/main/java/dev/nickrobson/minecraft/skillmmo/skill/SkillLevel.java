@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import net.minecraft.util.Identifier;
 
 import java.util.Collections;

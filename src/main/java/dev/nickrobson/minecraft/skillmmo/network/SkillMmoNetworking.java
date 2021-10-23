@@ -4,7 +4,7 @@ import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.UnlockType;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 

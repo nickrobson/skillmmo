@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
-import dev.nickrobson.minecraft.skillmmo.skill.UnlockType;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 

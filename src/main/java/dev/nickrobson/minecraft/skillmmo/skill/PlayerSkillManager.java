@@ -8,6 +8,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Map;
 
 @MethodsReturnNonnullByDefault
@@ -72,6 +74,18 @@ public class PlayerSkillManager {
 
         setSkillLevel(player, skill, currentLevel + 1);
         return ChooseSkillLevelResult.SUCCESS;
+    }
+
+    public SkillLevel getClosestLevel(PlayerEntity player, Collection<SkillLevel> skillLevelSet) {
+        return skillLevelSet
+                .stream()
+                .filter(lvl -> !PlayerSkillManager.getInstance().hasSkillLevel(player, lvl.getSkill(), lvl.getLevel()))
+                .min(Comparator.comparing(lvl -> {
+                    int level = lvl.getLevel();
+                    int playerLevel = PlayerSkillManager.getInstance().getSkillLevel(player, lvl.getSkill());
+                    return level - playerLevel;
+                }))
+                .orElse(null);
     }
 
     public enum ChooseSkillLevelResult {

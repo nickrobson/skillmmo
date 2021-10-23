@@ -30,7 +30,7 @@ public class SkillMmoConfig implements ConfigData {
     public float unskilledArmorDamageMultiplier = 2.5F;
 
     @ConfigEntry.Category("Experience / Levelling")
-    @Comment("Base cost for an experience level. Experience is calculated as (base + multiplier * ((level - 1) ^ exponent))")
+    @Comment("Base cost for an experience level. Experience is calculated as (base cost) + (multiplier * ((level - 1) ^ exponent))")
     public long expBaseCost = 100;
 
     @ConfigEntry.Category("Experience / Levelling")

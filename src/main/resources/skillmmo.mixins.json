@@ -12,7 +12,8 @@
     "MixinVillagerEntity"
   ],
   "client": [
-    "MixinClientPlayerEntity"
+    "client.MixinClientPlayerEntity",
+    "client.MixinItemStack"
   ],
   "server": [],
   "injectors": {

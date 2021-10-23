@@ -1,4 +1,4 @@
-package dev.nickrobson.minecraft.skillmmo.skill;
+package dev.nickrobson.minecraft.skillmmo.skill.unlock;
 
 public enum UnlockType {
     BLOCK,

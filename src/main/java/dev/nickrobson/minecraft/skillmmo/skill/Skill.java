@@ -3,6 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
@@ -29,7 +30,7 @@ public class Skill {
     private final Map<Integer, SkillLevel> skillLevelMap;
 
     private final SkillLevel maxSkillLevel;
-    private final LoadingCache<SkillUnlockCacheKey, Optional<SkillLevel>> levelsByUnlockCache;
+    private final LoadingCache<Unlock, Optional<SkillLevel>> levelsByUnlockCache;
 
     public Skill(
             Identifier id,
@@ -82,11 +83,10 @@ public class Skill {
                 .build(
                         new CacheLoader<>() {
                             @Override
-                            public Optional<SkillLevel> load(SkillUnlockCacheKey key) {
+                            public Optional<SkillLevel> load(Unlock key) {
                                 return skillLevels.stream()
                                         .filter(level ->
-                                                level.getUnlocks(key.getUnlockType())
-                                                        .contains(key.getUnlockIdentifier())
+                                                level.getUnlocks(key.unlockType()).contains(key.identifier())
                                         )
                                         .findFirst();
                             }
@@ -129,8 +129,8 @@ public class Skill {
         return Optional.ofNullable(skillLevelMap.get(skillLevel));
     }
 
-    public Optional<SkillLevel> getSkillLevelAffecting(UnlockType unlockType, Identifier unlockIdentifier) {
-        return levelsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockIdentifier));
+    public Optional<SkillLevel> getSkillLevelAffecting(Unlock unlock) {
+        return levelsByUnlockCache.getUnchecked(unlock);
     }
 
     @Override

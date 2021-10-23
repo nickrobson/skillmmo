@@ -1,11 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
@@ -124,7 +125,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     public void skillMmo$canHarvest(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
         ItemStack itemStackInHand = this.inventory.getMainHandStack();
-        if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStackInHand)) {
+        if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStackInHand) && !(itemStackInHand.getItem() instanceof BlockItem)) {
             PlayerSkillUnlockManager.getInstance().reportItemUseLocked(player, itemStackInHand.getItem());
             cir.setReturnValue(false);
         } else if (!PlayerSkillUnlockManager.getInstance().hasBlockUnlock(player, state)) {

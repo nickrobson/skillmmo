@@ -3,6 +3,8 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -31,7 +33,7 @@ public class SkillManager {
     private SkillManager() {}
 
     /** @see #initSkills(Set) */
-    private LoadingCache<SkillUnlockCacheKey, Set<Skill>> skillsByUnlockCache;
+    private LoadingCache<Unlock, Set<Skill>> skillsByUnlockCache;
 
     public void initSkills(Set<Skill> skills) {
         this.skillSet.clear();
@@ -46,9 +48,9 @@ public class SkillManager {
                 .expireAfterAccess(5, TimeUnit.MINUTES)
                 .build(new CacheLoader<>() {
                     @Override
-                    public Set<Skill> load(SkillUnlockCacheKey key) {
+                    public Set<Skill> load(Unlock unlock) {
                         return skills.stream()
-                                .filter(skill -> skill.getSkillLevelAffecting(key.getUnlockType(), key.getUnlockIdentifier()).isPresent())
+                                .filter(skill -> skill.getSkillLevelAffecting(unlock).isPresent())
                                 .collect(Collectors.toSet());
                     }
                 });
@@ -62,14 +64,14 @@ public class SkillManager {
         return Optional.ofNullable(this.skillMap.get(skillId));
     }
 
-    public Set<Skill> getSkillsAffecting(UnlockType unlockType, Identifier unlockIdentifier) {
-        return this.skillsByUnlockCache.getUnchecked(new SkillUnlockCacheKey(unlockType, unlockIdentifier));
+    public Set<Skill> getSkillsAffecting(Unlock unlock) {
+        return this.skillsByUnlockCache.getUnchecked(unlock);
     }
 
-    public Set<SkillLevel> getSkillLevelsAffecting(UnlockType unlockType, Identifier unlockIdentifier) {
-        Set<Skill> skills = this.getSkillsAffecting(unlockType, unlockIdentifier);
+    public Set<SkillLevel> getSkillLevelsAffecting(Unlock unlock) {
+        Set<Skill> skills = this.getSkillsAffecting(unlock);
         return skills.stream()
-                .flatMap(skill -> skill.getSkillLevelAffecting(unlockType, unlockIdentifier).stream())
+                .flatMap(skill -> skill.getSkillLevelAffecting(unlock).stream())
                 .collect(Collectors.toSet());
     }
 }
