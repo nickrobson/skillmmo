@@ -6,6 +6,7 @@
     "minecraft:crafting_table"
   ],
   "items": [
-    "minecraft:leather_helmet"
+    "minecraft:leather_helmet",
+    "elytra",
   ]
 }

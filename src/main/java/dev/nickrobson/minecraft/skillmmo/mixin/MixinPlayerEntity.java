@@ -19,6 +19,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -133,6 +134,20 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
                 // Only announce what skill is required to break a certain block if configured – it can be quite verbose
                 PlayerSkillUnlockManager.getInstance().reportBlockBreakLocked(player, state.getBlock());
             }
+            cir.setReturnValue(false);
+        }
+    }
+
+    @Inject(
+            method = "checkFallFlying",
+            at = @At(value = "INVOKE_ASSIGN", shift = At.Shift.AFTER, target = "Lnet/minecraft/entity/player/PlayerEntity;getEquippedStack(Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/ItemStack;"),
+            cancellable = true,
+            locals = LocalCapture.CAPTURE_FAILSOFT
+    )
+    public void skillMmo$checkFallFlying(CallbackInfoReturnable<Boolean> cir, ItemStack itemStack) {
+        PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
+        if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack)) {
+            PlayerSkillUnlockManager.getInstance().reportItemUseLocked(player, itemStack.getItem());
             cir.setReturnValue(false);
         }
     }
