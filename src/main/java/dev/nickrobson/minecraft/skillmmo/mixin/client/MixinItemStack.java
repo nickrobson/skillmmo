@@ -35,9 +35,9 @@ public abstract class MixinItemStack {
             method = "getTooltip",
             at = @At(
                     value = "INVOKE",
-                    shift = At.Shift.AFTER,
+                    shift = At.Shift.BEFORE,
                     ordinal = 0,
-                    target = "Ljava/util/List;add(Ljava/lang/Object;)Z"
+                    target = "Lnet/minecraft/item/ItemStack;getHideFlags()I"
             ),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
