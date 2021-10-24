@@ -34,13 +34,13 @@ public class PlayerSkillManager {
     private PlayerSkillManager() {
     }
 
-    public Map<Identifier, Integer> getSkills(PlayerEntity player) {
+    public Map<Identifier, Integer> getSkillLevels(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getSkillLevels();
     }
 
     public int getSkillLevel(PlayerEntity player, Skill skill) {
-        return getSkills(player).getOrDefault(skill.getId(), SkillLevel.MIN_LEVEL);
+        return getSkillLevels(player).getOrDefault(skill.getId(), SkillLevel.MIN_LEVEL);
     }
 
     public boolean hasSkillLevel(PlayerEntity player, Skill skill, int level) {

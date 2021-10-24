@@ -72,7 +72,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
     public static void sendPlayerSkills(ServerPlayerEntity player) {
         PacketByteBuf packetByteBuf = PacketByteBufs.create();
 
-        Map<Identifier, Integer> playerSkillLevels = PlayerSkillManager.getInstance().getSkills(player);
+        Map<Identifier, Integer> playerSkillLevels = PlayerSkillManager.getInstance().getSkillLevels(player);
         packetByteBuf.writeMap(
                 playerSkillLevels,
                 PacketByteBuf::writeIdentifier,

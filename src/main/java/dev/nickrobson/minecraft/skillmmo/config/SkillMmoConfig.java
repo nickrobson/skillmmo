@@ -19,6 +19,9 @@ public class SkillMmoConfig implements ConfigData {
     @Comment("How many levels for each skill should be lost on death?")
     public int levelsLostOnDeath = 0;
 
+    @Comment("Should levels be lost in all skills or just one random skill?")
+    public boolean loseLevelsInAllSkillsOnDeath = false;
+
     @Comment("If an block/item/etc. is locked by multiple skills, should the player need to unlock all of them or just one?")
     public boolean requireAllLockingSkillsToBeUnlocked = false;
 
@@ -40,4 +43,27 @@ public class SkillMmoConfig implements ConfigData {
     @ConfigEntry.Category("Experience / Levelling")
     @Comment("Experience level exponent. Experience is calculated as (base cost) + (multiplier * ((level - 1) ^ exponent))")
     public double expLevelExponent = 1.8;
+
+    @Override
+    public void validatePostLoad() throws ValidationException {
+        ConfigData.super.validatePostLoad();
+
+        if (levelsLostOnDeath < 0) {
+            throw new ValidationException("levelsLostOnDeath should be 0 or more");
+        }
+
+        if (unskilledArmorDamageMultiplier < 1) {
+            throw new ValidationException("unskilledArmorDamageMultiplier should be 1 or more");
+        }
+
+        if (expBaseCost <= 0) {
+            throw new ValidationException("expBaseCost should be greater than 0");
+        }
+        if (expMultiplier <= 0) {
+            throw new ValidationException("expMultiplier should be greater than 0");
+        }
+        if (expLevelExponent <= 0) {
+            throw new ValidationException("expLevelExponent should be greater than 0");
+        }
+    }
 }

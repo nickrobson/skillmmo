@@ -26,6 +26,10 @@
   "skillmmo.feedback.item.locked.advanced.heading.all": "Locked - requires:",
   "skillmmo.feedback.item.locked.advanced.heading.any": "Locked - requires one of:",
   "skillmmo.feedback.item.locked.advanced.line": "- %s %d",
+  "skillmmo.feedback.player.death.lost_level": "You lost %d level in each skill.",
+  "skillmmo.feedback.player.death.lost_levels": "You lost %d levels in each skill.",
+  "skillmmo.feedback.player.death.lost_level.in.skill": "You lost %d %s level.",
+  "skillmmo.feedback.player.death.lost_levels.in.skill": "You lost %d %s levels.",
   "skillmmo.feedback.player.level_up": "You've reached level %d! You have %d available skill points.",
 
   "skillmmo.skill.mining.name": "Mining",
