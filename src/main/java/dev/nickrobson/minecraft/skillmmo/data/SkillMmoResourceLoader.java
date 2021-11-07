@@ -4,8 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -128,6 +128,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
         );
 
         List<T> unlocksList = new ArrayList<>();
+        boolean errored = false;
         for (Identifier resourceIdentifier : resourceIdentifiers) {
             try (InputStreamReader resourceReader = new InputStreamReader(manager.getResource(resourceIdentifier).getInputStream())) {
                 T unlocks = gson.fromJson(resourceReader, type.getResourceClass());
@@ -137,11 +138,16 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                     unlocksList.add(unlocks);
                     logger.debug("Loaded resource for {}: '{}'", type.getResourceCategory(), resourceIdentifier);
                 } else {
-                    logger.warn("Ignoring resource '{}' for {} due to errors:\n\t- {}", resourceIdentifier, type.getResourceCategory(), String.join("\n\t- ", errors));
+                    logger.error("Ignoring resource '{}' for {} due to errors:\n\t- {}", resourceIdentifier, type.getResourceCategory(), String.join("\n\t- ", errors));
+                    errored = true;
                 }
             } catch (Exception ex) {
                 logger.error(new StringFormattedMessage("Failed to load resource '{}' for type '{}'", resourceIdentifier, type.getResourceCategory()).getFormattedMessage(), ex);
+                errored = true;
             }
+        }
+        if (errored) {
+            throw new IllegalStateException("Failed to start due to datapack validation errors! (See above)");
         }
         return unlocksList;
     }
