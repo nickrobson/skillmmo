@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -54,15 +55,19 @@ public class MixinServerPlayerEntity {
                             return currentLevel > levelsLostOnDeath ? currentLevel - levelsLostOnDeath : 0;
                         }));
             } else {
-                Identifier[] skillIds = skillLevels.keySet().toArray(new Identifier[0]);
-                skillId = skillIds[new Random().nextInt(skillIds.length)];
+                List<Identifier> ownedSkillIds = skillLevels.entrySet()
+                        .stream()
+                        .filter(e -> e.getValue() != null && e.getValue() > 0)
+                        .map(Map.Entry::getKey)
+                        .collect(Collectors.toList());
+                skillId = ownedSkillIds.get(new Random().nextInt(ownedSkillIds.size()));
                 int currentLevel = skillLevels.get(skillId);
                 newSkillLevels = Map.of(
                         skillId,
                         currentLevel > levelsLostOnDeath ? currentLevel - levelsLostOnDeath : 0
                 );
             }
-            PlayerSkillManager.getInstance().setSkillLevels(player, newSkillLevels);
+            PlayerSkillManager.getInstance().updateSkillLevels(player, newSkillLevels);
 
             int totalLostLevels = skillLevels.keySet().stream()
                     .filter(newSkillLevels::containsKey)

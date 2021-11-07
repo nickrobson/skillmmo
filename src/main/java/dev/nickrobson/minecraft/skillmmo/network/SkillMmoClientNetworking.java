@@ -45,7 +45,7 @@ public class SkillMmoClientNetworking implements SkillMmoNetworking {
                 if (client.player == null) {
                     logger.warn("Client player is null on {}", S2C_PLAYER_SKILLS);
                 } else {
-                    PlayerSkillManager.getInstance().setSkillLevels(client.player, playerSkillLevels);
+                    PlayerSkillManager.getInstance().updateSkillLevels(client.player, playerSkillLevels);
                 }
             });
         });

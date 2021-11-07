@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.config;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
@@ -50,6 +51,9 @@ public class SkillMmoConfig implements ConfigData {
 
         if (levelsLostOnDeath < 0) {
             throw new ValidationException("levelsLostOnDeath should be 0 or more");
+        }
+        if (levelsLostOnDeath > SkillLevel.MAX_LEVEL) {
+            throw new ValidationException("levelsLostOnDeath should be less than " + SkillLevel.MAX_LEVEL);
         }
 
         if (unskilledArmorDamageMultiplier < 1) {

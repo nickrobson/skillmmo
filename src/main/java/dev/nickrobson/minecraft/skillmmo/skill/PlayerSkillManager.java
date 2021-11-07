@@ -49,12 +49,12 @@ public class PlayerSkillManager {
     }
 
     public void setSkillLevel(PlayerEntity player, Skill skill, int level) {
-        this.setSkillLevels(player, Map.of(skill.getId(), level));
+        this.updateSkillLevels(player, Map.of(skill.getId(), level));
     }
 
-    public void setSkillLevels(PlayerEntity player, Map<Identifier, Integer> playerSkillLevels) {
+    public void updateSkillLevels(PlayerEntity player, Map<Identifier, Integer> changedSkillLevels) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        playerSkillLevels.forEach((skillId, level) ->
+        changedSkillLevels.forEach((skillId, level) ->
                 skillMmoPlayerDataHolder.getSkillMmoPlayerData().setSkillLevel(skillId, level));
 
         if (player instanceof ServerPlayerEntity serverPlayer) {
