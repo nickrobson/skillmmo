@@ -32,7 +32,6 @@ public class MixinServerPlayerEntity {
                 .giveExperience((ServerPlayerEntity) (Object) this, experience);
     }
 
-
     @Inject(
             method = "onDeath",
             at = @At("TAIL")
@@ -74,14 +73,14 @@ public class MixinServerPlayerEntity {
             if (skillId == null) {
                 // Lost levels in all skills
                 message = totalLostLevels == 1
-                        ? new TranslatableText("skillmmo.feedback.player.death.lost_level")
-                        : new TranslatableText("skillmmo.feedback.player.death.lost_levels");
+                        ? new TranslatableText("skillmmo.feedback.player.death.lost_level", totalLostLevels)
+                        : new TranslatableText("skillmmo.feedback.player.death.lost_levels", totalLostLevels);
             } else {
                 // Lost levels in one skill
                 Text skillName = SkillManager.getInstance().getSkill(skillId).orElseThrow().getNameText();
                 message = totalLostLevels == 1
-                        ? new TranslatableText("skillmmo.feedback.player.death.lost_level.in.skill", skillName)
-                        : new TranslatableText("skillmmo.feedback.player.death.lost_levels.in.skill", skillName);
+                        ? new TranslatableText("skillmmo.feedback.player.death.lost_level.in.skill", totalLostLevels, skillName)
+                        : new TranslatableText("skillmmo.feedback.player.death.lost_levels.in.skill", totalLostLevels, skillName);
             }
 
 

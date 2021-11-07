@@ -24,7 +24,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
             Identifier skillId = buf.readIdentifier();
             SkillManager.getInstance().getSkill(skillId)
                     .ifPresent(skill ->
-                            PlayerSkillManager.getInstance().chooseSkillLevel(player, skill)
+                            PlayerSkillManager.getInstance().chooseSkillLevel(player, skill) // TODO: give feedback to the client if not allowed
                     );
 
             logger.debug("Received skill choice from {}: {}", player.getGameProfile().getName(), skillId);
