@@ -60,7 +60,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 }));
         Set<Skill> skills = skillDataBySkillId.values()
                 .stream()
-                .filter(skillData -> skillData.enabled == null || skillData.enabled)
+                .filter(skillData -> skillData.enabled != Boolean.FALSE)
                 .map(skillData -> {
                     Set<SkillLevel> skillLevels = skillLevelsBySkill.get(skillData.id);
                     if (skillLevels == null || skillLevels.isEmpty()) {
@@ -99,8 +99,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                         unlockIdentifiersByUnlockType.clear();
                     }
 
-                    Map<UnlockType, Set<Identifier>> levelUnlocks = unlockData.getIdentifiers();
-                    levelUnlocks.forEach((unlockType, identifiers) ->
+                    unlockData.identifiers.forEach((unlockType, identifiers) ->
                             unlockIdentifiersByUnlockType.compute(unlockType, (k, v) -> {
                                 if (v == null || unlockData.replace) {
                                     v = new HashSet<>();
@@ -110,9 +109,11 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                             }));
                 });
 
-                skillLevelsByLevel.put(
-                        level, new SkillLevel(skillId, level, unlockIdentifiersByUnlockType)
-                );
+                if (!unlockIdentifiersByUnlockType.isEmpty()) {
+                    skillLevelsByLevel.put(
+                            level, new SkillLevel(skillId, level, unlockIdentifiersByUnlockType)
+                    );
+                }
             });
 
             skillLevelsBySkillId.put(skillId, new HashSet<>(skillLevelsByLevel.values()));

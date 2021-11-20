@@ -7,6 +7,8 @@ import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -58,6 +60,8 @@ public class SkillLevelUnlocksData implements DataValidatable {
     public transient Set<Identifier> itemIds;
     // TODO: add support for tags?
 
+    public transient Map<UnlockType, Set<Identifier>> identifiers;
+
     @Override
     public void validate(@Nonnull Collection<String> errors) {
         if (rawSkillId == null) {
@@ -92,13 +96,15 @@ public class SkillLevelUnlocksData implements DataValidatable {
                 errors.add("No items have been set");
             }
         }
-    }
 
-    public Map<UnlockType, Set<Identifier>> getIdentifiers() {
-        return Map.of(
-                UnlockType.BLOCK, blockIds,
-                UnlockType.ITEM, itemIds
-        );
+        Map<UnlockType, Set<Identifier>> identifiers = new HashMap<>();
+        if (blockIds != null && !blockIds.isEmpty()) {
+            identifiers.put(UnlockType.BLOCK, blockIds);
+        }
+        if (itemIds != null && !itemIds.isEmpty()) {
+            identifiers.put(UnlockType.ITEM, itemIds);
+        }
+        this.identifiers = Collections.unmodifiableMap(identifiers);
     }
 
     @Nonnull
