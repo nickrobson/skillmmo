@@ -34,12 +34,21 @@ Skills based on player attributes:
 Skills based on proficiencies:
 - Combat - swords, bows, etc.
 - Protection - armour (merge with Combat?)
-- Mining - pickaxes, shovels, stones, ores, sands, gravels, dirts etc. 
+- Mining - pickaxes, shovels, stones, ores, sands, gravels, dirts etc.
+    1. stone, cobble
+    1. coal ore, andesite, diorite, granite
+    1. iron ore, calcite, nether quartz
+    1. emerald ore, redstone ore
+    1. gold ore, lapis ore
+    1. amethyst, glowstone, deepslate
+    1. diamond ore, diamond, obsidian, buckets
+    1. ancient debris, netherite
+- Engineer - redstone, repeater, comparator etc.
 - Building - decoration blocks, scaffolding, etc.
-- Trading - villagers, wandering trader (goblin?)
-- Alchemy/Brewing - potions, enchanting, etc.
-- Forestry - axes, plants, etc.
-- Farming (Agriculture?) - hoes, crops, plant-based food etc.
+- Storage - bundles, barrels, chests, ender chests, shulkers
+- Trade - villagers, wandering trader (goblin?)
+- Sorcery - potions, enchanting, etc.
+- Agriculture - hoes, axes, plants, crops, plant-based food etc.
 - Animal Husbandry (Zoology?) - animals, meat-based food etc.
 - Necromancy (or something about hostile mobs more generally?) -> use mob drops?
 

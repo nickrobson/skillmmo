@@ -59,6 +59,8 @@ public class PlayerSkillManager {
 
         if (player instanceof ServerPlayerEntity serverPlayer) {
             SkillMmoServerNetworking.sendPlayerSkills(serverPlayer);
+
+            // TODO: lock/unlock recipes
         }
     }
 
