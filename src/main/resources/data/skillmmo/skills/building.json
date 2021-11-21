@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "enabled": true,
+  "nameKey": "skillmmo.skill.building.name",
+  "descriptionKey": "skillmmo.skill.building.description",
+  "maxLevel": 25
+}

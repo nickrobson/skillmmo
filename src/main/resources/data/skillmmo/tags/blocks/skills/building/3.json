@@ -1,0 +1,31 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:bookshelf",
+    "minecraft:ladder",
+    "minecraft:oak_stairs",
+    "minecraft:spruce_stairs",
+    "minecraft:birch_stairs",
+    "minecraft:jungle_stairs",
+    "minecraft:acacia_stairs",
+    "minecraft:dark_oak_stairs",
+    "minecraft:crimson_stairs",
+    "minecraft:warped_stairs",
+    "minecraft:oak_slab",
+    "minecraft:spruce_slab",
+    "minecraft:birch_slab",
+    "minecraft:jungle_slab",
+    "minecraft:acacia_slab",
+    "minecraft:dark_oak_slab",
+    "minecraft:crimson_slab",
+    "minecraft:warped_slab",
+    "minecraft:oak_fence",
+    "minecraft:spruce_fence",
+    "minecraft:birch_fence",
+    "minecraft:jungle_fence",
+    "minecraft:acacia_fence",
+    "minecraft:dark_oak_fence",
+    "minecraft:crimson_fence",
+    "minecraft:warped_fence"
+  ]
+}

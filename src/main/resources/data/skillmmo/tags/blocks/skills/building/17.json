@@ -1,0 +1,30 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:prismarine_stairs",
+    "minecraft:prismarine_brick_stairs",
+    "minecraft:dark_prismarine_stairs",
+    "minecraft:prismarine_slab",
+    "minecraft:prismarine_brick_slab",
+    "minecraft:dark_prismarine_slab",
+    "minecraft:prismarine_wall",
+    "minecraft:cobbled_deepslate_stairs",
+    "minecraft:cobbled_deepslate_slab",
+    "minecraft:cobbled_deepslate_wall",
+    "minecraft:polished_deepslate",
+    "minecraft:polished_deepslate_stairs",
+    "minecraft:polished_deepslate_slab",
+    "minecraft:polished_deepslate_wall",
+    "minecraft:deepslate_tiles",
+    "minecraft:deepslate_tile_stairs",
+    "minecraft:deepslate_tile_slab",
+    "minecraft:deepslate_tile_wall",
+    "minecraft:deepslate_bricks",
+    "minecraft:deepslate_brick_stairs",
+    "minecraft:deepslate_brick_slab",
+    "minecraft:deepslate_brick_wall",
+    "minecraft:chiseled_deepslate",
+    "minecraft:cracked_deepslate_bricks",
+    "minecraft:cracked_deepslate_tiles"
+  ]
+}
