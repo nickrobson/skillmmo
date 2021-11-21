@@ -36,8 +36,8 @@
   "skillmmo.skill.agriculture.description": "Master the natural world!",
   "skillmmo.skill.animalhusbandry.name": "Animal Husbandry",
   "skillmmo.skill.animalhusbandry.description": "Domesticate and tame our precious wildlife!",
+  "skillmmo.skill.combat.name": "Combat",
+  "skillmmo.skill.combat.description": "Gain prowess on the battlefield!",
   "skillmmo.skill.mining.name": "Mining",
-  "skillmmo.skill.mining.description": "Everything under the earth!",
-  "skillmmo.skill.testing_skill.name": "Testing Skill",
-  "skillmmo.skill.testing_skill.description": "Testing some of the more interesting things..."
+  "skillmmo.skill.mining.description": "Everything under the earth!"
 }

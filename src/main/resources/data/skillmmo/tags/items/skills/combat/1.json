@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:armor_stand",
+    "minecraft:wooden_sword"
+  ]
+}

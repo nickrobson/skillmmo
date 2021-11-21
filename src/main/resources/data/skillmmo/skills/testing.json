@@ -1,7 +1,0 @@
-{
-  "replace": true,
-  "enabled": true,
-  "nameKey": "skillmmo.skill.testing_skill.name",
-  "descriptionKey": "skillmmo.skill.testing_skill.description",
-  "maxLevel": 1
-}
