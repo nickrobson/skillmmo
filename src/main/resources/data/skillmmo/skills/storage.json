@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "enabled": true,
+  "nameKey": "skillmmo.skill.storage.name",
+  "descriptionKey": "skillmmo.skill.storage.description",
+  "maxLevel": 15
+}
