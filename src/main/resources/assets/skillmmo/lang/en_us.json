@@ -41,5 +41,7 @@
   "skillmmo.skill.engineering.name": "Engineering",
   "skillmmo.skill.engineering.description": "Develop mechanical contraptions!",
   "skillmmo.skill.mining.name": "Mining",
-  "skillmmo.skill.mining.description": "Everything under the earth!"
+  "skillmmo.skill.mining.description": "Everything under the earth!",
+  "skillmmo.skill.trading.name": "Trading",
+  "skillmmo.skill.trading.description": "Exchange goods with the locals!"
 }
