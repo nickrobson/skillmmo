@@ -40,7 +40,7 @@ public class PlayerExperienceManager {
         int newLevel = ExperienceLevelEquation.getInstance().getExperienceLevel(newExperience).level();
 
         if (oldLevel < newLevel) {
-            int availableSkillPoints = playerData.addAvailableSkillPoints(newLevel - oldLevel);
+            int availableSkillPoints = playerData.addAvailableSkillPoints(getTotalSkillPoints(newLevel) - getTotalSkillPoints(oldLevel));
 
             player.sendMessage(new TranslatableText("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
         }
@@ -48,5 +48,11 @@ public class PlayerExperienceManager {
         if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
             SkillMmoServerNetworking.sendPlayerXpInfo(player);
         }
+    }
+
+    public int getTotalSkillPoints(int level) {
+        // TODO: consider awarding an extra X points per Y levels?
+        //       e.g. points = level + (X * level//Y)
+        return level;
     }
 }
