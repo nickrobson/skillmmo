@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:coal_ore",
+    "minecraft:coal_block"
+  ]
+}

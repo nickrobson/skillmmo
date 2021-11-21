@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:blast_furnace",
+    "minecraft:lapis_ore",
+    "minecraft:lapis_block",
+    "minecraft:redstone_ore",
+    "minecraft:redstone_block"
+  ]
+}

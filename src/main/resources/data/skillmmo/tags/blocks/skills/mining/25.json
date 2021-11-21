@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:end_stone",
+    "minecraft:ancient_debris",
+    "minecraft:netherite_block"
+  ]
+}

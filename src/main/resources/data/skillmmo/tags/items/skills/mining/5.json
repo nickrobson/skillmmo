@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:raw_copper",
+    "minecraft:copper_ingot"
+  ]
+}

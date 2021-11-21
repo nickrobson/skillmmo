@@ -1,0 +1,14 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:obsidian",
+    "minecraft:crying_obsidian",
+    "minecraft:netherrack",
+    "minecraft:basalt",
+    "minecraft:glowstone",
+    "minecraft:nether_gold_ore",
+    "minecraft:nether_quartz_ore",
+    "minecraft:blackstone",
+    "minecraft:gilded_blackstone"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:stone",
+    "minecraft:granite",
+    "minecraft:diorite",
+    "minecraft:andesite",
+    "minecraft:calcite",
+    "minecraft:cobblestone",
+    "minecraft:infested_stone",
+    "minecraft:infested_cobblestone"
+  ]
+}
