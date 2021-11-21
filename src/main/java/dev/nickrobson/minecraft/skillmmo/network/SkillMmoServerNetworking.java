@@ -10,6 +10,9 @@ import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Style;
+import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,13 +22,23 @@ import java.util.Set;
 
 public class SkillMmoServerNetworking implements SkillMmoNetworking {
     private static final Logger logger = LoggerFactory.getLogger(SkillMmoServerNetworking.class);
+
     public static void register() {
         ServerPlayNetworking.registerGlobalReceiver(C2S_PLAYER_SKILL_CHOICE, (server, player, handler, buf, responseSender) -> {
             Identifier skillId = buf.readIdentifier();
-            SkillManager.getInstance().getSkill(skillId)
-                    .ifPresent(skill ->
-                            PlayerSkillManager.getInstance().chooseSkillLevel(player, skill) // TODO: give feedback to the client if not allowed
-                    );
+            SkillManager.getInstance().getSkill(skillId).ifPresent(skill -> {
+                PlayerSkillManager.ChooseSkillLevelResult result = PlayerSkillManager.getInstance().chooseSkillLevel(player, skill);
+                switch (result) {
+                    case FAILURE_AT_MAX_LEVEL -> player.sendMessage(
+                            new TranslatableText("skillmmo.feedback.player.skill_choice.failed_max_level")
+                                    .setStyle(Style.EMPTY.withFormatting(Formatting.RED)),
+                            false);
+                    case FAILURE_NO_AVAILABLE_POINTS -> player.sendMessage(
+                            new TranslatableText("skillmmo.feedback.player.skill_choice.failed_no_points")
+                                    .setStyle(Style.EMPTY.withFormatting(Formatting.RED)),
+                            false);
+                }
+            });
 
             logger.debug("Received skill choice from {}: {}", player.getGameProfile().getName(), skillId);
         });
