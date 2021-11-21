@@ -1,0 +1,9 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:experience_bottle",
+    "minecraft:golden_apple",
+    "minecraft:golden_carrot",
+    "minecraft:glistering_melon_slice"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:dragon_egg",
+    "minecraft:end_gateway",
+    "minecraft:end_portal",
+    "minecraft:end_portal_frame"
+  ]
+}

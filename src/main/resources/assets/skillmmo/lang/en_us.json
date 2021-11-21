@@ -42,6 +42,8 @@
   "skillmmo.skill.engineering.description": "Develop mechanical contraptions!",
   "skillmmo.skill.mining.name": "Mining",
   "skillmmo.skill.mining.description": "Everything under the earth!",
+  "skillmmo.skill.sorcery.name": "Sorcery",
+  "skillmmo.skill.sorcery.description": "Control the magic and the mystical!",
   "skillmmo.skill.trading.name": "Trading",
   "skillmmo.skill.trading.description": "Exchange goods with the locals!"
 }

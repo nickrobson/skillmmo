@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:enchanted_book",
+    "minecraft:enchanted_golden_apple",
+    "minecraft:potion"
+  ]
+}

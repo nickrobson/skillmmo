@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:enchanting_table",
+    "minecraft:grindstone"
+  ]
+}

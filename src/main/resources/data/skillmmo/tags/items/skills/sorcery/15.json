@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:dragon_breath",
+    "minecraft:elytra",
+    "minecraft:end_crystal",
+    "minecraft:lingering_potion",
+    "minecraft:nether_star"
+  ]
+}

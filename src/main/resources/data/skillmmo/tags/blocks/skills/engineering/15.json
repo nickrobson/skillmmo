@@ -2,6 +2,7 @@
   "replace": true,
   "values": [
     "minecraft:hopper",
+    "minecraft:lodestone",
     "minecraft:observer",
     "minecraft:target",
     "minecraft:tnt"

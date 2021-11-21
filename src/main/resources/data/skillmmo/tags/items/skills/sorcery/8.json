@@ -1,0 +1,9 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:ender_eye",
+    "minecraft:fire_charge",
+    "minecraft:spectral_arrow",
+    "minecraft:tipped_arrow"
+  ]
+}
