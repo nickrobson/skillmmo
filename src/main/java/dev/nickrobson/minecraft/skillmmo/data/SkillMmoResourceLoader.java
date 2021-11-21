@@ -15,7 +15,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,11 +31,11 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
 
     @Override
     public void reload(ResourceManager manager) {
-        List<SkillData> skillsData = loadResources(manager, SkillMmoDataType.SKILLS);
+        Map<Identifier, SkillData> skillsData = loadResources(manager, SkillMmoDataType.SKILLS);
 
         Map<Identifier, SkillData> skillDataBySkillId = new HashMap<>();
-        skillsData.forEach((skillData) ->
-                skillDataBySkillId.compute(skillData.id, (k, v) -> {
+        skillsData.forEach((id, skillData) ->
+                skillDataBySkillId.compute(id, (k, v) -> {
                     if (v == null || skillData.replace) {
                         return skillData;
                     }
@@ -52,27 +51,28 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                     return v;
                 }));
 
-        Set<Skill> skills = skillDataBySkillId.values()
+        Set<Skill> skills = skillDataBySkillId.entrySet()
                 .stream()
-                .filter(skillData -> skillData.enabled != Boolean.FALSE)
+                .filter(skillData -> skillData.getValue().enabled != Boolean.FALSE)
                 .map(skillData ->
                         new Skill(
-                                skillData.id, skillData.nameKey,
-                                skillData.descriptionKey,
-                                skillData.maxLevel
+                                skillData.getKey(),
+                                skillData.getValue().nameKey,
+                                skillData.getValue().descriptionKey,
+                                skillData.getValue().maxLevel
                         ))
                 .collect(Collectors.toUnmodifiableSet());
 
         SkillManager.getInstance().initSkills(skills);
     }
 
-    private <T extends DataValidatable> List<T> loadResources(ResourceManager manager, SkillMmoDataType<T> type) {
+    private <T extends DataValidatable> Map<Identifier, T> loadResources(ResourceManager manager, SkillMmoDataType<T> type) {
         Collection<Identifier> resourceIdentifiers = manager.findResources(
                 type.getResourceCategory(),
                 path -> path.endsWith(".json")
         );
 
-        List<T> unlocksList = new ArrayList<>();
+        Map<Identifier, T> unlocksMap = new HashMap<>();
         boolean errored = false;
         for (Identifier resourceIdentifier : resourceIdentifiers) {
             try (InputStreamReader resourceReader = new InputStreamReader(manager.getResource(resourceIdentifier).getInputStream())) {
@@ -80,8 +80,13 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 Collection<String> errors = new ArrayList<>();
                 unlocks.validate(errors);
                 if (errors.isEmpty()) {
-                    unlocksList.add(unlocks);
-                    logger.debug("Loaded resource for {}: '{}'", type.getResourceCategory(), resourceIdentifier);
+                    Identifier resourceId = new Identifier(
+                            resourceIdentifier.getNamespace(),
+                            // e.g. skills/abc.json -> abc
+                            resourceIdentifier.getPath().substring(type.getResourceCategory().length() + 1, resourceIdentifier.getPath().lastIndexOf("."))
+                    );
+                    unlocksMap.put(resourceId, unlocks);
+                    logger.info("Loaded resource for {}: '{}'", type.getResourceCategory(), resourceId);
                 } else {
                     logger.error("Failed to load {} resource '{}' due to errors:\n\t- {}", type.getResourceCategory(), resourceIdentifier, String.join("\n\t- ", errors));
                     errored = true;
@@ -94,6 +99,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
         if (errored) {
             throw new IllegalStateException("Failed to start due to datapack validation errors! (See above)");
         }
-        return unlocksList;
+
+        return unlocksMap;
     }
 }

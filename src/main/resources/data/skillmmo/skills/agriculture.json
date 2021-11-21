@@ -1,7 +1,6 @@
 {
   "replace": true,
   "enabled": true,
-  "id": "skillmmo:agriculture",
   "nameKey": "skillmmo.skill.agriculture.name",
   "descriptionKey": "skillmmo.skill.agriculture.description",
   "maxLevel": 17

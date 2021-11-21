@@ -1,7 +1,6 @@
 {
   "replace": true,
   "enabled": true,
-  "id": "skillmmo:mining",
   "nameKey": "skillmmo.skill.mining.name",
   "descriptionKey": "skillmmo.skill.mining.description",
   "maxLevel": 3

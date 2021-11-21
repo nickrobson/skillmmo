@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:axolotl_bucket",
+    "minecraft:scute",
+    "minecraft:turtle_helmet"
+  ]
+}

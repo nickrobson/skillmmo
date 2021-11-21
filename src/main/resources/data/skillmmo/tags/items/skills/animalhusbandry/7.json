@@ -1,0 +1,13 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:cod",
+    "minecraft:cod_bucket",
+    "minecraft:pufferfish",
+    "minecraft:pufferfish_bucket",
+    "minecraft:salmon",
+    "minecraft:salmon_bucket",
+    "minecraft:tropical_fish",
+    "minecraft:tropical_fish_bucket"
+  ]
+}
