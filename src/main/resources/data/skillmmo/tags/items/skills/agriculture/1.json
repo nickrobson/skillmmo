@@ -1,0 +1,32 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:charcoal",
+    "minecraft:wooden_axe",
+    "minecraft:wooden_hoe",
+    "minecraft:stone_axe",
+    "minecraft:stone_hoe",
+    "minecraft:golden_axe",
+    "minecraft:golden_hoe",
+    "minecraft:iron_axe",
+    "minecraft:iron_hoe",
+    "minecraft:diamond_axe",
+    "minecraft:diamond_hoe",
+    "minecraft:netherite_axe",
+    "minecraft:netherite_hoe",
+    "minecraft:mushroom_stew",
+    "minecraft:wheat_seeds",
+    "minecraft:bread",
+    "minecraft:paper",
+    "minecraft:bone_meal",
+    "minecraft:cookie",
+    "minecraft:melon_slice",
+    "minecraft:dried_kelp",
+    "minecraft:pumpkin_seeds",
+    "minecraft:melon_seeds",
+    "minecraft:carrot",
+    "minecraft:potato",
+    "minecraft:chorus_fruit",
+    "minecraft:popped_chorus_fruit"
+  ]
+}

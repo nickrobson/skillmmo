@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:melon",
+    "minecraft:melon_stem",
+    "minecraft:attached_melon_stem"
+  ]
+}

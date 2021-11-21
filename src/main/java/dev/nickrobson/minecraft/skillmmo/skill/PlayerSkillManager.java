@@ -40,7 +40,7 @@ public class PlayerSkillManager {
     }
 
     public int getSkillLevel(PlayerEntity player, Skill skill) {
-        return getSkillLevels(player).getOrDefault(skill.getId(), SkillLevel.MIN_LEVEL);
+        return getSkillLevels(player).getOrDefault(skill.getId(), Skill.MIN_LEVEL);
     }
 
     public boolean hasSkillLevel(PlayerEntity player, Skill skill, int level) {
@@ -66,7 +66,7 @@ public class PlayerSkillManager {
 
     public ChooseSkillLevelResult chooseSkillLevel(PlayerEntity player, Skill skill) {
         int currentLevel = getSkillLevel(player, skill);
-        if (currentLevel >= skill.getMaxLevel().getLevel()) {
+        if (currentLevel >= skill.getMaxLevel()) {
             return ChooseSkillLevelResult.FAILURE_AT_MAX_LEVEL;
         }
 

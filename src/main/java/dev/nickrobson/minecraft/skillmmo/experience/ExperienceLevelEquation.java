@@ -1,13 +1,13 @@
 package dev.nickrobson.minecraft.skillmmo.experience;
 
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class ExperienceLevelEquation {
-    private static final int ENTRY_COUNT = SkillLevel.MAX_LEVEL - SkillLevel.MIN_LEVEL + 1;
+    private static final int ENTRY_COUNT = Skill.MAX_LEVEL - Skill.MIN_LEVEL + 1;
 
     private static ExperienceLevelEquation instance;
 
@@ -40,9 +40,9 @@ public class ExperienceLevelEquation {
         this.levelExperienceArr[0] = baseCost;
         this.totalExperienceArr[0] = baseCost;
 
-        for (int level = SkillLevel.MIN_LEVEL + 1; level <= SkillLevel.MAX_LEVEL; level++) {
-            long experienceRequiredForLevel = (long) (baseCost + multiplier * Math.pow(level - SkillLevel.MIN_LEVEL, levelExponent));
-            int index = level - SkillLevel.MIN_LEVEL;
+        for (int level = Skill.MIN_LEVEL + 1; level <= Skill.MAX_LEVEL; level++) {
+            long experienceRequiredForLevel = (long) (baseCost + multiplier * Math.pow(level - Skill.MIN_LEVEL, levelExponent));
+            int index = level - Skill.MIN_LEVEL;
             this.levelExperienceArr[index] = experienceRequiredForLevel;
             this.totalExperienceArr[index] = this.totalExperienceArr[index - 1] + experienceRequiredForLevel;
             if (this.totalExperienceArr[index] < this.totalExperienceArr[index - 1]) {
@@ -65,30 +65,30 @@ public class ExperienceLevelEquation {
 
     public long getLevelExperience(int level) {
         checkSkillLevelInRange(level);
-        return levelExperienceArr[level - SkillLevel.MIN_LEVEL];
+        return levelExperienceArr[level - Skill.MIN_LEVEL];
     }
 
     public long getTotalExperience(int level) {
         checkSkillLevelInRange(level);
-        return totalExperienceArr[level - SkillLevel.MIN_LEVEL];
+        return totalExperienceArr[level - Skill.MIN_LEVEL];
     }
 
     public ExperienceLevel getExperienceLevel(long totalExperience) {
         if (totalExperience < 0L) {
-            return new ExperienceLevel(SkillLevel.MIN_LEVEL, 0, getLevelExperience(SkillLevel.MIN_LEVEL + 1));
+            return new ExperienceLevel(Skill.MIN_LEVEL, 0, getLevelExperience(Skill.MIN_LEVEL + 1));
         }
 
         int bsIndex = Arrays.binarySearch(this.totalExperienceArr, totalExperience);
         // If the value is >=0 then it's the exact level value
         // If the value is <0 then it's (-level - 1), so we derive level from it
         // Need to re-add the min level to translate from array index -> level number
-        int level = SkillLevel.MIN_LEVEL + (bsIndex >= 0 ? bsIndex : -bsIndex - 1);
-        if (level == SkillLevel.MAX_LEVEL) {
+        int level = Skill.MIN_LEVEL + (bsIndex >= 0 ? bsIndex : -bsIndex - 1);
+        if (level == Skill.MAX_LEVEL) {
             return new ExperienceLevel(level, 0, 0);
         }
 
         long experienceForLevel = getLevelExperience(level);
-        long totalExperienceForPreviousLevel = level == SkillLevel.MIN_LEVEL
+        long totalExperienceForPreviousLevel = level == Skill.MIN_LEVEL
                 ? 0L
                 : getTotalExperience(level - 1);
         long progress = Math.min(experienceForLevel, Math.max(0, totalExperience - totalExperienceForPreviousLevel));
@@ -97,8 +97,8 @@ public class ExperienceLevelEquation {
     }
 
     public static void checkSkillLevelInRange(int level) {
-        if (level < SkillLevel.MIN_LEVEL || level > SkillLevel.MAX_LEVEL) {
-            throw new IllegalArgumentException("Only level numbers between " + SkillLevel.MIN_LEVEL + " and " + SkillLevel.MAX_LEVEL + " (inclusive) are supported. Supplied: " + level);
+        if (level < Skill.MIN_LEVEL || level > Skill.MAX_LEVEL) {
+            throw new IllegalArgumentException("Only level numbers between " + Skill.MIN_LEVEL + " and " + Skill.MAX_LEVEL + " (inclusive) are supported. Supplied: " + level);
         }
     }
 

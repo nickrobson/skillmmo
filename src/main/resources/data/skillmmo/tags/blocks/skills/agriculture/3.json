@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:bamboo_sapling",
+    "minecraft:bamboo",
+    "minecraft:kelp",
+    "minecraft:kelp_plant",
+    "minecraft:sugar_cane"
+  ]
+}

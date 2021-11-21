@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:nether_wart",
+    "minecraft:nether_wart_block",
+    "minecraft:shroomlight"
+  ]
+}

@@ -227,11 +227,7 @@ public class PlayerSkillUnlockManager {
 
     private Text getThingName(Interaction interaction) {
         Identifier identifier = interaction.identifier();
-        return switch (interaction.interactionType().unlockType()) {
-            case BLOCK -> Registry.BLOCK.get(identifier).getName();
-            case ITEM -> Registry.ITEM.get(identifier).getName();
-            case ENTITY -> Registry.ENTITY_TYPE.get(identifier).getName();
-        };
+        return interaction.interactionType().unlockType().getName(identifier);
     }
 
 }

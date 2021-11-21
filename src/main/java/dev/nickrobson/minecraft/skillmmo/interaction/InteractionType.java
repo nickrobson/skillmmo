@@ -7,15 +7,15 @@ public enum InteractionType {
     BLOCK_INTERACT(UnlockType.BLOCK),
     BLOCK_PLACE(UnlockType.BLOCK),
     ITEM_USE(UnlockType.ITEM),
-    ENTITY_INTERACT(UnlockType.ENTITY);
+    ENTITY_INTERACT(UnlockType.ENTITY_TYPE);
 
-    private final UnlockType unlockType;
+    private final UnlockType<?> unlockType;
 
-    InteractionType(UnlockType unlockType) {
+    InteractionType(UnlockType<?> unlockType) {
         this.unlockType = unlockType;
     }
 
-    public UnlockType unlockType() {
+    public UnlockType<?> unlockType() {
         return unlockType;
     }
 }

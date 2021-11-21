@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:cactus",
+    "minecraft:cocoa",
+    "minecraft:dried_kelp_block"
+  ]
+}

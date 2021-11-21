@@ -64,7 +64,7 @@ public class SkillsCommand {
                         "skillmmo.command.skills.skill_line_with_level",
                         skill.getNameText(),
                         PlayerSkillManager.getInstance().getSkillLevel(player, skill),
-                        skill.getMaxLevel().getLevel()
+                        skill.getMaxLevel()
                 );
                 ctx.getSource().sendFeedback(text, false);
             }

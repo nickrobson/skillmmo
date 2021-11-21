@@ -1,0 +1,11 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:moss_carpet",
+    "minecraft:moss_block",
+    "minecraft:big_dripleaf",
+    "minecraft:big_dripleaf_stem",
+    "minecraft:small_dripleaf",
+    "minecraft:hanging_roots"
+  ]
+}

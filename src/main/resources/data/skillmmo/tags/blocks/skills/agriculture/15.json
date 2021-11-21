@@ -1,0 +1,17 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:warped_stem",
+    "minecraft:warped_hyphae",
+    "minecraft:stripped_warped_stem",
+    "minecraft:stripped_warped_hyphae",
+    "minecraft:warped_nylium",
+    "minecraft:warped_fungus",
+    "minecraft:warped_wart_block",
+    "minecraft:warped_roots",
+    "minecraft:twisting_vines",
+    "minecraft:twisting_vines_plant",
+    "minecraft:potted_warped_fungus",
+    "minecraft:potted_warped_roots"
+  ]
+}

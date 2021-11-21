@@ -32,6 +32,8 @@
   "skillmmo.feedback.player.death.lost_levels.in.skill": "You lost %d %s levels.",
   "skillmmo.feedback.player.level_up": "You've reached level %d! You have %d available skill points.",
 
+  "skillmmo.skill.agriculture.name": "Agriculture",
+  "skillmmo.skill.agriculture.description": "Master the natural world!",
   "skillmmo.skill.mining.name": "Mining",
   "skillmmo.skill.mining.description": "Everything under the earth!",
   "skillmmo.skill.testing_skill.name": "Testing Skill",

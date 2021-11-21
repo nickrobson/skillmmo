@@ -9,7 +9,6 @@ import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
@@ -57,7 +56,7 @@ public class SkillCommand {
                                 .requires(ctx -> ctx.hasPermissionLevel(3))
                                 .then(argument("player", EntityArgumentType.player())
                                         .then(argument("skill", new SkillArgumentType())
-                                                .then(argument("level", IntegerArgumentType.integer(SkillLevel.MIN_LEVEL, SkillLevel.MAX_LEVEL))
+                                                .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
                                                         .executes(SkillCommand::executeSetSkillLevelCommand)
                                                 )
                                         )
@@ -74,7 +73,7 @@ public class SkillCommand {
                 new TranslatableText(
                         "skillmmo.command.skill.info.skill",
                         skill.getNameText().setStyle(Style.EMPTY.withColor(Formatting.BLUE)),
-                        skill.getMaxLevel().getLevel()
+                        skill.getMaxLevel()
                 ),
                 false
         );

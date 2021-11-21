@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
@@ -45,6 +46,13 @@ public class SkillData implements DataValidatable {
     @SerializedName("descriptionKey")
     public String descriptionKey;
 
+    /**
+     * Maximum level this skill goes to (must be below the global level limit)
+     * @see Skill#MAX_LEVEL
+     */
+    @SerializedName("maxLevel")
+    public int maxLevel;
+
     @Override
     public void validate(@Nonnull Collection<String> errors) {
         if (rawId == null) {
@@ -62,6 +70,10 @@ public class SkillData implements DataValidatable {
 
         if (descriptionKey == null) {
             errors.add("'descriptionKey' is not defined");
+        }
+
+        if (maxLevel <= Skill.MIN_LEVEL || maxLevel > Skill.MAX_LEVEL) {
+            errors.add(String.format("'maxLevel' is %d, should be between %d and %d", maxLevel, Skill.MIN_LEVEL + 1, Skill.MAX_LEVEL));
         }
     }
 }

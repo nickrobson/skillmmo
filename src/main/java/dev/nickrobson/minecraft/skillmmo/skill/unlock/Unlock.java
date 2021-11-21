@@ -5,7 +5,7 @@ import dev.nickrobson.minecraft.skillmmo.interaction.InteractionType;
 import net.minecraft.util.Identifier;
 
 public record Unlock(
-        UnlockType unlockType,
+        UnlockType<?> unlockType,
         Identifier identifier
 ) {
     public Interaction toInteraction(InteractionType interactionType) {

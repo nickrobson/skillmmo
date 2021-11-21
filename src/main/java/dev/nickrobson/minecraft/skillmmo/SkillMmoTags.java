@@ -1,11 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo;
 
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class SkillMmoTags {
+    private SkillMmoTags() {}
+
     /**
      * This tag contains blocks that should be blocked from being clicked on
      * by another block.
@@ -15,4 +19,15 @@ public class SkillMmoTags {
      */
     public static final Tag<Block> interactableBlocks =
             TagFactory.BLOCK.create(new Identifier(SkillMmoMod.MOD_ID, "interactable"));
+
+    public static <T> Tag<T> getUnlocksTag(SkillLevel skillLevel, UnlockType<T> unlockType) {
+        return unlockType.getTagFactory().create(getLevelUnlocksIdentifier(skillLevel));
+    }
+
+    private static Identifier getLevelUnlocksIdentifier(SkillLevel skillLevel) {
+        Identifier skillIdentifier = skillLevel.getSkill().getId();
+        return new Identifier(
+                skillIdentifier.getNamespace(),
+                String.format("skills/%s/%d", skillIdentifier.getPath(), skillLevel.getLevel()));
+    }
 }

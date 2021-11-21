@@ -26,6 +26,6 @@ public class UnlockHelper {
     }
 
     public static Unlock forEntity(Entity entity) {
-        return new Unlock(UnlockType.ENTITY, IdentifierHelper.forEntity(entity));
+        return new Unlock(UnlockType.ENTITY_TYPE, IdentifierHelper.forEntity(entity));
     }
 }

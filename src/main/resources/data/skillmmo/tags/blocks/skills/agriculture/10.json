@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:azalea",
+    "minecraft:flowering_azalea",
+    "minecraft:azalea_leaves",
+    "minecraft:flowering_azalea_leaves",
+    "minecraft:spore_blossom"
+  ]
+}
