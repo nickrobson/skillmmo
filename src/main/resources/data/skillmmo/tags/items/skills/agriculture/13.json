@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:diamond_axe",
+    "minecraft:diamond_hoe"
+  ]
+}

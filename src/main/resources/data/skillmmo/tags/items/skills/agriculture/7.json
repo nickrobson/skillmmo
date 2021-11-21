@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:golden_axe",
+    "minecraft:stone_hoe",
+    "minecraft:pumpkin_seeds"
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:chorus_fruit",
+    "minecraft:popped_chorus_fruit"
+  ]
+}
