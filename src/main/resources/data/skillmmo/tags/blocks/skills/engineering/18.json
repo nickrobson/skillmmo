@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:daylight_detector",
+    "minecraft:lightning_rod",
+    "minecraft:sculk_sensor"
+  ]
+}

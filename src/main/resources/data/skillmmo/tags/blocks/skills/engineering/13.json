@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:slime_block",
+    "minecraft:sticky_piston",
+    "minecraft:piston",
+    "minecraft:piston_head",
+    "minecraft:moving_piston"
+  ]
+}

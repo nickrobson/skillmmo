@@ -37,7 +37,9 @@
   "skillmmo.skill.animalhusbandry.name": "Animal Husbandry",
   "skillmmo.skill.animalhusbandry.description": "Domesticate and tame our precious wildlife!",
   "skillmmo.skill.combat.name": "Combat",
-  "skillmmo.skill.combat.description": "Gain prowess on the battlefield!",
+  "skillmmo.skill.combat.description": "Gain an advantage on the battlefield!",
+  "skillmmo.skill.engineering.name": "Engineering",
+  "skillmmo.skill.engineering.description": "Develop mechanical contraptions!",
   "skillmmo.skill.mining.name": "Mining",
   "skillmmo.skill.mining.description": "Everything under the earth!"
 }

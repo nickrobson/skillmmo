@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:dispenser",
+    "minecraft:dropper",
+
+    "minecraft:note_block",
+    "minecraft:jukebox"
+  ]
+}

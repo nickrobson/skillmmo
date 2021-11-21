@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "enabled": true,
+  "nameKey": "skillmmo.skill.engineering.name",
+  "descriptionKey": "skillmmo.skill.engineering.description",
+  "maxLevel": 18
+}

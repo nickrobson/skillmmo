@@ -1,0 +1,11 @@
+{
+  "replace": true,
+  "values": [
+    "#rails",
+    "minecraft:iron_door",
+    "minecraft:iron_trapdoor",
+
+    "#anvil",
+    "minecraft:smithing_table"
+  ]
+}

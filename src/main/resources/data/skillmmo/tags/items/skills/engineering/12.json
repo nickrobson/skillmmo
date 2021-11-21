@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:firework_rocket",
+    "minecraft:firework_star"
+  ]
+}
