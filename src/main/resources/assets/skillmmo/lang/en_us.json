@@ -46,6 +46,8 @@
   "skillmmo.skill.sorcery.description": "Control the magic and the mystical!",
   "skillmmo.skill.storage.name": "Storage",
   "skillmmo.skill.storage.description": "Create containers to hold your items!",
+  "skillmmo.skill.survival.name": "Survival",
+  "skillmmo.skill.survival.description": "Extend your life in comfort!",
   "skillmmo.skill.trading.name": "Trading",
   "skillmmo.skill.trading.description": "Exchange goods with the locals!"
 }

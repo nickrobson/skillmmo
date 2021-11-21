@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:furnace",
+    "minecraft:cartography_table",
+    "minecraft:fletching_table"
+  ]
+}
