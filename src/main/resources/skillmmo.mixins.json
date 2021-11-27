@@ -4,6 +4,7 @@
   "package": "dev.nickrobson.minecraft.skillmmo.mixin",
   "compatibilityLevel": "JAVA_16",
   "mixins": [
+    "MixinFarmlandBlock",
     "MixinLivingEntity",
     "MixinPlayerEntity",
     "MixinPlayerInventory",
