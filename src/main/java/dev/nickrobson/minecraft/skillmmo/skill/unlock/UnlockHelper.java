@@ -15,14 +15,13 @@ public class UnlockHelper {
     }
 
     public static Unlock forItem(Item item) {
-        return new Unlock(UnlockType.ITEM, IdentifierHelper.forItem(item));
+        return item instanceof BlockItem blockItem
+                ? forBlock(blockItem.getBlock())
+                : new Unlock(UnlockType.ITEM, IdentifierHelper.forItem(item));
     }
 
     public static Unlock forItemStack(ItemStack itemStack) {
-        Item item = itemStack.getItem();
-        return item instanceof BlockItem blockItem
-                ? forBlock(blockItem.getBlock())
-                : forItem(item);
+        return forItem(itemStack.getItem());
     }
 
     public static Unlock forEntity(Entity entity) {

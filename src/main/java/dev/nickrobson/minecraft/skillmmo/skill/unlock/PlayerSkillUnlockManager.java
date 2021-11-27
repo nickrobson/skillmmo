@@ -20,6 +20,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -147,6 +148,14 @@ public class PlayerSkillUnlockManager {
         }
 
         return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forItemStack(itemStack));
+    }
+
+    public boolean hasItemUnlock(@Nullable PlayerEntity player, Item item) {
+        if (item == Items.AIR) {
+            return true;
+        }
+
+        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forItem(item));
     }
 
     public boolean hasEntityUnlock(@Nullable PlayerEntity player, Entity entity) {
