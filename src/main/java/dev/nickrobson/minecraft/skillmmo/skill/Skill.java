@@ -11,6 +11,7 @@ import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.stream.IntStream;
@@ -112,5 +113,18 @@ public class Skill {
                 .add("nameKey='" + nameKey + "'")
                 .add("descriptionKey='" + descriptionKey + "'")
                 .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Skill skill = (Skill) o;
+        return maxLevel == skill.maxLevel && id.equals(skill.id) && Objects.equals(nameKey, skill.nameKey) && Objects.equals(descriptionKey, skill.descriptionKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nameKey, descriptionKey, maxLevel);
     }
 }

@@ -41,4 +41,17 @@ public class SkillLevel {
                 .add("level=" + level)
                 .toString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SkillLevel that = (SkillLevel) o;
+        return level == that.level && skill.equals(that.skill);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(skill, level);
+    }
 }
