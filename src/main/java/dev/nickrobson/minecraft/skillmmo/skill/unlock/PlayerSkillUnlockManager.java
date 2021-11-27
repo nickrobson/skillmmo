@@ -16,6 +16,7 @@ import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
@@ -159,6 +160,10 @@ public class PlayerSkillUnlockManager {
     }
 
     public boolean hasEntityUnlock(@Nullable PlayerEntity player, Entity entity) {
+        if (entity instanceof ItemEntity itemEntity) {
+            return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemEntity.getStack());
+        }
+
         return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forEntity(entity));
     }
 

@@ -28,6 +28,18 @@
     "minecraft": "1.17.x",
     "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "cloth-config2": "5.x.x"
+    "cloth-config2": "^5.0.16"
+  },
+  "suggests": {
+    "wthit": "^3.9.0"
+  },
+
+  "custom": {
+    "waila:plugins": [
+      {
+        "id": "skillmmo:waila_unlocks_plugin",
+        "initializer": "dev.nickrobson.minecraft.skillmmo.compat.waila.SkillMmoWailaUnlocksPlugin"
+      }
+    ]
   }
 }
