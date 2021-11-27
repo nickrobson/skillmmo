@@ -3,6 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.mixin;
 import com.mojang.authlib.GameProfile;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
@@ -43,7 +44,9 @@ public abstract class MixinPlayerManager {
         SkillMmoServerNetworking.sendGenericData(player);
         SkillMmoServerNetworking.sendPlayerData(player);
 
-        // FIXME - this is only here to help me debug
-        this.addToOperators(player.getGameProfile());
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            // FIXME - this is only here to help me debug
+            this.addToOperators(player.getGameProfile());
+        }
     }
 }

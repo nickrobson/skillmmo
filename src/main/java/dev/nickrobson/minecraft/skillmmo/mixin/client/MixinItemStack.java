@@ -57,7 +57,7 @@ public abstract class MixinItemStack {
         if (skillLevelSet.isEmpty()) {
             list.add(new TranslatableText("skillmmo.feedback.item.locked"));
         } else if (Screen.hasShiftDown()) {
-            MutableText text = SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked
+            MutableText text = skillLevelSet.size() == 1 || SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked
                     ? new TranslatableText("skillmmo.feedback.item.locked.advanced.heading.all")
                     : new TranslatableText("skillmmo.feedback.item.locked.advanced.heading.any");
             list.add(text.setStyle(Style.EMPTY.withColor(Formatting.RED)));
