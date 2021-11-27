@@ -7,8 +7,6 @@
     "minecraft:bread",
     "minecraft:carrot",
     "minecraft:potato",
-    "minecraft:beetroot",
-    "minecraft:beetroot_seeds",
-    "minecraft:beetroot_soup"
+    "minecraft:beetroot_seeds"
   ]
 }

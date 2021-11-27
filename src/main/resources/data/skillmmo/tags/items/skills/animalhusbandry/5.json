@@ -1,7 +1,6 @@
 {
   "replace": true,
   "values": [
-    "minecraft:honeycomb",
-    "minecraft:honey_bottle"
+    "minecraft:honeycomb"
   ]
 }

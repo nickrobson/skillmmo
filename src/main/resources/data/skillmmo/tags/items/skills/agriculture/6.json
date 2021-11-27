@@ -1,7 +1,6 @@
 {
   "replace": true,
   "values": [
-    "minecraft:melon_slice",
     "minecraft:melon_seeds"
   ]
 }

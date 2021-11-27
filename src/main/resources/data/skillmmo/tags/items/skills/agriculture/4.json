@@ -1,8 +1,6 @@
 {
   "replace": true,
   "values": [
-    "minecraft:stone_axe",
-    "minecraft:mushroom_stew",
-    "minecraft:cookie"
+    "minecraft:stone_axe"
   ]
 }
