@@ -22,7 +22,7 @@ public abstract class MixinVillagerEntity implements SkillDenyCustomizable {
 
         return new TranslatableText(
                 "skillmmo.feedback.deny.villager.interact",
-                requiredSkillLevel.getSkill(),
+                new TranslatableText(requiredSkillLevel.getSkill().getNameKey()),
                 requiredSkillLevel.getLevel()
         );
     }
