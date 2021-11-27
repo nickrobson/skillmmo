@@ -12,6 +12,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.minecraft.block.AirBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -25,7 +26,6 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
-import net.minecraft.util.registry.Registry;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -120,10 +120,18 @@ public class PlayerSkillUnlockManager {
     }
 
     public boolean hasBlockUnlock(@Nullable PlayerEntity player, BlockState blockState) {
+        if (blockState.isAir()) {
+            return true;
+        }
+
         return hasBlockUnlock(player, blockState.getBlock());
     }
 
     public boolean hasBlockUnlock(@Nullable PlayerEntity player, Block block) {
+        if (block instanceof AirBlock) {
+            return true;
+        }
+
         return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forBlock(block));
     }
 
