@@ -82,11 +82,13 @@ public class PlayerSkillManager {
         return skillLevelSet
                 .stream()
                 .filter(lvl -> !PlayerSkillManager.getInstance().hasSkillLevel(player, lvl.getSkill(), lvl.getLevel()))
-                .min(Comparator.comparing(lvl -> {
-                    int level = lvl.getLevel();
-                    int playerLevel = PlayerSkillManager.getInstance().getSkillLevel(player, lvl.getSkill());
-                    return level - playerLevel;
-                }))
+                .min(Comparator
+                        .<SkillLevel, Integer>comparing(lvl -> {
+                            int level = lvl.getLevel();
+                            int playerLevel = PlayerSkillManager.getInstance().getSkillLevel(player, lvl.getSkill());
+                            return level - playerLevel;
+                        })
+                        .thenComparing(lvl -> lvl.getSkill().getId()))
                 .orElse(null);
     }
 

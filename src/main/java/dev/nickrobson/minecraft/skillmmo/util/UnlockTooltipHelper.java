@@ -28,8 +28,10 @@ public class UnlockTooltipHelper {
             return List.of(new TranslatableText("skillmmo.feedback.item.locked"));
         }
 
-        if (!Screen.hasShiftDown()) {
-            SkillLevel skillLevel = PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
+        if (skillLevelSet.size() == 1 || !Screen.hasShiftDown()) {
+            SkillLevel skillLevel = skillLevelSet.size() == 1
+                    ? skillLevelSet.stream().findAny().get()
+                    : PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
             return List.of(
                     new TranslatableText(
                             "skillmmo.feedback.item.locked.basic",
@@ -39,7 +41,7 @@ public class UnlockTooltipHelper {
             );
         }
 
-        MutableText text = skillLevelSet.size() == 1 || SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked
+        MutableText text = SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked
                 ? new TranslatableText("skillmmo.feedback.item.locked.advanced.heading.all")
                 : new TranslatableText("skillmmo.feedback.item.locked.advanced.heading.any");
 
