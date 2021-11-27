@@ -34,6 +34,11 @@
   "skillmmo.feedback.player.skill_choice.failed_max_level": "You've already reached the maximum level of %d!",
   "skillmmo.feedback.player.skill_choice.failed_no_points": "You don't have any available skill points to spend!",
 
+  "skillmmo.gui.skills.title": "Skills",
+
+  "skillmmo.keybindings.category": "SkillMMO",
+  "skillmmo.keybindings.binding.open_skills": "Open skills",
+
   "skillmmo.skill.agriculture.name": "Agriculture",
   "skillmmo.skill.agriculture.description": "Master the natural world!",
   "skillmmo.skill.animalhusbandry.name": "Animal Husbandry",
