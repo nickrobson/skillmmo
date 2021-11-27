@@ -23,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
@@ -101,22 +102,27 @@ public class PlayerSkillUnlockManager {
         });
 
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            ItemStack itemStack = player.getStackInHand(hand);
-
-            // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
-            if (!hasItemUnlock(player, itemStack)) {
-                reportItemUseLocked(player, itemStack.getItem());
-                return ActionResult.FAIL;
-            }
-
-            // If the player doesn't have the necessary skill for the entity, deny the interaction
-            if (!hasEntityUnlock(player, entity)) {
-                reportEntityInteractLocked(player, entity);
-                return ActionResult.FAIL;
-            }
-
-            return ActionResult.PASS;
+            return handleEntityInteraction(player, hand, entity);
         });
+    }
+
+    // FIXME - temporary while Fabric UseEntityCallback doesn't handle "normal" entity interactions
+    public ActionResult handleEntityInteraction(PlayerEntity player, Hand hand, Entity entity) {
+        ItemStack itemStack = player.getStackInHand(hand);
+
+        // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
+        if (!hasItemUnlock(player, itemStack)) {
+            reportItemUseLocked(player, itemStack.getItem());
+            return ActionResult.FAIL;
+        }
+
+        // If the player doesn't have the necessary skill for the entity, deny the interaction
+        if (!hasEntityUnlock(player, entity)) {
+            reportEntityInteractLocked(player, entity);
+            return ActionResult.FAIL;
+        }
+
+        return ActionResult.PASS;
     }
 
     public boolean hasBlockUnlock(@Nullable PlayerEntity player, BlockState blockState) {

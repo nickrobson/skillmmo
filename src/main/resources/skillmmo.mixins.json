@@ -9,6 +9,7 @@
     "MixinPlayerEntity",
     "MixinPlayerInventory",
     "MixinPlayerManager",
+    "MixinServerPlayPlayerInteractEntityC2SPacketHandler",
     "MixinServerPlayerEntity",
     "MixinVillagerEntity"
   ],
