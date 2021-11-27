@@ -89,7 +89,7 @@ public class Skill {
     }
 
     public List<SkillLevel> getSkillLevels() {
-        return IntStream.range(1, maxLevel)
+        return IntStream.rangeClosed(1, maxLevel)
                 .mapToObj(level -> new SkillLevel(this, level))
                 .toList();
     }
