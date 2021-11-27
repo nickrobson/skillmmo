@@ -7,9 +7,9 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormattedMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadListener {
-    private static final Logger logger = LoggerFactory.getLogger(SkillMmoResourceLoader.class);
+    private static final Logger logger = LogManager.getLogger(SkillMmoResourceLoader.class);
 
     private final Gson gson = new GsonBuilder().create();
 
