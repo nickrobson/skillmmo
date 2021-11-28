@@ -4,6 +4,7 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
+import net.minecraft.item.Item;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
@@ -27,6 +28,7 @@ public class Skill {
     private final String nameKey;
     private final String descriptionKey;
     private final int maxLevel;
+    private final Item iconItem;
 
     private final LoadingCache<Unlock, Optional<SkillLevel>> levelsByUnlockCache;
 
@@ -34,19 +36,21 @@ public class Skill {
             Identifier id,
             String nameKey,
             String descriptionKey,
-            int maxLevel) {
+            int maxLevel,
+            Item iconItem) {
         this.id = id;
         this.nameKey = nameKey;
         this.descriptionKey = descriptionKey;
         this.maxLevel = maxLevel;
+        this.iconItem = iconItem;
 
         if (maxLevel < MIN_LEVEL + 1) {
             throw new IllegalStateException(
-                    String.format("Max level for skill '%s' is %d, should be %d or higher", id, maxLevel, MIN_LEVEL + 1));
+                    "Max level for skill '%s' is %d, should be %d or higher".formatted(id, maxLevel, MIN_LEVEL + 1));
         }
         if (maxLevel > MAX_LEVEL) {
             throw new IllegalStateException(
-                    String.format("Maximum level for skill '%s' is %d, should be %d or lower", id, maxLevel, MAX_LEVEL));
+                    "Maximum level for skill '%s' is %d, should be %d or lower".formatted(id, maxLevel, MAX_LEVEL));
         }
 
         this.levelsByUnlockCache = CacheBuilder.newBuilder()
@@ -87,6 +91,10 @@ public class Skill {
 
     public int getMaxLevel() {
         return maxLevel;
+    }
+
+    public Item getIconItem() {
+        return iconItem;
     }
 
     public List<SkillLevel> getSkillLevels() {

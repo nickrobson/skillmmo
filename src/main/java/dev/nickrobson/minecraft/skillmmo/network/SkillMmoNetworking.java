@@ -3,6 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.network;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.util.Identifier;
 
@@ -21,8 +22,9 @@ public interface SkillMmoNetworking {
         String nameKey = packetByteBuf.readString();
         String descriptionKey = packetByteBuf.readString();
         int maxLevel = packetByteBuf.readVarInt();
+        Item iconItem = Item.byRawId(packetByteBuf.readVarInt());
 
-        return new Skill(id, nameKey, descriptionKey, maxLevel);
+        return new Skill(id, nameKey, descriptionKey, maxLevel, iconItem);
     }
 
     static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
@@ -30,6 +32,7 @@ public interface SkillMmoNetworking {
         packetByteBuf.writeString(skill.getNameKey());
         packetByteBuf.writeString(skill.getDescriptionKey());
         packetByteBuf.writeVarInt(skill.getMaxLevel());
+        packetByteBuf.writeVarInt(Item.getRawId(skill.getIconItem()));
     }
 
     static ExperienceLevelEquation readExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf) {

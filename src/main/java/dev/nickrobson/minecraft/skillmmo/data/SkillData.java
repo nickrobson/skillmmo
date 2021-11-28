@@ -2,10 +2,14 @@ package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import net.minecraft.item.Item;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
+import net.minecraft.util.registry.Registry;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Data shape for a skill in a datapack
@@ -38,10 +42,19 @@ public class SkillData implements DataValidatable {
 
     /**
      * Maximum level this skill goes to (must be below the global level limit)
+     *
      * @see Skill#MAX_LEVEL
      */
     @SerializedName("maxLevel")
     public int maxLevel;
+
+    /**
+     * The item to use as the icon for display in the Skills GUI
+     */
+    @SerializedName("iconItem")
+    public String rawItemIconId;
+
+    public transient Item iconItem;
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
@@ -54,7 +67,23 @@ public class SkillData implements DataValidatable {
         }
 
         if (maxLevel <= Skill.MIN_LEVEL || maxLevel > Skill.MAX_LEVEL) {
-            errors.add(String.format("'maxLevel' is %d, should be between %d and %d", maxLevel, Skill.MIN_LEVEL + 1, Skill.MAX_LEVEL));
+            errors.add("'maxLevel' is %d, should be between %d and %d".formatted(maxLevel, Skill.MIN_LEVEL + 1, Skill.MAX_LEVEL));
+        }
+
+        if (rawItemIconId == null) {
+            errors.add("'iconItem' should be set to an item ID to be used for the icon, e.g. minecraft:stone or minecraft:egg");
+        } else {
+            Identifier iconItemId = Identifier.tryParse(rawItemIconId);
+            if (iconItemId == null) {
+                errors.add("'iconItem' is '%s', should be a valid identifier format, e.g. minecraft:stone or mineraft:egg".formatted(rawItemIconId));
+            } else {
+                Optional<Item> iconItemOpt = Registry.ITEM.getOrEmpty(iconItemId);
+                if (iconItemOpt.isPresent()) {
+                    iconItem = iconItemOpt.get();
+                } else {
+                    errors.add("'iconItem' is '%s', which is not the ID of any item known to the game".formatted(iconItemId));
+                }
+            }
         }
     }
 }

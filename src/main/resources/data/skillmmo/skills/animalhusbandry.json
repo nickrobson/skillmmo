@@ -3,5 +3,6 @@
   "enabled": true,
   "nameKey": "skillmmo.skill.animalhusbandry.name",
   "descriptionKey": "skillmmo.skill.animalhusbandry.description",
-  "maxLevel": 15
+  "maxLevel": 15,
+  "iconItem": "minecraft:saddle"
 }

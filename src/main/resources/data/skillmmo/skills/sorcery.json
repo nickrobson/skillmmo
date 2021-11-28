@@ -3,5 +3,6 @@
   "enabled": true,
   "nameKey": "skillmmo.skill.sorcery.name",
   "descriptionKey": "skillmmo.skill.sorcery.description",
-  "maxLevel": 15
+  "maxLevel": 15,
+  "iconItem": "minecraft:enchanting_table"
 }

@@ -3,5 +3,6 @@
   "enabled": true,
   "nameKey": "skillmmo.skill.mining.name",
   "descriptionKey": "skillmmo.skill.mining.description",
-  "maxLevel": 25
+  "maxLevel": 25,
+  "iconItem": "minecraft:gold_ore"
 }

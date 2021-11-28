@@ -46,9 +46,8 @@ public class SkillsGui extends LightweightGuiDescription {
         WListPanel<SkillLevel, WGridPanel> skillLevelsPanel = new WListPanel<>(skillLevels, () -> new WGridPanel(GRID_SIZE), ((skillLevel, grid) -> {
             Skill skill = skillLevel.getSkill();
 
-            // TODO - add item icon config to skills in datapack & wire thru to here
             grid.add(
-                    new WItem(new ItemStack(Registry.ITEM.get((int) (Math.random() * 100)))),
+                    new WItem(new ItemStack(skill.getIconItem())),
                     0, 0,
                     ICON_GRID_WIDTH, 1
             );

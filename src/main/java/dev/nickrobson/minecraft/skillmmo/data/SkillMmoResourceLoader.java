@@ -59,7 +59,8 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                                 skillData.getKey(),
                                 skillData.getValue().nameKey,
                                 skillData.getValue().descriptionKey,
-                                skillData.getValue().maxLevel
+                                skillData.getValue().maxLevel,
+                                skillData.getValue().iconItem
                         ))
                 .collect(Collectors.toUnmodifiableSet());
 
@@ -88,7 +89,12 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                     unlocksMap.put(resourceId, unlocks);
                     logger.info("Loaded resource for {}: '{}'", type.getResourceCategory(), resourceId);
                 } else {
-                    logger.error("Failed to load {} resource '{}' due to errors:\n\t- {}", type.getResourceCategory(), resourceIdentifier, String.join("\n\t- ", errors));
+                    logger.error(
+                            "Failed to load resource '{}' for type '{}' due to errors:{}",
+                            resourceIdentifier,
+                            type.getResourceCategory(),
+                            errors.stream().map("\n\t- %s"::formatted).collect(Collectors.joining())
+                    );
                     errored = true;
                 }
             } catch (Exception ex) {

@@ -3,5 +3,6 @@
   "enabled": true,
   "nameKey": "skillmmo.skill.trading.name",
   "descriptionKey": "skillmmo.skill.trading.description",
-  "maxLevel": 8
+  "maxLevel": 8,
+  "iconItem": "minecraft:emerald"
 }

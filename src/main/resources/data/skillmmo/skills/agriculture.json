@@ -3,5 +3,6 @@
   "enabled": true,
   "nameKey": "skillmmo.skill.agriculture.name",
   "descriptionKey": "skillmmo.skill.agriculture.description",
-  "maxLevel": 17
+  "maxLevel": 17,
+  "iconItem": "minecraft:wheat"
 }

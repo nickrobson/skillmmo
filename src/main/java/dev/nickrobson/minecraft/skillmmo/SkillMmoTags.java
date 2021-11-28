@@ -28,6 +28,6 @@ public class SkillMmoTags {
         Identifier skillIdentifier = skillLevel.getSkill().getId();
         return new Identifier(
                 skillIdentifier.getNamespace(),
-                String.format("skills/%s/%d", skillIdentifier.getPath(), skillLevel.getLevel()));
+                "skills/%s/%d".formatted(skillIdentifier.getPath(), skillLevel.getLevel()));
     }
 }

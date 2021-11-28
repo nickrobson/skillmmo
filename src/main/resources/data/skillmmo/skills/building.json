@@ -3,5 +3,6 @@
   "enabled": true,
   "nameKey": "skillmmo.skill.building.name",
   "descriptionKey": "skillmmo.skill.building.description",
-  "maxLevel": 25
+  "maxLevel": 25,
+  "iconItem": "minecraft:scaffolding"
 }
