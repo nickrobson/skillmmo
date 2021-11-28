@@ -30,7 +30,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
                 PlayerSkillManager.ChooseSkillLevelResult result = PlayerSkillManager.getInstance().chooseSkillLevel(player, skill);
                 switch (result) {
                     case FAILURE_AT_MAX_LEVEL -> player.sendMessage(
-                            new TranslatableText("skillmmo.feedback.player.skill_choice.failed_max_level")
+                            new TranslatableText("skillmmo.feedback.player.skill_choice.failed_max_level", skill.getMaxLevel())
                                     .setStyle(Style.EMPTY.withFormatting(Formatting.RED)),
                             false);
                     case FAILURE_NO_AVAILABLE_POINTS -> player.sendMessage(
