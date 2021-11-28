@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
+import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
@@ -72,11 +73,22 @@ public class SkillsGui extends LightweightGuiDescription {
         WPlainPanel root = new WPlainPanel();
         setRootPanel(root);
         root.setInsets(Insets.ROOT_PANEL);
+
+        final int ROOT_WIDTH = ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH;
+
+        root.add(
+                new WExperienceBar(PlayerExperienceManager.getInstance().getExperienceLevel(player).progressFraction()),
+                0,
+                10,
+                GRID_SIZE * ROOT_WIDTH,
+                5
+        );
+
         root.add(
                 skillLevelsPanel,
                 0,
-                10,
-                GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH + 1),
+                18,
+                GRID_SIZE * (ROOT_WIDTH + 1),
                 GRID_SIZE * 8
         );
 

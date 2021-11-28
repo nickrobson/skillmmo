@@ -2,8 +2,6 @@ package dev.nickrobson.minecraft.skillmmo.experience;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
@@ -23,6 +21,10 @@ public class PlayerExperienceManager {
     public long getExperience(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getExperience();
+    }
+
+    public ExperienceLevel getExperienceLevel(PlayerEntity player) {
+        return ExperienceLevelEquation.getInstance().getExperienceLevel(getExperience(player));
     }
 
     public void setExperience(PlayerEntity player, long experience) {
@@ -45,9 +47,7 @@ public class PlayerExperienceManager {
             player.sendMessage(new TranslatableText("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
         }
 
-        if (FabricLoader.getInstance().getEnvironmentType() == EnvType.SERVER) {
-            SkillMmoServerNetworking.sendPlayerXpInfo(player);
-        }
+        SkillMmoServerNetworking.sendPlayerXpInfo(player);
     }
 
     public int getTotalSkillPoints(int level) {

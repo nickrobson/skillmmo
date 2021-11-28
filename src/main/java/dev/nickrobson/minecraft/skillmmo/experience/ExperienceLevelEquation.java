@@ -7,8 +7,6 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class ExperienceLevelEquation {
-    private static final int ENTRY_COUNT = Skill.MAX_LEVEL - Skill.MIN_LEVEL + 1;
-
     private static ExperienceLevelEquation instance;
 
     public static ExperienceLevelEquation getInstance() {
@@ -22,15 +20,18 @@ public class ExperienceLevelEquation {
     private final long baseCost;
     private final double multiplier;
     private final double levelExponent;
-    private final long[] levelExperienceArr; // experience required to get to the END of each level, starting from the start of it
-    private final long[] totalExperienceArr; // total experience required to get to the END of each level, starting from the start of level 0
+
+    private int entryCount = 1_000;
+    private int highestCalculated = 0;
+    private long[] levelExperienceArr; // experience required to get to the END of each level, starting from the start of it
+    private long[] totalExperienceArr; // total experience required to get to the END of each level, starting from the start of level 0
 
     public ExperienceLevelEquation(long baseCost, double multiplier, double levelExponent) {
         this.baseCost = baseCost;
         this.multiplier = multiplier;
         this.levelExponent = levelExponent;
-        this.levelExperienceArr = new long[ENTRY_COUNT];
-        this.totalExperienceArr = new long[ENTRY_COUNT];
+        this.levelExperienceArr = new long[entryCount];
+        this.totalExperienceArr = new long[entryCount];
 
         // Prevent level exponents that will cause invalid/insane numbers
         if (levelExponent < 0 || levelExponent > 4) {
@@ -40,15 +41,7 @@ public class ExperienceLevelEquation {
         this.levelExperienceArr[0] = baseCost;
         this.totalExperienceArr[0] = baseCost;
 
-        for (int level = Skill.MIN_LEVEL + 1; level <= Skill.MAX_LEVEL; level++) {
-            long experienceRequiredForLevel = (long) (baseCost + multiplier * Math.pow(level - Skill.MIN_LEVEL, levelExponent));
-            int index = level - Skill.MIN_LEVEL;
-            this.levelExperienceArr[index] = experienceRequiredForLevel;
-            this.totalExperienceArr[index] = this.totalExperienceArr[index - 1] + experienceRequiredForLevel;
-            if (this.totalExperienceArr[index] < this.totalExperienceArr[index - 1]) {
-                throw new IllegalStateException("Experience level equation grew too fast. Level " + (level - 1) + " has a higher exp cost than level " + level + ". Try reducing your multiplier and/or level exponent to ensure the number doesn't overflow.");
-            }
-        }
+        calculateLevelExperienceUpToLevel(entryCount - 1);
     }
 
     public long getBaseCost() {
@@ -64,13 +57,13 @@ public class ExperienceLevelEquation {
     }
 
     public long getLevelExperience(int level) {
-        checkSkillLevelInRange(level);
-        return levelExperienceArr[level - Skill.MIN_LEVEL];
+        calculateLevelExperienceUpToLevel(level);
+        return levelExperienceArr[level];
     }
 
     public long getTotalExperience(int level) {
-        checkSkillLevelInRange(level);
-        return totalExperienceArr[level - Skill.MIN_LEVEL];
+        calculateLevelExperienceUpToLevel(level);
+        return totalExperienceArr[level];
     }
 
     public ExperienceLevel getExperienceLevel(long totalExperience) {
@@ -96,10 +89,30 @@ public class ExperienceLevelEquation {
         return new ExperienceLevel(level, progress, experienceForLevel);
     }
 
-    public static void checkSkillLevelInRange(int level) {
-        if (level < Skill.MIN_LEVEL || level > Skill.MAX_LEVEL) {
-            throw new IllegalArgumentException("Only level numbers between " + Skill.MIN_LEVEL + " and " + Skill.MAX_LEVEL + " (inclusive) are supported. Supplied: " + level);
+    public void calculateLevelExperienceUpToLevel(int level) {
+        if (level < 0 || level > 10_000) {
+            throw new IllegalArgumentException("Only level numbers between 0 and 10000 (inclusive) are supported. Supplied: " + level);
         }
+
+        if (level >= entryCount) {
+            while (entryCount <= level) {
+                entryCount *= 2;
+            }
+
+            levelExperienceArr = Arrays.copyOf(levelExperienceArr, entryCount);
+            totalExperienceArr = Arrays.copyOf(totalExperienceArr, entryCount);
+        }
+
+        for (int i = highestCalculated + 1; i < entryCount; i++) {
+            long experienceRequiredForLevel = (long) (baseCost + multiplier * Math.pow(i, levelExponent));
+            this.levelExperienceArr[i] = experienceRequiredForLevel;
+            this.totalExperienceArr[i] = this.totalExperienceArr[i - 1] + experienceRequiredForLevel;
+            if (this.totalExperienceArr[i] < this.totalExperienceArr[i - 1]) {
+                throw new IllegalStateException("Experience level equation grew too fast. Level %d has a higher exp cost than level %d. Try reducing your multiplier and/or level exponent to ensure the number doesn't overflow.".formatted(i - 1, i));
+            }
+        }
+
+        highestCalculated = entryCount - 1;
     }
 
     @Override
