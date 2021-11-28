@@ -37,11 +37,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class SkillsGui extends LightweightGuiDescription {
     private static final int GRID_SIZE = 18;
 
-    private static final int ROOT_WIDTH = 10;
+    private static final int ROOT_WIDTH = 11;
     private static final int LEVEL_TEXT_WIDTH = 5;
     private static final int XP_PROGRESS_TEXT_WIDTH = ROOT_WIDTH - LEVEL_TEXT_WIDTH;
     private static final int ICON_GRID_WIDTH = 1;
-    private static final int NAME_GRID_WIDTH = 5;
+    private static final int NAME_GRID_WIDTH = 6;
     private static final int LEVEL_GRID_WIDTH = 2;
 
     public static void open() {
@@ -135,9 +135,9 @@ public class SkillsGui extends LightweightGuiDescription {
                     new WLabel(skill.getNameText())
                             .setVerticalAlignment(VerticalAlignment.CENTER)
                             .setHorizontalAlignment(HorizontalAlignment.LEFT),
-                    GRID_SIZE * ICON_GRID_WIDTH,
+                    GRID_SIZE * ICON_GRID_WIDTH + 6,
                     0,
-                    GRID_SIZE * NAME_GRID_WIDTH,
+                    GRID_SIZE * NAME_GRID_WIDTH - 6,
                     GRID_SIZE
             );
 
