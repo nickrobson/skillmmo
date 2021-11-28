@@ -9,6 +9,6 @@ import net.minecraft.text.TranslatableText;
 @Environment(EnvType.CLIENT)
 public class SkillsClientScreen extends CottonClientScreen {
     public SkillsClientScreen(GuiDescription description) {
-        super(new TranslatableText("skillmmo.gui.skills.title"), description);
+        super(description);
     }
 }

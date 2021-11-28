@@ -35,6 +35,9 @@
   "skillmmo.feedback.player.skill_choice.failed_no_points": "You don't have any available skill points to spend!",
 
   "skillmmo.gui.skills.title": "Skills",
+  "skillmmo.gui.skills.info.level": "Level %d",
+  "skillmmo.gui.skills.info.xp_progress": "XP %d/%d",
+  "skillmmo.gui.skills.info.available_points": "Available points: %d",
 
   "skillmmo.keybindings.category": "SkillMMO",
   "skillmmo.keybindings.binding.open_skills": "Open Skills",

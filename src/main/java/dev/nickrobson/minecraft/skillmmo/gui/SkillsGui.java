@@ -22,6 +22,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.TranslatableText;
 
 import java.util.Comparator;
 import java.util.List;
@@ -30,12 +31,12 @@ import java.util.List;
 public class SkillsGui extends LightweightGuiDescription {
     private static final int GRID_SIZE = 18;
 
+    private static final int ROOT_WIDTH = 10;
+    private static final int LEVEL_TEXT_WIDTH = 5;
+    private static final int XP_PROGRESS_TEXT_WIDTH = ROOT_WIDTH - LEVEL_TEXT_WIDTH;
     private static final int ICON_GRID_WIDTH = 1;
     private static final int NAME_GRID_WIDTH = 6;
     private static final int LEVEL_GRID_WIDTH = 2;
-    private static final int ROOT_WIDTH = ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH;
-    private static final int LEVEL_TEXT_WIDTH = 4;
-    private static final int POINTS_TEXT_WIDTH = ROOT_WIDTH - LEVEL_TEXT_WIDTH;
 
     public static void open() {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
@@ -50,8 +51,8 @@ public class SkillsGui extends LightweightGuiDescription {
 
         root.add(
                 createInfoPanel(player),
+                7,
                 0,
-                10,
                 GRID_SIZE * ROOT_WIDTH,
                 GRID_SIZE + 5
         );
@@ -59,8 +60,8 @@ public class SkillsGui extends LightweightGuiDescription {
         root.add(
                 createSkillsPanel(player),
                 0,
-                GRID_SIZE * 2,
-                GRID_SIZE * (ROOT_WIDTH + 1),
+                GRID_SIZE + 10,
+                GRID_SIZE * ROOT_WIDTH,
                 GRID_SIZE * 8
         );
 
@@ -69,12 +70,11 @@ public class SkillsGui extends LightweightGuiDescription {
 
     private WWidget createInfoPanel(ClientPlayerEntity player) {
         WPlainPanel infoPanel = new WPlainPanel();
-        infoPanel.setInsets(new Insets(0, 4));
 
         ExperienceLevel experienceLevel = PlayerExperienceManager.getInstance().getExperienceLevel(player);
 
         infoPanel.add(
-                new WLabel("Level " + experienceLevel.level())
+                new WLabel(new TranslatableText("skillmmo.gui.skills.info.level", experienceLevel.level()))
                         .setHorizontalAlignment(HorizontalAlignment.LEFT)
                         .setVerticalAlignment(VerticalAlignment.CENTER),
                 0,
@@ -84,12 +84,12 @@ public class SkillsGui extends LightweightGuiDescription {
         );
 
         infoPanel.add(
-                new WLabel("Available points: " + PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player))
+                new WLabel(new TranslatableText("skillmmo.gui.skills.info.xp_progress", experienceLevel.progress(), experienceLevel.levelExperience()))
                         .setHorizontalAlignment(HorizontalAlignment.RIGHT)
                         .setVerticalAlignment(VerticalAlignment.CENTER),
                 GRID_SIZE * LEVEL_TEXT_WIDTH,
                 0,
-                GRID_SIZE * POINTS_TEXT_WIDTH,
+                GRID_SIZE * XP_PROGRESS_TEXT_WIDTH - 7,
                 GRID_SIZE
         );
 
@@ -97,7 +97,7 @@ public class SkillsGui extends LightweightGuiDescription {
                 new WExperienceBar(experienceLevel.progressFraction()),
                 0,
                 GRID_SIZE,
-                GRID_SIZE * ROOT_WIDTH,
+                GRID_SIZE * ROOT_WIDTH - 7,
                 5
         );
 
@@ -111,7 +111,7 @@ public class SkillsGui extends LightweightGuiDescription {
                 .sorted(Comparator.comparing(skillLevel -> skillLevel.getSkill().getNameText().getString()))
                 .toList();
 
-        return new WListPanel<>(skillLevels, () -> new WGridPanel(GRID_SIZE), ((skillLevel, grid) -> {
+        WListPanel<SkillLevel, WGridPanel> skillLevelsPanel = new WListPanel<>(skillLevels, () -> new WGridPanel(GRID_SIZE), ((skillLevel, grid) -> {
             Skill skill = skillLevel.getSkill();
 
             grid.add(
@@ -129,12 +129,34 @@ public class SkillsGui extends LightweightGuiDescription {
             );
 
             grid.add(
-                    new WLabel(skillLevel.getLevel() + " / " + skill.getMaxLevel())
+                    new WLabel(skillLevel.getLevel() + "/" + skill.getMaxLevel())
                             .setVerticalAlignment(VerticalAlignment.CENTER)
                             .setHorizontalAlignment(HorizontalAlignment.RIGHT),
                     ICON_GRID_WIDTH + NAME_GRID_WIDTH, 0,
                     LEVEL_GRID_WIDTH, 1
             );
         }));
+
+        WPlainPanel skillsPanel = new WPlainPanel();
+
+        skillsPanel.add(
+                new WLabel(new TranslatableText("skillmmo.gui.skills.info.available_points", PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player)))
+                        .setHorizontalAlignment(HorizontalAlignment.RIGHT)
+                        .setVerticalAlignment(VerticalAlignment.CENTER),
+                0,
+                0,
+                GRID_SIZE * ROOT_WIDTH,
+                GRID_SIZE
+        );
+
+        skillsPanel.add(
+                skillLevelsPanel,
+                0,
+                GRID_SIZE,
+                GRID_SIZE * ROOT_WIDTH,
+                GRID_SIZE * 7
+        );
+
+        return skillsPanel;
     }
 }
