@@ -68,7 +68,7 @@ public class SkillsGui extends LightweightGuiDescription {
         root.add(
                 createSkillsPanel(player),
                 0,
-                GRID_SIZE + 8,
+                GRID_SIZE + 12,
                 GRID_SIZE * ROOT_WIDTH,
                 GRID_SIZE * 8
         );
@@ -192,13 +192,13 @@ public class SkillsGui extends LightweightGuiDescription {
                 0,
                 0,
                 GRID_SIZE * ROOT_WIDTH,
-                GRID_SIZE
+                GRID_SIZE - 4
         );
 
         skillsPanel.add(
                 skillLevelsPanel,
                 0,
-                GRID_SIZE,
+                GRID_SIZE - 4,
                 GRID_SIZE * ROOT_WIDTH,
                 GRID_SIZE * 7
         );
