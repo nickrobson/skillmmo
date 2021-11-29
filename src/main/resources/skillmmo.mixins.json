@@ -9,12 +9,13 @@
     "MixinPlayerEntity",
     "MixinPlayerInventory",
     "MixinPlayerManager",
-    "MixinServerPlayPlayerInteractEntityC2SPacketHandler",
     "MixinServerPlayerEntity",
+    "MixinServerPlayPlayerInteractEntityC2SPacketHandler",
     "MixinVillagerEntity"
   ],
   "client": [
     "client.MixinClientPlayerEntity",
+    "client.MixinConnectScreen",
     "client.MixinItemStack"
   ],
   "server": [],

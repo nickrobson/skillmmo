@@ -10,6 +10,8 @@ import net.minecraft.util.Identifier;
 import javax.annotation.Nonnull;
 
 public interface SkillMmoNetworking {
+    Identifier LOGIN_HANDSHAKE = new Identifier(SkillMmoMod.MOD_ID, "handshake");
+
     Identifier C2S_PLAYER_SKILL_CHOICE = new Identifier(SkillMmoMod.MOD_ID, "player_skill_choice");
 
     Identifier S2C_SKILLS = new Identifier(SkillMmoMod.MOD_ID, "skills");

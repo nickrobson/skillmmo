@@ -26,7 +26,7 @@ public class SkillMmoClientInitializer implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (openSkillsKeyBinding.wasPressed()) {
-                if (MinecraftClient.getInstance().currentScreen == null) {
+                if (SkillMmoMod.isModEnabled && MinecraftClient.getInstance().currentScreen == null) {
                     SkillsGui.open();
                 }
             }

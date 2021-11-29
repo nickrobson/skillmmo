@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
@@ -44,6 +45,10 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
             at = @At(value = "TAIL")
     )
     public void skillMmo$readNbtData(NbtCompound nbt, CallbackInfo ci) {
+        if (!SkillMmoMod.isModEnabled) {
+            return;
+        }
+
         NbtCompound skillMmoNbt = nbt.contains(SKILLMMO_ROOT_NBT_KEY, NbtElement.COMPOUND_TYPE)
                 ? nbt.getCompound(SKILLMMO_ROOT_NBT_KEY)
                 : new NbtCompound();
@@ -80,6 +85,10 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
             at = @At(value = "TAIL")
     )
     public void skillMmo$writeNbtData(NbtCompound nbt, CallbackInfo ci) {
+        if (!SkillMmoMod.isModEnabled) {
+            return;
+        }
+
         SkillMmoPlayerData playerData = this.getSkillMmoPlayerData();
         NbtCompound skillMmoNbt = new NbtCompound();
 

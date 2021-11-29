@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill.unlock;
 
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.interaction.Interaction;
@@ -168,6 +169,10 @@ public class PlayerSkillUnlockManager {
     }
 
     private boolean hasUnlock(@Nullable PlayerEntity player, Unlock unlock) {
+        if (!SkillMmoMod.isModEnabled) {
+            return true;
+        }
+
         if (player == null) {
             return false;
         }

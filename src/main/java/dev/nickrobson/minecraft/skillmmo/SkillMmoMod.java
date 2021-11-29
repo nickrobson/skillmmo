@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 
 public class SkillMmoMod implements ModInitializer {
     private static final Logger logger = LogManager.getLogger(SkillMmoMod.class);
+    public static boolean isModEnabled = true;
 
     public static final String MOD_ID = "skillmmo";
     public static final String MOD_NAME = "SkillMMO";
