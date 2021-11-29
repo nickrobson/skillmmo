@@ -1,15 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import com.mojang.authlib.GameProfile;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -17,9 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PlayerManager.class)
 public abstract class MixinPlayerManager {
-    @Shadow
-    public abstract void addToOperators(GameProfile profile);
-
     @Redirect(
             method = "onPlayerConnect",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/server/PlayerManager;loadPlayerData(Lnet/minecraft/server/network/ServerPlayerEntity;)Lnet/minecraft/nbt/NbtCompound;")
@@ -43,10 +37,5 @@ public abstract class MixinPlayerManager {
     public void skillMmo$onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
         SkillMmoServerNetworking.sendGenericData(player);
         SkillMmoServerNetworking.sendPlayerData(player);
-
-        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
-            // FIXME - this is only here to help me debug
-            this.addToOperators(player.getGameProfile());
-        }
     }
 }
