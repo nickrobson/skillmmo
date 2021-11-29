@@ -9,7 +9,6 @@ import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
-import io.github.cottonmc.cotton.gui.widget.WButton;
 import io.github.cottonmc.cotton.gui.widget.WDynamicLabel;
 import io.github.cottonmc.cotton.gui.widget.WItem;
 import io.github.cottonmc.cotton.gui.widget.WLabel;
@@ -25,7 +24,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.TranslatableText;
 
 import java.util.ArrayList;
@@ -50,7 +48,7 @@ public class SkillsGui extends LightweightGuiDescription {
         MinecraftClient.getInstance().setScreen(new SkillsClientScreen(new SkillsGui(player)));
     }
 
-    private final List<WButton> acquireSkillButtons = new ArrayList<>();
+    private final List<WPlusButton> acquireSkillButtons = new ArrayList<>();
 
     public SkillsGui(ClientPlayerEntity player) {
         WPlainPanel root = new WPlainPanel();
@@ -150,9 +148,8 @@ public class SkillsGui extends LightweightGuiDescription {
                     GRID_SIZE
             );
 
-            WButton acquireSkillButton = new WPlusButton(new LiteralText("+"))
-                    .setEnabled(availableSkillPoints > 0 && skillLevel.getLevel() < skill.getMaxLevel())
-                    .setAlignment(HorizontalAlignment.CENTER);
+            WPlusButton acquireSkillButton = new WPlusButton(new TranslatableText("skillmmo.gui.skills.info.acquire_skill.narration", skill.getNameText()))
+                    .setEnabled(availableSkillPoints > 0 && skillLevel.getLevel() < skill.getMaxLevel());
 
             AtomicInteger levelUps = new AtomicInteger(0);
             acquireSkillButton.setOnClick(() -> {

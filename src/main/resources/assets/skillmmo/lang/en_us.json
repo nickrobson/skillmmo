@@ -38,6 +38,7 @@
   "skillmmo.gui.skills.info.level": "Level %d",
   "skillmmo.gui.skills.info.xp_progress": "XP %d/%d",
   "skillmmo.gui.skills.info.available_points": "Available points: %d",
+  "skillmmo.gui.skills.info.acquire_skill.narration": "Level up %s",
 
   "skillmmo.keybindings.category": "SkillMMO",
   "skillmmo.keybindings.binding.open_skills": "Open Skills",
