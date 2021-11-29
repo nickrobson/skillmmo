@@ -31,6 +31,6 @@ public class WExperienceBar extends WWidget {
     @Environment(EnvType.CLIENT)
     public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         ScreenDrawing.texturedRect(matrices, x, y, getWidth(), getHeight(), TEXTURE_EMPTY_BAR, 0xFF_FFFFFF);
-        ScreenDrawing.texturedRect(matrices, x, y, (int) (getWidth() * progress), getHeight(), textureFilledBar, 0xFF_FFFFFF);
+        ScreenDrawing.texturedRect(matrices, x, y, (int) (getWidth() * progress), getHeight(), textureFilledBar, 0xFF_20AAFF);
     }
 }
