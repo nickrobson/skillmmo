@@ -52,7 +52,7 @@ public class SkillData implements DataValidatable {
      * The item to use as the icon for display in the Skills GUI
      */
     @SerializedName("iconItem")
-    public String rawItemIconId;
+    public String rawIconItemId;
 
     public transient Item iconItem;
 
@@ -70,12 +70,12 @@ public class SkillData implements DataValidatable {
             errors.add("'maxLevel' is %d, should be between %d and %d".formatted(maxLevel, Skill.MIN_LEVEL + 1, Skill.MAX_LEVEL));
         }
 
-        if (rawItemIconId == null) {
-            errors.add("'iconItem' should be set to an item ID to be used for the icon, e.g. minecraft:stone or minecraft:egg");
+        if (rawIconItemId == null) {
+            errors.add("'iconItem' is not set, should be an item ID, e.g. minecraft:stone or minecraft:egg");
         } else {
-            Identifier iconItemId = Identifier.tryParse(rawItemIconId);
+            Identifier iconItemId = Identifier.tryParse(rawIconItemId);
             if (iconItemId == null) {
-                errors.add("'iconItem' is '%s', should be a valid identifier format, e.g. minecraft:stone or mineraft:egg".formatted(rawItemIconId));
+                errors.add("'iconItem' is '%s', should be a valid identifier format, e.g. minecraft:stone or mineraft:egg".formatted(rawIconItemId));
             } else {
                 Optional<Item> iconItemOpt = Registry.ITEM.getOrEmpty(iconItemId);
                 if (iconItemOpt.isPresent()) {
