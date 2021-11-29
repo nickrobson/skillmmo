@@ -2,14 +2,10 @@ package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
-import net.minecraft.util.registry.Registry;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Data shape for a skill in a datapack
@@ -49,12 +45,10 @@ public class SkillData implements DataValidatable {
     public int maxLevel;
 
     /**
-     * The item to use as the icon for display in the Skills GUI
+     * The icon representing this skill in the Skills GUI
      */
-    @SerializedName("iconItem")
-    public String rawIconItemId;
-
-    public transient Item iconItem;
+    @SerializedName("icon")
+    public SkillIconData icon;
 
     @Override
     public void validate(@Nonnull Collection<String> errors) {
@@ -70,20 +64,10 @@ public class SkillData implements DataValidatable {
             errors.add("'maxLevel' is %d, should be between %d and %d".formatted(maxLevel, Skill.MIN_LEVEL + 1, Skill.MAX_LEVEL));
         }
 
-        if (rawIconItemId == null) {
-            errors.add("'iconItem' is not set, should be an item ID, e.g. minecraft:stone or minecraft:egg");
+        if (icon == null) {
+            errors.add("'icon' is not set, should be a JSON object with keys 'type' and 'value'");
         } else {
-            Identifier iconItemId = Identifier.tryParse(rawIconItemId);
-            if (iconItemId == null) {
-                errors.add("'iconItem' is '%s', should be a valid identifier format, e.g. minecraft:stone or mineraft:egg".formatted(rawIconItemId));
-            } else {
-                Optional<Item> iconItemOpt = Registry.ITEM.getOrEmpty(iconItemId);
-                if (iconItemOpt.isPresent()) {
-                    iconItem = iconItemOpt.get();
-                } else {
-                    errors.add("'iconItem' is '%s', which is not the ID of any item known to the game".formatted(iconItemId));
-                }
-            }
+            icon.validate(errors);
         }
     }
 }

@@ -60,7 +60,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                                 skillData.getValue().nameKey,
                                 skillData.getValue().descriptionKey,
                                 skillData.getValue().maxLevel,
-                                skillData.getValue().iconItem
+                                skillData.getValue().icon.iconItem
                         ))
                 .collect(Collectors.toUnmodifiableSet());
 

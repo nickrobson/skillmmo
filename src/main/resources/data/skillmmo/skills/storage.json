@@ -4,5 +4,8 @@
   "nameKey": "skillmmo.skill.storage.name",
   "descriptionKey": "skillmmo.skill.storage.description",
   "maxLevel": 15,
-  "iconItem": "minecraft:chest"
+  "icon": {
+    "type": "item",
+    "value": "minecraft:chest"
+  }
 }

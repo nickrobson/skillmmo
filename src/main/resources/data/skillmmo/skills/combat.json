@@ -4,5 +4,8 @@
   "nameKey": "skillmmo.skill.combat.name",
   "descriptionKey": "skillmmo.skill.combat.description",
   "maxLevel": 20,
-  "iconItem": "minecraft:netherite_sword"
+  "icon": {
+    "type": "item",
+    "value": "minecraft:netherite_sword"
+  }
 }

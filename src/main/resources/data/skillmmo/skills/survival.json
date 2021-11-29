@@ -4,5 +4,8 @@
   "nameKey": "skillmmo.skill.survival.name",
   "descriptionKey": "skillmmo.skill.survival.description",
   "maxLevel": 15,
-  "iconItem": "minecraft:flint_and_steel"
+  "icon": {
+    "type": "item",
+    "value": "minecraft:flint_and_steel"
+  }
 }

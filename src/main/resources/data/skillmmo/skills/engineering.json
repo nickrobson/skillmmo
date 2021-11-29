@@ -4,5 +4,8 @@
   "nameKey": "skillmmo.skill.engineering.name",
   "descriptionKey": "skillmmo.skill.engineering.description",
   "maxLevel": 18,
-  "iconItem": "minecraft:redstone"
+  "icon": {
+    "type": "item",
+    "value": "minecraft:redstone"
+  }
 }

@@ -4,5 +4,8 @@
   "nameKey": "skillmmo.skill.sorcery.name",
   "descriptionKey": "skillmmo.skill.sorcery.description",
   "maxLevel": 15,
-  "iconItem": "minecraft:enchanting_table"
+  "icon": {
+    "type": "item",
+    "value": "minecraft:enchanting_table"
+  }
 }
