@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
+import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.fabricmc.api.EnvType;
@@ -43,7 +44,7 @@ public class WPlusButton extends WWidget {
 
     @Override
     public boolean canFocus() {
-        return true;
+        return enabled;
     }
 
     @Override
@@ -52,6 +53,7 @@ public class WPlusButton extends WWidget {
         this.height = y;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         boolean hovered = (mouseX>=0 && mouseY>=0 && mouseX<getWidth() && mouseY<getHeight());
@@ -99,6 +101,12 @@ public class WPlusButton extends WWidget {
         if (isActivationKey(ch)) {
             onClick(0, 0, 0);
         }
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public void addTooltip(TooltipBuilder tooltip) {
+        tooltip.add(label);
     }
 
     @Environment(EnvType.CLIENT)
