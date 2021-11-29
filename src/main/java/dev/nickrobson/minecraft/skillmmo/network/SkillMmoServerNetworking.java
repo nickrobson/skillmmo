@@ -38,6 +38,7 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
                                     .setStyle(Style.EMPTY.withFormatting(Formatting.RED)),
                             false);
                 }
+                sendPlayerData(player);
             });
 
             logger.debug("Received skill choice from {}: {}", player.getGameProfile().getName(), skillId);
