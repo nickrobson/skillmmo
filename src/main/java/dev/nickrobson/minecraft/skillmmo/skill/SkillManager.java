@@ -4,7 +4,6 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -23,6 +22,7 @@ import java.util.stream.Collectors;
 @ParametersAreNonnullByDefault
 public class SkillManager {
     private static final SkillManager instance = new SkillManager();
+
     public static SkillManager getInstance() {
         return instance;
     }
@@ -30,9 +30,12 @@ public class SkillManager {
     private final Set<Skill> skillSet = new HashSet<>();
     private final Map<Identifier, Skill> skillMap = new HashMap<>();
 
-    private SkillManager() {}
+    private SkillManager() {
+    }
 
-    /** @see #initSkills(Set) */
+    /**
+     * @see #initSkills(Set)
+     */
     private LoadingCache<Unlock, Set<Skill>> skillsByUnlockCache;
 
     public void initSkills(Set<Skill> skills) {

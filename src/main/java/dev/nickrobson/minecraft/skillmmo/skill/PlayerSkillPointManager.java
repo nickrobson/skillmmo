@@ -9,10 +9,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class PlayerSkillPointManager {
     private static final PlayerSkillPointManager instance = new PlayerSkillPointManager();
+
     public static PlayerSkillPointManager getInstance() {
         return instance;
     }
-    private PlayerSkillPointManager() {}
+
+    private PlayerSkillPointManager() {
+    }
 
     public int getAvailableSkillPoints(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;

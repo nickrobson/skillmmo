@@ -13,10 +13,13 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class PlayerExperienceManager {
     private static final PlayerExperienceManager instance = new PlayerExperienceManager();
+
     public static PlayerExperienceManager getInstance() {
         return instance;
     }
-    private PlayerExperienceManager() {}
+
+    private PlayerExperienceManager() {
+    }
 
     public long getExperience(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;

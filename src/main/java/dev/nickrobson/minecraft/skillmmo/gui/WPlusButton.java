@@ -56,7 +56,7 @@ public class WPlusButton extends WWidget {
     @Environment(EnvType.CLIENT)
     @Override
     public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
-        boolean hovered = (mouseX>=0 && mouseY>=0 && mouseX<getWidth() && mouseY<getHeight());
+        boolean hovered = (mouseX >= 0 && mouseY >= 0 && mouseX < getWidth() && mouseY < getHeight());
 
         int panel = 0xFF737373;
         int outline = 0xFF121313;
@@ -80,8 +80,6 @@ public class WPlusButton extends WWidget {
     @Environment(EnvType.CLIENT)
     @Override
     public InputResult onClick(int x, int y, int button) {
-        super.onClick(x, y, button);
-
         if (enabled && isWithinBounds(x, y)) {
             MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 

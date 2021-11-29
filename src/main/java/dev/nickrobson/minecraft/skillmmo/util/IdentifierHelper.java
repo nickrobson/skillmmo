@@ -9,7 +9,8 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class IdentifierHelper {
-    private IdentifierHelper() {}
+    private IdentifierHelper() {
+    }
 
     public static Identifier forBlock(Block block) {
         return Registry.BLOCK.getId(block);

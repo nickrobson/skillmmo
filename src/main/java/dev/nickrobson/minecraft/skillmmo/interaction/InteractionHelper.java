@@ -6,7 +6,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 
 public class InteractionHelper {
-    private InteractionHelper() {}
+    private InteractionHelper() {
+    }
 
     public static Interaction forBlock(Block block, InteractionType interactionType) {
         return new Interaction(interactionType, IdentifierHelper.forBlock(block));

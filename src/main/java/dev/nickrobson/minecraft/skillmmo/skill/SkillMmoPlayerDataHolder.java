@@ -106,5 +106,6 @@ public interface SkillMmoPlayerDataHolder {
     }
 
     SkillMmoPlayerData getSkillMmoPlayerData();
+
     void setSkillMmoPlayerData(SkillMmoPlayerData playerData);
 }

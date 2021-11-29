@@ -8,7 +8,8 @@ import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
 public class SkillMmoTags {
-    private SkillMmoTags() {}
+    private SkillMmoTags() {
+    }
 
     /**
      * This tag contains blocks that should be blocked from being clicked on

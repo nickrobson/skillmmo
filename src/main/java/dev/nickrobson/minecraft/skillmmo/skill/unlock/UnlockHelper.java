@@ -10,7 +10,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class UnlockHelper {
-    private UnlockHelper() {}
+    private UnlockHelper() {
+    }
 
     public static Unlock forBlock(BlockState blockState) {
         return forBlock(blockState.getBlock());
