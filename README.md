@@ -17,7 +17,8 @@ SkillMMO has a few core concepts that underpin the mod:
 - Levels, which players gain by getting experience and use to advance in a skill of their choosing
 - Unlocks, which allow players to start using a certain thing (block, item, entity, etc.) through reaching a certain level in a skill
 
-All of the above are configured using datapacks. In fact, all the default skills and unlocks are configured through the datapack system!
+All of the above are configured using datapacks.
+In fact, all the default skills and unlocks are configured through the datapack system!
 
 ---
 
@@ -33,7 +34,7 @@ Skills based on proficiencies:
 - Sorcery - potions, enchanting, etc.
 - Storage - bundles, barrels, chests, ender chests, shulkers, etc.
 - Survival - beds, etc.
-- Trade - villagers, wandering trader, etc.
+- Trading - villagers, wandering trader, etc.
 
 ---
 
@@ -51,7 +52,7 @@ Skills have the form:
                    //     If you'd like to just change the name or something, you can set this to false
 
   "enabled": true, // "enabled" controls whether this skill is available
-                   //     You'll want to set this to false if you're wanting to disables an existing skill
+                   //     You'll want to set this to false if you're wanting to disable an existing skill
 
   "nameKey": "skillmmo.skill.agriculture.name", // The i18n key for your skill's name
   "descriptionKey": "skillmmo.skill.agriculture.description", // The i18n key for your skill's description
