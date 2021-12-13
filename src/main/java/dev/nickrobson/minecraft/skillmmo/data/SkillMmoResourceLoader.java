@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadListener {
@@ -87,7 +88,6 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                             resourceIdentifier.getPath().substring(type.getResourceCategory().length() + 1, resourceIdentifier.getPath().lastIndexOf("."))
                     );
                     unlocksMap.put(resourceId, unlocks);
-                    logger.info("Loaded resource for {}: '{}'", type.getResourceCategory(), resourceId);
                 } else {
                     logger.error(
                             "Failed to load resource '{}' for type '{}' due to errors:{}",
@@ -102,9 +102,13 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 errored = true;
             }
         }
+
         if (errored) {
             throw new IllegalStateException("Failed to start due to datapack validation errors! (See above)");
         }
+
+        Set<Identifier> successfullyLoaded = new TreeSet<>(unlocksMap.keySet());
+        logger.info("Loaded resources for {}: {}", type.getResourceCategory(), successfullyLoaded);
 
         return unlocksMap;
     }
