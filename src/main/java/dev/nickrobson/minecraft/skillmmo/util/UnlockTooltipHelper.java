@@ -35,7 +35,7 @@ public class UnlockTooltipHelper {
             return List.of(
                     new TranslatableText(
                             "skillmmo.feedback.item.locked.basic",
-                            skillLevel.getSkill().getNameText(),
+                            skillLevel.getSkill().getName(),
                             skillLevel.getLevel()
                     ).setStyle(Style.EMPTY.withColor(Formatting.RED))
             );
@@ -50,7 +50,7 @@ public class UnlockTooltipHelper {
                 skillLevelSet.stream().map(skillLevel ->
                         new TranslatableText(
                                 "skillmmo.feedback.item.locked.advanced.line",
-                                skillLevel.getSkill().getNameText(),
+                                skillLevel.getSkill().getName(),
                                 skillLevel.getLevel()
                         ).setStyle(Style.EMPTY.withColor(Formatting.RED)))
         ).toList();

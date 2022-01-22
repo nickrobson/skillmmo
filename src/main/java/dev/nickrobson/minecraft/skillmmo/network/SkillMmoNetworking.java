@@ -5,6 +5,7 @@ import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import net.minecraft.item.Item;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import javax.annotation.Nonnull;
@@ -21,18 +22,18 @@ public interface SkillMmoNetworking {
 
     static Skill readSkill(@Nonnull PacketByteBuf packetByteBuf) {
         Identifier id = packetByteBuf.readIdentifier();
-        String nameKey = packetByteBuf.readString();
-        String descriptionKey = packetByteBuf.readString();
+        Text nameText = packetByteBuf.readText();
+        Text descriptionText = packetByteBuf.readText();
         int maxLevel = packetByteBuf.readVarInt();
         Item iconItem = Item.byRawId(packetByteBuf.readVarInt());
 
-        return new Skill(id, nameKey, descriptionKey, maxLevel, iconItem);
+        return new Skill(id, nameText, descriptionText, maxLevel, iconItem);
     }
 
     static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
         packetByteBuf.writeIdentifier(skill.getId());
-        packetByteBuf.writeString(skill.getNameKey());
-        packetByteBuf.writeString(skill.getDescriptionKey());
+        packetByteBuf.writeText(skill.getName());
+        packetByteBuf.writeText(skill.getDescription());
         packetByteBuf.writeVarInt(skill.getMaxLevel());
         packetByteBuf.writeVarInt(Item.getRawId(skill.getIconItem()));
     }

@@ -82,7 +82,7 @@ public class MixinServerPlayerEntity {
                         : new TranslatableText("skillmmo.feedback.player.death.lost_levels", totalLostLevels);
             } else {
                 // Lost levels in one skill
-                Text skillName = SkillManager.getInstance().getSkill(skillId).orElseThrow().getNameText();
+                Text skillName = SkillManager.getInstance().getSkill(skillId).orElseThrow().getName();
                 message = totalLostLevels == 1
                         ? new TranslatableText("skillmmo.feedback.player.death.lost_level.in.skill", totalLostLevels, skillName)
                         : new TranslatableText("skillmmo.feedback.player.death.lost_levels.in.skill", totalLostLevels, skillName);

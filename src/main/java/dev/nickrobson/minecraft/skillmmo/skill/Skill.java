@@ -5,10 +5,11 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
 import net.minecraft.item.Item;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -25,8 +26,8 @@ public class Skill {
     public static final int MAX_LEVEL = 25;
 
     private final Identifier id;
-    private final String nameKey;
-    private final String descriptionKey;
+    private final Text name;
+    private final Text description;
     private final int maxLevel;
     private final Item iconItem;
 
@@ -34,13 +35,13 @@ public class Skill {
 
     public Skill(
             Identifier id,
-            String nameKey,
-            String descriptionKey,
+            Text name,
+            Text description,
             int maxLevel,
             Item iconItem) {
         this.id = id;
-        this.nameKey = nameKey;
-        this.descriptionKey = descriptionKey;
+        this.name = name;
+        this.description = description;
         this.maxLevel = maxLevel;
         this.iconItem = iconItem;
 
@@ -59,7 +60,7 @@ public class Skill {
                 .build(
                         new CacheLoader<>() {
                             @Override
-                            public Optional<SkillLevel> load(Unlock key) {
+                            public @NotNull Optional<SkillLevel> load(Unlock key) {
                                 return getSkillLevels()
                                         .stream()
                                         .filter(level -> level.hasUnlock(key.unlockType(), key.identifier()))
@@ -73,20 +74,12 @@ public class Skill {
         return id;
     }
 
-    public String getNameKey() {
-        return nameKey;
+    public Text getName() {
+        return name.copy();
     }
 
-    public TranslatableText getNameText() {
-        return new TranslatableText(nameKey);
-    }
-
-    public String getDescriptionKey() {
-        return descriptionKey;
-    }
-
-    public TranslatableText getDescriptionText() {
-        return new TranslatableText(descriptionKey);
+    public Text getDescription() {
+        return description.copy();
     }
 
     public int getMaxLevel() {
@@ -118,8 +111,8 @@ public class Skill {
     public String toString() {
         return new StringJoiner(", ", Skill.class.getSimpleName() + "[", "]")
                 .add("id=" + id)
-                .add("nameKey='" + nameKey + "'")
-                .add("descriptionKey='" + descriptionKey + "'")
+                .add("name='" + name + "'")
+                .add("description='" + description + "'")
                 .toString();
     }
 
@@ -128,11 +121,11 @@ public class Skill {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Skill skill = (Skill) o;
-        return maxLevel == skill.maxLevel && id.equals(skill.id) && Objects.equals(nameKey, skill.nameKey) && Objects.equals(descriptionKey, skill.descriptionKey);
+        return maxLevel == skill.maxLevel && id.equals(skill.id) && Objects.equals(name, skill.name) && Objects.equals(description, skill.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nameKey, descriptionKey, maxLevel);
+        return Objects.hash(id, name, description, maxLevel);
     }
 }

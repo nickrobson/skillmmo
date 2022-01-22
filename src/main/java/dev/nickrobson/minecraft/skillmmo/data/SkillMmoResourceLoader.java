@@ -6,6 +6,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
+import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,8 +59,8 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 .map(skillData ->
                         new Skill(
                                 skillData.getKey(),
-                                skillData.getValue().nameKey,
-                                skillData.getValue().descriptionKey,
+                                new TranslatableText(skillData.getValue().nameKey),
+                                new TranslatableText(skillData.getValue().descriptionKey),
                                 skillData.getValue().maxLevel,
                                 skillData.getValue().icon.iconItem
                         ))

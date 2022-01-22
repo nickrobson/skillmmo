@@ -114,7 +114,7 @@ public class SkillsGui extends LightweightGuiDescription {
         // List of player's skill levels, sorted by skill name in player's language
         List<SkillLevel> skillLevels = SkillManager.getInstance().getSkills().stream()
                 .map(skill -> new SkillLevel(skill, PlayerSkillManager.getInstance().getSkillLevel(player, skill)))
-                .sorted(Comparator.comparing(skillLevel -> skillLevel.getSkill().getNameText().getString()))
+                .sorted(Comparator.comparing(skillLevel -> skillLevel.getSkill().getName().getString()))
                 .toList();
 
         int availableSkillPoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
@@ -130,7 +130,7 @@ public class SkillsGui extends LightweightGuiDescription {
             );
 
             skillLevelPanel.add(
-                    new WLabel(skill.getNameText())
+                    new WLabel(skill.getName())
                             .setVerticalAlignment(VerticalAlignment.CENTER)
                             .setHorizontalAlignment(HorizontalAlignment.LEFT),
                     GRID_SIZE * ICON_GRID_WIDTH + 6,
@@ -148,7 +148,7 @@ public class SkillsGui extends LightweightGuiDescription {
                     GRID_SIZE
             );
 
-            WPlusButton acquireSkillButton = new WPlusButton(new TranslatableText("skillmmo.gui.skills.info.acquire_skill.narration", skill.getNameText()))
+            WPlusButton acquireSkillButton = new WPlusButton(new TranslatableText("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
                     .setEnabled(availableSkillPoints > 0 && skillLevel.getLevel() < skill.getMaxLevel());
 
             AtomicInteger levelUps = new AtomicInteger(0);

@@ -72,7 +72,7 @@ public class SkillCommand {
         ctx.getSource().sendFeedback(
                 new TranslatableText(
                         "skillmmo.command.skill.info.skill",
-                        skill.getNameText().setStyle(Style.EMPTY.withColor(Formatting.BLUE)),
+                        new TranslatableText("%s", skill.getName()).setStyle(Style.EMPTY.withColor(Formatting.BLUE)),
                         skill.getMaxLevel()
                 ),
                 false
@@ -80,7 +80,7 @@ public class SkillCommand {
         ctx.getSource().sendFeedback(
                 new TranslatableText(
                         "skillmmo.command.skill.info.description",
-                        skill.getDescriptionText()
+                        skill.getDescription()
                 ),
                 false
         );
@@ -99,11 +99,11 @@ public class SkillCommand {
             case SUCCESS -> {
                 int level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("skillmmo.command.skill.acquire.success", level, skill.getNameText()),
+                        new TranslatableText("skillmmo.command.skill.acquire.success", level, skill.getName()),
                         false);
                 yield Command.SINGLE_SUCCESS;
             }
-            case FAILURE_AT_MAX_LEVEL -> throw ACQUIRE_SKILL_FAILURE_MAX_LEVEL.create(skill.getNameText());
+            case FAILURE_AT_MAX_LEVEL -> throw ACQUIRE_SKILL_FAILURE_MAX_LEVEL.create(skill.getName());
             case FAILURE_NO_AVAILABLE_POINTS -> throw ACQUIRE_SKILL_FAILURE_NO_AVAILABLE_POINTS.create();
         };
     }
@@ -119,7 +119,7 @@ public class SkillCommand {
                         "skillmmo.command.skill.player_is_level",
                         player.getName(),
                         level,
-                        skill.getNameText()
+                        skill.getName()
                 ),
                 false
         );
@@ -138,7 +138,7 @@ public class SkillCommand {
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         level,
-                        skill.getNameText()
+                        skill.getName()
                 ),
                 false
         );

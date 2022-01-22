@@ -245,7 +245,7 @@ public class PlayerSkillUnlockManager {
     }
 
     private Text getDenyText(SkillLevel skillLevel, Interaction interaction) {
-        Text skillName = skillLevel.getSkill().getNameText();
+        Text skillName = skillLevel.getSkill().getName();
         int level = skillLevel.getLevel();
         Text thingName = getThingName(interaction);
 

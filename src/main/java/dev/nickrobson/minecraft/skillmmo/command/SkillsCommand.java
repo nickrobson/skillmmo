@@ -54,7 +54,7 @@ public class SkillsCommand {
             for (Skill skill : skills) {
                 Text text = new TranslatableText(
                         "skillmmo.command.skills.skill_line",
-                        skill.getNameText()
+                        skill.getName()
                 );
                 ctx.getSource().sendFeedback(text, false);
             }
@@ -62,7 +62,7 @@ public class SkillsCommand {
             for (Skill skill : skills) {
                 Text text = new TranslatableText(
                         "skillmmo.command.skills.skill_line_with_level",
-                        skill.getNameText(),
+                        skill.getName(),
                         PlayerSkillManager.getInstance().getSkillLevel(player, skill),
                         skill.getMaxLevel()
                 );
