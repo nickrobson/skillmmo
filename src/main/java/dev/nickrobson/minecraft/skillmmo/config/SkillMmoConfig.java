@@ -35,15 +35,15 @@ public class SkillMmoConfig implements ConfigData {
 
     @ConfigEntry.Category("Experience / Levelling")
     @Comment("Base cost for an experience level. Experience is calculated as (base cost) + (multiplier * ((level - 1) ^ exponent))")
-    public long expBaseCost = 100;
+    public long expBaseCost = 30;
 
     @ConfigEntry.Category("Experience / Levelling")
     @Comment("Multiplier for an experience level. Experience is calculated as (base cost) + (multiplier * ((level - 1) ^ exponent))")
-    public double expMultiplier = 1.33;
+    public double expMultiplier = 1.5;
 
     @ConfigEntry.Category("Experience / Levelling")
     @Comment("Experience level exponent. Experience is calculated as (base cost) + (multiplier * ((level - 1) ^ exponent))")
-    public double expLevelExponent = 1.8;
+    public double expLevelExponent = 1.2;
 
     @Override
     public void validatePostLoad() throws ValidationException {

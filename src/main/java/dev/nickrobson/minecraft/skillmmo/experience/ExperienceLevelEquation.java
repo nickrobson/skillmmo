@@ -1,12 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.experience;
 
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
 public class ExperienceLevelEquation {
+    private static final int MAX_EXPERIENCE_LEVEL = 10_000;
+
     private static ExperienceLevelEquation instance;
 
     public static ExperienceLevelEquation getInstance() {
@@ -58,12 +61,12 @@ public class ExperienceLevelEquation {
 
     public long getLevelExperience(int level) {
         calculateLevelExperienceUpToLevel(level);
-        return levelExperienceArr[level];
+        return levelExperienceArr[level - Skill.MIN_LEVEL];
     }
 
     public long getTotalExperience(int level) {
         calculateLevelExperienceUpToLevel(level);
-        return totalExperienceArr[level];
+        return totalExperienceArr[level - Skill.MIN_LEVEL];
     }
 
     public ExperienceLevel getExperienceLevel(long totalExperience) {
@@ -71,14 +74,15 @@ public class ExperienceLevelEquation {
             return new ExperienceLevel(Skill.MIN_LEVEL, 0, getLevelExperience(Skill.MIN_LEVEL + 1));
         }
 
-        int bsIndex = Arrays.binarySearch(this.totalExperienceArr, totalExperience);
-        // If the value is >=0 then it's the exact level value
-        // If the value is <0 then it's (-level - 1), so we derive level from it
-        // Need to re-add the min level to translate from array index -> level number
-        int level = Skill.MIN_LEVEL + (bsIndex >= 0 ? bsIndex : -bsIndex - 1);
-        if (level == Skill.MAX_LEVEL) {
-            return new ExperienceLevel(level, 0, 0);
+        while (totalExperience > this.totalExperienceArr[this.totalExperienceArr.length - 1]) {
+            calculateLevelExperienceUpToLevel(Skill.MIN_LEVEL + this.totalExperienceArr.length);
         }
+
+        int bsIndex = Arrays.binarySearch(this.totalExperienceArr, totalExperience);
+        // If the value is >=0 then it's the exact level value (so we add 1 since it really means you've completed that level)
+        // If the value is <0 then it's (-level - 1), so we convert it to the level number
+        // Need to re-add the min level to translate from array index -> level number
+        int level = Skill.MIN_LEVEL + (bsIndex >= 0 ? bsIndex + 1 : -bsIndex - 1);
 
         long experienceForLevel = getLevelExperience(level);
         long totalExperienceForPreviousLevel = level == Skill.MIN_LEVEL
@@ -90,12 +94,13 @@ public class ExperienceLevelEquation {
     }
 
     public void calculateLevelExperienceUpToLevel(int level) {
-        if (level < 0 || level > 10_000) {
-            throw new IllegalArgumentException("Only level numbers between 0 and 10000 (inclusive) are supported. Supplied: " + level);
+        int target = MathHelper.clamp(level, 0, MAX_EXPERIENCE_LEVEL);
+        if (target < highestCalculated) {
+            return;
         }
 
-        if (level >= entryCount) {
-            while (entryCount <= level) {
+        if (target >= entryCount) {
+            while (entryCount <= target) {
                 entryCount *= 2;
             }
 
@@ -104,7 +109,7 @@ public class ExperienceLevelEquation {
         }
 
         for (int i = highestCalculated + 1; i < entryCount; i++) {
-            long experienceRequiredForLevel = (long) (baseCost + multiplier * Math.pow(i, levelExponent));
+            long experienceRequiredForLevel = (long) (baseCost + multiplier * Math.pow(i - 1, levelExponent));
             this.levelExperienceArr[i] = experienceRequiredForLevel;
             this.totalExperienceArr[i] = this.totalExperienceArr[i - 1] + experienceRequiredForLevel;
             if (this.totalExperienceArr[i] < this.totalExperienceArr[i - 1]) {
