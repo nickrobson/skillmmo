@@ -113,7 +113,7 @@ public class SkillsGui extends LightweightGuiDescription {
     private WWidget createSkillsPanel(ClientPlayerEntity player) {
         // List of player's skill levels, sorted by skill name in player's language
         List<SkillLevel> skillLevels = SkillManager.getInstance().getSkills().stream()
-                .map(skill -> new SkillLevel(skill, PlayerSkillManager.getInstance().getSkillLevel(player, skill)))
+                .flatMap(skill -> skill.getLevel(PlayerSkillManager.getInstance().getSkillLevel(player, skill)).stream())
                 .sorted(Comparator.comparing(skillLevel -> skillLevel.getSkill().getName().getString()))
                 .toList();
 

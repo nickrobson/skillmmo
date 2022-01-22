@@ -6,7 +6,7 @@ import net.minecraft.text.Text;
 import javax.annotation.Nullable;
 
 /**
- * When something is denied from being used and it implements this interface,
+ * When something is denied from being used, and it implements this interface,
  * {@link #onDeny(PlayerEntity, SkillLevel, int)} is called.
  * <p>
  * This might be a {@link net.minecraft.block.Block}, {@link net.minecraft.item.Item},

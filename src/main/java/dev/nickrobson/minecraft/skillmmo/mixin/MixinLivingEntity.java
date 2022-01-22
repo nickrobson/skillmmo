@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(LivingEntity.class)
 public class MixinLivingEntity {
+    @SuppressWarnings("InvalidInjectorMethodSignature")
     @ModifyVariable(
             method = "tryUseTotem",
             at = @At(

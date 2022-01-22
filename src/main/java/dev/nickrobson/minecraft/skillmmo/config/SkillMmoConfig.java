@@ -8,6 +8,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
+@SuppressWarnings("CanBeFinal")
 @Config(name = SkillMmoMod.MOD_ID)
 public class SkillMmoConfig implements ConfigData {
     public static SkillMmoConfig getConfig() {

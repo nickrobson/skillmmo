@@ -75,20 +75,20 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 path -> path.endsWith(".json")
         );
 
-        Map<Identifier, T> unlocksMap = new HashMap<>();
+        Map<Identifier, T> resourcesMap = new HashMap<>();
         boolean errored = false;
         for (Identifier resourceIdentifier : resourceIdentifiers) {
             try (InputStreamReader resourceReader = new InputStreamReader(manager.getResource(resourceIdentifier).getInputStream())) {
-                T unlocks = gson.fromJson(resourceReader, type.getResourceClass());
+                T resource = gson.fromJson(resourceReader, type.getResourceClass());
                 Collection<String> errors = new ArrayList<>();
-                unlocks.validate(errors);
+                resource.validate(errors);
                 if (errors.isEmpty()) {
                     Identifier resourceId = new Identifier(
                             resourceIdentifier.getNamespace(),
                             // e.g. skills/abc.json -> abc
                             resourceIdentifier.getPath().substring(type.getResourceCategory().length() + 1, resourceIdentifier.getPath().lastIndexOf("."))
                     );
-                    unlocksMap.put(resourceId, unlocks);
+                    resourcesMap.put(resourceId, resource);
                 } else {
                     logger.error(
                             "Failed to load resource '{}' for type '{}' due to errors:{}",
@@ -108,9 +108,9 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
             throw new IllegalStateException("Failed to start due to datapack validation errors! (See above)");
         }
 
-        Set<Identifier> successfullyLoaded = new TreeSet<>(unlocksMap.keySet());
+        Set<Identifier> successfullyLoaded = new TreeSet<>(resourcesMap.keySet());
         logger.info("Loaded resources for {}: {}", type.getResourceCategory(), successfullyLoaded);
 
-        return unlocksMap;
+        return resourcesMap;
     }
 }

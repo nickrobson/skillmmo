@@ -26,11 +26,11 @@ public abstract class MixinServerPlayPlayerInteractEntityC2SPacketHandler implem
 
     // FIXME - temporary while Fabric UseEntityCallback doesn't handle interact :(
     @Inject(
-            method = "Lnet/minecraft/server/network/ServerPlayNetworkHandler$1;interact(Lnet/minecraft/util/Hand;)V",
+            method = "interact(Lnet/minecraft/util/Hand;)V",
             at = @At(value = "HEAD"),
             cancellable = true
     )
-    public void onPlayerInteractEntity(Hand hand, CallbackInfo ci) {
+    public void skillMmo$onPlayerInteractEntity(Hand hand, CallbackInfo ci) {
         PlayerEntity player = field_28963.player;
         ActionResult result = PlayerSkillUnlockManager.getInstance().handleEntityInteraction(player, hand, field_28962);
 

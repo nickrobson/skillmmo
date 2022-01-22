@@ -59,7 +59,7 @@ public class MixinServerPlayerEntity {
                         .stream()
                         .filter(e -> e.getValue() != null && e.getValue() > 0)
                         .map(Map.Entry::getKey)
-                        .collect(Collectors.toList());
+                        .toList();
                 skillId = ownedSkillIds.get(new Random().nextInt(ownedSkillIds.size()));
                 int currentLevel = skillLevels.get(skillId);
                 newSkillLevels = Map.of(

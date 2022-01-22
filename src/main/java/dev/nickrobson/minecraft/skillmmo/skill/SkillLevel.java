@@ -12,7 +12,7 @@ public class SkillLevel {
     private final Skill skill;
     private final int level;
 
-    public SkillLevel(Skill skill, int level) {
+    SkillLevel(Skill skill, int level) {
         this.skill = Objects.requireNonNull(skill);
         this.level = level;
     }

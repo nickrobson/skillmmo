@@ -6,6 +6,7 @@ import com.google.common.cache.LoadingCache;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
@@ -51,7 +52,7 @@ public class SkillManager {
                 .expireAfterAccess(5, TimeUnit.MINUTES)
                 .build(new CacheLoader<>() {
                     @Override
-                    public Set<Skill> load(Unlock unlock) {
+                    public @NotNull Set<Skill> load(Unlock unlock) {
                         return skills.stream()
                                 .filter(skill -> skill.getSkillLevelAffecting(unlock).isPresent())
                                 .collect(Collectors.toSet());

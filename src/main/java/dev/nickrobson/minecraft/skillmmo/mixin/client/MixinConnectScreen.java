@@ -21,7 +21,7 @@ public class MixinConnectScreen {
             method = "connect(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/network/ServerAddress;)V",
             at = @At("HEAD")
     )
-    public void onConnect(MinecraftClient client, ServerAddress address, CallbackInfo ci) {
+    public void skillMmo$onConnect(MinecraftClient client, ServerAddress address, CallbackInfo ci) {
         SkillManager.getInstance().initSkills(Collections.emptySet());
         SkillMmoMod.isModEnabled = false;
     }

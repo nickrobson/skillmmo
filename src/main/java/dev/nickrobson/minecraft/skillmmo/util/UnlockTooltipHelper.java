@@ -47,12 +47,11 @@ public class UnlockTooltipHelper {
 
         return Stream.<Text>concat(
                 Stream.of(text.setStyle(Style.EMPTY.withColor(Formatting.RED))),
-                skillLevelSet.stream().map(skillLevel ->
-                        new TranslatableText(
-                                "skillmmo.feedback.item.locked.advanced.line",
-                                skillLevel.getSkill().getName(),
-                                skillLevel.getLevel()
-                        ).setStyle(Style.EMPTY.withColor(Formatting.RED)))
+                skillLevelSet.stream().map(skillLevel -> new TranslatableText(
+                        "skillmmo.feedback.item.locked.advanced.line",
+                        skillLevel.getSkill().getName(),
+                        skillLevel.getLevel()
+                ).setStyle(Style.EMPTY.withColor(Formatting.RED)))
         ).toList();
     }
 }

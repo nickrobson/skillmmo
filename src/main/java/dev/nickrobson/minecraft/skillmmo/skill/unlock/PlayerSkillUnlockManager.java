@@ -104,9 +104,9 @@ public class PlayerSkillUnlockManager {
             return TypedActionResult.pass(itemStack);
         });
 
-        UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            return handleEntityInteraction(player, hand, entity);
-        });
+        UseEntityCallback.EVENT.register(
+                (player, world, hand, entity, hitResult) ->
+                        handleEntityInteraction(player, hand, entity));
     }
 
     // FIXME - temporary while Fabric UseEntityCallback doesn't handle "normal" entity interactions
@@ -187,8 +187,7 @@ public class PlayerSkillUnlockManager {
             return true;
         }
 
-        Predicate<SkillLevel> hasSkillLevel = level ->
-                PlayerSkillManager.getInstance().hasSkillLevel(player, level.getSkill(), level.getLevel());
+        Predicate<SkillLevel> hasSkillLevel = level -> PlayerSkillManager.getInstance().hasSkillLevel(player, level.getSkill(), level.getLevel());
 
         boolean requireAllLockingSkillsToBeUnlocked = SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked;
         return requireAllLockingSkillsToBeUnlocked

@@ -32,9 +32,8 @@ public class WPlusButton extends WWidget {
         return this;
     }
 
-    public WPlusButton setOnClick(Runnable onClick) {
+    public void setOnClick(Runnable onClick) {
         this.onClick = onClick;
-        return this;
     }
 
     @Override
