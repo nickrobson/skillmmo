@@ -149,7 +149,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
 
     @Inject(
             method = "checkFallFlying",
-            at = @At(value = "INVOKE_ASSIGN", shift = At.Shift.AFTER, target = "Lnet/minecraft/entity/player/PlayerEntity;getEquippedStack(Lnet/minecraft/entity/EquipmentSlot;)Lnet/minecraft/item/ItemStack;"),
+            at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/player/PlayerEntity;startFallFlying()V"),
             cancellable = true,
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
