@@ -19,6 +19,7 @@
   "skillmmo.feedback.deny.block.interact": "You need %s %d to use this %s",
   "skillmmo.feedback.deny.block.place": "You need %s %d to place this %s",
   "skillmmo.feedback.deny.item.use": "You need %s %d to use this %s",
+  "skillmmo.feedback.deny.item.collect.dragon.breath": "You need %s %d to collect %s",
   "skillmmo.feedback.deny.entity.interact": "You need %s %d to interact with a %s",
   "skillmmo.feedback.deny.villager.interact": "You need %s %d to trade with a Villager",
   "skillmmo.feedback.item.locked": "Locked",

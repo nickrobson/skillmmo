@@ -205,11 +205,15 @@ public class PlayerSkillUnlockManager {
     }
 
     public void reportItemUseLocked(@Nullable PlayerEntity player, Item item) {
+        reportItemUseLocked(player, item, null);
+    }
+
+    public void reportItemUseLocked(@Nullable PlayerEntity player, Item item, @Nullable SkillDenyCustomizable skillDenyCustomizable) {
         if (item instanceof BlockItem blockItem) {
             Block block = blockItem.getBlock();
-            reportInteractLocked(player, InteractionHelper.forBlock(block, InteractionType.BLOCK_PLACE), block);
+            reportInteractLocked(player, InteractionHelper.forBlock(block, InteractionType.BLOCK_PLACE), skillDenyCustomizable != null ? skillDenyCustomizable : block);
         } else {
-            reportInteractLocked(player, InteractionHelper.forItem(item, InteractionType.ITEM_USE), item);
+            reportInteractLocked(player, InteractionHelper.forItem(item, InteractionType.ITEM_USE), skillDenyCustomizable != null ? skillDenyCustomizable : item);
         }
     }
 
