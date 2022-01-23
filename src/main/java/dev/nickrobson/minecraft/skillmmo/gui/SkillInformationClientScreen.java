@@ -67,7 +67,6 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
         private static final int ROOT_WIDTH = 11;
         private static final int SKILL_LEVEL_WIDTH = 2;
-        private static final int UNLOCKS_TITLE_WIDTH = 5;
         private static final int ICON_GRID_SIZE = 1;
         private static final int ITEMS_PER_ROW = 10;
 
