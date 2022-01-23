@@ -13,7 +13,9 @@ import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
@@ -62,17 +64,23 @@ public class SkillCommand {
                                         )
                                 )
                         )
-                        .executes(SkillCommand::executeSkillInfoCommand)
+                )
+                .then(literal("info")
+                        .then(argument("skill", new SkillArgumentType())
+                                .executes(SkillCommand::executeSkillInfoCommand))
                 );
     }
 
     private static int executeSkillInfoCommand(CommandContext<ServerCommandSource> ctx) {
         Skill skill = ctx.getArgument("skill", Skill.class);
+        Text skillName = skill.getName();
 
         ctx.getSource().sendFeedback(
                 new TranslatableText(
                         "skillmmo.command.skill.info.skill",
-                        new TranslatableText("%s", skill.getName()).setStyle(Style.EMPTY.withColor(Formatting.BLUE)),
+                        skillName instanceof MutableText mutableText
+                                ? mutableText.setStyle(Style.EMPTY.withColor(Formatting.BLUE))
+                                : skillName,
                         skill.getMaxLevel()
                 ),
                 false
