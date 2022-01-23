@@ -97,7 +97,7 @@ public class Skill {
     }
 
     public Optional<SkillLevel> getLevel(int level) {
-        if (level > MIN_LEVEL && level <= maxLevel) {
+        if (level >= MIN_LEVEL && level <= maxLevel) {
             return Optional.of(new SkillLevel(this, level));
         }
         return Optional.empty();

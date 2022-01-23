@@ -40,6 +40,11 @@
   "skillmmo.gui.skills.info.xp_progress": "XP %d/%d",
   "skillmmo.gui.skills.info.available_points": "Available points: %d",
   "skillmmo.gui.skills.info.acquire_skill.narration": "Level up %s",
+  "skillmmo.gui.skills.skill.name": "%s",
+  "skillmmo.gui.skill.info.current_level": "Level %d/%d",
+  "skillmmo.gui.skill.unlocks.title": "Unlocks:",
+  "skillmmo.gui.skill.unlocks.show_unlocked": "Show unlocked",
+  "skillmmo.gui.skill.unlocks.level": "Level %d",
 
   "skillmmo.keybindings.category": "SkillMMO",
   "skillmmo.keybindings.binding.open_skills": "Open Skills",
