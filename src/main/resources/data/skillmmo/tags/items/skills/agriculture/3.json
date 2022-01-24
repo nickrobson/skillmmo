@@ -1,6 +1,11 @@
 {
   "replace": true,
   "values": [
-    "minecraft:paper"
+    "minecraft:wooden_hoe",
+    "minecraft:bone_meal",
+    "minecraft:wheat_seeds",
+    "minecraft:carrot",
+    "minecraft:potato",
+    "minecraft:beetroot_seeds"
   ]
 }

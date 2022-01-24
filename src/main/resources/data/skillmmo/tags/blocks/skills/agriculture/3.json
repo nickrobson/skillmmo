@@ -1,11 +1,9 @@
 {
   "replace": true,
   "values": [
-    "minecraft:bamboo_sapling",
-    "minecraft:bamboo",
-    "minecraft:kelp",
-    "minecraft:kelp_plant",
-    "minecraft:dried_kelp_block",
-    "minecraft:sugar_cane"
+    "minecraft:wheat",
+    "minecraft:carrots",
+    "minecraft:potatoes",
+    "minecraft:beetroots"
   ]
 }
