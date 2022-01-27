@@ -23,6 +23,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
@@ -31,8 +32,10 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -193,6 +196,20 @@ public class PlayerSkillUnlockManager {
         return requireAllLockingSkillsToBeUnlocked
                 ? skillLevelSet.stream().allMatch(hasSkillLevel)
                 : skillLevelSet.stream().anyMatch(hasSkillLevel);
+    }
+
+    public boolean hasRecipeUnlock(@Nonnull PlayerEntity player, Recipe<?> recipe) {
+        boolean someIngredientsAreFullyLocked = recipe.getIngredients().stream()
+                .anyMatch(ingredient -> {
+                    ItemStack[] matchingStacks = ingredient.getMatchingStacks();
+                    if (matchingStacks.length == 0) {
+                        return false;
+                    }
+                    return Arrays.stream(matchingStacks)
+                            .noneMatch(itemStack -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack));
+                });
+        boolean outputIsLocked = !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, recipe.getOutput());
+        return !someIngredientsAreFullyLocked && !outputIsLocked;
     }
 
     public void reportBlockBreakLocked(@Nullable PlayerEntity player, Block block) {

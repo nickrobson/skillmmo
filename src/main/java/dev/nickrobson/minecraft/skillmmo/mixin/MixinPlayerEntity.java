@@ -11,6 +11,8 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
+import net.minecraft.nbt.NbtString;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,6 +27,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Mixin(PlayerEntity.class)
 public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
@@ -32,6 +36,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     private static final String SKILLMMO_EXPERIENCE_NBT_KEY = "experience";
     private static final String SKILLMMO_AVAILABLE_SKILL_POINTS_NBT_KEY = "availableSkillPoints";
     private static final String SKILLMMO_SKILL_LEVELS_NBT_KEY = "skillLevels";
+    private static final String SKILLMMO_LOCKED_RECIPES_NBT_KEY = "lockedRecipes";
 
     @Unique
     private SkillMmoPlayerData skillMmo$playerData = null;
@@ -67,17 +72,38 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
             for (String skillLevelKey : skillLevelsNbt.getKeys()) {
                 if (skillLevelsNbt.contains(skillLevelKey, NbtElement.NUMBER_TYPE)) {
                     Identifier skillId = Identifier.tryParse(skillLevelKey);
-                    int level = skillLevelsNbt.getInt(skillLevelKey);
-
                     if (skillId == null) {
                         continue;
                     }
+                    int level = skillLevelsNbt.getInt(skillLevelKey);
                     skillLevels.put(skillId, level);
                 }
             }
         }
 
-        this.skillMmo$playerData = new SkillMmoPlayerData(experience, availableSkillPoints, skillLevels);
+        Map<Identifier, Set<Identifier>> lockedRecipes = new HashMap<>();
+        NbtCompound lockedRecipesNbt = skillMmoNbt.getCompound(SKILLMMO_LOCKED_RECIPES_NBT_KEY);
+        for (String recipeTypeKey : lockedRecipesNbt.getKeys()) {
+            Identifier recipeTypeId = Identifier.tryParse(recipeTypeKey);
+            if (recipeTypeId == null) {
+                continue;
+            }
+            NbtList lockedRecipeIdsNbt = lockedRecipesNbt.getList(recipeTypeKey, NbtElement.STRING_TYPE);
+            Set<Identifier> lockedRecipeIds = lockedRecipeIdsNbt
+                    .stream()
+                    .<Identifier>mapMulti((recipeIdNbt, sink) -> {
+                        Identifier recipeId = Identifier.tryParse(recipeIdNbt.asString());
+                        if (recipeId != null) {
+                            sink.accept(recipeId);
+                        }
+                    })
+                    .collect(Collectors.toSet());
+            if (!lockedRecipeIds.isEmpty()) {
+                lockedRecipes.put(recipeTypeId, lockedRecipeIds);
+            }
+        }
+
+        this.skillMmo$playerData = new SkillMmoPlayerData(experience, availableSkillPoints, skillLevels, lockedRecipes);
     }
 
     @Inject(
@@ -107,6 +133,19 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
             playerData.getSkillLevels().forEach((skillId, level) ->
                     skillLevelsNbt.putInt(skillId.toString(), level));
             skillMmoNbt.put(SKILLMMO_SKILL_LEVELS_NBT_KEY, skillLevelsNbt);
+        }
+
+        {
+            NbtCompound lockedRecipesNbt = new NbtCompound();
+            playerData.getLockedRecipes().forEach((recipeTypeId, recipeIds) -> {
+                NbtList recipeIdsNbt = new NbtList();
+                recipeIds.stream()
+                        .map(Identifier::toString)
+                        .map(NbtString::of)
+                        .forEach(recipeIdsNbt::add);
+                lockedRecipesNbt.put(recipeTypeId.toString(), recipeIdsNbt);
+            });
+            skillMmoNbt.put(SKILLMMO_LOCKED_RECIPES_NBT_KEY, lockedRecipesNbt);
         }
 
         nbt.put(SKILLMMO_ROOT_NBT_KEY, skillMmoNbt);

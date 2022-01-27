@@ -1,8 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
+import dev.nickrobson.minecraft.skillmmo.util.SkillMmoRecipeBookAccessor;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
@@ -11,6 +15,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -60,7 +66,24 @@ public class PlayerSkillManager {
         if (player instanceof ServerPlayerEntity serverPlayer) {
             SkillMmoServerNetworking.sendPlayerSkills(serverPlayer);
 
-            // TODO: lock/unlock recipes
+            RecipeManager recipeManager = serverPlayer.server.getRecipeManager();
+            Set<Recipe<?>> newlyUnlockedRecipes = skillMmoPlayerDataHolder.getSkillMmoPlayerData().getLockedRecipes().values().stream()
+                    .flatMap(Set::stream)
+                    .flatMap(recipeId -> recipeManager.get(recipeId).stream())
+                    .filter(recipe -> PlayerSkillUnlockManager.getInstance().hasRecipeUnlock(player, recipe))
+                    .collect(Collectors.toSet());
+            if (!newlyUnlockedRecipes.isEmpty()) {
+                serverPlayer.unlockRecipes(newlyUnlockedRecipes);
+            }
+
+            Set<Recipe<?>> newlyLockedRecipes = ((SkillMmoRecipeBookAccessor) serverPlayer.getRecipeBook()).skillMmo$getRecipes().stream()
+                    .flatMap(recipeId -> recipeManager.get(recipeId).stream())
+                    .filter(recipe -> !PlayerSkillUnlockManager.getInstance().hasRecipeUnlock(player, recipe))
+                    .collect(Collectors.toSet());
+            if (!newlyLockedRecipes.isEmpty()) {
+                serverPlayer.lockRecipes(newlyLockedRecipes);
+                skillMmoPlayerDataHolder.getSkillMmoPlayerData().addLockedRecipes(newlyLockedRecipes);
+            }
         }
     }
 

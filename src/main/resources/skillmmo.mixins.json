@@ -10,8 +10,10 @@
     "MixinPlayerEntity",
     "MixinPlayerInventory",
     "MixinPlayerManager",
+    "MixinRecipeBook",
     "MixinServerPlayerEntity",
     "MixinServerPlayPlayerInteractEntityC2SPacketHandler",
+    "MixinServerRecipeBook",
     "MixinVillagerEntity"
   ],
   "client": [

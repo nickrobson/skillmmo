@@ -1,12 +1,17 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import net.minecraft.recipe.Recipe;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
+import net.minecraft.util.registry.Registry;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -14,20 +19,22 @@ public interface SkillMmoPlayerDataHolder {
     @MethodsReturnNonnullByDefault
     @ParametersAreNonnullByDefault
     class SkillMmoPlayerData implements Cloneable {
-        public static final SkillMmoPlayerData UNINITIALISED = new SkillMmoPlayerData(0, 0, Collections.emptyMap());
+        public static final SkillMmoPlayerData UNINITIALISED = new SkillMmoPlayerData(0, 0, Collections.emptyMap(), Collections.emptyMap());
 
         private long experience;
         private int availableSkillPoints;
         private final Map<Identifier, Integer> skillLevels;
+        private final Map<Identifier, Set<Identifier>> lockedRecipes;
 
         public SkillMmoPlayerData() {
-            this(0L, 0, new HashMap<>());
+            this(0L, 0, new HashMap<>(), new HashMap<>());
         }
 
-        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<Identifier, Integer> skillLevels) {
+        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<Identifier, Integer> skillLevels, Map<Identifier, Set<Identifier>> lockedRecipes) {
             this.experience = experience;
             this.availableSkillPoints = availableSkillPoints;
             this.skillLevels = new HashMap<>(skillLevels);
+            this.lockedRecipes = new HashMap<>(lockedRecipes);
         }
 
         private void checkInitialised() {
@@ -102,6 +109,46 @@ public interface SkillMmoPlayerDataHolder {
             } catch (CloneNotSupportedException ex) {
                 throw new RuntimeException(ex);
             }
+        }
+
+        public Map<Identifier, Set<Identifier>> getLockedRecipes() {
+            return Collections.unmodifiableMap(lockedRecipes);
+        }
+
+        public boolean hasLockedRecipe(Recipe<?> recipe) {
+            Set<Identifier> lockedRecipesOfType = this.lockedRecipes.get(Registry.RECIPE_TYPE.getId(recipe.getType()));
+            return lockedRecipesOfType != null
+                    && lockedRecipesOfType.contains(recipe.getId());
+        }
+
+        public void addLockedRecipes(Collection<Recipe<?>> recipes) {
+            this.checkInitialised();
+            recipes.forEach(recipe -> {
+                Identifier recipeTypeId = Registry.RECIPE_TYPE.getId(recipe.getType());
+                this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
+                    if (recipeIds == null) {
+                        recipeIds = new HashSet<>();
+                    }
+                    recipeIds.add(recipe.getId());
+                    return recipeIds;
+                });
+            });
+        }
+
+        public void removeLockedRecipes(Collection<Recipe<?>> recipes) {
+            this.checkInitialised();
+            recipes.forEach(recipe -> {
+                Identifier recipeTypeId = Registry.RECIPE_TYPE.getId(recipe.getType());
+                this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
+                    if (recipeIds != null) {
+                        recipeIds.remove(recipe.getId());
+                        if (recipeIds.isEmpty()) {
+                            return null;
+                        }
+                    }
+                    return recipeIds;
+                });
+            });
         }
     }
 
