@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
+import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.ClientConnection;
@@ -37,5 +38,7 @@ public abstract class MixinPlayerManager {
     public void skillMmo$onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
         SkillMmoServerNetworking.sendGenericData(player);
         SkillMmoServerNetworking.sendPlayerData(player);
+
+        PlayerLockedRecipeManager.getInstance().syncLockedRecipes(player);
     }
 }

@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
+import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import net.minecraft.recipe.Recipe;
@@ -34,6 +35,10 @@ public class MixinServerRecipeBook {
             at = @At(value = "HEAD")
     )
     public void skillMmo$unlockRecipes$removeLockedRecipes(Collection<Recipe<?>> recipes, ServerPlayerEntity player, CallbackInfoReturnable<Integer> cir) {
+        if (!SkillMmoConfig.getConfig().lockRecipesUntilIngredientsAndOutputAreUnlocked) {
+            return;
+        }
+
         Set<Recipe<?>> lockedRecipes = recipes.stream()
                 .filter(recipe -> !PlayerSkillUnlockManager.getInstance().hasRecipeUnlock(player, recipe))
                 .collect(Collectors.toSet());

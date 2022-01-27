@@ -30,6 +30,9 @@ public class SkillMmoConfig implements ConfigData {
     @Comment("Announce required skill when breaking blocks?")
     public boolean announceRequiredSkillWhenBreakingBlock = true;
 
+    @Comment("Prevent recipes from appearing in the recipe book until the inputs and output are unlocked?")
+    public boolean lockRecipesUntilIngredientsAndOutputAreUnlocked = true;
+
     @ConfigEntry.Category("Unskilled")
     @Comment("Amount to multiply armor damage by when the player doesn't know how to use a certain type of armor")
     public float unskilledArmorDamageMultiplier = 2.5F;
