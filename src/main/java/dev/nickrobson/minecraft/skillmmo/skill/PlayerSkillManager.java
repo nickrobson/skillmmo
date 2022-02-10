@@ -2,12 +2,8 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
-import dev.nickrobson.minecraft.skillmmo.util.SkillMmoRecipeBookAccessor;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.recipe.Recipe;
-import net.minecraft.recipe.RecipeManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
@@ -16,8 +12,6 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -36,6 +30,11 @@ public class PlayerSkillManager {
             newPlayerDataHolder.setSkillMmoPlayerData(oldPlayerDataHolder.getSkillMmoPlayerData().clone());
             SkillMmoServerNetworking.sendPlayerData(newPlayer);
         });
+
+        // Send the player's updated player data once they've respawned
+        ServerPlayerEvents.AFTER_RESPAWN.register(((oldPlayer, newPlayer, alive) -> {
+            SkillMmoServerNetworking.sendPlayerData(newPlayer);
+        }));
     }
 
     private PlayerSkillManager() {
