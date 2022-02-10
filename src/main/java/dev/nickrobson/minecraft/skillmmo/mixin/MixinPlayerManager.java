@@ -21,8 +21,8 @@ public abstract class MixinPlayerManager {
             at = @At("RETURN"),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
-    public void skillMmo$loadPlayerData(ServerPlayerEntity player, CallbackInfoReturnable<NbtCompound> cir, NbtCompound nbtCompound) {
-        if (nbtCompound == null) {
+    public void skillMmo$loadPlayerData(ServerPlayerEntity player, CallbackInfoReturnable<NbtCompound> cir, NbtCompound nbtCompound, NbtCompound nbtCompound2) {
+        if (nbtCompound2 == null) {
             // This is the first time the player has joined the server,
             // so initialise them with empty data
             ((SkillMmoPlayerDataHolder) player).setSkillMmoPlayerData(

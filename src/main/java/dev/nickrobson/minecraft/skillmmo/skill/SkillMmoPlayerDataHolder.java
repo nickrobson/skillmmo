@@ -23,8 +23,8 @@ public interface SkillMmoPlayerDataHolder {
 
         private long experience;
         private int availableSkillPoints;
-        private final Map<Identifier, Integer> skillLevels;
-        private final Map<Identifier, Set<Identifier>> lockedRecipes;
+        private Map<Identifier, Integer> skillLevels;
+        private Map<Identifier, Set<Identifier>> lockedRecipes;
 
         public SkillMmoPlayerData() {
             this(0L, 0, new HashMap<>(), new HashMap<>());
@@ -105,7 +105,12 @@ public interface SkillMmoPlayerDataHolder {
         @Override
         public SkillMmoPlayerData clone() {
             try {
-                return (SkillMmoPlayerData) super.clone();
+                SkillMmoPlayerData clone = (SkillMmoPlayerData) super.clone();
+                clone.experience = this.experience;
+                clone.availableSkillPoints = this.availableSkillPoints;
+                clone.skillLevels = new HashMap<>(this.skillLevels);
+                clone.lockedRecipes = new HashMap<>(this.lockedRecipes);
+                return clone;
             } catch (CloneNotSupportedException ex) {
                 throw new RuntimeException(ex);
             }
