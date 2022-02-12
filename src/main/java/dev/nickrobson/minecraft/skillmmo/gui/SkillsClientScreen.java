@@ -60,7 +60,7 @@ public class SkillsClientScreen extends CottonClientScreen {
         private static final int ICON_GRID_WIDTH = 1;
         private static final int NAME_GRID_WIDTH = 6;
         private static final int LEVEL_GRID_WIDTH = 2;
-        private static final int INFO_BUTTON_GRID_WIDTH = 1;
+        private static final int ACQUIRE_SKILL_BUTTON_GRID_WIDTH = 1;
 
         private final List<WCharButton> acquireSkillButtons = new ArrayList<>();
 
@@ -172,15 +172,6 @@ public class SkillsClientScreen extends CottonClientScreen {
                         GRID_SIZE
                 );
 
-                skillLevelPanel.add(
-                        new WCharButton('?')
-                                .setOnClick(() -> SkillInformationClientScreen.open(player, skill)),
-                        GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH) + 8,
-                        4,
-                        10,
-                        10
-                );
-
                 WCharButton acquireSkillButton = new WCharButton('+')
                         .setTooltip(new TranslatableText("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
                         .setEnabled(availableSkillPoints > 0 && skillLevel.getRight() < skill.getMaxLevel());
@@ -208,7 +199,16 @@ public class SkillsClientScreen extends CottonClientScreen {
 
                 skillLevelPanel.add(
                         acquireSkillButton,
-                        GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH + INFO_BUTTON_GRID_WIDTH) + 8,
+                        GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH) + 8,
+                        4,
+                        10,
+                        10
+                );
+
+                skillLevelPanel.add(
+                        new WCharButton('?')
+                                .setOnClick(() -> SkillInformationClientScreen.open(player, skill)),
+                        GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH + ACQUIRE_SKILL_BUTTON_GRID_WIDTH) + 8,
                         4,
                         10,
                         10
