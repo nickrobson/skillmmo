@@ -65,10 +65,10 @@ public class SkillInformationClientScreen extends CottonClientScreen {
     public static class SkillInformationGui extends LightweightGuiDescription {
         private static final int GRID_SIZE = 18;
 
-        private static final int ROOT_WIDTH = 11;
+        private static final int ROOT_WIDTH = 12;
         private static final int SKILL_LEVEL_WIDTH = 2;
         private static final int ICON_GRID_SIZE = 1;
-        private static final int ITEMS_PER_ROW = 10;
+        private static final int ITEMS_PER_ROW = ROOT_WIDTH - 1;
 
         public SkillInformationGui(ClientPlayerEntity player, Skill skill) {
             WBox root = new WBox(Axis.VERTICAL);
