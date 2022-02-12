@@ -190,7 +190,8 @@ public class SkillInformationClientScreen extends CottonClientScreen {
                     int columnOffset = i % ITEMS_PER_ROW;
 
                     skillLevelUnlocksPanel.add(
-                            new WItem(itemStack),
+                            new WItemWithTooltip(itemStack)
+                                    .setTooltipText(itemStack.getName()),
                             GRID_SIZE * columnOffset,
                             GRID_SIZE * (rowOffset + 1) - 4,
                             GRID_SIZE * ICON_GRID_SIZE,
