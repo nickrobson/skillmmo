@@ -17,23 +17,32 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
-public class WPlusButton extends WWidget {
-    private final Text label;
+import javax.annotation.Nullable;
+
+public class WCharButton extends WWidget {
+    private final char text;
+    private @Nullable Text tooltip;
     private boolean enabled = true;
     private Runnable onClick;
 
-    WPlusButton(Text label) {
+    WCharButton(char text) {
         super();
-        this.label = label;
+        this.text = text;
     }
 
-    public WPlusButton setEnabled(boolean enabled) {
+    public WCharButton setTooltip(@Nullable Text tooltip) {
+        this.tooltip = tooltip;
+        return this;
+    }
+
+    public WCharButton setEnabled(boolean enabled) {
         this.enabled = enabled;
         return this;
     }
 
-    public void setOnClick(Runnable onClick) {
+    public WCharButton setOnClick(Runnable onClick) {
         this.onClick = onClick;
+        return this;
     }
 
     @Override
@@ -69,7 +78,7 @@ public class WPlusButton extends WWidget {
         ScreenDrawing.coloredRect(matrices, x + 1, y, getWidth() - 2, getHeight(), outline);
         ScreenDrawing.coloredRect(matrices, x + 1, y + 1, getWidth() - 2, getHeight() - 2, panel);
 
-        Text text = new LiteralText("+");
+        Text text = new LiteralText(String.valueOf(this.text));
         int color = enabled ? 0xE0E0E0 : 0xA0A0A0;
         int wid = MinecraftClient.getInstance().textRenderer.getWidth(text);
         float xOffset = (width - wid) / 2f;
@@ -103,13 +112,17 @@ public class WPlusButton extends WWidget {
     @Environment(EnvType.CLIENT)
     @Override
     public void addTooltip(TooltipBuilder tooltip) {
-        tooltip.add(label);
+        if (this.tooltip != null) {
+            tooltip.add(this.tooltip);
+        }
     }
 
     @Environment(EnvType.CLIENT)
     @Override
     public void addNarrations(NarrationMessageBuilder builder) {
-        builder.put(NarrationPart.TITLE, ClickableWidget.getNarrationMessage(label));
+        if (tooltip != null) {
+            builder.put(NarrationPart.TITLE, ClickableWidget.getNarrationMessage(tooltip));
+        }
 
         if (enabled) {
             if (isFocused()) {

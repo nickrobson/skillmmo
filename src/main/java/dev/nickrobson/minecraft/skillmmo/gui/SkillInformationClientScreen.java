@@ -37,6 +37,10 @@ import java.util.stream.Stream;
 
 @Environment(EnvType.CLIENT)
 public class SkillInformationClientScreen extends CottonClientScreen {
+    public static void open(ClientPlayerEntity player, Skill skill) {
+        open(player, skill, MinecraftClient.getInstance().currentScreen);
+    }
+
     public static void open(ClientPlayerEntity player, Skill skill, @Nullable Screen parent) {
         MinecraftClient.getInstance().setScreen(new SkillInformationClientScreen(player, skill, parent));
     }

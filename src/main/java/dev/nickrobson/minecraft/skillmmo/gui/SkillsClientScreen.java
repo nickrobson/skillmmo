@@ -53,15 +53,16 @@ public class SkillsClientScreen extends CottonClientScreen {
     public static class SkillsGui extends LightweightGuiDescription {
         private static final int GRID_SIZE = 18;
 
-        private static final int ROOT_WIDTH = 11;
+        private static final int ROOT_WIDTH = 12;
         private static final int LEVEL_TEXT_WIDTH = 5;
         private static final int XP_PROGRESS_TEXT_WIDTH = ROOT_WIDTH - LEVEL_TEXT_WIDTH;
         private static final int XP_PROGRESS_HEIGHT = 5;
         private static final int ICON_GRID_WIDTH = 1;
         private static final int NAME_GRID_WIDTH = 6;
         private static final int LEVEL_GRID_WIDTH = 2;
+        private static final int INFO_BUTTON_GRID_WIDTH = 1;
 
-        private final List<WPlusButton> acquireSkillButtons = new ArrayList<>();
+        private final List<WCharButton> acquireSkillButtons = new ArrayList<>();
 
         private SkillsGui(ClientPlayerEntity player) {
             WPlainPanel root = new WPlainPanel();
@@ -153,8 +154,7 @@ public class SkillsClientScreen extends CottonClientScreen {
                 );
 
                 skillLevelPanel.add(
-                        new WClickableLabel(new TranslatableText("skillmmo.gui.skills.skill.name", skill.getName()))
-                                .setOnClick(() -> SkillInformationClientScreen.open(player, skill, MinecraftClient.getInstance().currentScreen))
+                        new WLabel(new TranslatableText("skillmmo.gui.skills.skill.name", skill.getName()))
                                 .setVerticalAlignment(VerticalAlignment.CENTER)
                                 .setHorizontalAlignment(HorizontalAlignment.LEFT),
                         GRID_SIZE * ICON_GRID_WIDTH + 6,
@@ -172,7 +172,17 @@ public class SkillsClientScreen extends CottonClientScreen {
                         GRID_SIZE
                 );
 
-                WPlusButton acquireSkillButton = new WPlusButton(new TranslatableText("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
+                skillLevelPanel.add(
+                        new WCharButton('?')
+                                .setOnClick(() -> SkillInformationClientScreen.open(player, skill)),
+                        GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH) + 8,
+                        4,
+                        10,
+                        10
+                );
+
+                WCharButton acquireSkillButton = new WCharButton('+')
+                        .setTooltip(new TranslatableText("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
                         .setEnabled(availableSkillPoints > 0 && skillLevel.getRight() < skill.getMaxLevel());
 
                 AtomicInteger levelUps = new AtomicInteger(0);
@@ -198,7 +208,7 @@ public class SkillsClientScreen extends CottonClientScreen {
 
                 skillLevelPanel.add(
                         acquireSkillButton,
-                        GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH) + 8,
+                        GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH + LEVEL_GRID_WIDTH + INFO_BUTTON_GRID_WIDTH) + 8,
                         4,
                         10,
                         10
