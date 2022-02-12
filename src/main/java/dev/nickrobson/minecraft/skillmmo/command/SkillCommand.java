@@ -64,6 +64,26 @@ public class SkillCommand {
                                         )
                                 )
                         )
+                        .then(literal("add")
+                                .requires(ctx -> ctx.hasPermissionLevel(3))
+                                .then(argument("player", EntityArgumentType.player())
+                                        .then(argument("skill", new SkillArgumentType())
+                                                .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
+                                                        .executes(ctx -> executeAddSkillLevelCommand(ctx, 1))
+                                                )
+                                        )
+                                )
+                        )
+                        .then(literal("remove")
+                                .requires(ctx -> ctx.hasPermissionLevel(3))
+                                .then(argument("player", EntityArgumentType.player())
+                                        .then(argument("skill", new SkillArgumentType())
+                                                .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
+                                                        .executes(ctx -> executeAddSkillLevelCommand(ctx, -1))
+                                                )
+                                        )
+                                )
+                        )
                 )
                 .then(literal("info")
                         .then(argument("skill", new SkillArgumentType())
@@ -139,17 +159,48 @@ public class SkillCommand {
         PlayerEntity player = EntityArgumentType.getPlayer(ctx, "player");
         int level = ctx.getArgument("level", Integer.class);
 
-        PlayerSkillManager.getInstance().setSkillLevel(player, skill, level);
+        int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, level);
 
         ctx.getSource().sendFeedback(
                 new TranslatableText(
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
-                        level,
+                        newLevel,
                         skill.getName()
                 ),
-                false
+                true
         );
+        return Command.SINGLE_SUCCESS;
+    }
+
+    private static int executeAddSkillLevelCommand(CommandContext<ServerCommandSource> ctx, int multiplier) throws CommandSyntaxException {
+        Skill skill = ctx.getArgument("skill", Skill.class);
+        PlayerEntity player = EntityArgumentType.getPlayer(ctx, "player");
+        int levelDelta = ctx.getArgument("level", Integer.class) * multiplier;
+
+        int currentLevel = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
+        int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, currentLevel + levelDelta);
+
+        ctx.getSource().sendFeedback(
+                new TranslatableText(
+                        "skillmmo.command.skill.player_is_now_level",
+                        player.getName(),
+                        newLevel,
+                        skill.getName()
+                ),
+                true
+        );
+
+        boolean isSelf = false;
+        if (ctx.getSource().getEntity() instanceof PlayerEntity playerSource) {
+            isSelf = playerSource.getGameProfile().getId().equals(player.getGameProfile().getId());
+        }
+        if (!isSelf) {
+            player.sendMessage(
+                    new TranslatableText("skillmmo.command.skill.you_are_now_level", newLevel, skill.getName()),
+                    false
+            );
+        }
         return Command.SINGLE_SUCCESS;
     }
 }

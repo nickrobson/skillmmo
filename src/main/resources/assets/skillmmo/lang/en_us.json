@@ -14,6 +14,7 @@
   "skillmmo.command.skill.info.description": "%s",
   "skillmmo.command.skill.player_is_level": "%s is level %d in %s",
   "skillmmo.command.skill.player_is_now_level": "%s is now level %d in %s",
+  "skillmmo.command.skill.you_are_now_level": "You are now level %d in %s",
 
   "skillmmo.feedback.deny.block.break": "You need %s %d to break this %s",
   "skillmmo.feedback.deny.block.interact": "You need %s %d to use this %s",

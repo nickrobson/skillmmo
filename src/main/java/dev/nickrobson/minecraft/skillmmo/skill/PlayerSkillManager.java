@@ -7,6 +7,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
+import net.minecraft.util.math.MathHelper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -54,8 +55,10 @@ public class PlayerSkillManager {
         return playerSkillLevel >= level;
     }
 
-    public void setSkillLevel(PlayerEntity player, Skill skill, int level) {
-        this.updateSkillLevels(player, Map.of(skill.getId(), level));
+    public int setSkillLevel(PlayerEntity player, Skill skill, int level) {
+        int newLevel = MathHelper.clamp(level, Skill.MIN_LEVEL, Math.min(skill.getMaxLevel(), Skill.MAX_LEVEL));
+        this.updateSkillLevels(player, Map.of(skill.getId(), newLevel));
+        return newLevel;
     }
 
     public void updateSkillLevels(PlayerEntity player, Map<Identifier, Integer> changedSkillLevels) {
