@@ -20,7 +20,8 @@ import net.minecraft.util.Formatting;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Set;
+import java.util.Comparator;
+import java.util.List;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
@@ -38,7 +39,10 @@ public class SkillsCommand {
     }
 
     private static int executeSkillsCommand(@Nonnull CommandContext<ServerCommandSource> ctx, @Nullable PlayerEntity player) {
-        Set<Skill> skills = SkillManager.getInstance().getSkills();
+        List<Skill> skills = SkillManager.getInstance().getSkills()
+                .stream()
+                .sorted(Comparator.comparing(Skill::getId))
+                .toList();
 
         {
             Text heading = new TranslatableText("skillmmo.command.skills.heading", skills.size())
