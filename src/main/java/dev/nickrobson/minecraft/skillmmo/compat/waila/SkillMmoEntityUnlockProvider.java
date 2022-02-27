@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.compat.waila;
 
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.util.UnlockTooltipHelper;
 import mcp.mobius.waila.api.IEntityAccessor;

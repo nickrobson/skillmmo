@@ -21,8 +21,10 @@ import javax.annotation.Nullable;
 
 public class WCharButton extends WWidget {
     private final char text;
-    private @Nullable Text tooltip;
     private boolean enabled = true;
+    @Nullable
+    private Text tooltip;
+    @Nullable
     private Runnable onClick;
 
     WCharButton(char text) {

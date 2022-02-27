@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo;
 
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;

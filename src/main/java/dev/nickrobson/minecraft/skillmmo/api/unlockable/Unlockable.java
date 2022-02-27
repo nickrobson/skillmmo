@@ -29,6 +29,7 @@ public final class Unlockable<Target> {
 
     /**
      * Gets the {@link Identifier identifier} of the thing this Unlock contains
+     *
      * @return the identifier of the target thing that is or can be unlocked
      */
     public Identifier targetId() {

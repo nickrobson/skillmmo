@@ -1,8 +1,8 @@
 package dev.nickrobson.minecraft.skillmmo.mixin.client;
 
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.util.UnlockTooltipHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
