@@ -1,7 +1,9 @@
 {
   "replace": true,
   "values": [
+    "minecraft:diamond",
     "minecraft:diamond_shovel",
-    "minecraft:diamond_pickaxe"
+    "minecraft:diamond_pickaxe",
+    "minecraft:emerald"
   ]
 }
