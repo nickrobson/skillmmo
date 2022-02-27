@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo;
 
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
 import net.minecraft.tag.Tag;
@@ -21,8 +21,8 @@ public class SkillMmoTags {
     public static final Tag<Block> interactableBlocks =
             TagFactory.BLOCK.create(new Identifier(SkillMmoMod.MOD_ID, "interactable"));
 
-    public static <T> Tag<T> getUnlocksTag(SkillLevel skillLevel, UnlockType<T> unlockType) {
-        return unlockType.getTagFactory().create(getLevelUnlocksIdentifier(skillLevel));
+    public static <T> Tag<T> getUnlocksTag(SkillLevel skillLevel, UnlockableType<T> unlockableType) {
+        return unlockableType.getTagFactory().create(getLevelUnlocksIdentifier(skillLevel));
     }
 
     private static Identifier getLevelUnlocksIdentifier(SkillLevel skillLevel) {

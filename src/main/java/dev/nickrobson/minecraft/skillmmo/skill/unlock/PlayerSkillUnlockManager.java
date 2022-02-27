@@ -2,10 +2,12 @@ package dev.nickrobson.minecraft.skillmmo.skill.unlock;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
+import dev.nickrobson.minecraft.skillmmo.api.interaction.Interaction;
+import dev.nickrobson.minecraft.skillmmo.api.interaction.VanillaInteractionTypes;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.interaction.Interaction;
 import dev.nickrobson.minecraft.skillmmo.interaction.InteractionHelper;
-import dev.nickrobson.minecraft.skillmmo.interaction.InteractionType;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillDenyCustomizable;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
@@ -25,10 +27,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -144,7 +144,7 @@ public class PlayerSkillUnlockManager {
             return true;
         }
 
-        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forBlock(block));
+        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forBlock(block));
     }
 
     public boolean hasItemUnlock(@Nullable PlayerEntity player, ItemStack itemStack) {
@@ -152,7 +152,7 @@ public class PlayerSkillUnlockManager {
             return true;
         }
 
-        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forItemStack(itemStack));
+        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forItemStack(itemStack));
     }
 
     public boolean hasItemUnlock(@Nullable PlayerEntity player, Item item) {
@@ -160,7 +160,7 @@ public class PlayerSkillUnlockManager {
             return true;
         }
 
-        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forItem(item));
+        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forItem(item));
     }
 
     public boolean hasEntityUnlock(@Nullable PlayerEntity player, Entity entity) {
@@ -168,10 +168,10 @@ public class PlayerSkillUnlockManager {
             return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemEntity.getStack());
         }
 
-        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, UnlockHelper.forEntity(entity));
+        return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forEntity(entity));
     }
 
-    private boolean hasUnlock(@Nullable PlayerEntity player, Unlock unlock) {
+    private boolean hasUnlock(@Nullable PlayerEntity player, Unlockable<?> unlockable) {
         if (!SkillMmoMod.isModEnabled) {
             return true;
         }
@@ -184,7 +184,7 @@ public class PlayerSkillUnlockManager {
             return true;
         }
 
-        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlock);
+        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlockable);
         if (skillLevelSet.isEmpty()) {
             // If no skill levels affect the item, it's allowed!
             return true;
@@ -213,11 +213,11 @@ public class PlayerSkillUnlockManager {
     }
 
     public void reportBlockBreakLocked(@Nullable PlayerEntity player, Block block) {
-        reportInteractLocked(player, InteractionHelper.forBlock(block, InteractionType.BLOCK_BREAK), block);
+        reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_BREAK), block, block);
     }
 
     public void reportBlockInteractLocked(@Nullable PlayerEntity player, Block block) {
-        reportInteractLocked(player, InteractionHelper.forBlock(block, InteractionType.BLOCK_INTERACT), block);
+        reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_INTERACT), block, block);
     }
 
     public void reportItemUseLocked(@Nullable PlayerEntity player, Item item) {
@@ -227,25 +227,31 @@ public class PlayerSkillUnlockManager {
     public void reportItemUseLocked(@Nullable PlayerEntity player, Item item, @Nullable SkillDenyCustomizable skillDenyCustomizable) {
         if (item instanceof BlockItem blockItem) {
             Block block = blockItem.getBlock();
-            reportInteractLocked(player, InteractionHelper.forBlock(block, InteractionType.BLOCK_PLACE), skillDenyCustomizable != null ? skillDenyCustomizable : block);
+            reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_PLACE), block, skillDenyCustomizable != null ? skillDenyCustomizable : block);
         } else {
-            reportInteractLocked(player, InteractionHelper.forItem(item, InteractionType.ITEM_USE), skillDenyCustomizable != null ? skillDenyCustomizable : item);
+            reportInteractLocked(player, InteractionHelper.forItem(item, VanillaInteractionTypes.ITEM_USE), item, skillDenyCustomizable != null ? skillDenyCustomizable : item);
         }
     }
 
     public void reportEntityInteractLocked(@Nullable PlayerEntity player, Entity entity) {
-        reportInteractLocked(player, InteractionHelper.forEntity(entity, InteractionType.ENTITY_INTERACT), entity);
+        reportInteractLocked(
+                player,
+                InteractionHelper.forEntity(entity, VanillaInteractionTypes.ENTITY_INTERACT),
+                entity.getType(),
+                entity
+        );
     }
 
-    private void reportInteractLocked(
+    private <T> void reportInteractLocked(
             @Nullable PlayerEntity player,
-            Interaction interaction,
+            Interaction<T> interaction,
+            T target,
             @Nullable Object maybeSkillDenyCustomizable) {
         if (player == null) {
             return;
         }
 
-        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(interaction.toUnlock());
+        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(interaction.toUnlockable());
         if (skillLevelSet.isEmpty()) {
             return;
         }
@@ -259,28 +265,10 @@ public class PlayerSkillUnlockManager {
             text = skillDenyCustomizable.onDeny(player, skillLevel, playerLevel);
         }
         if (text == null) {
-            text = getDenyText(skillLevel, interaction);
+            Text skillName = skillLevel.getSkill().getName();
+            int level = skillLevel.getLevel();
+            text = interaction.getDenyText(target, skillName, level);
         }
         player.sendMessage(text, true);
     }
-
-    private Text getDenyText(SkillLevel skillLevel, Interaction interaction) {
-        Text skillName = skillLevel.getSkill().getName();
-        int level = skillLevel.getLevel();
-        Text thingName = getThingName(interaction);
-
-        return switch (interaction.interactionType()) {
-            case BLOCK_BREAK -> new TranslatableText("skillmmo.feedback.deny.block.break", skillName, level, thingName);
-            case BLOCK_INTERACT -> new TranslatableText("skillmmo.feedback.deny.block.interact", skillName, level, thingName);
-            case BLOCK_PLACE -> new TranslatableText("skillmmo.feedback.deny.block.place", skillName, level, thingName);
-            case ITEM_USE -> new TranslatableText("skillmmo.feedback.deny.item.use", skillName, level, thingName);
-            case ENTITY_INTERACT -> new TranslatableText("skillmmo.feedback.deny.entity.interact", skillName, level, thingName);
-        };
-    }
-
-    private Text getThingName(Interaction interaction) {
-        Identifier identifier = interaction.identifier();
-        return interaction.interactionType().unlockType().getName(identifier);
-    }
-
 }

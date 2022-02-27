@@ -3,7 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 import net.minecraft.item.Item;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -31,7 +31,7 @@ public class Skill {
     private final int maxLevel;
     private final Item iconItem;
 
-    private final LoadingCache<Unlock, Optional<SkillLevel>> levelsByUnlockCache;
+    private final LoadingCache<Unlockable<?>, Optional<SkillLevel>> levelsByUnlockCache;
 
     public Skill(
             Identifier id,
@@ -60,10 +60,10 @@ public class Skill {
                 .build(
                         new CacheLoader<>() {
                             @Override
-                            public @NotNull Optional<SkillLevel> load(Unlock key) {
+                            public @NotNull Optional<SkillLevel> load(Unlockable<?> key) {
                                 return getSkillLevels()
                                         .stream()
-                                        .filter(level -> level.hasUnlock(key.unlockType(), key.identifier()))
+                                        .filter(level -> level.hasUnlock(key.type(), key.targetId()))
                                         .findFirst();
                             }
                         }
@@ -103,7 +103,7 @@ public class Skill {
         return Optional.empty();
     }
 
-    public Optional<SkillLevel> getSkillLevelAffecting(Unlock unlock) {
+    public Optional<SkillLevel> getSkillLevelAffecting(Unlockable<?> unlock) {
         return levelsByUnlockCache.getUnchecked(unlock);
     }
 

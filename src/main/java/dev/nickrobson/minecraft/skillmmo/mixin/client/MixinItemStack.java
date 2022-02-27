@@ -1,8 +1,8 @@
 package dev.nickrobson.minecraft.skillmmo.mixin.client;
 
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockHelper;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.util.UnlockTooltipHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -42,7 +42,7 @@ public abstract class MixinItemStack {
             return;
         }
 
-        Unlock unlock = UnlockHelper.forItemStack(itemStack);
-        list.addAll(UnlockTooltipHelper.getLockedTooltipText(player, unlock));
+        Unlockable<?> unlockable = VanillaUnlockables.forItemStack(itemStack);
+        list.addAll(UnlockTooltipHelper.getLockedTooltipText(player, unlockable));
     }
 }

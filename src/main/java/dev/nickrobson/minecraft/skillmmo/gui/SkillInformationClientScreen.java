@@ -1,9 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
 import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WBox;
@@ -159,8 +159,8 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
             for (SkillLevel skillLevel : skillLevels) {
                 List<ItemStack> items = Stream.concat(
-                                skillLevel.getUnlocks(UnlockType.BLOCK).values().stream().map(Block::asItem),
-                                skillLevel.getUnlocks(UnlockType.ITEM).values().stream()
+                                skillLevel.getUnlocks(VanillaUnlockables.BLOCK).values().stream().map(Block::asItem),
+                                skillLevel.getUnlocks(VanillaUnlockables.ITEM).values().stream()
                         )
                         .sorted(Comparator.comparing(Registry.ITEM::getRawId))
                         .distinct()

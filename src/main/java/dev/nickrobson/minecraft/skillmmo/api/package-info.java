@@ -1,5 +1,5 @@
 /**
- * This package will contain the API entrypoints for SkillMMO
+ * This package contains the API entrypoints for SkillMMO
  */
 @ApiStatus.Experimental
 package dev.nickrobson.minecraft.skillmmo.api;

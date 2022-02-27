@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.UnlockType;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 import net.minecraft.tag.Tag;
 import net.minecraft.util.Identifier;
 
@@ -25,13 +25,13 @@ public class SkillLevel {
         return level;
     }
 
-    public <T> Tag<T> getUnlocks(UnlockType<T> unlockType) {
-        return SkillMmoTags.getUnlocksTag(this, unlockType);
+    public <Target> Tag<Target> getUnlocks(UnlockableType<Target> unlockableType) {
+        return SkillMmoTags.getUnlocksTag(this, unlockableType);
     }
 
-    public <T> boolean hasUnlock(UnlockType<T> unlockType, Identifier identifier) {
-        T thing = unlockType.getRegistry().get(identifier);
-        return thing != null && getUnlocks(unlockType).contains(thing);
+    public <Target> boolean hasUnlock(UnlockableType<Target> unlockableType, Identifier identifier) {
+        Target thingType = unlockableType.getById(identifier);
+        return thingType != null && getUnlocks(unlockableType).contains(thingType);
     }
 
     @Override

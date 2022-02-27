@@ -1,10 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.util;
 
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.Unlock;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
@@ -21,8 +21,8 @@ public class UnlockTooltipHelper {
     private UnlockTooltipHelper() {
     }
 
-    public static List<Text> getLockedTooltipText(PlayerEntity player, Unlock unlock) {
-        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlock);
+    public static List<Text> getLockedTooltipText(PlayerEntity player, Unlockable<?> unlockable) {
+        Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlockable);
 
         if (skillLevelSet.isEmpty()) {
             return List.of(new TranslatableText("skillmmo.feedback.item.locked"));
