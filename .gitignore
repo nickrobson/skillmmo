@@ -1,6 +1,9 @@
 # Minecraft
 /run/
 
+# jenv
+/.java-version
+
 # Gradle
 /.gradle/
 
