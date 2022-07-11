@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
-    "minecraft:conduit"
+    "minecraft:conduit",
+    "minecraft:reinforced_deepslate"
   ]
 }

@@ -6,6 +6,9 @@
     "minecraft:birch_leaves",
     "minecraft:jungle_leaves",
     "minecraft:acacia_leaves",
-    "minecraft:dark_oak_leaves"
+    "minecraft:dark_oak_leaves",
+    "minecraft:mangrove_leaves",
+    "minecraft:mangrove_roots",
+    "minecraft:muddy_mangrove_roots"
   ]
 }

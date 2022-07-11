@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:bucket",
+    "minecraft:water_bucket"
+  ]
+}

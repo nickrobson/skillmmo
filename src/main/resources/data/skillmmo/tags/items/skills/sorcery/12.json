@@ -1,6 +1,8 @@
 {
   "replace": true,
   "values": [
+    "minecraft:disc_fragment_5",
+    "minecraft:echo_shard",
     "minecraft:axolotl_spawn_egg",
     "minecraft:bat_spawn_egg",
     "minecraft:bee_spawn_egg",

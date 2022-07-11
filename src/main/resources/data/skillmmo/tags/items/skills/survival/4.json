@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:lava_bucket",
+    "minecraft:powder_snow_bucket"
+  ]
+}

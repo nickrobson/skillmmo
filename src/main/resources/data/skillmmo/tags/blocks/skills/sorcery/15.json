@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
+    "minecraft:beacon",
     "minecraft:dragon_egg",
     "minecraft:end_gateway",
     "minecraft:end_portal",

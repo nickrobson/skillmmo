@@ -1,6 +1,9 @@
 {
   "replace": true,
   "values": [
-    "minecraft:beacon"
+    "minecraft:sculk",
+    "minecraft:sculk_catalyst",
+    "minecraft:sculk_shrieker",
+    "minecraft:sculk_vein"
   ]
 }
