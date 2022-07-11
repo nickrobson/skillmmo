@@ -15,7 +15,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 import javax.annotation.Nonnull;
@@ -45,7 +44,7 @@ public class SkillsCommand {
                 .toList();
 
         {
-            Text heading = new TranslatableText("skillmmo.command.skills.heading", skills.size())
+            Text heading = Text.translatable("skillmmo.command.skills.heading", skills.size())
                     .setStyle(Style.EMPTY.withColor(Formatting.BLUE));
             ctx.getSource().sendFeedback(heading, false);
         }
@@ -56,7 +55,7 @@ public class SkillsCommand {
 
         if (player == null) {
             for (Skill skill : skills) {
-                Text text = new TranslatableText(
+                Text text = Text.translatable(
                         "skillmmo.command.skills.skill_line",
                         skill.getName()
                 );
@@ -64,7 +63,7 @@ public class SkillsCommand {
             }
         } else {
             for (Skill skill : skills) {
-                Text text = new TranslatableText(
+                Text text = Text.translatable(
                         "skillmmo.command.skills.skill_line_with_level",
                         skill.getName(),
                         PlayerSkillManager.getInstance().getSkillLevel(player, skill),
@@ -76,12 +75,12 @@ public class SkillsCommand {
             int availablePoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
             if (player == ctx.getSource().getEntity()) {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("skillmmo.command.skills.available_points_self", availablePoints),
+                        Text.translatable("skillmmo.command.skills.available_points_self", availablePoints),
                         false
                 );
             } else {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("skillmmo.command.skills.available_points_other", player.getName(), availablePoints),
+                        Text.translatable("skillmmo.command.skills.available_points_other", player.getName(), availablePoints),
                         false
                 );
             }
@@ -91,12 +90,12 @@ public class SkillsCommand {
 
             if (player == ctx.getSource().getEntity()) {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("skillmmo.command.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                        Text.translatable("skillmmo.command.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             } else {
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("skillmmo.command.skills.player_experience_other", player.getName(), experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                        Text.translatable("skillmmo.command.skills.player_experience_other", player.getName(), experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             }

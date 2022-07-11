@@ -5,7 +5,7 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.GlassBottleItem;
 import net.minecraft.item.Items;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,7 +35,7 @@ public class MixinGlassBottleItem {
                 player,
                 Items.DRAGON_BREATH,
                 (deniedPlayer, requiredSkillLevel, actualSkillLevel) ->
-                        new TranslatableText(
+                        Text.translatable(
                                 "skillmmo.feedback.deny.item.collect.dragon.breath",
                                 requiredSkillLevel.getSkill().getName(),
                                 requiredSkillLevel.getLevel(),

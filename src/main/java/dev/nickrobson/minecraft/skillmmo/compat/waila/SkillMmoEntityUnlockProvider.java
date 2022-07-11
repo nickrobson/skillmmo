@@ -27,7 +27,7 @@ class SkillMmoEntityUnlockProvider implements IEntityComponentProvider {
 
         Unlockable<?> unlockable = VanillaUnlockables.forEntity(entity);
         for (Text line : UnlockTooltipHelper.getLockedTooltipText(player, unlockable)) {
-            tooltip.add(line);
+            tooltip.addLine(line);
         }
     }
 }

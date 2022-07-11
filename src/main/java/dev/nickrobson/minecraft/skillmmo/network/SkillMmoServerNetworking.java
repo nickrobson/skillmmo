@@ -13,9 +13,8 @@ import net.fabricmc.fabric.api.networking.v1.ServerLoginNetworking;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Style;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
@@ -35,10 +34,10 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
             if (understood) {
                 String clientVersion = buf.readString();
                 if (!SkillMmoMod.MOD_VERSION_STRING.equals(clientVersion)) {
-                    handler.disconnect(new LiteralText("This server is running %s but you are using %s. Please install the same version as the server.".formatted(SkillMmoMod.MOD_VERSION_STRING, clientVersion)));
+                    handler.disconnect(Text.literal("This server is running %s but you are using %s. Please install the same version as the server.".formatted(SkillMmoMod.MOD_VERSION_STRING, clientVersion)));
                 }
             } else {
-                handler.disconnect(new LiteralText("This server requires you to install %s in order to join.".formatted(SkillMmoMod.MOD_VERSION_STRING)));
+                handler.disconnect(Text.literal("This server requires you to install %s in order to join.".formatted(SkillMmoMod.MOD_VERSION_STRING)));
             }
         });
 
@@ -48,11 +47,11 @@ public class SkillMmoServerNetworking implements SkillMmoNetworking {
                 PlayerSkillManager.ChooseSkillLevelResult result = PlayerSkillManager.getInstance().chooseSkillLevel(player, skill);
                 switch (result) {
                     case FAILURE_AT_MAX_LEVEL -> player.sendMessage(
-                            new TranslatableText("skillmmo.feedback.player.skill_choice.failed_max_level", skill.getMaxLevel())
+                            Text.translatable("skillmmo.feedback.player.skill_choice.failed_max_level", skill.getMaxLevel())
                                     .setStyle(Style.EMPTY.withFormatting(Formatting.RED)),
                             false);
                     case FAILURE_NO_AVAILABLE_POINTS -> player.sendMessage(
-                            new TranslatableText("skillmmo.feedback.player.skill_choice.failed_no_points")
+                            Text.translatable("skillmmo.feedback.player.skill_choice.failed_no_points")
                                     .setStyle(Style.EMPTY.withFormatting(Formatting.RED)),
                             false);
                 }

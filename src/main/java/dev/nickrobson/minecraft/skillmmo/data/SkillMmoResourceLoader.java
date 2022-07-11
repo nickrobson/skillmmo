@@ -5,8 +5,9 @@ import com.google.gson.GsonBuilder;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.resource.Resource;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,8 +60,8 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 .map(skillData ->
                         new Skill(
                                 skillData.getKey(),
-                                new TranslatableText(skillData.getValue().nameKey),
-                                new TranslatableText(skillData.getValue().descriptionKey),
+                                Text.translatable(skillData.getValue().nameKey),
+                                Text.translatable(skillData.getValue().descriptionKey),
                                 skillData.getValue().maxLevel,
                                 skillData.getValue().icon.iconItem
                         ))
@@ -70,25 +71,27 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
     }
 
     private <T extends DataValidatable> Map<Identifier, T> loadResources(ResourceManager manager, SkillMmoDataType<T> type) {
-        Collection<Identifier> resourceIdentifiers = manager.findResources(
+        Map<Identifier, Resource> resourceMap = manager.findResources(
                 type.getResourceCategory(),
-                path -> path.endsWith(".json")
+                path -> path.getPath().endsWith(".json")
         );
 
         Map<Identifier, T> resourcesMap = new HashMap<>();
         boolean errored = false;
-        for (Identifier resourceIdentifier : resourceIdentifiers) {
-            try (InputStreamReader resourceReader = new InputStreamReader(manager.getResource(resourceIdentifier).getInputStream())) {
-                T resource = gson.fromJson(resourceReader, type.getResourceClass());
+        for (Map.Entry<Identifier, Resource> resourceEntry : resourceMap.entrySet()) {
+            Identifier resourceIdentifier = resourceEntry.getKey();
+            Resource resource = resourceEntry.getValue();
+            try (InputStreamReader resourceReader = new InputStreamReader(resource.getInputStream())) {
+                T resourceValue = gson.fromJson(resourceReader, type.getResourceClass());
                 Collection<String> errors = new ArrayList<>();
-                resource.validate(errors);
+                resourceValue.validate(errors);
                 if (errors.isEmpty()) {
                     Identifier resourceId = new Identifier(
                             resourceIdentifier.getNamespace(),
                             // e.g. skills/abc.json -> abc
                             resourceIdentifier.getPath().substring(type.getResourceCategory().length() + 1, resourceIdentifier.getPath().lastIndexOf("."))
                     );
-                    resourcesMap.put(resourceId, resource);
+                    resourcesMap.put(resourceId, resourceValue);
                 } else {
                     logger.error(
                             "Failed to load resource '{}' for type '{}' due to errors:{}",

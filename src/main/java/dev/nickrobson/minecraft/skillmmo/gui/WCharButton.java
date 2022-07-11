@@ -13,9 +13,7 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 
 import javax.annotation.Nullable;
 
@@ -80,7 +78,7 @@ public class WCharButton extends WWidget {
         ScreenDrawing.coloredRect(matrices, x + 1, y, getWidth() - 2, getHeight(), outline);
         ScreenDrawing.coloredRect(matrices, x + 1, y + 1, getWidth() - 2, getHeight() - 2, panel);
 
-        Text text = new LiteralText(String.valueOf(this.text));
+        Text text = Text.literal(String.valueOf(this.text));
         int color = enabled ? 0xE0E0E0 : 0xA0A0A0;
         int wid = MinecraftClient.getInstance().textRenderer.getWidth(text);
         float xOffset = (width - wid) / 2f;
@@ -128,9 +126,9 @@ public class WCharButton extends WWidget {
 
         if (enabled) {
             if (isFocused()) {
-                builder.put(NarrationPart.USAGE, new TranslatableText("narration.button.usage.focused"));
+                builder.put(NarrationPart.USAGE, Text.translatable("narration.button.usage.focused"));
             } else if (isHovered()) {
-                builder.put(NarrationPart.USAGE, new TranslatableText("narration.button.usage.hovered"));
+                builder.put(NarrationPart.USAGE, Text.translatable("narration.button.usage.hovered"));
             }
         }
     }

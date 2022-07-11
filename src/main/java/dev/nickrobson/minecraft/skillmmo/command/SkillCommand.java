@@ -16,7 +16,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -29,10 +28,10 @@ import static net.minecraft.server.command.CommandManager.literal;
 @MethodsReturnNonnullByDefault
 public class SkillCommand {
     private static final DynamicCommandExceptionType ACQUIRE_SKILL_FAILURE_MAX_LEVEL = new DynamicCommandExceptionType(
-            skillName -> new TranslatableText("skillmmo.command.skill.acquire.failure_max_level", skillName)
+            skillName -> Text.translatable("skillmmo.command.skill.acquire.failure_max_level", skillName)
     );
     private static final SimpleCommandExceptionType ACQUIRE_SKILL_FAILURE_NO_AVAILABLE_POINTS = new SimpleCommandExceptionType(
-            new TranslatableText("skillmmo.command.skill.acquire.failure_no_available_points")
+            Text.translatable("skillmmo.command.skill.acquire.failure_no_available_points")
     );
 
     private SkillCommand() {
@@ -96,7 +95,7 @@ public class SkillCommand {
         Text skillName = skill.getName();
 
         ctx.getSource().sendFeedback(
-                new TranslatableText(
+                Text.translatable(
                         "skillmmo.command.skill.info.skill",
                         skillName instanceof MutableText mutableText
                                 ? mutableText.setStyle(Style.EMPTY.withColor(Formatting.BLUE))
@@ -106,7 +105,7 @@ public class SkillCommand {
                 false
         );
         ctx.getSource().sendFeedback(
-                new TranslatableText(
+                Text.translatable(
                         "skillmmo.command.skill.info.description",
                         skill.getDescription()
                 ),
@@ -117,7 +116,7 @@ public class SkillCommand {
     }
 
     private static int executeAcquireSkillCommand(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().getPlayer();
+        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
         Skill skill = ctx.getArgument("skill", Skill.class);
 
         PlayerSkillManager.ChooseSkillLevelResult result = PlayerSkillManager.getInstance()
@@ -127,7 +126,7 @@ public class SkillCommand {
             case SUCCESS -> {
                 int level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
                 ctx.getSource().sendFeedback(
-                        new TranslatableText("skillmmo.command.skill.acquire.success", level, skill.getName()),
+                        Text.translatable("skillmmo.command.skill.acquire.success", level, skill.getName()),
                         false);
                 yield Command.SINGLE_SUCCESS;
             }
@@ -143,7 +142,7 @@ public class SkillCommand {
         int level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
 
         ctx.getSource().sendFeedback(
-                new TranslatableText(
+                Text.translatable(
                         "skillmmo.command.skill.player_is_level",
                         player.getName(),
                         level,
@@ -162,7 +161,7 @@ public class SkillCommand {
         int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, level);
 
         ctx.getSource().sendFeedback(
-                new TranslatableText(
+                Text.translatable(
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         newLevel,
@@ -182,7 +181,7 @@ public class SkillCommand {
         int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, currentLevel + levelDelta);
 
         ctx.getSource().sendFeedback(
-                new TranslatableText(
+                Text.translatable(
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         newLevel,
@@ -197,7 +196,7 @@ public class SkillCommand {
         }
         if (!isSelf) {
             player.sendMessage(
-                    new TranslatableText("skillmmo.command.skill.you_are_now_level", newLevel, skill.getName()),
+                    Text.translatable("skillmmo.command.skill.you_are_now_level", newLevel, skill.getName()),
                     false
             );
         }

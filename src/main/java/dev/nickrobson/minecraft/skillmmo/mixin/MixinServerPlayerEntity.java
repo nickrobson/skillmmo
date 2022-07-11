@@ -9,7 +9,6 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -78,14 +77,14 @@ public class MixinServerPlayerEntity {
             if (skillId == null) {
                 // Lost levels in all skills
                 message = totalLostLevels == 1
-                        ? new TranslatableText("skillmmo.feedback.player.death.lost_level", totalLostLevels)
-                        : new TranslatableText("skillmmo.feedback.player.death.lost_levels", totalLostLevels);
+                        ? Text.translatable("skillmmo.feedback.player.death.lost_level", totalLostLevels)
+                        : Text.translatable("skillmmo.feedback.player.death.lost_levels", totalLostLevels);
             } else {
                 // Lost levels in one skill
                 Text skillName = SkillManager.getInstance().getSkill(skillId).orElseThrow().getName();
                 message = totalLostLevels == 1
-                        ? new TranslatableText("skillmmo.feedback.player.death.lost_level.in.skill", totalLostLevels, skillName)
-                        : new TranslatableText("skillmmo.feedback.player.death.lost_levels.in.skill", totalLostLevels, skillName);
+                        ? Text.translatable("skillmmo.feedback.player.death.lost_level.in.skill", totalLostLevels, skillName)
+                        : Text.translatable("skillmmo.feedback.player.death.lost_levels.in.skill", totalLostLevels, skillName);
             }
 
 

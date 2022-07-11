@@ -10,7 +10,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.Formatting;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class UnlockTooltipHelper {
         Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlockable);
 
         if (skillLevelSet.isEmpty()) {
-            return List.of(new TranslatableText("skillmmo.feedback.item.locked"));
+            return List.of(Text.translatable("skillmmo.feedback.item.locked"));
         }
 
         if (skillLevelSet.size() == 1 || !Screen.hasShiftDown()) {
@@ -33,7 +32,7 @@ public class UnlockTooltipHelper {
                     ? skillLevelSet.stream().findAny().get()
                     : PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
             return List.of(
-                    new TranslatableText(
+                    Text.translatable(
                             "skillmmo.feedback.item.locked.basic",
                             skillLevel.getSkill().getName(),
                             skillLevel.getLevel()
@@ -42,12 +41,12 @@ public class UnlockTooltipHelper {
         }
 
         MutableText text = SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked
-                ? new TranslatableText("skillmmo.feedback.item.locked.advanced.heading.all")
-                : new TranslatableText("skillmmo.feedback.item.locked.advanced.heading.any");
+                ? Text.translatable("skillmmo.feedback.item.locked.advanced.heading.all")
+                : Text.translatable("skillmmo.feedback.item.locked.advanced.heading.any");
 
         return Stream.<Text>concat(
                 Stream.of(text.setStyle(Style.EMPTY.withColor(Formatting.RED))),
-                skillLevelSet.stream().map(skillLevel -> new TranslatableText(
+                skillLevelSet.stream().map(skillLevel -> Text.translatable(
                         "skillmmo.feedback.item.locked.advanced.line",
                         skillLevel.getSkill().getName(),
                         skillLevel.getLevel()

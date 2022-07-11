@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '0.10-SNAPSHOT'
+    id 'fabric-loom' version '0.12-SNAPSHOT'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -24,24 +24,24 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 
     compileOnly 'org.apache.commons:commons-lang3:3.12.0'
-    compileOnly 'org.apache.logging.log4j:log4j-api:2.14.1'
-    compileOnly 'com.google.code.findbugs:jsr305:3.0.1'
-    compileOnly 'com.google.code.gson:gson:2.8.8'
+    compileOnly 'org.apache.logging.log4j:log4j-api:2.17.0'
+    compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+    compileOnly 'com.google.code.gson:gson:2.8.9'
 
     // Fabric
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     // LibGui
-    modImplementation include("io.github.cottonmc:LibGui:5.1.0+1.18")
+    modImplementation include("io.github.cottonmc:LibGui:6.0.0+1.19")
 
     // Cloth Config
-    modApi("me.shedaniel.cloth:cloth-config-fabric:6.1.48") {
+    modApi("me.shedaniel.cloth:cloth-config-fabric:7.0.72") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
     // WTHIT (WAILA)
-    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-4.3.1"
+    modCompileOnly "mcp.mobius.waila:wthit-api:fabric-5.5.1"
 }
 
 processResources {

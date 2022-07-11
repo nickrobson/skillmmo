@@ -2,8 +2,9 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.RegistryEntry;
 
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -25,13 +26,23 @@ public class SkillLevel {
         return level;
     }
 
-    public <Target> Tag<Target> getUnlocks(UnlockableType<Target> unlockableType) {
+    public <Target> TagKey<Target> getUnlocksTag(UnlockableType<Target> unlockableType) {
         return SkillMmoTags.getUnlocksTag(this, unlockableType);
     }
 
     public <Target> boolean hasUnlock(UnlockableType<Target> unlockableType, Identifier identifier) {
         Target thingType = unlockableType.getById(identifier);
-        return thingType != null && getUnlocks(unlockableType).contains(thingType);
+        if (thingType == null) {
+            return false;
+        }
+
+        for (RegistryEntry<Target> entry : unlockableType.getRegistry().iterateEntries(getUnlocksTag(unlockableType))) {
+            if (entry.matchesId(identifier)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

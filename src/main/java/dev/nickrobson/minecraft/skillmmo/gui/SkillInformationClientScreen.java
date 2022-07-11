@@ -20,19 +20,25 @@ import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.block.Block;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.tag.TagKey;
+import net.minecraft.text.Text;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryEntryList;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Environment(EnvType.CLIENT)
@@ -59,7 +65,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
     }
 
     @Override
-    public void onClose() {
+    public void close() {
         if (this.client != null) {
             this.client.setScreen(parent);
         }
@@ -159,8 +165,8 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
             for (SkillLevel skillLevel : skillLevels) {
                 List<ItemStack> items = Stream.concat(
-                                skillLevel.getUnlocks(VanillaUnlockables.BLOCK).values().stream().map(Block::asItem),
-                                skillLevel.getUnlocks(VanillaUnlockables.ITEM).values().stream()
+                                explodeTagItems(Registry.BLOCK, skillLevel.getUnlocksTag(VanillaUnlockables.BLOCK)),
+                                explodeTagItems(Registry.ITEM, skillLevel.getUnlocksTag(VanillaUnlockables.ITEM))
                         )
                         .sorted(Comparator.comparing(Registry.ITEM::getRawId))
                         .distinct()
@@ -174,7 +180,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
                 WPlainPanel skillLevelUnlocksPanel = new WPlainPanel();
                 skillLevelUnlocksPanel.add(
-                        new WLabel(new TranslatableText("skillmmo.gui.skill.unlocks.level", skillLevel.getLevel()))
+                        new WLabel(Text.translatable("skillmmo.gui.skill.unlocks.level", skillLevel.getLevel()))
                                 .setVerticalAlignment(VerticalAlignment.TOP)
                                 .setHorizontalAlignment(HorizontalAlignment.LEFT),
                         0,
@@ -205,6 +211,19 @@ public class SkillInformationClientScreen extends CottonClientScreen {
             return new WScrollPanel(skillLevelsPanel)
                     .setScrollingHorizontally(TriState.FALSE)
                     .setScrollingVertically(TriState.DEFAULT);
+        }
+
+        private <T extends ItemConvertible> Stream<Item> explodeTagItems(Registry<T> registry, TagKey<T> tag) {
+            Optional<RegistryEntryList.Named<T>> entryListOpt = registry.getEntryList(tag);
+
+            if (entryListOpt.isEmpty()) {
+                return Stream.empty();
+            }
+
+            return entryListOpt.get().stream()
+                    .map(RegistryEntry::value)
+                    .filter(Objects::nonNull)
+                    .map(ItemConvertible::asItem);
         }
     }
 }

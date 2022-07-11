@@ -2,10 +2,10 @@ package dev.nickrobson.minecraft.skillmmo;
 
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import net.fabricmc.fabric.api.tag.TagFactory;
 import net.minecraft.block.Block;
-import net.minecraft.tag.Tag;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 
 public class SkillMmoTags {
     private SkillMmoTags() {
@@ -18,11 +18,11 @@ public class SkillMmoTags {
      * in some way while holding another block.
      * This includes any form of right-click interaction like opening an inventory or GUI, sleeping in a bed, etc.
      */
-    public static final Tag<Block> interactableBlocks =
-            TagFactory.BLOCK.create(new Identifier(SkillMmoMod.MOD_ID, "interactable"));
+    public static final TagKey<Block> interactableBlocks =
+            TagKey.of(Registry.BLOCK_KEY, new Identifier(SkillMmoMod.MOD_ID, "interactable"));
 
-    public static <T> Tag<T> getUnlocksTag(SkillLevel skillLevel, UnlockableType<T> unlockableType) {
-        return unlockableType.getTagFactory().create(getLevelUnlocksIdentifier(skillLevel));
+    public static <T> TagKey<T> getUnlocksTag(SkillLevel skillLevel, UnlockableType<T> unlockableType) {
+        return unlockableType.createTag(getLevelUnlocksIdentifier(skillLevel));
     }
 
     private static Identifier getLevelUnlocksIdentifier(SkillLevel skillLevel) {

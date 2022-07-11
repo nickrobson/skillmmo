@@ -1,21 +1,23 @@
 package dev.nickrobson.minecraft.skillmmo.api.unlockable;
 
-import net.fabricmc.fabric.api.tag.TagFactory;
+import net.minecraft.tag.TagKey;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public abstract class UnlockableType<Target> {
     private final Registry<Target> registry;
-    private final TagFactory<Target> tagFactory;
 
-    public UnlockableType(Registry<Target> registry, TagFactory<Target> tagFactory) {
+    public UnlockableType(Registry<Target> registry) {
         this.registry = registry;
-        this.tagFactory = tagFactory;
     }
 
-    public TagFactory<Target> getTagFactory() {
-        return tagFactory;
+    public Registry<Target> getRegistry() {
+        return registry;
+    }
+
+    public TagKey<Target> createTag(Identifier tagIdentifier) {
+        return TagKey.of(registry.getKey(), tagIdentifier);
     }
 
     public Unlockable<Target> createUnlockable(Target targetType) {

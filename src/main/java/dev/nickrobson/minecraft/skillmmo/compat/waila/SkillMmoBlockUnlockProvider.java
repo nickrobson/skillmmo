@@ -27,7 +27,7 @@ class SkillMmoBlockUnlockProvider implements IBlockComponentProvider {
 
         Unlockable<?> unlock = VanillaUnlockables.forBlock(blockState);
         for (Text line : UnlockTooltipHelper.getLockedTooltipText(player, unlock)) {
-            tooltip.add(line);
+            tooltip.addLine(line);
         }
     }
 }

@@ -4,7 +4,7 @@ import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -47,7 +47,8 @@ public class PlayerExperienceManager {
         if (oldLevel < newLevel) {
             int availableSkillPoints = playerData.addAvailableSkillPoints(getTotalSkillPoints(newLevel) - getTotalSkillPoints(oldLevel));
 
-            player.sendMessage(new TranslatableText("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
+
+            player.sendMessage(Text.translatable("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
         }
 
         SkillMmoServerNetworking.sendPlayerXpInfo(player);

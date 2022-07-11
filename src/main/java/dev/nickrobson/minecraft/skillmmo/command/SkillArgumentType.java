@@ -11,7 +11,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import java.util.Collection;
@@ -20,11 +20,14 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
 public class SkillArgumentType implements ArgumentType<Skill> {
+    public static final ConstantArgumentSerializer<SkillArgumentType> SERIALIZER =
+            ConstantArgumentSerializer.of(SkillArgumentType::new);
+
     @Override
     public Skill parse(StringReader reader) throws CommandSyntaxException {
         Identifier skillId = Identifier.fromCommandInput(reader);
         return SkillManager.getInstance().getSkill(skillId)
-                .orElseThrow(() -> new SimpleCommandExceptionType(new LiteralText("No such skill!")).createWithContext(reader));
+                .orElseThrow(() -> new SimpleCommandExceptionType(Text.literal("No such skill!")).createWithContext(reader));
     }
 
     @Override
@@ -50,11 +53,5 @@ public class SkillArgumentType implements ArgumentType<Skill> {
                 .map(Identifier::toString)
                 .sorted()
                 .toList();
-    }
-
-    public static class Serializer extends ConstantArgumentSerializer<SkillArgumentType> {
-        public Serializer() {
-            super(SkillArgumentType::new);
-        }
     }
 }

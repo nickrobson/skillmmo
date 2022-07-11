@@ -75,11 +75,11 @@ public class Skill {
     }
 
     public Text getName() {
-        return name.copy();
+        return name.copyContentOnly();
     }
 
     public Text getDescription() {
-        return description.copy();
+        return description.copyContentOnly();
     }
 
     public int getMaxLevel() {

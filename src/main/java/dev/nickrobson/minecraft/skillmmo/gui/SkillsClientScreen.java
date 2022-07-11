@@ -24,7 +24,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.ItemStack;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Pair;
 
 import java.util.ArrayList;
@@ -94,7 +94,7 @@ public class SkillsClientScreen extends CottonClientScreen {
             ExperienceLevel experienceLevel = PlayerExperienceManager.getInstance().getExperienceLevel(player);
 
             infoPanel.add(
-                    new WLabel(new TranslatableText("skillmmo.gui.skills.info.level", experienceLevel.level()))
+                    new WLabel(Text.translatable("skillmmo.gui.skills.info.level", experienceLevel.level()))
                             .setHorizontalAlignment(HorizontalAlignment.LEFT)
                             .setVerticalAlignment(VerticalAlignment.CENTER),
                     0,
@@ -104,7 +104,7 @@ public class SkillsClientScreen extends CottonClientScreen {
             );
 
             infoPanel.add(
-                    new WLabel(new TranslatableText("skillmmo.gui.skills.info.xp_progress", experienceLevel.progress(), experienceLevel.levelExperience()))
+                    new WLabel(Text.translatable("skillmmo.gui.skills.info.xp_progress", experienceLevel.progress(), experienceLevel.levelExperience()))
                             .setHorizontalAlignment(HorizontalAlignment.RIGHT)
                             .setVerticalAlignment(VerticalAlignment.CENTER),
                     GRID_SIZE * LEVEL_TEXT_WIDTH,
@@ -154,7 +154,7 @@ public class SkillsClientScreen extends CottonClientScreen {
                 );
 
                 skillLevelPanel.add(
-                        new WLabel(new TranslatableText("skillmmo.gui.skills.skill.name", skill.getName()))
+                        new WLabel(Text.translatable("skillmmo.gui.skills.skill.name", skill.getName()))
                                 .setVerticalAlignment(VerticalAlignment.CENTER)
                                 .setHorizontalAlignment(HorizontalAlignment.LEFT),
                         GRID_SIZE * ICON_GRID_WIDTH + 6,
@@ -173,7 +173,7 @@ public class SkillsClientScreen extends CottonClientScreen {
                 );
 
                 WCharButton acquireSkillButton = new WCharButton('+')
-                        .setTooltip(new TranslatableText("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
+                        .setTooltip(Text.translatable("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
                         .setEnabled(availableSkillPoints > 0 && skillLevel.getRight() < skill.getMaxLevel());
 
                 AtomicInteger levelUps = new AtomicInteger(0);
