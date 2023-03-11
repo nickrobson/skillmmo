@@ -1,9 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
 import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
-import net.minecraft.util.registry.Registry;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
@@ -121,7 +121,7 @@ public interface SkillMmoPlayerDataHolder {
         }
 
         public boolean hasLockedRecipe(Recipe<?> recipe) {
-            Set<Identifier> lockedRecipesOfType = this.lockedRecipes.get(Registry.RECIPE_TYPE.getId(recipe.getType()));
+            Set<Identifier> lockedRecipesOfType = this.lockedRecipes.get(Registries.RECIPE_TYPE.getId(recipe.getType()));
             return lockedRecipesOfType != null
                     && lockedRecipesOfType.contains(recipe.getId());
         }
@@ -129,7 +129,7 @@ public interface SkillMmoPlayerDataHolder {
         public void addLockedRecipes(Collection<Recipe<?>> recipes) {
             this.checkInitialised();
             recipes.forEach(recipe -> {
-                Identifier recipeTypeId = Registry.RECIPE_TYPE.getId(recipe.getType());
+                Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.getType());
                 this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
                     if (recipeIds == null) {
                         recipeIds = new HashSet<>();
@@ -143,7 +143,7 @@ public interface SkillMmoPlayerDataHolder {
         public void removeLockedRecipes(Collection<Recipe<?>> recipes) {
             this.checkInitialised();
             recipes.forEach(recipe -> {
-                Identifier recipeTypeId = Registry.RECIPE_TYPE.getId(recipe.getType());
+                Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.getType());
                 this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
                     if (recipeIds != null) {
                         recipeIds.remove(recipe.getId());

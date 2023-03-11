@@ -2,9 +2,8 @@ package dev.nickrobson.minecraft.skillmmo.data;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.Item;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
@@ -13,7 +12,6 @@ import java.util.Optional;
 /**
  * Data shape for a skill's icon in a datapack
  */
-@FieldsAreNonnullByDefault
 public class SkillIconData implements DataValidatable {
     /**
      * The type of the icon. Must be 'item'
@@ -42,7 +40,7 @@ public class SkillIconData implements DataValidatable {
                 if (iconItemId == null) {
                     errors.add("'icon.value' is '%s', should be a valid identifier format, e.g. minecraft:stone or minecraft:egg".formatted(value));
                 } else {
-                    Optional<Item> iconItemOpt = Registry.ITEM.getOrEmpty(iconItemId);
+                    Optional<Item> iconItemOpt = Registries.ITEM.getOrEmpty(iconItemId);
                     if (iconItemOpt.isPresent()) {
                         iconItem = iconItemOpt.get();
                     } else {

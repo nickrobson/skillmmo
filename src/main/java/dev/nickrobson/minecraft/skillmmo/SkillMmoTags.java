@@ -3,9 +3,9 @@ package dev.nickrobson.minecraft.skillmmo;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import net.minecraft.block.Block;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class SkillMmoTags {
     private SkillMmoTags() {
@@ -19,7 +19,7 @@ public class SkillMmoTags {
      * This includes any form of right-click interaction like opening an inventory or GUI, sleeping in a bed, etc.
      */
     public static final TagKey<Block> interactableBlocks =
-            TagKey.of(Registry.BLOCK_KEY, new Identifier(SkillMmoMod.MOD_ID, "interactable"));
+            TagKey.of(Registries.BLOCK.getKey(), new Identifier(SkillMmoMod.MOD_ID, "interactable"));
 
     public static <T> TagKey<T> getUnlocksTag(SkillLevel skillLevel, UnlockableType<T> unlockableType) {
         return unlockableType.createTag(getLevelUnlocksIdentifier(skillLevel));

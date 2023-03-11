@@ -2,10 +2,9 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.RegistryEntry;
-
 import java.util.Objects;
 import java.util.StringJoiner;
 

@@ -27,11 +27,12 @@ import net.minecraft.client.resource.language.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tag.TagKey;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryEntryList;
 
 import javax.annotation.Nullable;
 import java.util.Comparator;
@@ -165,10 +166,10 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
             for (SkillLevel skillLevel : skillLevels) {
                 List<ItemStack> items = Stream.concat(
-                                explodeTagItems(Registry.BLOCK, skillLevel.getUnlocksTag(VanillaUnlockables.BLOCK)),
-                                explodeTagItems(Registry.ITEM, skillLevel.getUnlocksTag(VanillaUnlockables.ITEM))
+                                explodeTagItems(Registries.BLOCK, skillLevel.getUnlocksTag(VanillaUnlockables.BLOCK)),
+                                explodeTagItems(Registries.ITEM, skillLevel.getUnlocksTag(VanillaUnlockables.ITEM))
                         )
-                        .sorted(Comparator.comparing(Registry.ITEM::getRawId))
+                        .sorted(Comparator.comparing(Registries.ITEM::getRawId))
                         .distinct()
                         .map(ItemStack::new)
                         .filter(itemStack -> !itemStack.isEmpty())

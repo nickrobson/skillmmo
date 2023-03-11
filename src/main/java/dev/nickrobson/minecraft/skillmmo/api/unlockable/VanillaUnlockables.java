@@ -8,25 +8,25 @@ import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.text.Text;
-import net.minecraft.util.registry.Registry;
 
 public class VanillaUnlockables {
-    public static final UnlockableType<Block> BLOCK = new UnlockableType<>(Registry.BLOCK) {
+    public static final UnlockableType<Block> BLOCK = new UnlockableType<>(Registries.BLOCK) {
         @Override
         protected Text getName(Block block) {
             return block.getName();
         }
     };
 
-    public static final UnlockableType<Item> ITEM = new UnlockableType<>(Registry.ITEM) {
+    public static final UnlockableType<Item> ITEM = new UnlockableType<>(Registries.ITEM) {
         @Override
         protected Text getName(Item item) {
             return item.getName();
         }
     };
 
-    public static final UnlockableType<EntityType<?>> ENTITY_TYPE = new UnlockableType<>(Registry.ENTITY_TYPE) {
+    public static final UnlockableType<EntityType<?>> ENTITY_TYPE = new UnlockableType<>(Registries.ENTITY_TYPE) {
         @Override
         protected Text getName(EntityType<?> entityType) {
             return entityType.getName();
