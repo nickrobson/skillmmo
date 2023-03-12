@@ -23,5 +23,5 @@ jobs:
       - name: Capture build artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: Artifacts
-          path: build/libs/
+          name: Mod JAR (Fabric)
+          path: build/libs/skillmmo-*-fabric*.jar
