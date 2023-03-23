@@ -208,7 +208,7 @@ public class PlayerSkillUnlockManager {
                     return Arrays.stream(matchingStacks)
                             .noneMatch(itemStack -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack));
                 });
-        boolean outputIsLocked = !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, recipe.getOutput());
+        boolean outputIsLocked = !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, recipe.getOutput(player.getWorld().getRegistryManager()));
         return !someIngredientsAreFullyLocked && !outputIsLocked;
     }
 
