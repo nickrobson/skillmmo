@@ -103,10 +103,12 @@ public class WCharButton extends WWidget {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void onKeyPressed(int ch, int key, int modifiers) {
+    public InputResult onKeyPressed(int ch, int key, int modifiers) {
         if (isActivationKey(ch)) {
             onClick(0, 0, 0);
+            return InputResult.PROCESSED;
         }
+        return InputResult.IGNORED;
     }
 
     @Environment(EnvType.CLIENT)
