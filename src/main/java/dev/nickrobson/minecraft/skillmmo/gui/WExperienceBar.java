@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.Texture;
@@ -31,6 +32,7 @@ public class WExperienceBar extends WWidget {
     @Environment(EnvType.CLIENT)
     public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         ScreenDrawing.texturedRect(matrices, x, y, getWidth(), getHeight(), TEXTURE_EMPTY_BAR, 0xFF_FFFFFF);
-        ScreenDrawing.texturedRect(matrices, x, y, (int) (getWidth() * progress), getHeight(), textureFilledBar, 0xFF_20AAFF);
+        ScreenDrawing.texturedRect(matrices, x, y, (int) (getWidth() * progress), getHeight(), textureFilledBar, 0xFF_409FFF);
+        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
     }
 }
