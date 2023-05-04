@@ -13,6 +13,9 @@ A clear and concise description of what the bug is.
 **Minecraft and Fabric version**
 What version of Minecraft, Fabric Loader, and Fabric API are you using?
 
+**Config changes**
+Have you changed any of the mod's config options from their defaults?
+
 **Other mods installed**
 If you have any mods, please list them here along with their version.
 

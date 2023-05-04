@@ -13,6 +13,9 @@ What do you think of the mod? What's good about it? What could be improved?
 **Minecraft and Fabric version**
 What version of Minecraft, Fabric Loader, and Fabric API are you using?
 
+**Config changes**
+Have you changed any of the mod's config options from their defaults?
+
 **Other mods installed**
 Optional: If you have any mods, please list them here along with their version.
 
