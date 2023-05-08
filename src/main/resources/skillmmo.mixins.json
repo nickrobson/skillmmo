@@ -14,7 +14,6 @@
     "MixinPlayerManager",
     "MixinRecipeBook",
     "MixinServerPlayerEntity",
-    "MixinServerPlayPlayerInteractEntityC2SPacketHandler",
     "MixinServerRecipeBook",
     "MixinVillagerEntity"
   ],
