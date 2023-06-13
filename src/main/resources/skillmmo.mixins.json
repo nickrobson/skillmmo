@@ -18,6 +18,7 @@
     "MixinVillagerEntity"
   ],
   "client": [
+    "client.InGameHudAccess",
     "client.MixinClientPlayerEntity",
     "client.MixinConnectScreen",
     "client.MixinItemStack"

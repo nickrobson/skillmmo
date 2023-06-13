@@ -7,6 +7,7 @@ import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -63,7 +64,7 @@ public class WCharButton extends WWidget {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
+    public void paint(DrawContext drawContext, int x, int y, int mouseX, int mouseY) {
         boolean hovered = (mouseX >= 0 && mouseY >= 0 && mouseX < getWidth() && mouseY < getHeight());
 
         int panel = 0xFF737373;
@@ -74,15 +75,20 @@ public class WCharButton extends WWidget {
             outline = 0xFFF5F5F5;
         }
 
-        ScreenDrawing.coloredRect(matrices, x, y + 1, getWidth(), getHeight() - 2, outline);
-        ScreenDrawing.coloredRect(matrices, x + 1, y, getWidth() - 2, getHeight(), outline);
-        ScreenDrawing.coloredRect(matrices, x + 1, y + 1, getWidth() - 2, getHeight() - 2, panel);
+        ScreenDrawing.coloredRect(drawContext, x, y + 1, getWidth(), getHeight() - 2, outline);
+        ScreenDrawing.coloredRect(drawContext, x + 1, y, getWidth() - 2, getHeight(), outline);
+        ScreenDrawing.coloredRect(drawContext, x + 1, y + 1, getWidth() - 2, getHeight() - 2, panel);
 
         Text text = Text.literal(String.valueOf(this.text));
+        int textWidth = MinecraftClient.getInstance().textRenderer.getWidth(text);
         int color = enabled ? 0xE0E0E0 : 0xA0A0A0;
-        int wid = MinecraftClient.getInstance().textRenderer.getWidth(text);
-        float xOffset = (width - wid) / 2f;
-        MinecraftClient.getInstance().textRenderer.drawWithShadow(matrices, text, x + xOffset + 0.4f, y + (getHeight() - 8) / 2f + 0.4f, color);
+        drawContext.drawTextWithShadow(
+                MinecraftClient.getInstance().textRenderer,
+                text,
+                x + (width - textWidth) / 2,
+                y + (getHeight() - 8) / 2,
+                color
+        );
     }
 
     @Environment(EnvType.CLIENT)

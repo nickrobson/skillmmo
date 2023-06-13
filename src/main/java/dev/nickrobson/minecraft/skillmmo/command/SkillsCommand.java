@@ -43,11 +43,8 @@ public class SkillsCommand {
                 .sorted(Comparator.comparing(Skill::getId))
                 .toList();
 
-        {
-            Text heading = Text.translatable("skillmmo.command.skills.heading", skills.size())
-                    .setStyle(Style.EMPTY.withColor(Formatting.BLUE));
-            ctx.getSource().sendFeedback(heading, false);
-        }
+        ctx.getSource().sendFeedback(() -> Text.translatable("skillmmo.command.skills.heading", skills.size())
+                .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false);
 
         if (player == null && ctx.getSource().getEntity() instanceof PlayerEntity sourcePlayer) {
             player = sourcePlayer;
@@ -55,32 +52,32 @@ public class SkillsCommand {
 
         if (player == null) {
             for (Skill skill : skills) {
-                Text text = Text.translatable(
+                ctx.getSource().sendFeedback(() -> Text.translatable(
                         "skillmmo.command.skills.skill_line",
                         skill.getName()
-                );
-                ctx.getSource().sendFeedback(text, false);
+                ), false);
             }
         } else {
+            Text playerName = player.getName();
             for (Skill skill : skills) {
-                Text text = Text.translatable(
+                int skillLevel = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
+                ctx.getSource().sendFeedback(() -> Text.translatable(
                         "skillmmo.command.skills.skill_line_with_level",
                         skill.getName(),
-                        PlayerSkillManager.getInstance().getSkillLevel(player, skill),
+                        skillLevel,
                         skill.getMaxLevel()
-                );
-                ctx.getSource().sendFeedback(text, false);
+                ), false);
             }
 
             int availablePoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
             if (player == ctx.getSource().getEntity()) {
                 ctx.getSource().sendFeedback(
-                        Text.translatable("skillmmo.command.skills.available_points_self", availablePoints),
+                        () -> Text.translatable("skillmmo.command.skills.available_points_self", availablePoints),
                         false
                 );
             } else {
                 ctx.getSource().sendFeedback(
-                        Text.translatable("skillmmo.command.skills.available_points_other", player.getName(), availablePoints),
+                        () -> Text.translatable("skillmmo.command.skills.available_points_other", playerName, availablePoints),
                         false
                 );
             }
@@ -90,12 +87,12 @@ public class SkillsCommand {
 
             if (player == ctx.getSource().getEntity()) {
                 ctx.getSource().sendFeedback(
-                        Text.translatable("skillmmo.command.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                        () -> Text.translatable("skillmmo.command.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             } else {
                 ctx.getSource().sendFeedback(
-                        Text.translatable("skillmmo.command.skills.player_experience_other", player.getName(), experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                        () -> Text.translatable("skillmmo.command.skills.player_experience_other", playerName, experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             }

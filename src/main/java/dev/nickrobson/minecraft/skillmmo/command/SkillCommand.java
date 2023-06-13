@@ -95,7 +95,7 @@ public class SkillCommand {
         Text skillName = skill.getName();
 
         ctx.getSource().sendFeedback(
-                Text.translatable(
+                () -> Text.translatable(
                         "skillmmo.command.skill.info.skill",
                         skillName instanceof MutableText mutableText
                                 ? mutableText.setStyle(Style.EMPTY.withColor(Formatting.BLUE))
@@ -105,7 +105,7 @@ public class SkillCommand {
                 false
         );
         ctx.getSource().sendFeedback(
-                Text.translatable(
+                () -> Text.translatable(
                         "skillmmo.command.skill.info.description",
                         skill.getDescription()
                 ),
@@ -126,7 +126,7 @@ public class SkillCommand {
             case SUCCESS -> {
                 int level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
                 ctx.getSource().sendFeedback(
-                        Text.translatable("skillmmo.command.skill.acquire.success", level, skill.getName()),
+                        () -> Text.translatable("skillmmo.command.skill.acquire.success", level, skill.getName()),
                         false);
                 yield Command.SINGLE_SUCCESS;
             }
@@ -142,7 +142,7 @@ public class SkillCommand {
         int level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
 
         ctx.getSource().sendFeedback(
-                Text.translatable(
+                () -> Text.translatable(
                         "skillmmo.command.skill.player_is_level",
                         player.getName(),
                         level,
@@ -161,7 +161,7 @@ public class SkillCommand {
         int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, level);
 
         ctx.getSource().sendFeedback(
-                Text.translatable(
+                () -> Text.translatable(
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         newLevel,
@@ -181,7 +181,7 @@ public class SkillCommand {
         int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, currentLevel + levelDelta);
 
         ctx.getSource().sendFeedback(
-                Text.translatable(
+                () -> Text.translatable(
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         newLevel,
