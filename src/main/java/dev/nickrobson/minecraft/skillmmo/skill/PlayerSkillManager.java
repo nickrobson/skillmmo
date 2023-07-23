@@ -2,6 +2,7 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -30,6 +31,11 @@ public class PlayerSkillManager {
             SkillMmoPlayerDataHolder newPlayerDataHolder = (SkillMmoPlayerDataHolder) newPlayer;
             newPlayerDataHolder.setSkillMmoPlayerData(oldPlayerDataHolder.getSkillMmoPlayerData().clone());
             SkillMmoServerNetworking.sendPlayerData(newPlayer);
+        });
+
+        // When players change world, their ClientPlayerEntity is recreated so loses its data
+        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> {
+            SkillMmoServerNetworking.sendPlayerData(player);
         });
 
         // Send the player's updated player data once they've respawned
