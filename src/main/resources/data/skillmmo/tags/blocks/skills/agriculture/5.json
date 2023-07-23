@@ -1,7 +1,8 @@
 {
   "replace": true,
   "values": [
-    "minecraft:cactus",
+    "minecraft:cake",
+    "#candle_cakes",
     "minecraft:cocoa",
     "minecraft:kelp",
     "minecraft:kelp_plant",

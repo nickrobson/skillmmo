@@ -1,6 +1,14 @@
 {
   "replace": true,
   "values": [
-    "#boats"
+    "minecraft:oak_boat",
+    "minecraft:spruce_boat",
+    "minecraft:birch_boat",
+    "minecraft:jungle_boat",
+    "minecraft:acacia_boat",
+    "minecraft:dark_oak_boat",
+    "minecraft:mangrove_boat",
+    "minecraft:bamboo_raft",
+    "minecraft:cherry_boat"
   ]
 }

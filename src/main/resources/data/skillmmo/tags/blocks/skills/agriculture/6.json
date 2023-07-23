@@ -3,6 +3,11 @@
   "values": [
     "minecraft:melon",
     "minecraft:melon_stem",
-    "minecraft:attached_melon_stem"
+    "minecraft:attached_melon_stem",
+    "minecraft:pumpkin",
+    "minecraft:pumpkin_stem",
+    "minecraft:attached_pumpkin_stem",
+    "minecraft:carved_pumpkin",
+    "minecraft:jack_o_lantern"
   ]
 }

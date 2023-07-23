@@ -24,9 +24,9 @@
     "minecraft:respawn_anchor",
 
     "#buttons",
-    "#doors",
     "#fence_gates",
-    "#trapdoors",
+    "#wooden_doors",
+    "#wooden_trapdoors",
     "minecraft:comparator",
     "minecraft:daylight_detector",
     "minecraft:dispenser",

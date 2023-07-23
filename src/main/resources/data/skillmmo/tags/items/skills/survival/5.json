@@ -4,6 +4,7 @@
     "minecraft:filled_map",
     "minecraft:fishing_rod",
     "minecraft:map",
-    "minecraft:name_tag"
+    "minecraft:name_tag",
+    "minecraft:brush"
   ]
 }

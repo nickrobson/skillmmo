@@ -2,9 +2,9 @@
   "replace": true,
   "values": [
     "minecraft:wheat",
-    "minecraft:packed_mud",
     "minecraft:carrots",
     "minecraft:potatoes",
-    "minecraft:beetroots"
+    "minecraft:beetroots",
+    "minecraft:composter"
   ]
 }

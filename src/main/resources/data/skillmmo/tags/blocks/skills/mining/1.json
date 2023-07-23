@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
+    "#terracotta",
     "minecraft:stone",
     "minecraft:granite",
     "minecraft:diorite",

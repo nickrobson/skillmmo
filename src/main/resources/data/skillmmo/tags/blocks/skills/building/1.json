@@ -1,18 +1,26 @@
 {
   "replace": true,
   "values": [
+    "#bamboo_blocks",
+    "minecraft:bamboo_mosaic",
     "minecraft:oak_stairs",
     "minecraft:spruce_stairs",
     "minecraft:birch_stairs",
     "minecraft:jungle_stairs",
     "minecraft:acacia_stairs",
     "minecraft:dark_oak_stairs",
+    "minecraft:cherry_stairs",
+    "minecraft:bamboo_stairs",
+    "minecraft:bamboo_mosaic_stairs",
     "minecraft:oak_slab",
     "minecraft:spruce_slab",
     "minecraft:birch_slab",
     "minecraft:jungle_slab",
     "minecraft:acacia_slab",
     "minecraft:dark_oak_slab",
+    "minecraft:cherry_slab",
+    "minecraft:bamboo_slab",
+    "minecraft:bamboo_mosaic_slab",
     "minecraft:crimson_planks",
     "minecraft:warped_planks"
   ]

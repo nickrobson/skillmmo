@@ -3,6 +3,7 @@
   "values": [
     "minecraft:daylight_detector",
     "minecraft:lightning_rod",
-    "minecraft:sculk_sensor"
+    "minecraft:sculk_sensor",
+    "minecraft:calibrated_sculk_sensor"
   ]
 }

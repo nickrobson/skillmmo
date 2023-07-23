@@ -1,6 +1,8 @@
 {
   "replace": true,
   "values": [
+    "minecraft:pitcher_pod",
+    "minecraft:torchflower_seeds",
     "minecraft:diamond_axe",
     "minecraft:diamond_hoe"
   ]

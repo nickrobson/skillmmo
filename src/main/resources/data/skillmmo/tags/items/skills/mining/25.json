@@ -4,6 +4,7 @@
     "minecraft:netherite_ingot",
     "minecraft:netherite_scrap",
     "minecraft:netherite_shovel",
-    "minecraft:netherite_pickaxe"
+    "minecraft:netherite_pickaxe",
+    "minecraft:netherite_upgrade_smithing_template"
   ]
 }

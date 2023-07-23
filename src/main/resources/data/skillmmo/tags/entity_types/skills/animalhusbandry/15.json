@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
-    "minecraft:strider"
+    "minecraft:strider",
+    "minecraft:sniffer"
   ]
 }

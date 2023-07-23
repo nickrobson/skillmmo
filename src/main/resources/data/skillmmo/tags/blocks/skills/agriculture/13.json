@@ -1,6 +1,9 @@
 {
   "replace": true,
   "values": [
-    "minecraft:composter"
+    "minecraft:pitcher_crop",
+    "minecraft:pitcher_plant",
+    "minecraft:torchflower_crop",
+    "minecraft:torchflower"
   ]
 }

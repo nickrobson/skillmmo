@@ -3,6 +3,28 @@
   "values": [
     "minecraft:nether_wart",
     "minecraft:nether_wart_block",
-    "minecraft:shroomlight"
+    "minecraft:shroomlight",
+    "minecraft:crimson_stem",
+    "minecraft:stripped_crimson_stem",
+    "minecraft:crimson_hyphae",
+    "minecraft:stripped_crimson_hyphae",
+    "minecraft:crimson_nylium",
+    "minecraft:crimson_fungus",
+    "minecraft:weeping_vines",
+    "minecraft:weeping_vines_plant",
+    "minecraft:potted_crimson_fungus",
+    "minecraft:potted_crimson_roots",
+    "minecraft:warped_stem",
+    "minecraft:warped_hyphae",
+    "minecraft:stripped_warped_stem",
+    "minecraft:stripped_warped_hyphae",
+    "minecraft:warped_nylium",
+    "minecraft:warped_fungus",
+    "minecraft:warped_wart_block",
+    "minecraft:warped_roots",
+    "minecraft:twisting_vines",
+    "minecraft:twisting_vines_plant",
+    "minecraft:potted_warped_fungus",
+    "minecraft:potted_warped_roots"
   ]
 }

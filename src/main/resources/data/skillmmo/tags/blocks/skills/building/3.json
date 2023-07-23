@@ -2,6 +2,7 @@
   "replace": true,
   "values": [
     "minecraft:bookshelf",
+    "minecraft:chiseled_bookshelf",
     "minecraft:ladder",
     "minecraft:crimson_stairs",
     "minecraft:warped_stairs",
@@ -13,6 +14,8 @@
     "minecraft:jungle_fence",
     "minecraft:acacia_fence",
     "minecraft:dark_oak_fence",
+    "minecraft:cherry_fence",
+    "minecraft:bamboo_fence",
     "minecraft:crimson_fence",
     "minecraft:warped_fence"
   ]

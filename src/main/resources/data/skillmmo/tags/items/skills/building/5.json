@@ -1,6 +1,6 @@
 {
   "replace": true,
   "values": [
-    "minecraft:boat"
+    "#decorated_pot_sherds"
   ]
 }

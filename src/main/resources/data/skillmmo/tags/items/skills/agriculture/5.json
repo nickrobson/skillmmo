@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
+    "minecraft:cookie",
     "minecraft:paper"
   ]
 }

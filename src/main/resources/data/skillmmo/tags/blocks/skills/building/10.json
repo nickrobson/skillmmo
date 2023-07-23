@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
+    "#all_hanging_signs",
     "minecraft:white_glazed_terracotta",
     "minecraft:orange_glazed_terracotta",
     "minecraft:magenta_glazed_terracotta",

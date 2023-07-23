@@ -7,8 +7,10 @@
     "minecraft:jungle_leaves",
     "minecraft:acacia_leaves",
     "minecraft:dark_oak_leaves",
+    "minecraft:cherry_leaves",
     "minecraft:mangrove_leaves",
     "minecraft:mangrove_roots",
-    "minecraft:muddy_mangrove_roots"
+    "minecraft:muddy_mangrove_roots",
+    "minecraft:packed_mud"
   ]
 }
