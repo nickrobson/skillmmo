@@ -28,9 +28,7 @@ public class UnlockTooltipHelper {
         }
 
         if (skillLevelSet.size() == 1 || !Screen.hasShiftDown()) {
-            SkillLevel skillLevel = skillLevelSet.size() == 1
-                    ? skillLevelSet.stream().findAny().get()
-                    : PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
+            SkillLevel skillLevel = PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
             return List.of(
                     Text.translatable(
                             "skillmmo.feedback.item.locked.basic",

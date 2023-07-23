@@ -88,6 +88,14 @@ public class PlayerSkillManager {
     }
 
     public SkillLevel getClosestLevel(PlayerEntity player, Collection<SkillLevel> skillLevelSet) {
+        if (skillLevelSet.isEmpty()) {
+            throw new IllegalArgumentException("Expected a non-empty set of skill levels");
+        }
+
+        if (skillLevelSet.size() == 1) {
+            return skillLevelSet.stream().findAny().get();
+        }
+
         return skillLevelSet
                 .stream()
                 .filter(lvl -> !PlayerSkillManager.getInstance().hasSkillLevel(player, lvl.getSkill(), lvl.getLevel()))
@@ -98,7 +106,7 @@ public class PlayerSkillManager {
                             return level - playerLevel;
                         })
                         .thenComparing(lvl -> lvl.getSkill().getId()))
-                .orElse(null);
+                .orElseThrow();
     }
 
     public enum ChooseSkillLevelResult {

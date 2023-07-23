@@ -15,6 +15,7 @@ public class MixinClientPlayerEntity implements SkillMmoPlayerDataHolder {
     private SkillMmoPlayerData skillMmo$clientPlayerData = new SkillMmoPlayerData();
 
     @Unique
+    @Nonnull
     @Override
     public SkillMmoPlayerData getSkillMmoPlayerData() {
         return skillMmo$clientPlayerData;
