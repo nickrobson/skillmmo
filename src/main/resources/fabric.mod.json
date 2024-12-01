@@ -24,14 +24,14 @@
   ],
 
   "depends": {
-    "java": ">=17",
-    "minecraft": ">=1.20 <=1.20.1",
-    "fabricloader": ">=0.14.19",
-    "fabric-api": "*",
-    "cloth-config2": "^11.0.0"
+    "java": "${java_version_range}",
+    "minecraft": "${minecraft_version_range}",
+    "fabricloader": "${fabric_loader_version_range}",
+    "fabric-api": "${fabric_api_version_range}",
+    "cloth-config2": "${cloth_config_version_range}"
   },
   "suggests": {
-    "wthit": "^7.1.1"
+    "wthit": "${wthit_version_range}"
   },
 
   "custom": {
