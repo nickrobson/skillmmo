@@ -11,13 +11,16 @@ assignees: ''
 What do you think of the mod? What's good about it? What could be improved?
 
 **Minecraft and Fabric version**
-What version of Minecraft, Fabric Loader, and Fabric API are you using?
+Minecraft version: INSERT_HERE
+Fabric Loader version: INSERT_HERE
+Fabric API version: INSERT_HERE
+SkillMMO version: INSERT_HERE
 
 **Config changes**
-Have you changed any of the mod's config options from their defaults?
+List changes to the default config here.
 
 **Other mods installed**
-Optional: If you have any mods, please list them here along with their version.
+Optional: List other relevant mods you have installed here, including their versions.
 
 **Screenshots**
 Optional: If you think it would be useful, you can add any screenshots to help explain your problem.

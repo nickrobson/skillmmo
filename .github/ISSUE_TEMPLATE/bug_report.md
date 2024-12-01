@@ -8,16 +8,19 @@ assignees: ''
 ---
 
 **Describe the bug**
-A clear and concise description of what the bug is.
+Clearly and concisely describe the bug here.
 
 **Minecraft and Fabric version**
-What version of Minecraft, Fabric Loader, and Fabric API are you using?
+Minecraft version: INSERT_HERE
+Fabric Loader version: INSERT_HERE
+Fabric API version: INSERT_HERE
+SkillMMO version: INSERT_HERE
 
 **Config changes**
-Have you changed any of the mod's config options from their defaults?
+List changes to the default config here.
 
 **Other mods installed**
-If you have any mods, please list them here along with their version.
+List other relevant mods you have installed here, including their versions.
 
 **To reproduce**
 Steps to reproduce the behavior:
@@ -27,7 +30,7 @@ Steps to reproduce the behavior:
 4. See that you can't ...
 
 **Expected behavior**
-What did you expect to happen?
+Describe what you expected to happen here.
 
 **Screenshots**
 If you think it would be useful, you can add any screenshots to help explain your problem.
