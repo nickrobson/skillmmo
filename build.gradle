@@ -77,11 +77,24 @@ processResources {
                 "mod_name": project.mod_name,
                 "mod_description": project.mod_description,
                 "java_version_range": project.java_version_range,
-                "minecraft_version_range": project.minecraft_version_range,
+                "minecraft_version_range": project.minecraft_version_range_fabric,
                 "fabric_loader_version_range": project.fabric_loader_version_range,
                 "fabric_api_version_range": project.fabric_api_version_range,
-                "cloth_config_version_range": project.cloth_config_version_range,
-                "wthit_version_range": project.wthit_version_range
+                "cloth_config_version_range": project.cloth_config_version_range_fabric,
+                "wthit_version_range": project.wthit_version_range_fabric
+    }
+
+    filesMatching("META-INF/mods.toml") {
+        expand "mod_id": project.mod_id,
+                "mod_version": project.mod_version,
+                "mod_name": project.mod_name,
+                "mod_description": project.mod_description,
+                "minecraft_version_range": project.minecraft_version_range_forge,
+                "forge_loader_version_range": project.forge_loader_version_range,
+                "forge_version_range": project.forge_version_range,
+                "connector_version_range": project.connector_version_range,
+                "cloth_config_version_range": project.cloth_config_version_range_forge,
+                "wthit_version_range": project.wthit_version_range_forge
     }
 }
 
