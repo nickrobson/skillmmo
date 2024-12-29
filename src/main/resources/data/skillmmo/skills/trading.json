@@ -1,5 +1,4 @@
 {
-  "replace": true,
   "enabled": true,
   "nameKey": "skillmmo.skill.trading.name",
   "descriptionKey": "skillmmo.skill.trading.description",
