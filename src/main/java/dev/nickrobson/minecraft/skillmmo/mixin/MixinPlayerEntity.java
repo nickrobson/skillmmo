@@ -32,10 +32,15 @@ import java.util.stream.Collectors;
 
 @Mixin(PlayerEntity.class)
 public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
+    @Unique
     private static final String SKILLMMO_ROOT_NBT_KEY = "skillMmo";
+    @Unique
     private static final String SKILLMMO_EXPERIENCE_NBT_KEY = "experience";
+    @Unique
     private static final String SKILLMMO_AVAILABLE_SKILL_POINTS_NBT_KEY = "availableSkillPoints";
+    @Unique
     private static final String SKILLMMO_SKILL_LEVELS_NBT_KEY = "skillLevels";
+    @Unique
     private static final String SKILLMMO_LOCKED_RECIPES_NBT_KEY = "lockedRecipes";
 
     @Unique
@@ -115,7 +120,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
             return;
         }
 
-        SkillMmoPlayerData playerData = this.getSkillMmoPlayerData();
+        SkillMmoPlayerData playerData = this.skillMmo$getPlayerData();
         NbtCompound skillMmoNbt = new NbtCompound();
 
         {
@@ -152,8 +157,9 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     }
 
     @Unique
+    @Nonnull
     @Override
-    public SkillMmoPlayerData getSkillMmoPlayerData() {
+    public SkillMmoPlayerData skillMmo$getPlayerData() {
         return skillMmo$playerData != null
                 ? skillMmo$playerData
                 : SkillMmoPlayerData.UNINITIALISED;
@@ -161,7 +167,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
 
     @Unique
     @Override
-    public void setSkillMmoPlayerData(@Nonnull SkillMmoPlayerData playerData) {
+    public void skillMmo$setPlayerData(@Nonnull SkillMmoPlayerData playerData) {
         this.skillMmo$playerData = playerData;
     }
 

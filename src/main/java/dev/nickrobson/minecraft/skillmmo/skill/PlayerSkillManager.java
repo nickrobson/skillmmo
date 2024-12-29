@@ -29,7 +29,7 @@ public class PlayerSkillManager {
         ServerPlayerEvents.COPY_FROM.register((oldPlayer, newPlayer, alive) -> {
             SkillMmoPlayerDataHolder oldPlayerDataHolder = (SkillMmoPlayerDataHolder) oldPlayer;
             SkillMmoPlayerDataHolder newPlayerDataHolder = (SkillMmoPlayerDataHolder) newPlayer;
-            newPlayerDataHolder.setSkillMmoPlayerData(oldPlayerDataHolder.getSkillMmoPlayerData().clone());
+            newPlayerDataHolder.skillMmo$setPlayerData(oldPlayerDataHolder.skillMmo$getPlayerData().clone());
             SkillMmoServerNetworking.sendPlayerData(newPlayer);
         });
 
@@ -49,7 +49,7 @@ public class PlayerSkillManager {
 
     public Map<Identifier, Integer> getSkillLevels(PlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        return skillMmoPlayerDataHolder.getSkillMmoPlayerData().getSkillLevels();
+        return skillMmoPlayerDataHolder.skillMmo$getPlayerData().getSkillLevels();
     }
 
     public int getSkillLevel(PlayerEntity player, Skill skill) {
@@ -70,7 +70,7 @@ public class PlayerSkillManager {
     public void updateSkillLevels(PlayerEntity player, Map<Identifier, Integer> changedSkillLevels) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
         changedSkillLevels.forEach((skillId, level) ->
-                skillMmoPlayerDataHolder.getSkillMmoPlayerData().setSkillLevel(skillId, level));
+                skillMmoPlayerDataHolder.skillMmo$getPlayerData().setSkillLevel(skillId, level));
 
         if (player instanceof ServerPlayerEntity serverPlayer) {
             SkillMmoServerNetworking.sendPlayerSkills(serverPlayer);

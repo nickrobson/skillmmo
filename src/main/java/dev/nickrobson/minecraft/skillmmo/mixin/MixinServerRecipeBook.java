@@ -45,9 +45,9 @@ public class MixinServerRecipeBook {
 
         recipes.removeAll(lockedRecipes);
 
-        ((SkillMmoPlayerDataHolder) player).getSkillMmoPlayerData()
+        ((SkillMmoPlayerDataHolder) player).skillMmo$getPlayerData()
                 .addLockedRecipes(lockedRecipes);
-        ((SkillMmoPlayerDataHolder) player).getSkillMmoPlayerData()
+        ((SkillMmoPlayerDataHolder) player).skillMmo$getPlayerData()
                 .removeLockedRecipes(recipes);
     }
 }

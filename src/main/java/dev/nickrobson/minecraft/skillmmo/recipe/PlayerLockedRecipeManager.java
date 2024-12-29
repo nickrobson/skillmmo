@@ -38,14 +38,14 @@ public class PlayerLockedRecipeManager {
                     .collect(Collectors.toSet());
             if (!newlyLockedRecipes.isEmpty()) {
                 player.lockRecipes(newlyLockedRecipes);
-                skillMmoPlayerDataHolder.getSkillMmoPlayerData().addLockedRecipes(newlyLockedRecipes);
+                skillMmoPlayerDataHolder.skillMmo$getPlayerData().addLockedRecipes(newlyLockedRecipes);
             }
         } else {
             // Recipe locking is disabled so unlock everything
             Set<Recipe<?>> lockedRecipes = getLockedRecipesAsStream(recipeManager, skillMmoPlayerDataHolder)
                     .collect(Collectors.toSet());
             player.unlockRecipes(lockedRecipes);
-            skillMmoPlayerDataHolder.getSkillMmoPlayerData()
+            skillMmoPlayerDataHolder.skillMmo$getPlayerData()
                     .removeLockedRecipes(lockedRecipes);
         }
     }
@@ -57,7 +57,7 @@ public class PlayerLockedRecipeManager {
     }
 
     private Stream<Recipe<?>> getLockedRecipesAsStream(RecipeManager recipeManager, SkillMmoPlayerDataHolder playerDataHolder) {
-        return playerDataHolder.getSkillMmoPlayerData().getLockedRecipes().values().stream()
+        return playerDataHolder.skillMmo$getPlayerData().getLockedRecipes().values().stream()
                 .flatMap(Set::stream)
                 .flatMap(recipeId -> recipeManager.get(recipeId).stream());
     }

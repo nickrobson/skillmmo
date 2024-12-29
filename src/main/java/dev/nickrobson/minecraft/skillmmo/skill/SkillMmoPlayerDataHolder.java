@@ -157,7 +157,7 @@ public interface SkillMmoPlayerDataHolder {
         }
     }
 
-    SkillMmoPlayerData getSkillMmoPlayerData();
+    SkillMmoPlayerData skillMmo$getPlayerData();
 
-    void setSkillMmoPlayerData(SkillMmoPlayerData playerData);
+    void skillMmo$setPlayerData(SkillMmoPlayerData playerData);
 }

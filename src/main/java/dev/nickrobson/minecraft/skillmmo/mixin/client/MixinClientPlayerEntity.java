@@ -17,13 +17,13 @@ public class MixinClientPlayerEntity implements SkillMmoPlayerDataHolder {
     @Unique
     @Nonnull
     @Override
-    public SkillMmoPlayerData getSkillMmoPlayerData() {
+    public SkillMmoPlayerData skillMmo$getPlayerData() {
         return skillMmo$clientPlayerData;
     }
 
     @Unique
     @Override
-    public void setSkillMmoPlayerData(@Nonnull SkillMmoPlayerData playerData) {
+    public void skillMmo$setPlayerData(@Nonnull SkillMmoPlayerData playerData) {
         this.skillMmo$clientPlayerData = playerData;
     }
 }
