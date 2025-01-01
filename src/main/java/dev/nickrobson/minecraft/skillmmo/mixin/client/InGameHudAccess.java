@@ -8,7 +8,7 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 @Mixin(InGameHud.class)
 public interface InGameHudAccess {
     @Accessor("ICONS")
-    public static Identifier getIcons() {
+    static Identifier getIcons() {
         throw new AssertionError("mixin");
     }
 }

@@ -12,7 +12,6 @@ import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 
@@ -54,12 +53,6 @@ public class WCharButton extends WWidget {
     @Override
     public boolean canFocus() {
         return enabled;
-    }
-
-    @Override
-    public void setSize(int x, int y) {
-        this.width = x;
-        this.height = y;
     }
 
     @Environment(EnvType.CLIENT)
