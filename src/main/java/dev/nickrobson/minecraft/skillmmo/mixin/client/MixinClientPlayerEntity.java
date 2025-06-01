@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 @Environment(EnvType.CLIENT)
 @Mixin(ClientPlayerEntity.class)
 public class MixinClientPlayerEntity implements SkillMmoPlayerDataHolder {
+    @Unique
     private SkillMmoPlayerData skillMmo$clientPlayerData = new SkillMmoPlayerData();
 
     @Unique

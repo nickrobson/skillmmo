@@ -93,7 +93,7 @@ public class ExperienceLevelEquation {
         return new ExperienceLevel(level, progress, experienceForLevel);
     }
 
-    public void calculateLevelExperienceUpToLevel(int level) {
+    private void calculateLevelExperienceUpToLevel(int level) {
         int target = MathHelper.clamp(level, 0, MAX_EXPERIENCE_LEVEL);
         if (target < highestCalculated) {
             return;
