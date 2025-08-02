@@ -3,7 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.mixin;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
-import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerRecipeBook;
 import org.spongepowered.asm.mixin.Mixin;
@@ -25,7 +25,7 @@ public class MixinServerRecipeBook {
             ordinal = 0,
             argsOnly = true
     )
-    public Collection<Recipe<?>> skillMmo$unlockRecipes$makeRecipeCollectionMutable(Collection<Recipe<?>> recipes) {
+    public Collection<RecipeEntry<?>> skillMmo$unlockRecipes$makeRecipeCollectionMutable(Collection<RecipeEntry<?>> recipes) {
         // ensure the recipes collection is mutable
         return new HashSet<>(recipes);
     }
@@ -34,12 +34,12 @@ public class MixinServerRecipeBook {
             method = "unlockRecipes",
             at = @At(value = "HEAD")
     )
-    public void skillMmo$unlockRecipes$removeLockedRecipes(Collection<Recipe<?>> recipes, ServerPlayerEntity player, CallbackInfoReturnable<Integer> cir) {
+    public void skillMmo$unlockRecipes$removeLockedRecipes(Collection<RecipeEntry<?>> recipes, ServerPlayerEntity player, CallbackInfoReturnable<Integer> cir) {
         if (!SkillMmoConfig.getConfig().lockRecipesUntilIngredientsAndOutputAreUnlocked) {
             return;
         }
 
-        Set<Recipe<?>> lockedRecipes = recipes.stream()
+        Set<RecipeEntry<?>> lockedRecipes = recipes.stream()
                 .filter(recipe -> !PlayerSkillUnlockManager.getInstance().hasRecipeUnlock(player, recipe))
                 .collect(Collectors.toSet());
 

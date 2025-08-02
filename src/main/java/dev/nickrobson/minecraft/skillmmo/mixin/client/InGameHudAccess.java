@@ -7,8 +7,12 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(InGameHud.class)
 public interface InGameHudAccess {
-    @Accessor("ICONS")
-    static Identifier getIcons() {
+    @Accessor("EXPERIENCE_BAR_BACKGROUND_TEXTURE")
+    static Identifier getExperienceBarBackgroundTexture() {
+        throw new AssertionError("mixin");
+    }
+    @Accessor("EXPERIENCE_BAR_PROGRESS_TEXTURE")
+    static Identifier getExperienceBarProgressTexture() {
         throw new AssertionError("mixin");
     }
 }

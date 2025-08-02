@@ -6,6 +6,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
+import net.minecraft.server.network.ConnectedClientData;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -35,7 +36,7 @@ public abstract class MixinPlayerManager {
             method = "onPlayerConnect",
             at = @At("TAIL")
     )
-    public void skillMmo$onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, CallbackInfo ci) {
+    public void skillMmo$onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
         SkillMmoServerNetworking.sendGenericData(player);
         SkillMmoServerNetworking.sendPlayerData(player);
 

@@ -11,7 +11,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.MathHelper;
 
 public class WExperienceBar extends WWidget {
-    private static final Texture TEXTURE_EMPTY_BAR = new Texture(InGameHudAccess.getIcons(), 0F, 64F / 256F, 182 / 256F, 69 / 256F);
+    private static final Texture TEXTURE_EMPTY_BAR = new Texture(InGameHudAccess.getExperienceBarBackgroundTexture(), Texture.Type.GUI_SPRITE);
 
     private final float progress;
 
@@ -20,7 +20,7 @@ public class WExperienceBar extends WWidget {
     public WExperienceBar(double progress) {
         this.progress = MathHelper.clamp((float) progress, 0F, 1F);
 
-        this.textureFilledBar = new Texture(InGameHudAccess.getIcons(), 0F, 69F / 256F, 182 / 256F * this.progress, 74 / 256F);
+        this.textureFilledBar = new Texture(InGameHudAccess.getExperienceBarProgressTexture(), Texture.Type.GUI_SPRITE);
     }
 
     @Override

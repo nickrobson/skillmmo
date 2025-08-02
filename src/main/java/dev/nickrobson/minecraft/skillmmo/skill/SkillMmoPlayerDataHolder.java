@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
 import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
@@ -120,33 +121,27 @@ public interface SkillMmoPlayerDataHolder {
             return Collections.unmodifiableMap(lockedRecipes);
         }
 
-        public boolean hasLockedRecipe(Recipe<?> recipe) {
-            Set<Identifier> lockedRecipesOfType = this.lockedRecipes.get(Registries.RECIPE_TYPE.getId(recipe.getType()));
-            return lockedRecipesOfType != null
-                    && lockedRecipesOfType.contains(recipe.getId());
-        }
-
-        public void addLockedRecipes(Collection<Recipe<?>> recipes) {
+        public void addLockedRecipes(Collection<RecipeEntry<?>> recipes) {
             this.checkInitialised();
             recipes.forEach(recipe -> {
-                Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.getType());
+                Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.value().getType());
                 this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
                     if (recipeIds == null) {
                         recipeIds = new HashSet<>();
                     }
-                    recipeIds.add(recipe.getId());
+                    recipeIds.add(recipe.id());
                     return recipeIds;
                 });
             });
         }
 
-        public void removeLockedRecipes(Collection<Recipe<?>> recipes) {
+        public void removeLockedRecipes(Collection<RecipeEntry<?>> recipes) {
             this.checkInitialised();
             recipes.forEach(recipe -> {
-                Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.getType());
+                Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.value().getType());
                 this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
                     if (recipeIds != null) {
-                        recipeIds.remove(recipe.getId());
+                        recipeIds.remove(recipe.id());
                         if (recipeIds.isEmpty()) {
                             return null;
                         }

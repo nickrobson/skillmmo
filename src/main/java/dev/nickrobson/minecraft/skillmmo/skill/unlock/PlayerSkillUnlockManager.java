@@ -25,7 +25,7 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
@@ -192,8 +192,8 @@ public class PlayerSkillUnlockManager {
                 : skillLevelSet.stream().anyMatch(hasSkillLevel);
     }
 
-    public boolean hasRecipeUnlock(@Nonnull PlayerEntity player, Recipe<?> recipe) {
-        boolean someIngredientsAreFullyLocked = recipe.getIngredients().stream()
+    public boolean hasRecipeUnlock(@Nonnull PlayerEntity player, RecipeEntry<?> recipe) {
+        boolean someIngredientsAreFullyLocked = recipe.value().getIngredients().stream()
                 .anyMatch(ingredient -> {
                     ItemStack[] matchingStacks = ingredient.getMatchingStacks();
                     if (matchingStacks.length == 0) {
@@ -202,7 +202,7 @@ public class PlayerSkillUnlockManager {
                     return Arrays.stream(matchingStacks)
                             .noneMatch(itemStack -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack));
                 });
-        boolean outputIsLocked = !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, recipe.getOutput(player.getWorld().getRegistryManager()));
+        boolean outputIsLocked = !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, recipe.value().getResult(player.getWorld().getRegistryManager()));
         return !someIngredientsAreFullyLocked && !outputIsLocked;
     }
 
