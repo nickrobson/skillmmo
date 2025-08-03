@@ -6,8 +6,9 @@ import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.util.UnlockTooltipHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.item.TooltipType;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -25,15 +26,19 @@ public abstract class MixinItemStack {
     @Inject(
             method = "getTooltip",
             at = @At(
-                    value = "INVOKE",
+                    value = "RETURN",
                     shift = At.Shift.BEFORE,
-                    ordinal = 0,
+                    ordinal = 1,
                     target = "Lnet/minecraft/item/ItemStack;getHideFlags()I"
             ),
             locals = LocalCapture.CAPTURE_FAILSOFT
     )
-    public void skillMmo$getTooltip(@Nullable PlayerEntity player, TooltipContext context, CallbackInfoReturnable<List<Text>> cir, List<Text> list) {
+    public void skillMmo$getTooltip(Item.TooltipContext context, @Nullable PlayerEntity player, TooltipType type, CallbackInfoReturnable<List<Text>> cir, List<Text> list) {
         if (player == null) {
+            return;
+        }
+        if (list.isEmpty()) {
+            // In case this tooltip is meant to be empty
             return;
         }
 

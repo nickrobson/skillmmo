@@ -10,7 +10,6 @@
     "MixinGlassBottleItem",
     "MixinLivingEntity",
     "MixinPlayerEntity",
-    "MixinPlayerInventory",
     "MixinPlayerManager",
     "MixinRecipeBook",
     "MixinServerPlayerEntity",

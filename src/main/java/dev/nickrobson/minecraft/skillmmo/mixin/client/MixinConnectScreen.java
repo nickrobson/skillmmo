@@ -6,6 +6,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.multiplayer.ConnectScreen;
+import net.minecraft.client.network.CookieStorage;
 import net.minecraft.client.network.ServerAddress;
 import net.minecraft.client.network.ServerInfo;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,10 +20,10 @@ import java.util.Collections;
 @Mixin(ConnectScreen.class)
 public class MixinConnectScreen {
     @Inject(
-            method = "connect(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/network/ServerAddress;Lnet/minecraft/client/network/ServerInfo;)V",
+            method = "connect(Lnet/minecraft/client/MinecraftClient;Lnet/minecraft/client/network/ServerAddress;Lnet/minecraft/client/network/ServerInfo;Lnet/minecraft/client/network/CookieStorage;)V",
             at = @At("HEAD")
     )
-    public void skillMmo$onConnect(MinecraftClient client, ServerAddress address, ServerInfo info, CallbackInfo ci) {
+    public void skillMmo$onConnect(MinecraftClient client, ServerAddress address, ServerInfo info, CookieStorage cookieStorage, CallbackInfo ci) {
         SkillManager.getInstance().initSkills(Collections.emptySet());
         SkillMmoMod.isModEnabled = false;
     }

@@ -1,54 +1,22 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
-import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import net.minecraft.item.Item;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
-import javax.annotation.Nonnull;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 public interface SkillMmoNetworking {
-    Identifier LOGIN_HANDSHAKE = new Identifier(SkillMmoMod.MOD_ID, "handshake");
+    static void registerPackets() {
+        // Configuration - S2C
+        PayloadTypeRegistry.configurationS2C().register(SkillMmoConfigurationS2CPacket.PACKET_ID, SkillMmoConfigurationS2CPacket.PACKET_CODEC);
 
-    Identifier C2S_PLAYER_SKILL_CHOICE = new Identifier(SkillMmoMod.MOD_ID, "player_skill_choice");
+        // Configuration - C2S
+        PayloadTypeRegistry.configurationC2S().register(SkillMmoConfigurationC2SPacket.PACKET_ID, SkillMmoConfigurationC2SPacket.PACKET_CODEC);
 
-    Identifier S2C_SKILLS = new Identifier(SkillMmoMod.MOD_ID, "skills");
-    Identifier S2C_EXPERIENCE_LEVEL_EQUATION = new Identifier(SkillMmoMod.MOD_ID, "experience_level_equation");
-    Identifier S2C_PLAYER_SKILLS = new Identifier(SkillMmoMod.MOD_ID, "player_skills");
-    Identifier S2C_PLAYER_XP = new Identifier(SkillMmoMod.MOD_ID, "player_xp");
+        // Play - S2C
+        PayloadTypeRegistry.playS2C().register(SetSkillsS2CPacket.PACKET_ID, SetSkillsS2CPacket.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(SetExperienceLevelEquationS2CPacket.PACKET_ID, SetExperienceLevelEquationS2CPacket.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(SetPlayerSkillsS2CPacket.PACKET_ID, SetPlayerSkillsS2CPacket.PACKET_CODEC);
+        PayloadTypeRegistry.playS2C().register(SetPlayerExperienceS2CPacket.PACKET_ID, SetPlayerExperienceS2CPacket.PACKET_CODEC);
 
-    static Skill readSkill(@Nonnull PacketByteBuf packetByteBuf) {
-        Identifier id = packetByteBuf.readIdentifier();
-        Text nameText = packetByteBuf.readText();
-        Text descriptionText = packetByteBuf.readText();
-        int maxLevel = packetByteBuf.readVarInt();
-        Item iconItem = Item.byRawId(packetByteBuf.readVarInt());
-
-        return new Skill(id, nameText, descriptionText, maxLevel, iconItem);
-    }
-
-    static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
-        packetByteBuf.writeIdentifier(skill.getId());
-        packetByteBuf.writeText(skill.getName());
-        packetByteBuf.writeText(skill.getDescription());
-        packetByteBuf.writeVarInt(skill.getMaxLevel());
-        packetByteBuf.writeVarInt(Item.getRawId(skill.getIconItem()));
-    }
-
-    static ExperienceLevelEquation readExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf) {
-        long baseCost = packetByteBuf.readLong();
-        double multiplier = packetByteBuf.readDouble();
-        double levelExponent = packetByteBuf.readDouble();
-
-        return new ExperienceLevelEquation(baseCost, multiplier, levelExponent);
-    }
-
-    static void writeExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf, @Nonnull ExperienceLevelEquation equation) {
-        packetByteBuf.writeLong(equation.getBaseCost());
-        packetByteBuf.writeDouble(equation.getMultiplier());
-        packetByteBuf.writeDouble(equation.getLevelExponent());
+        // Play - C2S
+        PayloadTypeRegistry.playC2S().register(PlayerSkillChoiceC2SPacket.PACKET_ID, PlayerSkillChoiceC2SPacket.PACKET_CODEC);
     }
 }

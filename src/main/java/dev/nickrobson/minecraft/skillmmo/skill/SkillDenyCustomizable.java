@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 /**
  * When something is denied from being used, and it implements this interface,
- * {@link #onDeny(PlayerEntity, SkillLevel, int)} is called.
+ * {@link #skillMmo$onDeny(PlayerEntity, SkillLevel, int)} is called.
  * <p>
  * This might be a {@link net.minecraft.block.Block}, {@link net.minecraft.item.Item},
  * or {@link net.minecraft.entity.Entity}.
@@ -23,5 +23,5 @@ public interface SkillDenyCustomizable {
      * @return a message to send to the player as feedback
      */
     @Nullable
-    Text onDeny(PlayerEntity player, SkillLevel requiredSkillLevel, int actualSkillLevel);
+    Text skillMmo$onDeny(PlayerEntity player, SkillLevel requiredSkillLevel, int actualSkillLevel);
 }

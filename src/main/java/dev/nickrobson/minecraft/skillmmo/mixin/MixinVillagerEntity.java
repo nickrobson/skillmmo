@@ -16,7 +16,7 @@ public abstract class MixinVillagerEntity implements SkillDenyCustomizable {
 
     @Unique
     @Override
-    public Text onDeny(PlayerEntity player, SkillLevel requiredSkillLevel, int actualSkillLevel) {
+    public Text skillMmo$onDeny(PlayerEntity player, SkillLevel requiredSkillLevel, int actualSkillLevel) {
         this.sayNo();
 
         return Text.translatable(

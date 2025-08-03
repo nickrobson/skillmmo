@@ -256,7 +256,7 @@ public class PlayerSkillUnlockManager {
         Text text = null;
         if (maybeSkillDenyCustomizable instanceof SkillDenyCustomizable skillDenyCustomizable) {
             int playerLevel = PlayerSkillManager.getInstance().getSkillLevel(player, skillLevel.getSkill());
-            text = skillDenyCustomizable.onDeny(player, skillLevel, playerLevel);
+            text = skillDenyCustomizable.skillMmo$onDeny(player, skillLevel, playerLevel);
         }
         if (text == null) {
             Text skillName = skillLevel.getSkill().getName();

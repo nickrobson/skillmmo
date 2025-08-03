@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
+import java.util.Optional;
+
 @Mixin(PlayerManager.class)
 public abstract class MixinPlayerManager {
     @Inject(
@@ -22,8 +24,8 @@ public abstract class MixinPlayerManager {
             at = @At("RETURN"),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
-    public void skillMmo$loadPlayerData(ServerPlayerEntity player, CallbackInfoReturnable<NbtCompound> cir, NbtCompound nbtCompound, NbtCompound nbtCompound2) {
-        if (nbtCompound2 == null) {
+    public void skillMmo$loadPlayerData(ServerPlayerEntity player, CallbackInfoReturnable<Optional<NbtCompound>> cir, NbtCompound nbtCompound, Optional<NbtCompound> optional) {
+        if (optional.isEmpty()) {
             // This is the first time the player has joined the server,
             // so initialise them with empty data
             ((SkillMmoPlayerDataHolder) player).skillMmo$setPlayerData(

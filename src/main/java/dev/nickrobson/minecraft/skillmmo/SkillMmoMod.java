@@ -4,6 +4,7 @@ import dev.nickrobson.minecraft.skillmmo.command.SkillMmoCommands;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceLoader;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
+import dev.nickrobson.minecraft.skillmmo.network.SkillMmoNetworking;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
@@ -32,7 +33,8 @@ public class SkillMmoMod implements ModInitializer {
 
         ExperienceLevelEquation.setInstance(new ExperienceLevelEquation(config.expBaseCost, config.expMultiplier, config.expLevelExponent));
 
-        SkillMmoServerNetworking.register();
+        SkillMmoNetworking.registerPackets();
+        SkillMmoServerNetworking.registerReceivers();
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
                 .registerReloadListener(new SkillMmoResourceLoader());

@@ -16,7 +16,7 @@ public class SkillMmoClientInitializer implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        SkillMmoClientNetworking.register();
+        SkillMmoClientNetworking.registerReceivers();
 
         KeyBinding openSkillsKeyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
                 "skillmmo.keybindings.binding.open_skills",
