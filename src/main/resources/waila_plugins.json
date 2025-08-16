@@ -1,0 +1,7 @@
+{
+  "skillmmo:waila_unlocks_plugin": {
+    "initializer": "dev.nickrobson.minecraft.skillmmo.compat.waila.SkillMmoWailaUnlocksPlugin",
+    "side": "*",
+    "defaultEnabled": true
+  }
+}

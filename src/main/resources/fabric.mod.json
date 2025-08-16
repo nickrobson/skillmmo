@@ -32,14 +32,5 @@
   },
   "suggests": {
     "wthit": "${wthit_version_range}"
-  },
-
-  "custom": {
-    "waila:plugins": [
-      {
-        "id": "skillmmo:waila_unlocks_plugin",
-        "initializer": "dev.nickrobson.minecraft.skillmmo.compat.waila.SkillMmoWailaUnlocksPlugin"
-      }
-    ]
   }
 }
