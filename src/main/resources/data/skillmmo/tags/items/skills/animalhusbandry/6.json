@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
-    "minecraft:tadpole_bucket"
+    "minecraft:tadpole_bucket",
+    "minecraft:armadillo_scute"
   ]
 }
