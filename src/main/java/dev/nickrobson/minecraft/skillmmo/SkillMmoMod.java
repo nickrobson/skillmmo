@@ -22,7 +22,7 @@ public class SkillMmoMod implements ModInitializer {
 
     public static final String MOD_ID = "skillmmo";
     public static final String MOD_NAME = "SkillMMO";
-    public static final String MOD_VERSION = "0.1.11";
+    public static final String MOD_VERSION = "0.1.12";
     public static final String MOD_VERSION_STRING = MOD_NAME + " v" + MOD_VERSION;
 
     @Override
