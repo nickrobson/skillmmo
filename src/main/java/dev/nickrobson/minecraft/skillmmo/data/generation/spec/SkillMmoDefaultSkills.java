@@ -366,7 +366,7 @@ public final class SkillMmoDefaultSkills {
                                     )
                             )
                             .build()
-            )
+            ),
 //            // BUILDING
 //            new SkillDataGenSpec(),
 //            // COMBAT
@@ -381,8 +381,33 @@ public final class SkillMmoDefaultSkills {
 //            new SkillDataGenSpec(),
 //            // SURVIVAL
 //            new SkillDataGenSpec(),
-//            // TRADING
-//            new SkillDataGenSpec()
+            // TRADING
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "trading"),
+                    "skillmmo.skill.trading.name",
+                    "skillmmo.skill.trading.description",
+                    Items.EMERALD,
+                    levelsBuilder()
+                            .put(3, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.WRITABLE_BOOK
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BELL
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.VILLAGER
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withEntityTypes(
+                                            EntityType.WANDERING_TRADER
+                                    )
+                            )
+                            .build()
+            )
     );
 
     private static ImmutableMap.Builder<Integer, SkillLevelDataGenSpec> levelsBuilder() {
