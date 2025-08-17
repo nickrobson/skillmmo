@@ -1,6 +1,6 @@
 {
   "replace": true,
   "values": [
-    "minecraft:spyglass"
+    "#minecraft:pressure_plates"
   ]
 }

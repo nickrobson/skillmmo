@@ -1,8 +1,0 @@
-{
-  "replace": true,
-  "values": [
-    "minecraft:redstone_lamp",
-    "minecraft:lantern",
-    "minecraft:soul_lantern"
-  ]
-}

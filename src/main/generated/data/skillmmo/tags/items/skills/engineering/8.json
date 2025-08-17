@@ -1,0 +1,9 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:minecart",
+    "minecraft:furnace_minecart",
+    "minecraft:tnt_minecart",
+    "minecraft:hopper_minecart"
+  ]
+}

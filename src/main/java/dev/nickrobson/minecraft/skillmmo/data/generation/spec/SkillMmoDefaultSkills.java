@@ -372,8 +372,128 @@ public final class SkillMmoDefaultSkills {
 //            new SkillDataGenSpec(),
 //            // COMBAT
 //            new SkillDataGenSpec(),
-//            // ENGINEERING
-//            new SkillDataGenSpec(),
+            // ENGINEERING
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "engineering"),
+                    "skillmmo.skill.engineering.name",
+                    "skillmmo.skill.engineering.description",
+                    Items.REDSTONE,
+                    levelsBuilder()
+                            .put(1, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.LEVER
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.WOODEN_BUTTONS,
+                                            BlockTags.STONE_BUTTONS
+                                    )
+                            )
+                            .put(3, new SkillLevelDataGenSpec()
+                                    .withBlockTags(
+                                            BlockTags.PRESSURE_PLATES
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.REDSTONE_WIRE,
+                                            Blocks.REDSTONE_TORCH,
+                                            Blocks.REDSTONE_WALL_TORCH
+                                    )
+                                    .withItems(
+                                            Items.COMPASS
+                                    )
+                            )
+                            .put(6, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.REDSTONE_LAMP
+                                    )
+                                    .withItems(
+                                            Items.CLOCK
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.IRON_DOOR,
+                                            Blocks.IRON_TRAPDOOR,
+                                            Blocks.SMITHING_TABLE
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.RAILS,
+                                            BlockTags.ANVIL
+                                    )
+                                    .withItems(
+                                            Items.MINECART,
+                                            Items.FURNACE_MINECART,
+                                            Items.TNT_MINECART,
+                                            Items.HOPPER_MINECART
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.MINECART,
+                                            EntityType.FURNACE_MINECART,
+                                            EntityType.TNT_MINECART,
+                                            EntityType.HOPPER_MINECART
+                                    )
+                            )
+                            .put(9, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.TRIPWIRE_HOOK
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.DISPENSER,
+                                            Blocks.DROPPER,
+                                            Blocks.NOTE_BLOCK,
+                                            Blocks.JUKEBOX
+                                    )
+                                    .withItemTags(
+                                            ItemTags.MUSIC_DISCS
+                                    )
+                            )
+                            .put(12, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.COMPARATOR,
+                                            Blocks.REPEATER
+                                    )
+                                    .withItems(
+                                            Items.FIREWORK_ROCKET,
+                                            Items.FIREWORK_STAR
+                                    )
+                            )
+                            .put(13, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.SLIME_BLOCK,
+                                            Blocks.STICKY_PISTON,
+                                            Blocks.PISTON,
+                                            Blocks.PISTON_HEAD,
+                                            Blocks.MOVING_PISTON
+                                    )
+                            )
+                            .put(15, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.HOPPER,
+                                            Blocks.LODESTONE,
+                                            Blocks.OBSERVER,
+                                            Blocks.TARGET,
+                                            Blocks.TNT
+                                    )
+                                    .withItems(
+                                            Items.TNT_MINECART
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.TNT_MINECART
+                                    )
+                            )
+                            .put(18, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.DAYLIGHT_DETECTOR,
+                                            Blocks.LIGHTNING_ROD,
+                                            Blocks.SCULK_SENSOR,
+                                            Blocks.CALIBRATED_SCULK_SENSOR
+                                    )
+                            )
+                            .build()
+            ),
             // MINING
             new SkillDataGenSpec(
                     Identifier.of("skillmmo", "mining"),
@@ -714,6 +834,10 @@ public final class SkillMmoDefaultSkills {
                                     )
                             )
                             .put(3, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.LANTERN,
+                                            Blocks.SOUL_LANTERN
+                                    )
                                     .withBlockTags(
                                             BlockTags.CAMPFIRES
                                     )
@@ -745,7 +869,8 @@ public final class SkillMmoDefaultSkills {
                                             Items.FISHING_ROD,
                                             Items.MAP,
                                             Items.NAME_TAG,
-                                            Items.BRUSH
+                                            Items.BRUSH,
+                                            Items.SPYGLASS
                                     )
                             )
                             .put(6, new SkillLevelDataGenSpec()
@@ -770,6 +895,9 @@ public final class SkillMmoDefaultSkills {
                                     )
                                     .withItems(
                                             Items.RECOVERY_COMPASS
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.SPAWNER_MINECART
                                     )
                             )
                             .put(12, new SkillLevelDataGenSpec()

@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:lever",
+    "#minecraft:wooden_buttons",
+    "#minecraft:stone_buttons"
+  ]
+}
