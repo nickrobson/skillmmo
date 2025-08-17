@@ -1,6 +1,8 @@
 {
   "replace": true,
   "values": [
+    "minecraft:raw_gold",
+    "minecraft:gold_ingot",
     "minecraft:golden_shovel",
     "minecraft:golden_pickaxe"
   ]

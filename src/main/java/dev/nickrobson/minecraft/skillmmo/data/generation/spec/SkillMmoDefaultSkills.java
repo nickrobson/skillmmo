@@ -374,8 +374,178 @@ public final class SkillMmoDefaultSkills {
 //            new SkillDataGenSpec(),
 //            // ENGINEERING
 //            new SkillDataGenSpec(),
-//            // MINING
-//            new SkillDataGenSpec(),
+            // MINING
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "mining"),
+                    "skillmmo.skill.mining.name",
+                    "skillmmo.skill.mining.description",
+                    Items.GOLD_ORE,
+                    levelsBuilder()
+                            .put(1, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.STONE,
+                                            Blocks.GRANITE,
+                                            Blocks.DIORITE,
+                                            Blocks.ANDESITE,
+                                            Blocks.CALCITE,
+                                            Blocks.COBBLESTONE,
+                                            Blocks.INFESTED_STONE,
+                                            Blocks.INFESTED_COBBLESTONE,
+                                            Blocks.TUFF
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.TERRACOTTA
+                                    )
+                                    .withItems(
+                                            Items.WOODEN_PICKAXE
+                                    )
+                            )
+                            .put(3, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.COAL_ORE,
+                                            Blocks.COAL_BLOCK
+                                    )
+                            )
+                            .put(4, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.STONE_SHOVEL,
+                                            Items.STONE_PICKAXE
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.OXIDIZED_COPPER,
+                                            Blocks.WEATHERED_COPPER,
+                                            Blocks.EXPOSED_COPPER,
+                                            Blocks.RAW_COPPER_BLOCK,
+                                            Blocks.COPPER_BLOCK,
+                                            Blocks.COPPER_ORE,
+                                            Blocks.WAXED_COPPER_BLOCK,
+                                            Blocks.WAXED_WEATHERED_COPPER,
+                                            Blocks.WAXED_EXPOSED_COPPER,
+                                            Blocks.WAXED_OXIDIZED_COPPER
+                                    )
+                                    .withItems(
+                                            Items.RAW_COPPER,
+                                            Items.COPPER_INGOT
+                                    )
+                            )
+                            .put(7, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.IRON_ORE,
+                                            Blocks.RAW_IRON_BLOCK,
+                                            Blocks.IRON_BLOCK,
+                                            Blocks.POINTED_DRIPSTONE,
+                                            Blocks.DRIPSTONE_BLOCK
+                                    )
+                                    .withItems(
+                                            Items.RAW_IRON,
+                                            Items.IRON_INGOT
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                    )
+                                    .withItems(
+                                            Items.IRON_SHOVEL,
+                                            Items.IRON_PICKAXE
+                                    )
+                            )
+                            .put(9, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.LAPIS_ORE,
+                                            Blocks.LAPIS_BLOCK,
+                                            Blocks.REDSTONE_ORE,
+                                            Blocks.REDSTONE_BLOCK
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BLAST_FURNACE,
+                                            Blocks.GOLD_ORE,
+                                            Blocks.GOLD_BLOCK,
+                                            Blocks.RAW_GOLD_BLOCK,
+                                            Blocks.MAGMA_BLOCK
+                                    )
+                                    .withItems(
+                                            Items.RAW_GOLD,
+                                            Items.GOLD_INGOT,
+                                            Items.GOLDEN_SHOVEL,
+                                            Items.GOLDEN_PICKAXE
+                                    )
+                            )
+                            .put(12, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.DIAMOND_ORE,
+                                            Blocks.DIAMOND_BLOCK,
+                                            Blocks.EMERALD_ORE,
+                                            Blocks.EMERALD_BLOCK
+                                    )
+                                    .withItems(
+                                            Items.DIAMOND,
+                                            Items.DIAMOND_SHOVEL,
+                                            Items.DIAMOND_PICKAXE,
+                                            Items.EMERALD
+                                    )
+                            )
+                            .put(15, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.AMETHYST_BLOCK,
+                                            Blocks.AMETHYST_CLUSTER,
+                                            Blocks.BUDDING_AMETHYST,
+                                            Blocks.LARGE_AMETHYST_BUD,
+                                            Blocks.MEDIUM_AMETHYST_BUD,
+                                            Blocks.SMALL_AMETHYST_BUD
+                                    )
+                                    .withItems(
+                                    )
+                            )
+                            .put(18, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.OBSIDIAN,
+                                            Blocks.CRYING_OBSIDIAN,
+                                            Blocks.NETHERRACK,
+                                            Blocks.BASALT,
+                                            Blocks.GLOWSTONE,
+                                            Blocks.NETHER_GOLD_ORE,
+                                            Blocks.NETHER_QUARTZ_ORE,
+                                            Blocks.QUARTZ_BLOCK,
+                                            Blocks.BLACKSTONE,
+                                            Blocks.GILDED_BLACKSTONE
+                                    )
+                                    .withItems(
+                                    )
+                            )
+                            .put(20, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.DEEPSLATE,
+                                            Blocks.COBBLED_DEEPSLATE,
+                                            Blocks.INFESTED_DEEPSLATE,
+                                            Blocks.DEEPSLATE_COAL_ORE,
+                                            Blocks.DEEPSLATE_COPPER_ORE,
+                                            Blocks.DEEPSLATE_IRON_ORE,
+                                            Blocks.DEEPSLATE_LAPIS_ORE,
+                                            Blocks.DEEPSLATE_REDSTONE_ORE,
+                                            Blocks.DEEPSLATE_GOLD_ORE,
+                                            Blocks.DEEPSLATE_DIAMOND_ORE,
+                                            Blocks.DEEPSLATE_EMERALD_ORE
+                                    )
+                            )
+                            .put(25, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.ANCIENT_DEBRIS,
+                                            Blocks.NETHERITE_BLOCK
+                                    )
+                                    .withItems(
+                                            Items.NETHERITE_INGOT,
+                                            Items.NETHERITE_SCRAP,
+                                            Items.NETHERITE_SHOVEL,
+                                            Items.NETHERITE_PICKAXE,
+                                            Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE
+                                    )
+                            )
+                            .build()
+            ),
             // SORCERY
             new SkillDataGenSpec(
                     Identifier.of("skillmmo", "sorcery"),
