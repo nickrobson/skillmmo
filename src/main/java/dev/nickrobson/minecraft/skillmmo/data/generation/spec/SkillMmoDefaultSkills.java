@@ -378,8 +378,54 @@ public final class SkillMmoDefaultSkills {
 //            new SkillDataGenSpec(),
 //            // SORCERY
 //            new SkillDataGenSpec(),
-//            // STORAGE
-//            new SkillDataGenSpec(),
+            // STORAGE
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "storage"),
+                    "skillmmo.skill.storage.name",
+                    "skillmmo.skill.storage.description",
+                    Items.CHEST,
+                    levelsBuilder()
+                            .put(1, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.BUNDLE
+                                    )
+                            )
+                            .put(3, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.ITEM_FRAME,
+                                            Items.GLOW_ITEM_FRAME
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.BARREL
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.CHEST,
+                                            Blocks.TRAPPED_CHEST
+                                    )
+                                    .withItemTags(
+                                            ItemTags.CHEST_BOATS
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.CHEST_BOAT,
+                                            EntityType.CHEST_MINECART
+                                    )
+                            )
+                            .put(12, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.ENDER_CHEST
+                                    )
+                            )
+                            .put(18, new SkillLevelDataGenSpec()
+                                    .withBlockTags(
+                                            BlockTags.SHULKER_BOXES
+                                    )
+                            )
+                            .build()
+            ),
             // SURVIVAL
             new SkillDataGenSpec(
                     Identifier.of("skillmmo", "survival"),

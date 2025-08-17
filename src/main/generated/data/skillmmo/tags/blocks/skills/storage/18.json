@@ -1,6 +1,6 @@
 {
   "replace": true,
   "values": [
-    "#shulker_boxes"
+    "#minecraft:shulker_boxes"
   ]
 }
