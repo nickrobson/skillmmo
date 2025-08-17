@@ -116,4 +116,8 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
 
         return resourcesMap;
     }
+
+    public Gson getGson() {
+        return gson;
+    }
 }

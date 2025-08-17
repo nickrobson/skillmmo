@@ -6,6 +6,6 @@
   "maxLevel": 20,
   "icon": {
     "type": "item",
-    "value": "minecraft:netherite_sword"
+    "value": "minecraft:diamond_sword"
   }
 }

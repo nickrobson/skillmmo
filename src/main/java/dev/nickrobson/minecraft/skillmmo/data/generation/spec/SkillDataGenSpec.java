@@ -4,7 +4,6 @@ import dev.nickrobson.minecraft.skillmmo.data.SkillData;
 import dev.nickrobson.minecraft.skillmmo.data.SkillIconData;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
@@ -16,7 +15,7 @@ public record SkillDataGenSpec(
         Item iconItem,
         Map<Integer, SkillLevelDataGenSpec> levels
 ) {
-    public SkillData toSkillData(RegistryWrapper.WrapperLookup lookup) {
+    public SkillData toSkillData() {
         SkillData result = new SkillData();
         result.replace = true;
         result.enabled = true;
