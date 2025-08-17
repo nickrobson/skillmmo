@@ -370,8 +370,85 @@ public final class SkillMmoDefaultSkills {
             ),
 //            // BUILDING
 //            new SkillDataGenSpec(),
-//            // COMBAT
-//            new SkillDataGenSpec(),
+            // COMBAT
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "combat"),
+                    "skillmmo.skill.combat.name",
+                    "skillmmo.skill.combat.description",
+                    Items.DIAMOND_SWORD,
+                    levelsBuilder()
+                            .put(1, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.ARMOR_STAND,
+                                            Items.WOODEN_SWORD
+                                    ))
+                            .put(2, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.LEATHER_HELMET,
+                                            Items.LEATHER_CHESTPLATE,
+                                            Items.LEATHER_LEGGINGS,
+                                            Items.LEATHER_BOOTS,
+                                            Items.LEATHER_HORSE_ARMOR
+                                    ))
+                            .put(4, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.STONE_SWORD
+                                    ))
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.CHAINMAIL_HELMET,
+                                            Items.CHAINMAIL_CHESTPLATE,
+                                            Items.CHAINMAIL_LEGGINGS,
+                                            Items.CHAINMAIL_BOOTS
+                                    ))
+                            .put(7, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.BOW,
+                                            Items.ARROW
+                                    ))
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.GOLDEN_SWORD,
+                                            Items.GOLDEN_HELMET,
+                                            Items.GOLDEN_CHESTPLATE,
+                                            Items.GOLDEN_LEGGINGS,
+                                            Items.GOLDEN_BOOTS,
+                                            Items.GOLDEN_HORSE_ARMOR
+                                    ))
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.IRON_SWORD,
+                                            Items.IRON_HELMET,
+                                            Items.IRON_CHESTPLATE,
+                                            Items.IRON_LEGGINGS,
+                                            Items.IRON_BOOTS,
+                                            Items.IRON_HORSE_ARMOR,
+                                            Items.SHIELD
+                                    ))
+                            .put(12, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.CROSSBOW
+                                    ))
+                            .put(15, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.DIAMOND_SWORD,
+                                            Items.DIAMOND_HELMET,
+                                            Items.DIAMOND_CHESTPLATE,
+                                            Items.DIAMOND_LEGGINGS,
+                                            Items.DIAMOND_BOOTS,
+                                            Items.DIAMOND_HORSE_ARMOR,
+                                            Items.TRIDENT
+                                    ))
+                            .put(20, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.NETHERITE_SWORD,
+                                            Items.NETHERITE_HELMET,
+                                            Items.NETHERITE_CHESTPLATE,
+                                            Items.NETHERITE_LEGGINGS,
+                                            Items.NETHERITE_BOOTS
+                                    ))
+                            .build()
+            ),
             // ENGINEERING
             new SkillDataGenSpec(
                     Identifier.of("skillmmo", "engineering"),
