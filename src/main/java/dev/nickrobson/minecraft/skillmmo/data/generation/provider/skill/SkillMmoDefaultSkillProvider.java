@@ -12,6 +12,11 @@ public class SkillMmoDefaultSkillProvider extends SkillProvider {
     }
 
     @Override
+    public String getName() {
+        return "SkillMMO default skills";
+    }
+
+    @Override
     protected void configure(RegistryWrapper.WrapperLookup lookup) {
         SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(this::addSkill);
     }
