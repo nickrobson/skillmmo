@@ -1,7 +1,6 @@
 {
   "replace": true,
   "values": [
-    "#all_hanging_signs",
     "minecraft:white_glazed_terracotta",
     "minecraft:orange_glazed_terracotta",
     "minecraft:magenta_glazed_terracotta",
@@ -34,21 +33,7 @@
     "minecraft:green_concrete",
     "minecraft:red_concrete",
     "minecraft:black_concrete",
-    "minecraft:white_concrete_powder",
-    "minecraft:orange_concrete_powder",
-    "minecraft:magenta_concrete_powder",
-    "minecraft:light_blue_concrete_powder",
-    "minecraft:yellow_concrete_powder",
-    "minecraft:lime_concrete_powder",
-    "minecraft:pink_concrete_powder",
-    "minecraft:gray_concrete_powder",
-    "minecraft:light_gray_concrete_powder",
-    "minecraft:cyan_concrete_powder",
-    "minecraft:purple_concrete_powder",
-    "minecraft:blue_concrete_powder",
-    "minecraft:brown_concrete_powder",
-    "minecraft:green_concrete_powder",
-    "minecraft:red_concrete_powder",
-    "minecraft:black_concrete_powder"
+    "#minecraft:all_hanging_signs",
+    "#minecraft:concrete_powder"
   ]
 }

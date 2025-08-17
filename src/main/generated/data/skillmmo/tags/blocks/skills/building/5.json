@@ -1,0 +1,14 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:scaffolding",
+    "minecraft:loom",
+    "minecraft:lectern",
+    "minecraft:stonecutter",
+    "minecraft:decorated_pot",
+    "#minecraft:candles",
+    "#minecraft:standing_signs",
+    "#minecraft:wall_signs",
+    "#minecraft:wool_carpets"
+  ]
+}

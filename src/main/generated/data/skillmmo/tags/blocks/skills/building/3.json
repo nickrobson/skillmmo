@@ -1,0 +1,9 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:bookshelf",
+    "minecraft:chiseled_bookshelf",
+    "minecraft:ladder",
+    "#minecraft:wooden_fences"
+  ]
+}

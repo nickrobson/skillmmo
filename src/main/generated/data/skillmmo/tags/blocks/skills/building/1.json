@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:bamboo_mosaic",
+    "minecraft:bamboo_mosaic_stairs",
+    "minecraft:bamboo_mosaic_slab",
+    "#minecraft:wooden_stairs",
+    "#minecraft:wooden_slabs"
+  ]
+}

@@ -368,8 +368,358 @@ public final class SkillMmoDefaultSkills {
                             )
                             .build()
             ),
-//            // BUILDING
-//            new SkillDataGenSpec(),
+            // BUILDING
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "building"),
+                    "skillmmo.skill.building.name",
+                    "skillmmo.skill.building.description",
+                    Items.SCAFFOLDING,
+                    levelsBuilder()
+                            .put(1, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BAMBOO_MOSAIC,
+                                            Blocks.BAMBOO_MOSAIC_STAIRS,
+                                            Blocks.BAMBOO_MOSAIC_SLAB
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.WOODEN_STAIRS,
+                                            BlockTags.WOODEN_SLABS
+                                    )
+                                    .withItems(
+                                            Items.WHITE_DYE,
+                                            Items.ORANGE_DYE,
+                                            Items.MAGENTA_DYE,
+                                            Items.LIGHT_BLUE_DYE,
+                                            Items.YELLOW_DYE,
+                                            Items.LIME_DYE,
+                                            Items.PINK_DYE,
+                                            Items.GRAY_DYE,
+                                            Items.LIGHT_GRAY_DYE,
+                                            Items.CYAN_DYE,
+                                            Items.PURPLE_DYE,
+                                            Items.BLUE_DYE,
+                                            Items.BROWN_DYE,
+                                            Items.GREEN_DYE,
+                                            Items.RED_DYE,
+                                            Items.BLACK_DYE
+                                    )
+                            )
+                            .put(3, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BOOKSHELF,
+                                            Blocks.CHISELED_BOOKSHELF,
+                                            Blocks.LADDER
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.WOODEN_FENCES
+                                    )
+                                    .withItems(
+                                            Items.PAINTING,
+                                            Items.GLOW_INK_SAC,
+                                            Items.FLOWER_BANNER_PATTERN,
+                                            Items.CREEPER_BANNER_PATTERN,
+                                            Items.SKULL_BANNER_PATTERN,
+                                            Items.MOJANG_BANNER_PATTERN,
+                                            Items.GLOBE_BANNER_PATTERN,
+                                            Items.PIGLIN_BANNER_PATTERN
+                                    )
+                                    .withItemTags(
+                                            ItemTags.BANNERS
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.PAINTING
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.SCAFFOLDING,
+                                            Blocks.LOOM,
+                                            Blocks.LECTERN,
+                                            Blocks.STONECUTTER,
+                                            Blocks.DECORATED_POT
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.CANDLES,
+                                            BlockTags.STANDING_SIGNS,
+                                            BlockTags.WALL_SIGNS,
+                                            BlockTags.WOOL_CARPETS
+                                    )
+                                    .withItemTags(
+                                            ItemTags.DECORATED_POT_SHERDS
+                                    )
+                            )
+                            .put(6, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.MUD_BRICKS,
+                                            Blocks.MUD_BRICK_STAIRS,
+                                            Blocks.MUD_BRICK_SLAB,
+                                            Blocks.MUD_BRICK_WALL,
+                                            Blocks.ANDESITE_STAIRS,
+                                            Blocks.ANDESITE_SLAB,
+                                            Blocks.ANDESITE_WALL,
+                                            Blocks.POLISHED_ANDESITE,
+                                            Blocks.DIORITE_STAIRS,
+                                            Blocks.DIORITE_SLAB,
+                                            Blocks.DIORITE_WALL,
+                                            Blocks.POLISHED_DIORITE,
+                                            Blocks.GRANITE_STAIRS,
+                                            Blocks.GRANITE_SLAB,
+                                            Blocks.GRANITE_WALL,
+                                            Blocks.POLISHED_GRANITE,
+                                            Blocks.POLISHED_GRANITE_STAIRS,
+                                            Blocks.POLISHED_DIORITE_STAIRS,
+                                            Blocks.POLISHED_ANDESITE_STAIRS,
+                                            Blocks.POLISHED_GRANITE_SLAB,
+                                            Blocks.POLISHED_DIORITE_SLAB,
+                                            Blocks.POLISHED_ANDESITE_SLAB,
+                                            Blocks.COBBLESTONE_STAIRS,
+                                            Blocks.COBBLESTONE_SLAB,
+                                            Blocks.COBBLESTONE_WALL,
+                                            Blocks.MOSSY_COBBLESTONE,
+                                            Blocks.MOSSY_COBBLESTONE_STAIRS,
+                                            Blocks.MOSSY_COBBLESTONE_SLAB,
+                                            Blocks.MOSSY_COBBLESTONE_WALL,
+                                            Blocks.SMOOTH_STONE,
+                                            Blocks.SMOOTH_STONE_SLAB,
+                                            Blocks.STONE_STAIRS,
+                                            Blocks.SANDSTONE_STAIRS,
+                                            Blocks.SANDSTONE_SLAB,
+                                            Blocks.SANDSTONE_WALL,
+                                            Blocks.RED_SANDSTONE_STAIRS,
+                                            Blocks.RED_SANDSTONE_SLAB,
+                                            Blocks.RED_SANDSTONE_WALL,
+                                            Blocks.CHISELED_SANDSTONE,
+                                            Blocks.CUT_SANDSTONE,
+                                            Blocks.CUT_SANDSTONE_SLAB,
+                                            Blocks.CHISELED_RED_SANDSTONE,
+                                            Blocks.CUT_RED_SANDSTONE,
+                                            Blocks.CUT_RED_SANDSTONE_SLAB,
+                                            Blocks.SMOOTH_SANDSTONE,
+                                            Blocks.SMOOTH_SANDSTONE_STAIRS,
+                                            Blocks.SMOOTH_SANDSTONE_SLAB,
+                                            Blocks.SMOOTH_RED_SANDSTONE,
+                                            Blocks.SMOOTH_RED_SANDSTONE_STAIRS,
+                                            Blocks.SMOOTH_RED_SANDSTONE_SLAB
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BRICKS,
+                                            Blocks.BRICK_STAIRS,
+                                            Blocks.BRICK_SLAB,
+                                            Blocks.BRICK_WALL,
+                                            Blocks.STONE_BRICKS,
+                                            Blocks.STONE_BRICK_STAIRS,
+                                            Blocks.STONE_BRICK_SLAB,
+                                            Blocks.STONE_BRICK_WALL,
+                                            Blocks.MOSSY_STONE_BRICKS,
+                                            Blocks.MOSSY_STONE_BRICK_STAIRS,
+                                            Blocks.MOSSY_STONE_BRICK_SLAB,
+                                            Blocks.MOSSY_STONE_BRICK_WALL,
+                                            Blocks.CRACKED_STONE_BRICKS,
+                                            Blocks.CHISELED_STONE_BRICKS,
+                                            Blocks.INFESTED_STONE_BRICKS,
+                                            Blocks.INFESTED_MOSSY_STONE_BRICKS,
+                                            Blocks.INFESTED_CRACKED_STONE_BRICKS,
+                                            Blocks.INFESTED_CHISELED_STONE_BRICKS,
+                                            Blocks.CHISELED_QUARTZ_BLOCK,
+                                            Blocks.QUARTZ_BRICKS,
+                                            Blocks.QUARTZ_STAIRS,
+                                            Blocks.QUARTZ_SLAB,
+                                            Blocks.QUARTZ_PILLAR,
+                                            Blocks.SMOOTH_QUARTZ,
+                                            Blocks.SMOOTH_QUARTZ_STAIRS,
+                                            Blocks.SMOOTH_QUARTZ_SLAB
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.WHITE_GLAZED_TERRACOTTA,
+                                            Blocks.ORANGE_GLAZED_TERRACOTTA,
+                                            Blocks.MAGENTA_GLAZED_TERRACOTTA,
+                                            Blocks.LIGHT_BLUE_GLAZED_TERRACOTTA,
+                                            Blocks.YELLOW_GLAZED_TERRACOTTA,
+                                            Blocks.LIME_GLAZED_TERRACOTTA,
+                                            Blocks.PINK_GLAZED_TERRACOTTA,
+                                            Blocks.GRAY_GLAZED_TERRACOTTA,
+                                            Blocks.LIGHT_GRAY_GLAZED_TERRACOTTA,
+                                            Blocks.CYAN_GLAZED_TERRACOTTA,
+                                            Blocks.PURPLE_GLAZED_TERRACOTTA,
+                                            Blocks.BLUE_GLAZED_TERRACOTTA,
+                                            Blocks.BROWN_GLAZED_TERRACOTTA,
+                                            Blocks.GREEN_GLAZED_TERRACOTTA,
+                                            Blocks.RED_GLAZED_TERRACOTTA,
+                                            Blocks.BLACK_GLAZED_TERRACOTTA,
+                                            Blocks.WHITE_CONCRETE,
+                                            Blocks.ORANGE_CONCRETE,
+                                            Blocks.MAGENTA_CONCRETE,
+                                            Blocks.LIGHT_BLUE_CONCRETE,
+                                            Blocks.YELLOW_CONCRETE,
+                                            Blocks.LIME_CONCRETE,
+                                            Blocks.PINK_CONCRETE,
+                                            Blocks.GRAY_CONCRETE,
+                                            Blocks.LIGHT_GRAY_CONCRETE,
+                                            Blocks.CYAN_CONCRETE,
+                                            Blocks.PURPLE_CONCRETE,
+                                            Blocks.BLUE_CONCRETE,
+                                            Blocks.BROWN_CONCRETE,
+                                            Blocks.GREEN_CONCRETE,
+                                            Blocks.RED_CONCRETE,
+                                            Blocks.BLACK_CONCRETE
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.ALL_HANGING_SIGNS,
+                                            BlockTags.CONCRETE_POWDER
+                                    )
+                            )
+                            .put(13, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.GLASS,
+                                            Blocks.WHITE_STAINED_GLASS,
+                                            Blocks.ORANGE_STAINED_GLASS,
+                                            Blocks.MAGENTA_STAINED_GLASS,
+                                            Blocks.LIGHT_BLUE_STAINED_GLASS,
+                                            Blocks.YELLOW_STAINED_GLASS,
+                                            Blocks.LIME_STAINED_GLASS,
+                                            Blocks.PINK_STAINED_GLASS,
+                                            Blocks.GRAY_STAINED_GLASS,
+                                            Blocks.LIGHT_GRAY_STAINED_GLASS,
+                                            Blocks.CYAN_STAINED_GLASS,
+                                            Blocks.PURPLE_STAINED_GLASS,
+                                            Blocks.BLUE_STAINED_GLASS,
+                                            Blocks.BROWN_STAINED_GLASS,
+                                            Blocks.GREEN_STAINED_GLASS,
+                                            Blocks.RED_STAINED_GLASS,
+                                            Blocks.BLACK_STAINED_GLASS,
+                                            Blocks.GLASS_PANE,
+                                            Blocks.WHITE_STAINED_GLASS_PANE,
+                                            Blocks.ORANGE_STAINED_GLASS_PANE,
+                                            Blocks.MAGENTA_STAINED_GLASS_PANE,
+                                            Blocks.LIGHT_BLUE_STAINED_GLASS_PANE,
+                                            Blocks.YELLOW_STAINED_GLASS_PANE,
+                                            Blocks.LIME_STAINED_GLASS_PANE,
+                                            Blocks.PINK_STAINED_GLASS_PANE,
+                                            Blocks.GRAY_STAINED_GLASS_PANE,
+                                            Blocks.LIGHT_GRAY_STAINED_GLASS_PANE,
+                                            Blocks.CYAN_STAINED_GLASS_PANE,
+                                            Blocks.PURPLE_STAINED_GLASS_PANE,
+                                            Blocks.BLUE_STAINED_GLASS_PANE,
+                                            Blocks.BROWN_STAINED_GLASS_PANE,
+                                            Blocks.GREEN_STAINED_GLASS_PANE,
+                                            Blocks.RED_STAINED_GLASS_PANE,
+                                            Blocks.BLACK_STAINED_GLASS_PANE,
+                                            Blocks.TINTED_GLASS
+                                    )
+                            )
+                            .put(15, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.IRON_BARS,
+                                            Blocks.CHAIN,
+                                            Blocks.OXIDIZED_CUT_COPPER,
+                                            Blocks.WEATHERED_CUT_COPPER,
+                                            Blocks.EXPOSED_CUT_COPPER,
+                                            Blocks.CUT_COPPER,
+                                            Blocks.OXIDIZED_CUT_COPPER_STAIRS,
+                                            Blocks.WEATHERED_CUT_COPPER_STAIRS,
+                                            Blocks.EXPOSED_CUT_COPPER_STAIRS,
+                                            Blocks.CUT_COPPER_STAIRS,
+                                            Blocks.OXIDIZED_CUT_COPPER_SLAB,
+                                            Blocks.WEATHERED_CUT_COPPER_SLAB,
+                                            Blocks.EXPOSED_CUT_COPPER_SLAB,
+                                            Blocks.CUT_COPPER_SLAB,
+                                            Blocks.WAXED_OXIDIZED_CUT_COPPER,
+                                            Blocks.WAXED_WEATHERED_CUT_COPPER,
+                                            Blocks.WAXED_EXPOSED_CUT_COPPER,
+                                            Blocks.WAXED_CUT_COPPER,
+                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS,
+                                            Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS,
+                                            Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS,
+                                            Blocks.WAXED_CUT_COPPER_STAIRS,
+                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB,
+                                            Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB,
+                                            Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB,
+                                            Blocks.WAXED_CUT_COPPER_SLAB
+                                    )
+                            )
+                            .put(17, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.PRISMARINE_STAIRS,
+                                            Blocks.PRISMARINE_BRICK_STAIRS,
+                                            Blocks.DARK_PRISMARINE_STAIRS,
+                                            Blocks.PRISMARINE_SLAB,
+                                            Blocks.PRISMARINE_BRICK_SLAB,
+                                            Blocks.DARK_PRISMARINE_SLAB,
+                                            Blocks.PRISMARINE_WALL,
+                                            Blocks.COBBLED_DEEPSLATE_STAIRS,
+                                            Blocks.COBBLED_DEEPSLATE_SLAB,
+                                            Blocks.COBBLED_DEEPSLATE_WALL,
+                                            Blocks.POLISHED_DEEPSLATE,
+                                            Blocks.POLISHED_DEEPSLATE_STAIRS,
+                                            Blocks.POLISHED_DEEPSLATE_SLAB,
+                                            Blocks.POLISHED_DEEPSLATE_WALL,
+                                            Blocks.DEEPSLATE_TILES,
+                                            Blocks.DEEPSLATE_TILE_STAIRS,
+                                            Blocks.DEEPSLATE_TILE_SLAB,
+                                            Blocks.DEEPSLATE_TILE_WALL,
+                                            Blocks.DEEPSLATE_BRICKS,
+                                            Blocks.DEEPSLATE_BRICK_STAIRS,
+                                            Blocks.DEEPSLATE_BRICK_SLAB,
+                                            Blocks.DEEPSLATE_BRICK_WALL,
+                                            Blocks.CHISELED_DEEPSLATE,
+                                            Blocks.CRACKED_DEEPSLATE_BRICKS,
+                                            Blocks.CRACKED_DEEPSLATE_TILES
+                                    )
+                                    .withBlockTags(
+                                            BlockTags.CORALS,
+                                            BlockTags.CORAL_BLOCKS,
+                                            BlockTags.WALL_CORALS
+                                    )
+                            )
+                            .put(20, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.SMOOTH_BASALT,
+                                            Blocks.POLISHED_BASALT,
+                                            Blocks.NETHER_BRICKS,
+                                            Blocks.NETHER_BRICK_FENCE,
+                                            Blocks.NETHER_BRICK_STAIRS,
+                                            Blocks.NETHER_BRICK_SLAB,
+                                            Blocks.RED_NETHER_BRICKS,
+                                            Blocks.RED_NETHER_BRICK_SLAB,
+                                            Blocks.RED_NETHER_BRICK_STAIRS,
+                                            Blocks.NETHER_BRICK_WALL,
+                                            Blocks.RED_NETHER_BRICK_WALL,
+                                            Blocks.BLACKSTONE_STAIRS,
+                                            Blocks.BLACKSTONE_WALL,
+                                            Blocks.BLACKSTONE_SLAB,
+                                            Blocks.POLISHED_BLACKSTONE,
+                                            Blocks.POLISHED_BLACKSTONE_BRICKS,
+                                            Blocks.CRACKED_POLISHED_BLACKSTONE_BRICKS,
+                                            Blocks.CHISELED_POLISHED_BLACKSTONE,
+                                            Blocks.POLISHED_BLACKSTONE_BRICK_SLAB,
+                                            Blocks.POLISHED_BLACKSTONE_BRICK_STAIRS,
+                                            Blocks.POLISHED_BLACKSTONE_BRICK_WALL,
+                                            Blocks.POLISHED_BLACKSTONE_STAIRS,
+                                            Blocks.POLISHED_BLACKSTONE_SLAB,
+                                            Blocks.POLISHED_BLACKSTONE_WALL,
+                                            Blocks.CHISELED_NETHER_BRICKS,
+                                            Blocks.CRACKED_NETHER_BRICKS
+                                    )
+                            )
+                            .put(25, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.PURPUR_BLOCK,
+                                            Blocks.PURPUR_PILLAR,
+                                            Blocks.PURPUR_STAIRS,
+                                            Blocks.PURPUR_SLAB,
+                                            Blocks.END_ROD,
+                                            Blocks.END_STONE_BRICKS,
+                                            Blocks.END_STONE_BRICK_SLAB,
+                                            Blocks.END_STONE_BRICK_STAIRS,
+                                            Blocks.END_STONE_BRICK_WALL
+                                    )
+                            )
+                            .build()
+            ),
             // COMBAT
             new SkillDataGenSpec(
                     Identifier.of("skillmmo", "combat"),
@@ -641,8 +991,6 @@ public final class SkillMmoDefaultSkills {
                                     )
                             )
                             .put(8, new SkillLevelDataGenSpec()
-                                    .withBlocks(
-                                    )
                                     .withItems(
                                             Items.IRON_SHOVEL,
                                             Items.IRON_PICKAXE
@@ -694,8 +1042,6 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.MEDIUM_AMETHYST_BUD,
                                             Blocks.SMALL_AMETHYST_BUD
                                     )
-                                    .withItems(
-                                    )
                             )
                             .put(18, new SkillLevelDataGenSpec()
                                     .withBlocks(
@@ -709,8 +1055,6 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.QUARTZ_BLOCK,
                                             Blocks.BLACKSTONE,
                                             Blocks.GILDED_BLACKSTONE
-                                    )
-                                    .withItems(
                                     )
                             )
                             .put(20, new SkillLevelDataGenSpec()

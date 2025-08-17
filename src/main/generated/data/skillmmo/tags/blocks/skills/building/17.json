@@ -1,9 +1,6 @@
 {
   "replace": true,
   "values": [
-    "#corals",
-    "#coral_blocks",
-    "#wall_corals",
     "minecraft:prismarine_stairs",
     "minecraft:prismarine_brick_stairs",
     "minecraft:dark_prismarine_stairs",
@@ -28,6 +25,9 @@
     "minecraft:deepslate_brick_wall",
     "minecraft:chiseled_deepslate",
     "minecraft:cracked_deepslate_bricks",
-    "minecraft:cracked_deepslate_tiles"
+    "minecraft:cracked_deepslate_tiles",
+    "#minecraft:corals",
+    "#minecraft:coral_blocks",
+    "#minecraft:wall_corals"
   ]
 }
