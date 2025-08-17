@@ -52,6 +52,7 @@ public abstract class SkillProvider implements DataProvider {
                                         .stream()
                                         .map(
                                                 spec -> {
+                                                    // TODO use codec instead
                                                     JsonElement jsonElement = skillMmoResourceLoader.getGson().toJsonTree(spec.toSkillData());
                                                     Path path = this.pathResolver.resolveJson(spec.id());
                                                     return DataProvider.writeToPath(writer, jsonElement, path);
