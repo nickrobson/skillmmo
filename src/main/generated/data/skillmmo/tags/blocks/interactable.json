@@ -1,32 +1,20 @@
 {
-  "replace": false,
   "values": [
-    "#shulker_boxes",
     "minecraft:barrel",
     "minecraft:chest",
     "minecraft:ender_chest",
     "minecraft:trapped_chest",
-
     "minecraft:blast_furnace",
     "minecraft:furnace",
     "minecraft:smoker",
-
     "minecraft:crafting_table",
-
-    "#cauldrons",
     "minecraft:beacon",
     "minecraft:brewing_stand",
     "minecraft:enchanting_table",
-
     "minecraft:dragon_egg",
     "minecraft:end_portal_frame",
     "minecraft:lodestone",
     "minecraft:respawn_anchor",
-
-    "#buttons",
-    "#fence_gates",
-    "#wooden_doors",
-    "#wooden_trapdoors",
     "minecraft:comparator",
     "minecraft:daylight_detector",
     "minecraft:dispenser",
@@ -34,21 +22,12 @@
     "minecraft:jukebox",
     "minecraft:lever",
     "minecraft:repeater",
-
-    "#campfires",
-    "#candles",
-    "#candle_cakes",
     "minecraft:cake",
-
-    "#beds",
-    "#flower_pots",
     "minecraft:sweet_berry_bush",
     "minecraft:note_block",
     "minecraft:scaffolding",
-
     "minecraft:beehive",
     "minecraft:bee_nest",
-
     "minecraft:bell",
     "minecraft:cartography_table",
     "minecraft:composter",
@@ -57,6 +36,17 @@
     "minecraft:lectern",
     "minecraft:loom",
     "minecraft:smithing_table",
-    "minecraft:stonecutter"
+    "minecraft:stonecutter",
+    "#minecraft:shulker_boxes",
+    "#minecraft:cauldrons",
+    "#minecraft:buttons",
+    "#minecraft:fence_gates",
+    "#minecraft:wooden_doors",
+    "#minecraft:wooden_trapdoors",
+    "#minecraft:campfires",
+    "#minecraft:candles",
+    "#minecraft:candle_cakes",
+    "#minecraft:beds",
+    "#minecraft:flower_pots"
   ]
 }
