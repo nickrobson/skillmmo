@@ -8,8 +8,6 @@ import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoSk
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoSkillLevelItemTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.JsonKeySortOrderCallback;
-import net.minecraft.registry.RegistryBuilder;
 
 public class SkillMmoDataGenerator implements DataGeneratorEntrypoint {
     @Override
@@ -29,15 +27,5 @@ public class SkillMmoDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(SkillMmoSkillLevelBlockTagProvider::new);
         pack.addProvider(SkillMmoSkillLevelItemTagProvider::new);
         pack.addProvider(SkillMmoSkillLevelEntityTypeTagProvider::new);
-    }
-
-    @Override
-    public void buildRegistry(RegistryBuilder registryBuilder) {
-        DataGeneratorEntrypoint.super.buildRegistry(registryBuilder);
-    }
-
-    @Override
-    public void addJsonKeySortOrders(JsonKeySortOrderCallback callback) {
-        DataGeneratorEntrypoint.super.addJsonKeySortOrders(callback);
     }
 }
