@@ -17,6 +17,9 @@
     ],
     "client": [
       "dev.nickrobson.minecraft.skillmmo.SkillMmoClientInitializer"
+    ],
+    "fabric-datagen": [
+      "dev.nickrobson.minecraft.skillmmo.data.generation.SkillMmoDataGenerator"
     ]
   },
   "mixins": [

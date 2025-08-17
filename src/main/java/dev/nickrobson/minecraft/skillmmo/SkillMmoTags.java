@@ -22,13 +22,14 @@ public class SkillMmoTags {
             TagKey.of(Registries.BLOCK.getKey(), new Identifier(SkillMmoMod.MOD_ID, "interactable"));
 
     public static <T> TagKey<T> getUnlocksTag(SkillLevel skillLevel, UnlockableType<T> unlockableType) {
-        return unlockableType.createTag(getLevelUnlocksIdentifier(skillLevel));
+        return getUnlocksTag(skillLevel.getSkill().getId(), skillLevel.getLevel(), unlockableType);
     }
 
-    private static Identifier getLevelUnlocksIdentifier(SkillLevel skillLevel) {
-        Identifier skillIdentifier = skillLevel.getSkill().getId();
-        return new Identifier(
-                skillIdentifier.getNamespace(),
-                "skills/%s/%d".formatted(skillIdentifier.getPath(), skillLevel.getLevel()));
+    public static <T> TagKey<T> getUnlocksTag(Identifier skillId, int skillLevel, UnlockableType<T> unlockableType) {
+        return unlockableType.createTag(getLevelUnlocksIdentifier(skillId, skillLevel));
+    }
+
+    private static Identifier getLevelUnlocksIdentifier(Identifier skillId, int skillLevel) {
+        return skillId.withPath("skills/%s/%d".formatted(skillId.getPath(), skillLevel));
     }
 }

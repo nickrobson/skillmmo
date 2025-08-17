@@ -1,5 +1,6 @@
 # Minecraft
 /run/
+/src/main/generated/.cache/
 
 # jenv
 /.java-version
@@ -36,3 +37,6 @@ hs_err_pid*
 # IntelliJ
 .idea/
 *.iml
+
+# macOS
+.DS_Store

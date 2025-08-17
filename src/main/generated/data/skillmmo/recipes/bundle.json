@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "h": {
+      "item": "minecraft:rabbit_hide"
+    },
+    "s": {
+      "item": "minecraft:string"
+    }
+  },
+  "pattern": [
+    "shs",
+    "h h",
+    "hhh"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:bundle"
+  }
+}
