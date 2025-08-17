@@ -5,6 +5,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 
 import java.util.List;
@@ -379,8 +380,99 @@ public final class SkillMmoDefaultSkills {
 //            new SkillDataGenSpec(),
 //            // STORAGE
 //            new SkillDataGenSpec(),
-//            // SURVIVAL
-//            new SkillDataGenSpec(),
+            // SURVIVAL
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "survival"),
+                    "skillmmo.skill.survival.name",
+                    "skillmmo.skill.survival.description",
+                    Items.FLINT_AND_STEEL,
+                    levelsBuilder()
+                            .put(1, new SkillLevelDataGenSpec()
+                                    .withBlockTags(
+                                            BlockTags.BEDS
+                                    )
+                            )
+                            .put(2, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.BUCKET,
+                                            Items.WATER_BUCKET
+                                    )
+                            )
+                            .put(3, new SkillLevelDataGenSpec()
+                                    .withBlockTags(
+                                            BlockTags.CAMPFIRES
+                                    )
+                                    .withItemTags(
+                                            ItemTags.BOATS
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.BOAT
+                                    )
+                            )
+                            .put(4, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.POWDER_SNOW
+                                    )
+                                    .withItems(
+                                            Items.LAVA_BUCKET,
+                                            Items.POWDER_SNOW_BUCKET
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.ICE,
+                                            Blocks.PACKED_ICE,
+                                            Blocks.FROSTED_ICE,
+                                            Blocks.BLUE_ICE
+                                    )
+                                    .withItems(
+                                            Items.FILLED_MAP,
+                                            Items.FISHING_ROD,
+                                            Items.MAP,
+                                            Items.NAME_TAG,
+                                            Items.BRUSH
+                                    )
+                            )
+                            .put(6, new SkillLevelDataGenSpec()
+                                    .withItemTags(
+                                            ItemTags.TRIM_TEMPLATES
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.FURNACE,
+                                            Blocks.CARTOGRAPHY_TABLE,
+                                            Blocks.FLETCHING_TABLE
+                                    )
+                                    .withItems(
+                                            Items.FLINT_AND_STEEL,
+                                            Items.SHEARS
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.SPAWNER
+                                    )
+                                    .withItems(
+                                            Items.RECOVERY_COMPASS
+                                    )
+                            )
+                            .put(12, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.PRISMARINE,
+                                            Blocks.PRISMARINE_BRICKS,
+                                            Blocks.DARK_PRISMARINE,
+                                            Blocks.SEA_LANTERN
+                                    )
+                            )
+                            .put(15, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.CONDUIT,
+                                            Blocks.REINFORCED_DEEPSLATE
+                                    )
+                            )
+                            .build()
+            ),
             // TRADING
             new SkillDataGenSpec(
                     Identifier.of("skillmmo", "trading"),
