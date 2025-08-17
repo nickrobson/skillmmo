@@ -2,6 +2,7 @@ package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.Blocks;
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.Identifier;
@@ -15,6 +16,7 @@ public final class SkillMmoDefaultSkills {
                     Identifier.of("skillmmo", "agriculture"),
                     "skillmmo.skill.agriculture.name",
                     "skillmmo.skill.agriculture.description",
+                    Items.WHEAT,
                     levelsBuilder()
                             .put(1, new SkillLevelDataGenSpec()
                                     .withBlocks(
@@ -209,11 +211,162 @@ public final class SkillMmoDefaultSkills {
                                             Items.POPPED_CHORUS_FRUIT
                                     )
                             )
-                            .build(),
-                    Items.WHEAT
+                            .build()
+            ),
+            // ANIMAL_HUSBANDRY
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "animalhusbandry"),
+                    "skillmmo.skill.animalhusbandry.name",
+                    "skillmmo.skill.animalhusbandry.description",
+                    Items.SADDLE,
+                    levelsBuilder()
+                            .put(2, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.EGG
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.BAT,
+                                            EntityType.CHICKEN,
+                                            EntityType.RABBIT
+                                    )
+                            )
+                            .put(3, new SkillLevelDataGenSpec()
+                                    .withBlockTags(
+                                            BlockTags.WOOL
+                                    )
+                                    .withItems(
+                                            Items.GOAT_HORN
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.GOAT,
+                                            EntityType.PIG,
+                                            EntityType.SHEEP
+                                    )
+                            )
+                            .put(4, new SkillLevelDataGenSpec()
+
+                                    .withEntityTypes(
+                                            EntityType.COW,
+                                            EntityType.MOOSHROOM
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BEE_NEST,
+                                            Blocks.BEEHIVE,
+                                            Blocks.HONEY_BLOCK,
+                                            Blocks.HONEYCOMB_BLOCK
+                                    )
+                                    .withItems(
+                                            Items.HONEYCOMB,
+                                            Items.HONEY_BOTTLE
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.BEE
+                                    )
+                            )
+                            .put(6, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.PEARLESCENT_FROGLIGHT,
+                                            Blocks.VERDANT_FROGLIGHT,
+                                            Blocks.OCHRE_FROGLIGHT,
+                                            Blocks.FROGSPAWN
+                                    )
+                                    .withItems(
+                                            Items.TADPOLE_BUCKET,
+                                            Items.ARMADILLO_SCUTE
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.FROG,
+                                            EntityType.TADPOLE,
+                                            EntityType.ARMADILLO
+                                    )
+                            )
+                            .put(7, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.COD_BUCKET,
+                                            Items.PUFFERFISH_BUCKET,
+                                            Items.SALMON_BUCKET,
+                                            Items.TROPICAL_FISH_BUCKET
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.COD,
+                                            EntityType.PUFFERFISH,
+                                            EntityType.SALMON,
+                                            EntityType.TROPICAL_FISH
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.TURTLE_EGG
+                                    )
+                                    .withItems(
+                                            Items.AXOLOTL_BUCKET,
+                                            Items.TURTLE_SCUTE,
+                                            Items.TURTLE_HELMET
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.AXOLOTL,
+                                            EntityType.DOLPHIN,
+                                            EntityType.GLOW_SQUID,
+                                            EntityType.SQUID,
+                                            EntityType.TURTLE
+                                    )
+                            )
+                            .put(9, new SkillLevelDataGenSpec()
+
+                                    .withEntityTypes(
+                                            EntityType.LLAMA,
+                                            EntityType.TRADER_LLAMA
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.SMOKER
+                                    )
+                                    .withItems(
+                                            Items.WOLF_ARMOR
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.CAT,
+                                            EntityType.FOX,
+                                            EntityType.OCELOT,
+                                            EntityType.PARROT,
+                                            EntityType.WOLF
+                                    )
+                            )
+                            .put(12, new SkillLevelDataGenSpec()
+                                    .withEntityTypes(
+                                            EntityType.LEASH_KNOT,
+                                            EntityType.DONKEY,
+                                            EntityType.HORSE,
+                                            EntityType.MULE,
+                                            EntityType.SKELETON_HORSE,
+                                            EntityType.ZOMBIE_HORSE,
+                                            EntityType.CAMEL
+                                    )
+                            )
+                            .put(14, new SkillLevelDataGenSpec()
+                                    .withEntityTypes(
+                                            EntityType.PANDA,
+                                            EntityType.POLAR_BEAR
+                                    )
+                            )
+                            .put(15, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.SNIFFER_EGG
+                                    )
+                                    .withItems(
+                                            Items.SADDLE,
+                                            Items.LEAD
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.STRIDER,
+                                            EntityType.SNIFFER
+                                    )
+                            )
+                            .build()
             )
-//            // ANIMAL_HUSBANDRY
-//            new SkillDataGenSpec(),
 //            // BUILDING
 //            new SkillDataGenSpec(),
 //            // COMBAT

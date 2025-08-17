@@ -13,8 +13,8 @@ public record SkillDataGenSpec(
         Identifier id,
         String nameKey,
         String descriptionKey,
-        Map<Integer, SkillLevelDataGenSpec> levels,
-        Item iconItem
+        Item iconItem,
+        Map<Integer, SkillLevelDataGenSpec> levels
 ) {
     public SkillData toSkillData(RegistryWrapper.WrapperLookup lookup) {
         SkillData result = new SkillData();
