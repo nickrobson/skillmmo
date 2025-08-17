@@ -376,8 +376,107 @@ public final class SkillMmoDefaultSkills {
 //            new SkillDataGenSpec(),
 //            // MINING
 //            new SkillDataGenSpec(),
-//            // SORCERY
-//            new SkillDataGenSpec(),
+            // SORCERY
+            new SkillDataGenSpec(
+                    Identifier.of("skillmmo", "sorcery"),
+                    "skillmmo.skill.sorcery.name",
+                    "skillmmo.skill.sorcery.description",
+                    Items.ENCHANTING_TABLE,
+                    levelsBuilder()
+                            .put(1, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.ENDER_PEARL
+                                    )
+                            )
+                            .put(3, new SkillLevelDataGenSpec()
+
+                                    .withBlockTags(
+                                            BlockTags.CAULDRONS
+                                    )
+                                    .withItems(
+                                            Items.EXPERIENCE_BOTTLE,
+                                            Items.GOLDEN_APPLE,
+                                            Items.GOLDEN_CARROT,
+                                            Items.GLISTERING_MELON_SLICE
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.ALLAY
+                                    )
+                            )
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BREWING_STAND
+                                    )
+                                    .withItems(
+                                            Items.ENCHANTED_BOOK,
+                                            Items.ENCHANTED_GOLDEN_APPLE,
+                                            Items.POTION
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.SNOW_GOLEM,
+                                            EntityType.ZOMBIE_VILLAGER
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.ENCHANTING_TABLE,
+                                            Blocks.GRINDSTONE
+                                    )
+                                    .withItems(
+                                            Items.ENDER_EYE,
+                                            Items.FIRE_CHARGE,
+                                            Items.SPECTRAL_ARROW,
+                                            Items.TIPPED_ARROW
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.RESPAWN_ANCHOR
+                                    )
+                                    .withItems(
+                                            Items.SPLASH_POTION,
+                                            Items.TOTEM_OF_UNDYING
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.IRON_GOLEM
+                                    )
+                            )
+                            .put(12, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.SCULK,
+                                            Blocks.SCULK_CATALYST,
+                                            Blocks.SCULK_SHRIEKER,
+                                            Blocks.SCULK_VEIN
+                                    )
+                                    .withItems(
+                                            Items.DISC_FRAGMENT_5,
+                                            Items.ECHO_SHARD
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.WARDEN
+                                    )
+                            )
+                            .put(15, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.BEACON,
+                                            Blocks.DRAGON_EGG,
+                                            Blocks.END_GATEWAY,
+                                            Blocks.END_PORTAL,
+                                            Blocks.END_PORTAL_FRAME
+                                    )
+                                    .withItems(
+                                            Items.DRAGON_BREATH,
+                                            Items.ELYTRA,
+                                            Items.END_CRYSTAL,
+                                            Items.LINGERING_POTION,
+                                            Items.NETHER_STAR
+                                    )
+                                    .withEntityTypes(
+                                            EntityType.ENDER_DRAGON
+                                    )
+                            )
+                            .build()
+            ),
             // STORAGE
             new SkillDataGenSpec(
                     Identifier.of("skillmmo", "storage"),

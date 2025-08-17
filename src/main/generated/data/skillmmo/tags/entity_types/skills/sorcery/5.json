@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:snow_golem",
+    "minecraft:zombie_villager"
+  ]
+}
