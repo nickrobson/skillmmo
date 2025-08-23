@@ -19,7 +19,7 @@ public class SkillMmoTags {
      * This includes any form of right-click interaction like opening an inventory or GUI, sleeping in a bed, etc.
      */
     public static final TagKey<Block> interactableBlocks =
-            TagKey.of(Registries.BLOCK.getKey(), new Identifier(SkillMmoMod.MOD_ID, "interactable"));
+            TagKey.of(Registries.BLOCK.getKey(), Identifier.of(SkillMmoMod.MOD_ID, "interactable"));
 
     public static <T> TagKey<T> getUnlocksTag(SkillLevel skillLevel, UnlockableType<T> unlockableType) {
         return getUnlocksTag(skillLevel.getSkill().getId(), skillLevel.getLevel(), unlockableType);

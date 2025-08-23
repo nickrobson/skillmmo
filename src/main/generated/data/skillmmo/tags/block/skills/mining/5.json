@@ -1,15 +1,15 @@
 {
   "replace": true,
   "values": [
-    "minecraft:oxidized_copper",
-    "minecraft:weathered_copper",
-    "minecraft:exposed_copper",
+    "minecraft:copper_ore",
     "minecraft:raw_copper_block",
     "minecraft:copper_block",
-    "minecraft:copper_ore",
+    "minecraft:exposed_copper",
+    "minecraft:weathered_copper",
+    "minecraft:oxidized_copper",
     "minecraft:waxed_copper_block",
-    "minecraft:waxed_weathered_copper",
     "minecraft:waxed_exposed_copper",
+    "minecraft:waxed_weathered_copper",
     "minecraft:waxed_oxidized_copper"
   ]
 }

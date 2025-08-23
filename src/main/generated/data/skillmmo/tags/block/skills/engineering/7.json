@@ -1,0 +1,29 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:copper_bulb",
+    "minecraft:exposed_copper_bulb",
+    "minecraft:weathered_copper_bulb",
+    "minecraft:oxidized_copper_bulb",
+    "minecraft:waxed_copper_bulb",
+    "minecraft:waxed_exposed_copper_bulb",
+    "minecraft:waxed_weathered_copper_bulb",
+    "minecraft:waxed_oxidized_copper_bulb",
+    "minecraft:copper_door",
+    "minecraft:exposed_copper_door",
+    "minecraft:weathered_copper_door",
+    "minecraft:oxidized_copper_door",
+    "minecraft:waxed_copper_door",
+    "minecraft:waxed_exposed_copper_door",
+    "minecraft:waxed_weathered_copper_door",
+    "minecraft:waxed_oxidized_copper_door",
+    "minecraft:copper_trapdoor",
+    "minecraft:exposed_copper_trapdoor",
+    "minecraft:weathered_copper_trapdoor",
+    "minecraft:oxidized_copper_trapdoor",
+    "minecraft:waxed_copper_trapdoor",
+    "minecraft:waxed_exposed_copper_trapdoor",
+    "minecraft:waxed_weathered_copper_trapdoor",
+    "minecraft:waxed_oxidized_copper_trapdoor"
+  ]
+}

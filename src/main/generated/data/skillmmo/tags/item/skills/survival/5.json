@@ -6,6 +6,8 @@
     "minecraft:map",
     "minecraft:name_tag",
     "minecraft:brush",
-    "minecraft:spyglass"
+    "minecraft:spyglass",
+    "minecraft:flint_and_steel",
+    "minecraft:shears"
   ]
 }

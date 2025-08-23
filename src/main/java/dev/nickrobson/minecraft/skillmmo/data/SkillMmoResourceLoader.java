@@ -29,7 +29,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
 
     @Override
     public Identifier getFabricId() {
-        return new Identifier("skillmmo", "skills");
+        return Identifier.of("skillmmo", "skills");
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                 Collection<String> errors = new ArrayList<>();
                 resourceValue.validate(errors);
                 if (errors.isEmpty()) {
-                    Identifier resourceId = new Identifier(
+                    Identifier resourceId = Identifier.of(
                             resourceIdentifier.getNamespace(),
                             // e.g. skills/abc.json -> abc
                             resourceIdentifier.getPath().substring(type.getResourceCategory().length() + 1, resourceIdentifier.getPath().lastIndexOf("."))

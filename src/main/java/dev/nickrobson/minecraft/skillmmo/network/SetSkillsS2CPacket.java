@@ -22,7 +22,7 @@ public record SetSkillsS2CPacket(
 ) implements CustomPayload {
     private static final PacketCodec<RegistryByteBuf, Skill> SKILL_PACKET_CODEC = PacketCodec.ofStatic(SetSkillsS2CPacket::writeSkill, SetSkillsS2CPacket::readSkill);
 
-    public static final CustomPayload.Id<SetSkillsS2CPacket> PACKET_ID = new CustomPayload.Id<>(new Identifier(SkillMmoMod.MOD_ID, "set_skills"));
+    public static final CustomPayload.Id<SetSkillsS2CPacket> PACKET_ID = new CustomPayload.Id<>(Identifier.of(SkillMmoMod.MOD_ID, "set_skills"));
     public static final PacketCodec<RegistryByteBuf, SetSkillsS2CPacket> PACKET_CODEC = SKILL_PACKET_CODEC.collect(PacketCodecs.toCollection(SetSkillsS2CPacket::toSet)).xmap(SetSkillsS2CPacket::new, SetSkillsS2CPacket::skills);
 
     @Override

@@ -1,0 +1,8 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:trial_spawner",
+    "minecraft:heavy_core",
+    "minecraft:vault"
+  ]
+}

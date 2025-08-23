@@ -2,14 +2,14 @@
   "replace": true,
   "values": [
     "minecraft:stone",
+    "minecraft:cobblestone",
     "minecraft:granite",
     "minecraft:diorite",
     "minecraft:andesite",
     "minecraft:calcite",
-    "minecraft:cobblestone",
+    "minecraft:tuff",
     "minecraft:infested_stone",
     "minecraft:infested_cobblestone",
-    "minecraft:tuff",
     "#minecraft:terracotta"
   ]
 }

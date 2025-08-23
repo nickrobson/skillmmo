@@ -1,0 +1,10 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:breeze_rod",
+    "minecraft:wind_charge",
+    "minecraft:trial_key",
+    "minecraft:ominous_bottle",
+    "minecraft:ominous_trial_key"
+  ]
+}

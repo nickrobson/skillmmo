@@ -3,7 +3,7 @@
   "enabled": true,
   "nameKey": "skillmmo.skill.combat.name",
   "descriptionKey": "skillmmo.skill.combat.description",
-  "maxLevel": 20,
+  "maxLevel": 25,
   "icon": {
     "type": "item",
     "value": "minecraft:diamond_sword"

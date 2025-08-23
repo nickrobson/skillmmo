@@ -421,7 +421,9 @@ public final class SkillMmoDefaultSkills {
                                             Items.SKULL_BANNER_PATTERN,
                                             Items.MOJANG_BANNER_PATTERN,
                                             Items.GLOBE_BANNER_PATTERN,
-                                            Items.PIGLIN_BANNER_PATTERN
+                                            Items.PIGLIN_BANNER_PATTERN,
+                                            Items.FLOW_BANNER_PATTERN,
+                                            Items.GUSTER_BANNER_PATTERN
                                     )
                                     .withItemTags(
                                             ItemTags.BANNERS
@@ -457,21 +459,28 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.ANDESITE_STAIRS,
                                             Blocks.ANDESITE_SLAB,
                                             Blocks.ANDESITE_WALL,
-                                            Blocks.POLISHED_ANDESITE,
                                             Blocks.DIORITE_STAIRS,
                                             Blocks.DIORITE_SLAB,
                                             Blocks.DIORITE_WALL,
-                                            Blocks.POLISHED_DIORITE,
                                             Blocks.GRANITE_STAIRS,
                                             Blocks.GRANITE_SLAB,
                                             Blocks.GRANITE_WALL,
+                                            Blocks.TUFF_STAIRS,
+                                            Blocks.TUFF_SLAB,
+                                            Blocks.TUFF_WALL,
+                                            Blocks.POLISHED_ANDESITE,
+                                            Blocks.POLISHED_ANDESITE_STAIRS,
+                                            Blocks.POLISHED_ANDESITE_SLAB,
+                                            Blocks.POLISHED_DIORITE,
+                                            Blocks.POLISHED_DIORITE_STAIRS,
+                                            Blocks.POLISHED_DIORITE_SLAB,
                                             Blocks.POLISHED_GRANITE,
                                             Blocks.POLISHED_GRANITE_STAIRS,
-                                            Blocks.POLISHED_DIORITE_STAIRS,
-                                            Blocks.POLISHED_ANDESITE_STAIRS,
                                             Blocks.POLISHED_GRANITE_SLAB,
-                                            Blocks.POLISHED_DIORITE_SLAB,
-                                            Blocks.POLISHED_ANDESITE_SLAB,
+                                            Blocks.POLISHED_TUFF,
+                                            Blocks.POLISHED_TUFF_STAIRS,
+                                            Blocks.POLISHED_TUFF_SLAB,
+                                            Blocks.POLISHED_TUFF_WALL,
                                             Blocks.COBBLESTONE_STAIRS,
                                             Blocks.COBBLESTONE_SLAB,
                                             Blocks.COBBLESTONE_WALL,
@@ -512,16 +521,22 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.STONE_BRICK_STAIRS,
                                             Blocks.STONE_BRICK_SLAB,
                                             Blocks.STONE_BRICK_WALL,
+                                            Blocks.CRACKED_STONE_BRICKS,
+                                            Blocks.CHISELED_STONE_BRICKS,
                                             Blocks.MOSSY_STONE_BRICKS,
                                             Blocks.MOSSY_STONE_BRICK_STAIRS,
                                             Blocks.MOSSY_STONE_BRICK_SLAB,
                                             Blocks.MOSSY_STONE_BRICK_WALL,
-                                            Blocks.CRACKED_STONE_BRICKS,
-                                            Blocks.CHISELED_STONE_BRICKS,
                                             Blocks.INFESTED_STONE_BRICKS,
                                             Blocks.INFESTED_MOSSY_STONE_BRICKS,
                                             Blocks.INFESTED_CRACKED_STONE_BRICKS,
                                             Blocks.INFESTED_CHISELED_STONE_BRICKS,
+                                            Blocks.TUFF_BRICKS,
+                                            Blocks.TUFF_BRICK_SLAB,
+                                            Blocks.TUFF_BRICK_STAIRS,
+                                            Blocks.TUFF_BRICK_WALL,
+                                            Blocks.CHISELED_TUFF,
+                                            Blocks.CHISELED_TUFF_BRICKS,
                                             Blocks.CHISELED_QUARTZ_BLOCK,
                                             Blocks.QUARTZ_BRICKS,
                                             Blocks.QUARTZ_STAIRS,
@@ -615,30 +630,46 @@ public final class SkillMmoDefaultSkills {
                                     .withBlocks(
                                             Blocks.IRON_BARS,
                                             Blocks.CHAIN,
-                                            Blocks.OXIDIZED_CUT_COPPER,
-                                            Blocks.WEATHERED_CUT_COPPER,
-                                            Blocks.EXPOSED_CUT_COPPER,
                                             Blocks.CUT_COPPER,
-                                            Blocks.OXIDIZED_CUT_COPPER_STAIRS,
-                                            Blocks.WEATHERED_CUT_COPPER_STAIRS,
-                                            Blocks.EXPOSED_CUT_COPPER_STAIRS,
                                             Blocks.CUT_COPPER_STAIRS,
-                                            Blocks.OXIDIZED_CUT_COPPER_SLAB,
-                                            Blocks.WEATHERED_CUT_COPPER_SLAB,
-                                            Blocks.EXPOSED_CUT_COPPER_SLAB,
                                             Blocks.CUT_COPPER_SLAB,
-                                            Blocks.WAXED_OXIDIZED_CUT_COPPER,
-                                            Blocks.WAXED_WEATHERED_CUT_COPPER,
-                                            Blocks.WAXED_EXPOSED_CUT_COPPER,
+                                            Blocks.EXPOSED_CUT_COPPER,
+                                            Blocks.EXPOSED_CUT_COPPER_STAIRS,
+                                            Blocks.EXPOSED_CUT_COPPER_SLAB,
+                                            Blocks.WEATHERED_CUT_COPPER,
+                                            Blocks.WEATHERED_CUT_COPPER_STAIRS,
+                                            Blocks.WEATHERED_CUT_COPPER_SLAB,
+                                            Blocks.OXIDIZED_CUT_COPPER,
+                                            Blocks.OXIDIZED_CUT_COPPER_STAIRS,
+                                            Blocks.OXIDIZED_CUT_COPPER_SLAB,
                                             Blocks.WAXED_CUT_COPPER,
-                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS,
-                                            Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS,
-                                            Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS,
                                             Blocks.WAXED_CUT_COPPER_STAIRS,
-                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB,
-                                            Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB,
+                                            Blocks.WAXED_CUT_COPPER_SLAB,
+                                            Blocks.WAXED_EXPOSED_CUT_COPPER,
+                                            Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS,
                                             Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB,
-                                            Blocks.WAXED_CUT_COPPER_SLAB
+                                            Blocks.WAXED_WEATHERED_CUT_COPPER,
+                                            Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS,
+                                            Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB,
+                                            Blocks.WAXED_OXIDIZED_CUT_COPPER,
+                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS,
+                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB,
+                                            Blocks.CHISELED_COPPER,
+                                            Blocks.EXPOSED_CHISELED_COPPER,
+                                            Blocks.WEATHERED_CHISELED_COPPER,
+                                            Blocks.OXIDIZED_CHISELED_COPPER,
+                                            Blocks.WAXED_CHISELED_COPPER,
+                                            Blocks.WAXED_EXPOSED_CHISELED_COPPER,
+                                            Blocks.WAXED_WEATHERED_CHISELED_COPPER,
+                                            Blocks.WAXED_OXIDIZED_CHISELED_COPPER,
+                                            Blocks.COPPER_GRATE,
+                                            Blocks.EXPOSED_COPPER_GRATE,
+                                            Blocks.WEATHERED_COPPER_GRATE,
+                                            Blocks.OXIDIZED_COPPER_GRATE,
+                                            Blocks.WAXED_COPPER_GRATE,
+                                            Blocks.WAXED_EXPOSED_COPPER_GRATE,
+                                            Blocks.WAXED_WEATHERED_COPPER_GRATE,
+                                            Blocks.WAXED_OXIDIZED_COPPER_GRATE
                                     )
                             )
                             .put(17, new SkillLevelDataGenSpec()
@@ -731,7 +762,8 @@ public final class SkillMmoDefaultSkills {
                                     .withItems(
                                             Items.ARMOR_STAND,
                                             Items.WOODEN_SWORD
-                                    ))
+                                    )
+                            )
                             .put(2, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.LEATHER_HELMET,
@@ -739,23 +771,27 @@ public final class SkillMmoDefaultSkills {
                                             Items.LEATHER_LEGGINGS,
                                             Items.LEATHER_BOOTS,
                                             Items.LEATHER_HORSE_ARMOR
-                                    ))
+                                    )
+                            )
                             .put(4, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.STONE_SWORD
-                                    ))
+                                    )
+                            )
                             .put(5, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.CHAINMAIL_HELMET,
                                             Items.CHAINMAIL_CHESTPLATE,
                                             Items.CHAINMAIL_LEGGINGS,
                                             Items.CHAINMAIL_BOOTS
-                                    ))
+                                    )
+                            )
                             .put(7, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.BOW,
                                             Items.ARROW
-                                    ))
+                                    )
+                            )
                             .put(8, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.GOLDEN_SWORD,
@@ -764,7 +800,8 @@ public final class SkillMmoDefaultSkills {
                                             Items.GOLDEN_LEGGINGS,
                                             Items.GOLDEN_BOOTS,
                                             Items.GOLDEN_HORSE_ARMOR
-                                    ))
+                                    )
+                            )
                             .put(10, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.IRON_SWORD,
@@ -774,11 +811,13 @@ public final class SkillMmoDefaultSkills {
                                             Items.IRON_BOOTS,
                                             Items.IRON_HORSE_ARMOR,
                                             Items.SHIELD
-                                    ))
+                                    )
+                            )
                             .put(12, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.CROSSBOW
-                                    ))
+                                    )
+                            )
                             .put(15, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.DIAMOND_SWORD,
@@ -788,7 +827,8 @@ public final class SkillMmoDefaultSkills {
                                             Items.DIAMOND_BOOTS,
                                             Items.DIAMOND_HORSE_ARMOR,
                                             Items.TRIDENT
-                                    ))
+                                    )
+                            )
                             .put(20, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.NETHERITE_SWORD,
@@ -796,7 +836,13 @@ public final class SkillMmoDefaultSkills {
                                             Items.NETHERITE_CHESTPLATE,
                                             Items.NETHERITE_LEGGINGS,
                                             Items.NETHERITE_BOOTS
-                                    ))
+                                    )
+                            )
+                            .put(25, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.MACE
+                                    )
+                            )
                             .build()
             ),
             // ENGINEERING
@@ -838,6 +884,34 @@ public final class SkillMmoDefaultSkills {
                                             Items.CLOCK
                                     )
                             )
+                            .put(7, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.COPPER_BULB,
+                                            Blocks.EXPOSED_COPPER_BULB,
+                                            Blocks.WEATHERED_COPPER_BULB,
+                                            Blocks.OXIDIZED_COPPER_BULB,
+                                            Blocks.WAXED_COPPER_BULB,
+                                            Blocks.WAXED_EXPOSED_COPPER_BULB,
+                                            Blocks.WAXED_WEATHERED_COPPER_BULB,
+                                            Blocks.WAXED_OXIDIZED_COPPER_BULB,
+                                            Blocks.COPPER_DOOR,
+                                            Blocks.EXPOSED_COPPER_DOOR,
+                                            Blocks.WEATHERED_COPPER_DOOR,
+                                            Blocks.OXIDIZED_COPPER_DOOR,
+                                            Blocks.WAXED_COPPER_DOOR,
+                                            Blocks.WAXED_EXPOSED_COPPER_DOOR,
+                                            Blocks.WAXED_WEATHERED_COPPER_DOOR,
+                                            Blocks.WAXED_OXIDIZED_COPPER_DOOR,
+                                            Blocks.COPPER_TRAPDOOR,
+                                            Blocks.EXPOSED_COPPER_TRAPDOOR,
+                                            Blocks.WEATHERED_COPPER_TRAPDOOR,
+                                            Blocks.OXIDIZED_COPPER_TRAPDOOR,
+                                            Blocks.WAXED_COPPER_TRAPDOOR,
+                                            Blocks.WAXED_EXPOSED_COPPER_TRAPDOOR,
+                                            Blocks.WAXED_WEATHERED_COPPER_TRAPDOOR,
+                                            Blocks.WAXED_OXIDIZED_COPPER_TRAPDOOR
+                                    )
+                            )
                             .put(8, new SkillLevelDataGenSpec()
                                     .withBlocks(
                                             Blocks.IRON_DOOR,
@@ -873,8 +947,26 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.NOTE_BLOCK,
                                             Blocks.JUKEBOX
                                     )
-                                    .withItemTags(
-                                            ItemTags.MUSIC_DISCS
+                                    .withItems(
+                                            Items.MUSIC_DISC_5,
+                                            Items.MUSIC_DISC_11,
+                                            Items.MUSIC_DISC_13,
+                                            Items.MUSIC_DISC_CAT,
+                                            Items.MUSIC_DISC_BLOCKS,
+                                            Items.MUSIC_DISC_CHIRP,
+                                            Items.MUSIC_DISC_CREATOR,
+                                            Items.MUSIC_DISC_CREATOR_MUSIC_BOX,
+                                            Items.MUSIC_DISC_FAR,
+                                            Items.MUSIC_DISC_MALL,
+                                            Items.MUSIC_DISC_MELLOHI,
+                                            Items.MUSIC_DISC_OTHERSIDE,
+                                            Items.MUSIC_DISC_PIGSTEP,
+                                            Items.MUSIC_DISC_PRECIPICE,
+                                            Items.MUSIC_DISC_RELIC,
+                                            Items.MUSIC_DISC_STAL,
+                                            Items.MUSIC_DISC_STRAD,
+                                            Items.MUSIC_DISC_WAIT,
+                                            Items.MUSIC_DISC_WARD
                                     )
                             )
                             .put(12, new SkillLevelDataGenSpec()
@@ -911,6 +1003,11 @@ public final class SkillMmoDefaultSkills {
                                             EntityType.TNT_MINECART
                                     )
                             )
+                            .put(16, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.CRAFTER
+                                    )
+                            )
                             .put(18, new SkillLevelDataGenSpec()
                                     .withBlocks(
                                             Blocks.DAYLIGHT_DETECTOR,
@@ -931,19 +1028,20 @@ public final class SkillMmoDefaultSkills {
                             .put(1, new SkillLevelDataGenSpec()
                                     .withBlocks(
                                             Blocks.STONE,
+                                            Blocks.COBBLESTONE,
                                             Blocks.GRANITE,
                                             Blocks.DIORITE,
                                             Blocks.ANDESITE,
                                             Blocks.CALCITE,
-                                            Blocks.COBBLESTONE,
+                                            Blocks.TUFF,
                                             Blocks.INFESTED_STONE,
-                                            Blocks.INFESTED_COBBLESTONE,
-                                            Blocks.TUFF
+                                            Blocks.INFESTED_COBBLESTONE
                                     )
                                     .withBlockTags(
                                             BlockTags.TERRACOTTA
                                     )
                                     .withItems(
+                                            Items.WOODEN_SHOVEL,
                                             Items.WOODEN_PICKAXE
                                     )
                             )
@@ -961,15 +1059,15 @@ public final class SkillMmoDefaultSkills {
                             )
                             .put(5, new SkillLevelDataGenSpec()
                                     .withBlocks(
-                                            Blocks.OXIDIZED_COPPER,
-                                            Blocks.WEATHERED_COPPER,
-                                            Blocks.EXPOSED_COPPER,
+                                            Blocks.COPPER_ORE,
                                             Blocks.RAW_COPPER_BLOCK,
                                             Blocks.COPPER_BLOCK,
-                                            Blocks.COPPER_ORE,
+                                            Blocks.EXPOSED_COPPER,
+                                            Blocks.WEATHERED_COPPER,
+                                            Blocks.OXIDIZED_COPPER,
                                             Blocks.WAXED_COPPER_BLOCK,
-                                            Blocks.WAXED_WEATHERED_COPPER,
                                             Blocks.WAXED_EXPOSED_COPPER,
+                                            Blocks.WAXED_WEATHERED_COPPER,
                                             Blocks.WAXED_OXIDIZED_COPPER
                                     )
                                     .withItems(
@@ -1251,7 +1349,8 @@ public final class SkillMmoDefaultSkills {
                             .put(2, new SkillLevelDataGenSpec()
                                     .withItems(
                                             Items.BUCKET,
-                                            Items.WATER_BUCKET
+                                            Items.WATER_BUCKET,
+                                            Items.LAVA_BUCKET
                                     )
                             )
                             .put(3, new SkillLevelDataGenSpec()
@@ -1271,19 +1370,21 @@ public final class SkillMmoDefaultSkills {
                             )
                             .put(4, new SkillLevelDataGenSpec()
                                     .withBlocks(
+                                            Blocks.ICE,
+                                            Blocks.PACKED_ICE,
+                                            Blocks.FROSTED_ICE,
+                                            Blocks.BLUE_ICE,
                                             Blocks.POWDER_SNOW
                                     )
                                     .withItems(
-                                            Items.LAVA_BUCKET,
                                             Items.POWDER_SNOW_BUCKET
                                     )
                             )
                             .put(5, new SkillLevelDataGenSpec()
                                     .withBlocks(
-                                            Blocks.ICE,
-                                            Blocks.PACKED_ICE,
-                                            Blocks.FROSTED_ICE,
-                                            Blocks.BLUE_ICE
+                                            Blocks.FURNACE,
+                                            Blocks.CARTOGRAPHY_TABLE,
+                                            Blocks.FLETCHING_TABLE
                                     )
                                     .withItems(
                                             Items.FILLED_MAP,
@@ -1291,34 +1392,36 @@ public final class SkillMmoDefaultSkills {
                                             Items.MAP,
                                             Items.NAME_TAG,
                                             Items.BRUSH,
-                                            Items.SPYGLASS
-                                    )
-                            )
-                            .put(6, new SkillLevelDataGenSpec()
-                                    .withItemTags(
-                                            ItemTags.TRIM_TEMPLATES
-                                    )
-                            )
-                            .put(8, new SkillLevelDataGenSpec()
-                                    .withBlocks(
-                                            Blocks.FURNACE,
-                                            Blocks.CARTOGRAPHY_TABLE,
-                                            Blocks.FLETCHING_TABLE
-                                    )
-                                    .withItems(
+                                            Items.SPYGLASS,
                                             Items.FLINT_AND_STEEL,
                                             Items.SHEARS
                                     )
                             )
-                            .put(10, new SkillLevelDataGenSpec()
+                            .put(6, new SkillLevelDataGenSpec()
                                     .withBlocks(
                                             Blocks.SPAWNER
                                     )
-                                    .withItems(
-                                            Items.RECOVERY_COMPASS
-                                    )
                                     .withEntityTypes(
                                             EntityType.SPAWNER_MINECART
+                                    )
+                            )
+                            .put(8, new SkillLevelDataGenSpec()
+                                    .withItemTags(
+                                            ItemTags.TRIM_TEMPLATES
+                                    )
+                            )
+                            .put(10, new SkillLevelDataGenSpec()
+                                    .withBlocks(
+                                            Blocks.TRIAL_SPAWNER,
+                                            Blocks.HEAVY_CORE,
+                                            Blocks.VAULT
+                                    )
+                                    .withItems(
+                                            Items.BREEZE_ROD,
+                                            Items.WIND_CHARGE,
+                                            Items.TRIAL_KEY,
+                                            Items.OMINOUS_BOTTLE,
+                                            Items.OMINOUS_TRIAL_KEY
                                     )
                             )
                             .put(12, new SkillLevelDataGenSpec()
@@ -1333,6 +1436,9 @@ public final class SkillMmoDefaultSkills {
                                     .withBlocks(
                                             Blocks.CONDUIT,
                                             Blocks.REINFORCED_DEEPSLATE
+                                    )
+                                    .withItems(
+                                            Items.RECOVERY_COMPASS
                                     )
                             )
                             .build()

@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 public record SkillMmoConfigurationS2CPacket(
         String modVersion
 ) implements CustomPayload {
-    public static final CustomPayload.Id<SkillMmoConfigurationS2CPacket> PACKET_ID = new CustomPayload.Id<>(new Identifier(SkillMmoMod.MOD_ID, "configure_s2c"));
+    public static final CustomPayload.Id<SkillMmoConfigurationS2CPacket> PACKET_ID = new CustomPayload.Id<>(Identifier.of(SkillMmoMod.MOD_ID, "configure_s2c"));
     public static final PacketCodec<PacketByteBuf, SkillMmoConfigurationS2CPacket> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.STRING, SkillMmoConfigurationS2CPacket::modVersion, SkillMmoConfigurationS2CPacket::new);
 
     @Override

@@ -1,15 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.compat.waila;
 
-import mcp.mobius.waila.api.IRegistrar;
-import mcp.mobius.waila.api.IWailaPlugin;
+import mcp.mobius.waila.api.IClientRegistrar;
+import mcp.mobius.waila.api.IWailaClientPlugin;
 import mcp.mobius.waila.api.TooltipPosition;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 
-public class SkillMmoWailaUnlocksPlugin implements IWailaPlugin {
+public class SkillMmoWailaUnlocksPlugin implements IWailaClientPlugin {
     @Override
-    public void register(IRegistrar registrar) {
-        registrar.addComponent(new SkillMmoBlockUnlockProvider(), TooltipPosition.BODY, Block.class);
-        registrar.addComponent(new SkillMmoEntityUnlockProvider(), TooltipPosition.BODY, Entity.class);
+    public void register(IClientRegistrar registrar) {
+        registrar.body(new SkillMmoBlockUnlockProvider(), Block.class);
+        registrar.body(new SkillMmoEntityUnlockProvider(), Entity.class);
     }
 }

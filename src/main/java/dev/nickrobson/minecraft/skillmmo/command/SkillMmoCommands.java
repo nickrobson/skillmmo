@@ -8,7 +8,7 @@ import net.minecraft.util.Identifier;
 public class SkillMmoCommands {
     public static void register() {
         ArgumentTypeRegistry.registerArgumentType(
-                new Identifier(SkillMmoMod.MOD_ID, "skill"),
+                Identifier.of(SkillMmoMod.MOD_ID, "skill"),
                 SkillArgumentType.class,
                 SkillArgumentType.SERIALIZER
         );

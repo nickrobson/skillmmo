@@ -15,7 +15,7 @@ public record SetExperienceLevelEquationS2CPacket(
 ) implements CustomPayload {
     private static final PacketCodec<RegistryByteBuf, ExperienceLevelEquation> EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC = PacketCodec.ofStatic(SetExperienceLevelEquationS2CPacket::writeExperienceLevelEquation, SetExperienceLevelEquationS2CPacket::readExperienceLevelEquation);
 
-    public static final Id<SetExperienceLevelEquationS2CPacket> PACKET_ID = new Id<>(new Identifier(SkillMmoMod.MOD_ID, "set_experience_level_equation"));
+    public static final Id<SetExperienceLevelEquationS2CPacket> PACKET_ID = new Id<>(Identifier.of(SkillMmoMod.MOD_ID, "set_experience_level_equation"));
     public static final PacketCodec<RegistryByteBuf, SetExperienceLevelEquationS2CPacket> PACKET_CODEC = EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC.xmap(SetExperienceLevelEquationS2CPacket::new, SetExperienceLevelEquationS2CPacket::experienceLevelEquation);
 
     @Override
