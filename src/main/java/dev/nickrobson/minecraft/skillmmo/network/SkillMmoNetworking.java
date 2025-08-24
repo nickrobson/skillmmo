@@ -11,8 +11,6 @@ public interface SkillMmoNetworking {
         PayloadTypeRegistry.configurationC2S().register(SkillMmoConfigurationC2SPacket.PACKET_ID, SkillMmoConfigurationC2SPacket.PACKET_CODEC);
 
         // Play - S2C
-        PayloadTypeRegistry.playS2C().register(SetSkillsS2CPacket.PACKET_ID, SetSkillsS2CPacket.PACKET_CODEC);
-        PayloadTypeRegistry.playS2C().register(SetExperienceLevelEquationS2CPacket.PACKET_ID, SetExperienceLevelEquationS2CPacket.PACKET_CODEC);
         PayloadTypeRegistry.playS2C().register(SetPlayerSkillsS2CPacket.PACKET_ID, SetPlayerSkillsS2CPacket.PACKET_CODEC);
         PayloadTypeRegistry.playS2C().register(SetPlayerExperienceS2CPacket.PACKET_ID, SetPlayerExperienceS2CPacket.PACKET_CODEC);
 

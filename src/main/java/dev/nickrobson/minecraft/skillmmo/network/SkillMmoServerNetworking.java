@@ -28,7 +28,9 @@ public class SkillMmoServerNetworking {
         // Configuration
         ServerConfigurationConnectionEvents.CONFIGURE.register((handler, server) -> {
             if (ServerConfigurationNetworking.canSend(handler, SkillMmoConfigurationS2CPacket.PACKET_ID)) {
-                handler.addTask(new SkillMmoConfigurationTask(SkillMmoMod.MOD_VERSION_STRING));
+                Set<Skill> skillSet = SkillManager.getInstance().getInstalledSkills();
+                ExperienceLevelEquation experienceLevelEquation = ExperienceLevelEquation.getInstance();
+                handler.addTask(new SkillMmoConfigurationTask(SkillMmoMod.MOD_VERSION_STRING, skillSet, experienceLevelEquation));
             } else {
                 handler.disconnect(Text.literal("This server requires you to install %s in order to join.".formatted(SkillMmoMod.MOD_VERSION_STRING)));
             }
@@ -64,25 +66,6 @@ public class SkillMmoServerNetworking {
 
             logger.debug("Received skill choice from {}: {}", player.getGameProfile().getName(), skillId);
         });
-    }
-
-    private static void sendSkills(ServerPlayerEntity player) {
-        Set<Skill> skills = SkillManager.getInstance().getSkills();
-
-        ServerPlayNetworking.send(player, new SetSkillsS2CPacket(skills));
-        logger.debug("Sent skills to player '{}': {}", player.getGameProfile().getName(), skills);
-    }
-
-    private static void sendExperienceLevelEquation(ServerPlayerEntity player) {
-        ExperienceLevelEquation experienceLevelEquation = ExperienceLevelEquation.getInstance();
-
-        ServerPlayNetworking.send(player, new SetExperienceLevelEquationS2CPacket(experienceLevelEquation));
-        logger.debug("Sent experience level equation to player '{}': {}", player.getGameProfile().getName(), experienceLevelEquation);
-    }
-
-    public static void sendGenericData(ServerPlayerEntity player) {
-        sendSkills(player);
-        sendExperienceLevelEquation(player);
     }
 
     public static void sendPlayerXpInfo(ServerPlayerEntity player) {

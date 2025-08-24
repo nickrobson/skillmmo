@@ -67,7 +67,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                         ))
                 .collect(Collectors.toUnmodifiableSet());
 
-        SkillManager.getInstance().initSkills(skills);
+        SkillManager.getInstance().initInstalledSkills(skills);
     }
 
     private <T extends DataValidatable> Map<Identifier, T> loadResources(ResourceManager manager, SkillMmoDataType<T> type) {

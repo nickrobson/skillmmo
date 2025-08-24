@@ -28,6 +28,10 @@ public class SkillManager {
         return instance;
     }
 
+    // Skills set in the current side's datapack
+    private final Set<Skill> installedSkillSet = new HashSet<>();
+
+    // Skills active on the current game session (BEWARE: the server can sync to the client a different set of skills to what the client has installed in their datapack!)
     private final Set<Skill> skillSet = new HashSet<>();
     private final Map<Identifier, Skill> skillMap = new HashMap<>();
 
@@ -39,6 +43,27 @@ public class SkillManager {
      */
     private LoadingCache<Unlockable<?>, Set<Skill>> skillsByUnlockCache;
 
+    /**
+     * Register the skills that are installed by the current side's datapack.
+     * Should ONLY be called by the resource loader.
+     */
+    public void initInstalledSkills(Set<Skill> skillSet) {
+        this.installedSkillSet.clear();
+        this.installedSkillSet.addAll(skillSet);
+        this.initSkills(skillSet);
+    }
+
+    /**
+     * Set which skills are <i>active</i> in the mod (primarily important for client-side).
+     * <br />
+     * <br />
+     * This is not necessarily the same as the skills installed in the datapack,
+     * as this list is controlled by the server and synced to the client (to enable
+     * the server to define active skills).
+     * <br />
+     * <br />
+     * Should be called in server-to-client sync.
+     */
     public void initSkills(Set<Skill> skills) {
         this.skillSet.clear();
         this.skillSet.addAll(skills);
@@ -60,6 +85,24 @@ public class SkillManager {
                 });
     }
 
+    /**
+     * Gets the installed skills, according to the current side's datapack.
+     * <br />
+     * <br />
+     * Should be used only during server-to-client sync.
+     * Use {@link #getSkills()} instead if you need the active skills during gameplay.
+     */
+    public Set<Skill> getInstalledSkills() {
+        return Collections.unmodifiableSet(this.installedSkillSet);
+    }
+
+    /**
+     * Gets the current active skills for the current gameplay session.
+     * <br />
+     * <br />
+     * Should be used only during gameplay.
+     * Use {@link #getInstalledSkills()} instead if you need the skills installed in the datapack.
+     */
     public Set<Skill> getSkills() {
         return Collections.unmodifiableSet(this.skillSet);
     }

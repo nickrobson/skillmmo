@@ -14,7 +14,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
-import java.util.Set;
 
 public class SkillMmoClientNetworking {
     private static final Logger logger = LogManager.getLogger(SkillMmoClientNetworking.class);
@@ -24,24 +23,13 @@ public class SkillMmoClientNetworking {
         ClientConfigurationNetworking.registerGlobalReceiver(SkillMmoConfigurationS2CPacket.PACKET_ID, (packet, context) -> {
             if (SkillMmoMod.MOD_VERSION_STRING.equals(packet.modVersion())) {
                 SkillMmoMod.isModEnabled = true;
+                SkillManager.getInstance().initSkills(packet.skills());
+                ExperienceLevelEquation.setInstance(packet.experienceLevelEquation());
             }
             context.responseSender().sendPacket(new SkillMmoConfigurationC2SPacket(SkillMmoMod.MOD_VERSION_STRING));
         });
 
         // Play
-        ClientPlayNetworking.registerGlobalReceiver(SetSkillsS2CPacket.PACKET_ID, (payload, context) -> {
-            SkillMmoMod.isModEnabled = true;
-            Set<Skill> skillSet = payload.skills();
-            SkillManager.getInstance().initSkills(skillSet);
-            logger.debug("Received skills: {}", skillSet);
-        });
-
-        ClientPlayNetworking.registerGlobalReceiver(SetExperienceLevelEquationS2CPacket.PACKET_ID, (payload, context) -> {
-            ExperienceLevelEquation experienceLevelEquation = payload.experienceLevelEquation();
-            ExperienceLevelEquation.setInstance(experienceLevelEquation);
-            logger.debug("Received experience level equation: {}", experienceLevelEquation);
-        });
-
         ClientPlayNetworking.registerGlobalReceiver(SetPlayerSkillsS2CPacket.PACKET_ID, (payload, context) -> {
             Map<Identifier, Integer> playerSkillLevels = payload.playerSkillLevels();
             logger.debug("Received player skills: {}", playerSkillLevels);
