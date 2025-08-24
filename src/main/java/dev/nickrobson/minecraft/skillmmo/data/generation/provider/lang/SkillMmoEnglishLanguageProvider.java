@@ -1,14 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.lang;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Maps;
+import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillTranslationSpec;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.tag.TagKey;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -130,11 +131,19 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
                 )
         );
 
-        SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(defaultSkill -> {
-            String skillIdPath = defaultSkill.id().getPath();
+        SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(skill -> {
+            String skillIdPath = skill.id().getPath();
             SkillTranslationSpec translationSpec = Objects.requireNonNull(skillNameTranslations.get(skillIdPath), "missing translations for " + skillIdPath);
-            translationBuilder.add(defaultSkill.nameKey(), translationSpec.name());
-            translationBuilder.add(defaultSkill.descriptionKey(), translationSpec.description());
+            translationBuilder.add(skill.nameKey(), translationSpec.name());
+            translationBuilder.add(skill.descriptionKey(), translationSpec.description());
+
+            skill.levels()
+                    .forEach((level, spec) -> {
+                        if (spec.hasItems()) {
+                            TagKey<Item> itemTag = SkillMmoTags.getUnlocksTag(skill.id(), level, VanillaUnlockables.ITEM);
+                            translationBuilder.add("tag.item.%s.%s".formatted(itemTag.id().getNamespace(), itemTag.id().getPath()), translationSpec.name() + " lvl " + level);
+                        }
+                    });
         });
 
     }
