@@ -12,6 +12,11 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
     }
 
     @Override
+    public String getName() {
+        return "Language: en_US";
+    }
+
+    @Override
     public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("skillmmo.command.skills.heading", "Skills (%d)");
         translationBuilder.add("skillmmo.command.skills.skill_line", "- %s");

@@ -31,7 +31,7 @@ public abstract class SkillProvider implements DataProvider {
 
     @Override
     public String getName() {
-        return "SkillMMO skill provider";
+        return "Unnamed skill provider";
     }
 
     protected abstract void configure(RegistryWrapper.WrapperLookup lookup);

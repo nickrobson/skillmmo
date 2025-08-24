@@ -17,7 +17,7 @@ public class SkillMmoSkillLevelEntityTypeTagProvider extends FabricTagProvider.E
 
     @Override
     public String getName() {
-        return "SkillMMO skill level entity type tags";
+        return "Default skill level entity type tags";
     }
 
     @Override

@@ -17,7 +17,7 @@ public class SkillMmoBundleRecipeProvider extends FabricRecipeProvider {
 
     @Override
     public String getName() {
-        return "Bundle recipe";
+        return "Recipe: bundle";
     }
 
     @Override

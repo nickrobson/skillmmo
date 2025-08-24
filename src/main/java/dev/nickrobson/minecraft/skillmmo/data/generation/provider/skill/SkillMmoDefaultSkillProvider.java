@@ -13,7 +13,7 @@ public class SkillMmoDefaultSkillProvider extends SkillProvider {
 
     @Override
     public String getName() {
-        return "SkillMMO default skills";
+        return "Default skills";
     }
 
     @Override

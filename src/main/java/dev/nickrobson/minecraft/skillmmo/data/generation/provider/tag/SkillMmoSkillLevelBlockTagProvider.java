@@ -17,7 +17,7 @@ public class SkillMmoSkillLevelBlockTagProvider extends FabricTagProvider.BlockT
 
     @Override
     public String getName() {
-        return "SkillMMO skill level block tags";
+        return "Default skill level block tags";
     }
 
     @Override

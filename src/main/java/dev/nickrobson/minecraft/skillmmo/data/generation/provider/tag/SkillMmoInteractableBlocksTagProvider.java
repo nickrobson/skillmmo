@@ -16,7 +16,7 @@ public class SkillMmoInteractableBlocksTagProvider extends FabricTagProvider.Blo
 
     @Override
     public String getName() {
-        return "SkillMMO interactable blocks tag";
+        return "Interactable blocks tag";
     }
 
     @Override
