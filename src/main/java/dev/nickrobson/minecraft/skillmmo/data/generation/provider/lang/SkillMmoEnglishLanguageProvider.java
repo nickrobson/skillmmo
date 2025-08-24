@@ -66,7 +66,7 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("skillmmo.gui.skills.title", "Skills");
         translationBuilder.add("skillmmo.gui.skills.info.level", "Level %d");
         translationBuilder.add("skillmmo.gui.skills.info.xp_progress", "XP %d/%d");
-        translationBuilder.add("skillmmo.gui.skills.info.available_points", "Available points, %d");
+        translationBuilder.add("skillmmo.gui.skills.info.available_points", "Available points: %d");
         translationBuilder.add("skillmmo.gui.skills.info.acquire_skill.narration", "Level up %s");
         translationBuilder.add("skillmmo.gui.skills.skill.name", "%s");
         translationBuilder.add("skillmmo.gui.skill.info.current_level", "Level %d/%d");

@@ -38,7 +38,7 @@
   "skillmmo.gui.skill.unlocks.show_unlocked": "Show unlocked",
   "skillmmo.gui.skill.unlocks.title": "Unlocks:",
   "skillmmo.gui.skills.info.acquire_skill.narration": "Level up %s",
-  "skillmmo.gui.skills.info.available_points": "Available points, %d",
+  "skillmmo.gui.skills.info.available_points": "Available points: %d",
   "skillmmo.gui.skills.info.level": "Level %d",
   "skillmmo.gui.skills.info.xp_progress": "XP %d/%d",
   "skillmmo.gui.skills.skill.name": "%s",
