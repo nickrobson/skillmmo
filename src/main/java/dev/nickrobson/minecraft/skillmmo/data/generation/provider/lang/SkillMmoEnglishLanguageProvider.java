@@ -1,9 +1,16 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.lang;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
+import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
+import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillTranslationSpec;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.registry.RegistryWrapper;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
@@ -69,25 +76,66 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("skillmmo.keybindings.category", "SkillMMO");
         translationBuilder.add("skillmmo.keybindings.binding.open_skills", "Open Skills");
 
-        translationBuilder.add("skillmmo.skill.agriculture.name", "Agriculture");
-        translationBuilder.add("skillmmo.skill.agriculture.description", "Master the natural world!");
-        translationBuilder.add("skillmmo.skill.animalhusbandry.name", "Animal Husbandry");
-        translationBuilder.add("skillmmo.skill.animalhusbandry.description", "Domesticate and tame our precious wildlife!");
-        translationBuilder.add("skillmmo.skill.building.name", "Building");
-        translationBuilder.add("skillmmo.skill.building.description", "Construct your next masterpiece!");
-        translationBuilder.add("skillmmo.skill.combat.name", "Combat");
-        translationBuilder.add("skillmmo.skill.combat.description", "Gain an advantage on the battlefield!");
-        translationBuilder.add("skillmmo.skill.engineering.name", "Engineering");
-        translationBuilder.add("skillmmo.skill.engineering.description", "Develop mechanical contraptions!");
-        translationBuilder.add("skillmmo.skill.mining.name", "Mining");
-        translationBuilder.add("skillmmo.skill.mining.description", "Everything under the earth!");
-        translationBuilder.add("skillmmo.skill.sorcery.name", "Sorcery");
-        translationBuilder.add("skillmmo.skill.sorcery.description", "Control the magic and the mystical!");
-        translationBuilder.add("skillmmo.skill.storage.name", "Storage");
-        translationBuilder.add("skillmmo.skill.storage.description", "Create containers to hold your items!");
-        translationBuilder.add("skillmmo.skill.survival.name", "Survival");
-        translationBuilder.add("skillmmo.skill.survival.description", "Extend your life in comfort!");
-        translationBuilder.add("skillmmo.skill.trading.name", "Trading");
-        translationBuilder.add("skillmmo.skill.trading.description", "Exchange goods with the locals!");
+        Map<String, SkillTranslationSpec> skillNameTranslations = Map.of(
+                "agriculture",
+                new SkillTranslationSpec(
+                        "Agriculture",
+                        "Master the natural world!"
+                ),
+                "animalhusbandry",
+                new SkillTranslationSpec(
+                        "Animal Husbandry",
+                        "Domesticate and tame our precious wildlife!"
+
+                ),
+                "building",
+                new SkillTranslationSpec(
+                        "Building",
+                        "Construct your next masterpiece!"
+                ),
+                "combat",
+                new SkillTranslationSpec(
+                        "Combat",
+                        "Gain an advantage on the battlefield!"
+                ),
+                "engineering",
+                new SkillTranslationSpec(
+                        "Engineering",
+                        "Develop mechanical contraptions!"
+                ),
+                "mining",
+                new SkillTranslationSpec(
+                        "Mining",
+                        "Everything under the earth!"
+                ),
+                "sorcery",
+                new SkillTranslationSpec(
+                        "Sorcery",
+                        "Control the magic and the mystical!"
+                ),
+                "storage",
+                new SkillTranslationSpec(
+                        "Storage",
+                        "Create containers to hold your items!"
+                ),
+                "survival",
+                new SkillTranslationSpec(
+                        "Survival",
+                        "Extend your life in comfort!"
+                ),
+                "trading",
+                new SkillTranslationSpec(
+                        "Trading",
+                        "Exchange goods with the locals!"
+                )
+        );
+
+        SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(defaultSkill -> {
+            String skillIdPath = defaultSkill.id().getPath();
+            SkillTranslationSpec translationSpec = Objects.requireNonNull(skillNameTranslations.get(skillIdPath), "missing translations for " + skillIdPath);
+            translationBuilder.add(defaultSkill.nameKey(), translationSpec.name());
+            translationBuilder.add(defaultSkill.descriptionKey(), translationSpec.description());
+        });
+
     }
 }
