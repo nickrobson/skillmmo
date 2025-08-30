@@ -18,7 +18,7 @@ public abstract class MixinGameRules {
     @Final
     private Map<GameRules.Key<?>, GameRules.Rule<?>> rules;
 
-    @Inject(method = "<init>()V", at = @At("RETURN"))
+    @Inject(method = "<init>(Ljava/util/Map;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V", at = @At("RETURN"))
     private void onRegisterGameRule(CallbackInfo ci) {
         if (SkillMmoConfig.getConfig().enableDoLimitedCraftingGameruleInAllNewWorlds) {
             GameRules.Rule<?> rule = this.rules.get(GameRules.DO_LIMITED_CRAFTING);

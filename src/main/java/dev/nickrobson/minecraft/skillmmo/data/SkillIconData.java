@@ -40,7 +40,7 @@ public class SkillIconData implements DataValidatable {
                 if (iconItemId == null) {
                     errors.add("'icon.value' is '%s', should be a valid identifier format, e.g. minecraft:stone or minecraft:egg".formatted(value));
                 } else {
-                    Optional<Item> iconItemOpt = Registries.ITEM.getOrEmpty(iconItemId);
+                    Optional<Item> iconItemOpt = Registries.ITEM.getOptionalValue(iconItemId);
                     if (iconItemOpt.isPresent()) {
                         iconItem = iconItemOpt.get();
                     } else {

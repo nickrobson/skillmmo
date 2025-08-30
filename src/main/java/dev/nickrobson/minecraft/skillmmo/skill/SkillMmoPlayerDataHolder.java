@@ -3,6 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
@@ -25,17 +26,17 @@ public interface SkillMmoPlayerDataHolder {
         private long experience;
         private int availableSkillPoints;
         private Map<Identifier, Integer> skillLevels;
-        private Map<Identifier, Set<Identifier>> lockedRecipes;
+        private Map<Identifier, Set<RegistryKey<Recipe<?>>>> lockedRecipesByType;
 
         public SkillMmoPlayerData() {
             this(0L, 0, new HashMap<>(), new HashMap<>());
         }
 
-        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<Identifier, Integer> skillLevels, Map<Identifier, Set<Identifier>> lockedRecipes) {
+        public SkillMmoPlayerData(long experience, int availableSkillPoints, Map<Identifier, Integer> skillLevels, Map<Identifier, Set<RegistryKey<Recipe<?>>>> lockedRecipesByType) {
             this.experience = experience;
             this.availableSkillPoints = availableSkillPoints;
             this.skillLevels = new HashMap<>(skillLevels);
-            this.lockedRecipes = new HashMap<>(lockedRecipes);
+            this.lockedRecipesByType = new HashMap<>(lockedRecipesByType);
         }
 
         private void checkInitialised() {
@@ -110,22 +111,22 @@ public interface SkillMmoPlayerDataHolder {
                 clone.experience = this.experience;
                 clone.availableSkillPoints = this.availableSkillPoints;
                 clone.skillLevels = new HashMap<>(this.skillLevels);
-                clone.lockedRecipes = new HashMap<>(this.lockedRecipes);
+                clone.lockedRecipesByType = new HashMap<>(this.lockedRecipesByType);
                 return clone;
             } catch (CloneNotSupportedException ex) {
                 throw new RuntimeException(ex);
             }
         }
 
-        public Map<Identifier, Set<Identifier>> getLockedRecipes() {
-            return Collections.unmodifiableMap(lockedRecipes);
+        public Map<Identifier, Set<RegistryKey<Recipe<?>>>> getLockedRecipesByType() {
+            return Collections.unmodifiableMap(lockedRecipesByType);
         }
 
         public void addLockedRecipes(Collection<RecipeEntry<?>> recipes) {
             this.checkInitialised();
             recipes.forEach(recipe -> {
                 Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.value().getType());
-                this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
+                this.lockedRecipesByType.compute(recipeTypeId, (typeId, recipeIds) -> {
                     if (recipeIds == null) {
                         recipeIds = new HashSet<>();
                     }
@@ -139,7 +140,7 @@ public interface SkillMmoPlayerDataHolder {
             this.checkInitialised();
             recipes.forEach(recipe -> {
                 Identifier recipeTypeId = Registries.RECIPE_TYPE.getId(recipe.value().getType());
-                this.lockedRecipes.compute(recipeTypeId, (typeId, recipeIds) -> {
+                this.lockedRecipesByType.compute(recipeTypeId, (typeId, recipeIds) -> {
                     if (recipeIds != null) {
                         recipeIds.remove(recipe.id());
                         if (recipeIds.isEmpty()) {

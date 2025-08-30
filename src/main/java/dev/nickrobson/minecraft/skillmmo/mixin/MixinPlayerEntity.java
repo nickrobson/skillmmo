@@ -13,6 +13,9 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +25,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -86,7 +88,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
             }
         }
 
-        Map<Identifier, Set<Identifier>> lockedRecipes = new HashMap<>();
+        Map<Identifier, Set<RegistryKey<Recipe<?>>>> lockedRecipes = new HashMap<>();
         NbtCompound lockedRecipesNbt = skillMmoNbt.getCompound(SKILLMMO_LOCKED_RECIPES_NBT_KEY);
         for (String recipeTypeKey : lockedRecipesNbt.getKeys()) {
             Identifier recipeTypeId = Identifier.tryParse(recipeTypeKey);
@@ -94,12 +96,12 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
                 continue;
             }
             NbtList lockedRecipeIdsNbt = lockedRecipesNbt.getList(recipeTypeKey, NbtElement.STRING_TYPE);
-            Set<Identifier> lockedRecipeIds = lockedRecipeIdsNbt
+            Set<RegistryKey<Recipe<?>>> lockedRecipeIds = lockedRecipeIdsNbt
                     .stream()
-                    .<Identifier>mapMulti((recipeIdNbt, sink) -> {
+                    .<RegistryKey<Recipe<?>>>mapMulti((recipeIdNbt, sink) -> {
                         Identifier recipeId = Identifier.tryParse(recipeIdNbt.asString());
                         if (recipeId != null) {
-                            sink.accept(recipeId);
+                            sink.accept(RegistryKey.of(RegistryKeys.RECIPE, recipeId));
                         }
                     })
                     .collect(Collectors.toSet());
@@ -142,9 +144,10 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
 
         {
             NbtCompound lockedRecipesNbt = new NbtCompound();
-            playerData.getLockedRecipes().forEach((recipeTypeId, recipeIds) -> {
+            playerData.getLockedRecipesByType().forEach((recipeTypeId, recipeIds) -> {
                 NbtList recipeIdsNbt = new NbtList();
                 recipeIds.stream()
+                        .map(RegistryKey::getValue)
                         .map(Identifier::toString)
                         .map(NbtString::of)
                         .forEach(recipeIdsNbt::add);
@@ -188,20 +191,6 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
                 // Only announce what skill is required to break a certain block if configured – it can be quite verbose
                 PlayerSkillUnlockManager.getInstance().reportBlockBreakLocked(player, state.getBlock());
             }
-            cir.setReturnValue(false);
-        }
-    }
-
-    @Inject(
-            method = "checkFallFlying",
-            at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/entity/player/PlayerEntity;startFallFlying()V"),
-            cancellable = true,
-            locals = LocalCapture.CAPTURE_FAILSOFT
-    )
-    public void skillMmo$checkFallFlying(CallbackInfoReturnable<Boolean> cir, ItemStack itemStack) {
-        PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
-        if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack)) {
-            PlayerSkillUnlockManager.getInstance().reportItemUseLocked(player, itemStack.getItem());
             cir.setReturnValue(false);
         }
     }

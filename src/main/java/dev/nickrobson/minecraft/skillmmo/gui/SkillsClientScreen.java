@@ -128,7 +128,7 @@ public class SkillsClientScreen extends CottonClientScreen {
             WPlainPanel skillsPanel = new WPlainPanel();
             skillsPanel.add(
                     new WDynamicLabel(() -> I18n.translate("skillmmo.gui.skills.info.available_points", PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player)))
-                            .setAlignment(HorizontalAlignment.RIGHT),
+                            .setHorizontalAlignment(HorizontalAlignment.RIGHT),
                     0,
                     0,
                     GRID_SIZE * ROOT_WIDTH,
@@ -165,7 +165,7 @@ public class SkillsClientScreen extends CottonClientScreen {
 
                 skillLevelPanel.add(
                         new WDynamicLabel(() -> PlayerSkillManager.getInstance().getSkillLevel(player, skill) + "/" + skill.getMaxLevel())
-                                .setAlignment(HorizontalAlignment.RIGHT),
+                                .setHorizontalAlignment(HorizontalAlignment.RIGHT),
                         GRID_SIZE * (ICON_GRID_WIDTH + NAME_GRID_WIDTH),
                         5,
                         GRID_SIZE * LEVEL_GRID_WIDTH,

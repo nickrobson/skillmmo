@@ -1318,8 +1318,16 @@ public final class SkillMmoDefaultSkills {
                                             ItemTags.CHEST_BOATS
                                     )
                                     .withEntityTypes(
-                                            EntityType.CHEST_BOAT,
-                                            EntityType.CHEST_MINECART
+                                            EntityType.CHEST_MINECART,
+                                            EntityType.ACACIA_CHEST_BOAT,
+                                            EntityType.BIRCH_CHEST_BOAT,
+                                            EntityType.CHERRY_CHEST_BOAT,
+                                            EntityType.DARK_OAK_CHEST_BOAT,
+                                            EntityType.JUNGLE_CHEST_BOAT,
+                                            EntityType.MANGROVE_CHEST_BOAT,
+                                            EntityType.OAK_CHEST_BOAT,
+                                            EntityType.PALE_OAK_CHEST_BOAT,
+                                            EntityType.SPRUCE_CHEST_BOAT
                                     )
                             )
                             .put(12, new SkillLevelDataGenSpec()
@@ -1365,7 +1373,15 @@ public final class SkillMmoDefaultSkills {
                                             ItemTags.BOATS
                                     )
                                     .withEntityTypes(
-                                            EntityType.BOAT
+                                            EntityType.ACACIA_BOAT,
+                                            EntityType.BIRCH_BOAT,
+                                            EntityType.CHERRY_BOAT,
+                                            EntityType.DARK_OAK_BOAT,
+                                            EntityType.JUNGLE_BOAT,
+                                            EntityType.MANGROVE_BOAT,
+                                            EntityType.OAK_BOAT,
+                                            EntityType.PALE_OAK_BOAT,
+                                            EntityType.SPRUCE_BOAT
                                     )
                             )
                             .put(4, new SkillLevelDataGenSpec()

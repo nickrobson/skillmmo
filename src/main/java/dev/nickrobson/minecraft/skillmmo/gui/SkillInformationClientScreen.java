@@ -125,7 +125,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
             infoPanel.add(
                     new WDynamicLabel(() -> I18n.translate("skillmmo.gui.skill.info.current_level", PlayerSkillManager.getInstance().getSkillLevel(player, skill), skill.getMaxLevel()))
-                            .setAlignment(HorizontalAlignment.RIGHT),
+                            .setHorizontalAlignment(HorizontalAlignment.RIGHT),
                     GRID_SIZE * (ROOT_WIDTH - SKILL_LEVEL_WIDTH),
                     5,
                     GRID_SIZE * SKILL_LEVEL_WIDTH - 3,
@@ -215,7 +215,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
         }
 
         private <T extends ItemConvertible> Stream<Item> explodeTagItems(Registry<T> registry, TagKey<T> tag) {
-            Optional<RegistryEntryList.Named<T>> entryListOpt = registry.getEntryList(tag);
+            Optional<RegistryEntryList.Named<T>> entryListOpt = registry.getOptional(tag);
 
             if (entryListOpt.isEmpty()) {
                 return Stream.empty();

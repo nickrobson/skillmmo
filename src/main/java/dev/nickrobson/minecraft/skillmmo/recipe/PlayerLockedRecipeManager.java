@@ -4,9 +4,8 @@ import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.util.SkillMmoRecipeBookAccessor;
-import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.RecipeManager;
+import net.minecraft.recipe.ServerRecipeManager;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.util.Set;
@@ -22,7 +21,7 @@ public class PlayerLockedRecipeManager {
 
     public void syncLockedRecipes(ServerPlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        RecipeManager recipeManager = player.server.getRecipeManager();
+        ServerRecipeManager recipeManager = player.server.getRecipeManager();
 
         if (SkillMmoConfig.getConfig().lockRecipesUntilIngredientsAndOutputAreUnlocked) {
             // Unlock the recipes that have been unlocked since this was last synced (i.e. player has gained levels)
@@ -51,14 +50,15 @@ public class PlayerLockedRecipeManager {
         }
     }
 
-    private Stream<RecipeEntry<?>> toUnlockedRecipesAsStream(RecipeManager recipeManager, ServerPlayerEntity player) {
-        return ((SkillMmoRecipeBookAccessor) player.getRecipeBook()).skillMmo$getRecipes()
+    private Stream<RecipeEntry<?>> toUnlockedRecipesAsStream(ServerRecipeManager recipeManager, ServerPlayerEntity player) {
+        return ((SkillMmoRecipeBookAccessor) player.getRecipeBook()).skillMmo$getUnlockedRecipes()
                 .stream()
                 .flatMap(recipeId -> recipeManager.get(recipeId).stream());
     }
 
-    private Stream<RecipeEntry<?>> getLockedRecipesAsStream(RecipeManager recipeManager, SkillMmoPlayerDataHolder playerDataHolder) {
-        return playerDataHolder.skillMmo$getPlayerData().getLockedRecipes().values().stream()
+    private Stream<RecipeEntry<?>> getLockedRecipesAsStream(ServerRecipeManager recipeManager, SkillMmoPlayerDataHolder playerDataHolder) {
+        return playerDataHolder.skillMmo$getPlayerData().getLockedRecipesByType().values()
+                .stream()
                 .flatMap(Set::stream)
                 .flatMap(recipeId -> recipeManager.get(recipeId).stream());
     }

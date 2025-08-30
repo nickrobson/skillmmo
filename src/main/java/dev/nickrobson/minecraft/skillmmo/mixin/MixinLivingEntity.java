@@ -11,10 +11,12 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
+import static net.minecraft.entity.LivingEntity.canGlideWith;
+
 @Mixin(LivingEntity.class)
-public class MixinLivingEntity {
+public abstract class MixinLivingEntity {
     @ModifyVariable(
-            method = "tryUseTotem",
+            method = "tryUseDeathProtector",
             at = @At(
                     value = "INVOKE_ASSIGN",
                     target = "Lnet/minecraft/entity/LivingEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;",
@@ -47,5 +49,21 @@ public class MixinLivingEntity {
             amount = (int) (amount * SkillMmoConfig.getConfig().unskilledArmorDamageMultiplier);
         }
         instance.damage(amount, entity, slot);
+    }
+
+    @Redirect(
+            method = "canGlide",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;canGlideWith(Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/EquipmentSlot;)Z"
+            )
+    )
+    public boolean skillMmo$canGlide(ItemStack stack, EquipmentSlot slot) {
+        //noinspection ConstantValue
+        if ((Object) this instanceof PlayerEntity player
+                && !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, stack)) {
+            return false;
+        }
+        return canGlideWith(stack, slot);
     }
 }

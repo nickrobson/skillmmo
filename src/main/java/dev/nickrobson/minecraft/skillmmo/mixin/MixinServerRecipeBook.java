@@ -3,10 +3,16 @@ package dev.nickrobson.minecraft.skillmmo.mixin;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
+import dev.nickrobson.minecraft.skillmmo.util.SkillMmoRecipeBookAccessor;
+import net.minecraft.recipe.Recipe;
 import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.network.ServerRecipeBook;
+import net.minecraft.util.Identifier;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
@@ -18,7 +24,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Mixin(ServerRecipeBook.class)
-public class MixinServerRecipeBook {
+public class MixinServerRecipeBook implements SkillMmoRecipeBookAccessor {
     @ModifyVariable(
             method = "unlockRecipes",
             at = @At("HEAD"),
@@ -49,5 +55,14 @@ public class MixinServerRecipeBook {
                 .addLockedRecipes(lockedRecipes);
         ((SkillMmoPlayerDataHolder) player).skillMmo$getPlayerData()
                 .removeLockedRecipes(recipes);
+    }
+
+    @Shadow
+    @Final
+    protected Set<RegistryKey<Recipe<?>>> unlocked;
+
+    @Override
+    public Set<RegistryKey<Recipe<?>>> skillMmo$getUnlockedRecipes() {
+        return this.unlocked;
     }
 }

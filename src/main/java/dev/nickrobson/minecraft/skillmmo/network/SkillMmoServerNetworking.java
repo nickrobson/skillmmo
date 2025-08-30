@@ -9,6 +9,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.networking.v1.ServerConfigurationConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
@@ -45,6 +46,10 @@ public class SkillMmoServerNetworking {
         });
 
         // Play
+        ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> {
+            sendPlayerData(handler.player);
+        }));
+
         ServerPlayNetworking.registerGlobalReceiver(PlayerSkillChoiceC2SPacket.PACKET_ID, (payload, context) -> {
             Identifier skillId = payload.skillId();
             ServerPlayerEntity player = context.player();

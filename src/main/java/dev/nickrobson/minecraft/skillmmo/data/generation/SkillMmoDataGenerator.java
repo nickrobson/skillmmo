@@ -1,7 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation;
 
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.lang.SkillMmoEnglishLanguageProvider;
-import dev.nickrobson.minecraft.skillmmo.data.generation.provider.recipe.SkillMmoBundleRecipeProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.skill.SkillMmoDefaultSkillProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoInteractableBlocksTagProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoSkillLevelBlockTagProvider;
@@ -18,9 +17,6 @@ public class SkillMmoDataGenerator implements DataGeneratorEntrypoint {
 
         // lang
         pack.addProvider(SkillMmoEnglishLanguageProvider::new);
-
-        // recipe
-        pack.addProvider(SkillMmoBundleRecipeProvider::new);
 
         // tags
         pack.addProvider(SkillMmoInteractableBlocksTagProvider::new);

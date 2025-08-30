@@ -26,21 +26,28 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.RecipeEntry;
+import net.minecraft.recipe.display.SlotDisplay;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
 public class PlayerSkillUnlockManager {
+    private static final Logger logger = LogManager.getLogger(PlayerSkillUnlockManager.class);
+
     private static final PlayerSkillUnlockManager instance = new PlayerSkillUnlockManager();
 
     public static PlayerSkillUnlockManager getInstance() {
@@ -100,10 +107,10 @@ public class PlayerSkillUnlockManager {
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!hasItemUnlock(player, itemStack)) {
                 reportItemUseLocked(player, itemStack.getItem());
-                return TypedActionResult.fail(itemStack);
+                return ActionResult.FAIL;
             }
 
-            return TypedActionResult.pass(itemStack);
+            return ActionResult.PASS;
         });
 
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
@@ -193,17 +200,65 @@ public class PlayerSkillUnlockManager {
     }
 
     public boolean hasRecipeUnlock(@Nonnull PlayerEntity player, RecipeEntry<?> recipe) {
-        boolean someIngredientsAreFullyLocked = recipe.value().getIngredients().stream()
+        // FIXME: relying on recipe displays probably isn't the right way to do this
+        //  but, I think the "right" way would be to fake a craft, and that seems to be really difficult to implement
+        //  buuuut... it works... so... that'll be what we do for now
+        boolean anyIngredientIsFullyLocked = recipe.value().getIngredientPlacement().getIngredients().stream()
                 .anyMatch(ingredient -> {
-                    ItemStack[] matchingStacks = ingredient.getMatchingStacks();
-                    if (matchingStacks.length == 0) {
+                    List<RegistryEntry<Item>> matchingItems = ingredient.getMatchingItems();
+                    if (matchingItems.isEmpty()) {
                         return false;
                     }
-                    return Arrays.stream(matchingStacks)
-                            .noneMatch(itemStack -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStack));
+                    return matchingItems.stream()
+                            .map(RegistryEntry::value)
+                            .noneMatch(item -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, item));
                 });
-        boolean outputIsLocked = !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, recipe.value().getResult(player.getWorld().getRegistryManager()));
-        return !someIngredientsAreFullyLocked && !outputIsLocked;
+        boolean outputIsLocked = recipe.value().getDisplays().stream()
+                .anyMatch(recipeDisplay -> !hasSlotDisplayUnlocked(player, recipeDisplay.result()));
+
+        return !anyIngredientIsFullyLocked && !outputIsLocked;
+    }
+
+    private boolean hasSlotDisplayUnlocked(PlayerEntity player, SlotDisplay slotDisplay) {
+        switch (slotDisplay) {
+            case SlotDisplay.ItemSlotDisplay itemSlotDisplay -> {
+                return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemSlotDisplay.item().value());
+            }
+            case SlotDisplay.StackSlotDisplay stackSlotDisplay -> {
+                return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, stackSlotDisplay.stack());
+            }
+            case SlotDisplay.WithRemainderSlotDisplay withRemainderSlotDisplay -> {
+                // we only care about the input, not the remainder here
+                return hasSlotDisplayUnlocked(player, withRemainderSlotDisplay.input());
+            }
+            case SlotDisplay.CompositeSlotDisplay compositeSlotDisplay -> {
+                // CompositeSlotDisplay represents "one of many items"
+                return compositeSlotDisplay.contents().stream().anyMatch(
+                        innerSlotDisplay -> hasSlotDisplayUnlocked(player, innerSlotDisplay)
+                );
+            }
+            case SlotDisplay.TagSlotDisplay tagSlotDisplay -> {
+                // TagSlotDisplay represents "one of many items"
+                return Registries.ITEM.getOptional(tagSlotDisplay.tag()).stream()
+                        .flatMap(RegistryEntryList.ListBacked::stream)
+                        .anyMatch(
+                                item -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, item.value())
+                        );
+            }
+            case SlotDisplay.EmptySlotDisplay ignored -> {
+                return true; // empty slots don't matter
+            }
+            case SlotDisplay.AnyFuelSlotDisplay ignored -> {
+                return true; // fuel slots don't count towards unlocks
+            }
+            case SlotDisplay.SmithingTrimSlotDisplay smithingTrimSlotDisplay -> {
+                return true; // smithing trim slots don't count towards unlocks
+            }
+            default -> {
+                logger.warn("Unsupported slot display type: {}", slotDisplay.getClass().getSimpleName());
+                return true;
+            }
+        }
     }
 
     public void reportBlockBreakLocked(@Nullable PlayerEntity player, Block block) {
