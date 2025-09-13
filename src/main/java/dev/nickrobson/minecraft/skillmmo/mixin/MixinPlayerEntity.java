@@ -10,7 +10,6 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.nbt.NbtString;
 import net.minecraft.recipe.Recipe;
@@ -61,48 +60,35 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
             return;
         }
 
-        NbtCompound skillMmoNbt = nbt.contains(SKILLMMO_ROOT_NBT_KEY, NbtElement.COMPOUND_TYPE)
-                ? nbt.getCompound(SKILLMMO_ROOT_NBT_KEY)
-                : new NbtCompound();
-
-        long experience = skillMmoNbt.contains(SKILLMMO_EXPERIENCE_NBT_KEY, NbtElement.NUMBER_TYPE)
-                ? skillMmoNbt.getLong(SKILLMMO_EXPERIENCE_NBT_KEY)
-                : 0L;
-
-        int availableSkillPoints = skillMmoNbt.contains(SKILLMMO_AVAILABLE_SKILL_POINTS_NBT_KEY, NbtElement.NUMBER_TYPE)
-                ? skillMmoNbt.getInt(SKILLMMO_AVAILABLE_SKILL_POINTS_NBT_KEY)
-                : 0;
+        NbtCompound skillMmoNbt = nbt.getCompoundOrEmpty(SKILLMMO_ROOT_NBT_KEY);
+        long experience = skillMmoNbt.getLong(SKILLMMO_EXPERIENCE_NBT_KEY, 0L);
+        int availableSkillPoints = skillMmoNbt.getInt(SKILLMMO_AVAILABLE_SKILL_POINTS_NBT_KEY, 0);
 
         Map<Identifier, Integer> skillLevels = new HashMap<>();
-        if (skillMmoNbt.contains(SKILLMMO_SKILL_LEVELS_NBT_KEY, NbtElement.COMPOUND_TYPE)) {
-            NbtCompound skillLevelsNbt = skillMmoNbt.getCompound(SKILLMMO_SKILL_LEVELS_NBT_KEY);
-            for (String skillLevelKey : skillLevelsNbt.getKeys()) {
-                if (skillLevelsNbt.contains(skillLevelKey, NbtElement.NUMBER_TYPE)) {
-                    Identifier skillId = Identifier.tryParse(skillLevelKey);
-                    if (skillId == null) {
-                        continue;
-                    }
-                    int level = skillLevelsNbt.getInt(skillLevelKey);
+        NbtCompound skillLevelsNbt = skillMmoNbt.getCompoundOrEmpty(SKILLMMO_SKILL_LEVELS_NBT_KEY);
+        for (String skillLevelKey : skillLevelsNbt.getKeys()) {
+            skillLevelsNbt.getInt(skillLevelKey).ifPresent(level -> {
+                Identifier skillId = Identifier.tryParse(skillLevelKey);
+                if (skillId != null) {
                     skillLevels.put(skillId, level);
                 }
-            }
+            });
         }
 
         Map<Identifier, Set<RegistryKey<Recipe<?>>>> lockedRecipes = new HashMap<>();
-        NbtCompound lockedRecipesNbt = skillMmoNbt.getCompound(SKILLMMO_LOCKED_RECIPES_NBT_KEY);
+        NbtCompound lockedRecipesNbt = skillMmoNbt.getCompoundOrEmpty(SKILLMMO_LOCKED_RECIPES_NBT_KEY);
         for (String recipeTypeKey : lockedRecipesNbt.getKeys()) {
             Identifier recipeTypeId = Identifier.tryParse(recipeTypeKey);
             if (recipeTypeId == null) {
                 continue;
             }
-            NbtList lockedRecipeIdsNbt = lockedRecipesNbt.getList(recipeTypeKey, NbtElement.STRING_TYPE);
+            NbtList lockedRecipeIdsNbt = lockedRecipesNbt.getListOrEmpty(recipeTypeKey);
             Set<RegistryKey<Recipe<?>>> lockedRecipeIds = lockedRecipeIdsNbt
                     .stream()
                     .<RegistryKey<Recipe<?>>>mapMulti((recipeIdNbt, sink) -> {
-                        Identifier recipeId = Identifier.tryParse(recipeIdNbt.asString());
-                        if (recipeId != null) {
+                        recipeIdNbt.asString().map(Identifier::tryParse).ifPresent(recipeId -> {
                             sink.accept(RegistryKey.of(RegistryKeys.RECIPE, recipeId));
-                        }
+                        });
                     })
                     .collect(Collectors.toSet());
             if (!lockedRecipeIds.isEmpty()) {
@@ -182,7 +168,7 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     )
     public void skillMmo$canHarvest(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
-        ItemStack itemStackInHand = this.inventory.getMainHandStack();
+        ItemStack itemStackInHand = player.getMainHandStack();
         if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStackInHand) && !(itemStackInHand.getItem() instanceof BlockItem)) {
             PlayerSkillUnlockManager.getInstance().reportItemUseLocked(player, itemStackInHand.getItem());
             cir.setReturnValue(false);
