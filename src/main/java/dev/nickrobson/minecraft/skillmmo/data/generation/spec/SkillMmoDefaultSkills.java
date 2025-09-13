@@ -548,7 +548,12 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.QUARTZ_PILLAR,
                                             Blocks.SMOOTH_QUARTZ,
                                             Blocks.SMOOTH_QUARTZ_STAIRS,
-                                            Blocks.SMOOTH_QUARTZ_SLAB
+                                            Blocks.SMOOTH_QUARTZ_SLAB,
+                                            Blocks.RESIN_BRICKS,
+                                            Blocks.RESIN_BRICK_STAIRS,
+                                            Blocks.RESIN_BRICK_SLAB,
+                                            Blocks.RESIN_BRICK_WALL,
+                                            Blocks.CHISELED_RESIN_BRICKS
                                     )
                             )
                             .put(10, new SkillLevelDataGenSpec()
@@ -1420,15 +1425,40 @@ public final class SkillMmoDefaultSkills {
                             .put(6, new SkillLevelDataGenSpec()
                                     .withBlocks(
                                             Blocks.SPAWNER,
-                                            Blocks.CREAKING_HEART
+                                            Blocks.CREAKING_HEART,
+                                            Blocks.CLOSED_EYEBLOSSOM,
+                                            Blocks.OPEN_EYEBLOSSOM,
+                                            Blocks.RESIN_BLOCK,
+                                            Blocks.RESIN_CLUMP
+                                    )
+                                    .withItems(
+                                            Items.RESIN_BRICK
                                     )
                                     .withEntityTypes(
                                             EntityType.SPAWNER_MINECART
                                     )
                             )
                             .put(8, new SkillLevelDataGenSpec()
-                                    .withItemTags(
-                                            ItemTags.TRIM_TEMPLATES
+                                    .withItems(
+                                            Items.NETHERITE_UPGRADE_SMITHING_TEMPLATE,
+                                            Items.BOLT_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.COAST_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.DUNE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.EYE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.FLOW_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.HOST_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.RAISER_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.RIB_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.SENTRY_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.SNOUT_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.TIDE_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.VEX_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.WARD_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE,
+                                            Items.WILD_ARMOR_TRIM_SMITHING_TEMPLATE
                                     )
                             )
                             .put(10, new SkillLevelDataGenSpec()

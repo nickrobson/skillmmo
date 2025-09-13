@@ -39,7 +39,6 @@ import org.apache.logging.log4j.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -204,15 +203,10 @@ public class PlayerSkillUnlockManager {
         //  but, I think the "right" way would be to fake a craft, and that seems to be really difficult to implement
         //  buuuut... it works... so... that'll be what we do for now
         boolean anyIngredientIsFullyLocked = recipe.value().getIngredientPlacement().getIngredients().stream()
-                .anyMatch(ingredient -> {
-                    List<RegistryEntry<Item>> matchingItems = ingredient.getMatchingItems();
-                    if (matchingItems.isEmpty()) {
-                        return false;
-                    }
-                    return matchingItems.stream()
-                            .map(RegistryEntry::value)
-                            .noneMatch(item -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, item));
-                });
+                .anyMatch(ingredient ->
+                        !ingredient.getMatchingItems()
+                                .map(RegistryEntry::value)
+                                .allMatch(item -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, item)));
         boolean outputIsLocked = recipe.value().getDisplays().stream()
                 .anyMatch(recipeDisplay -> !hasSlotDisplayUnlocked(player, recipeDisplay.result()));
 
