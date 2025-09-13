@@ -29,6 +29,7 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.DARK_OAK_SAPLING,
                                             Blocks.CHERRY_SAPLING,
                                             Blocks.PINK_PETALS,
+                                            Blocks.PALE_OAK_SAPLING,
                                             Blocks.MANGROVE_PROPAGULE
                                     )
                                     .withItems(
@@ -44,6 +45,7 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.ACACIA_LEAVES,
                                             Blocks.DARK_OAK_LEAVES,
                                             Blocks.CHERRY_LEAVES,
+                                            Blocks.PALE_OAK_LEAVES,
                                             Blocks.MANGROVE_LEAVES,
                                             Blocks.MANGROVE_ROOTS,
                                             Blocks.MUDDY_MANGROVE_ROOTS,
@@ -423,7 +425,9 @@ public final class SkillMmoDefaultSkills {
                                             Items.GLOBE_BANNER_PATTERN,
                                             Items.PIGLIN_BANNER_PATTERN,
                                             Items.FLOW_BANNER_PATTERN,
-                                            Items.GUSTER_BANNER_PATTERN
+                                            Items.GUSTER_BANNER_PATTERN,
+                                            Items.FIELD_MASONED_BANNER_PATTERN,
+                                            Items.BORDURE_INDENTED_BANNER_PATTERN
                                     )
                                     .withItemTags(
                                             ItemTags.BANNERS
@@ -1294,8 +1298,8 @@ public final class SkillMmoDefaultSkills {
                     Items.CHEST,
                     levelsBuilder()
                             .put(1, new SkillLevelDataGenSpec()
-                                    .withItems(
-                                            Items.BUNDLE
+                                    .withItemTags(
+                                            ItemTags.BUNDLES
                                     )
                             )
                             .put(3, new SkillLevelDataGenSpec()
@@ -1415,7 +1419,8 @@ public final class SkillMmoDefaultSkills {
                             )
                             .put(6, new SkillLevelDataGenSpec()
                                     .withBlocks(
-                                            Blocks.SPAWNER
+                                            Blocks.SPAWNER,
+                                            Blocks.CREAKING_HEART
                                     )
                                     .withEntityTypes(
                                             EntityType.SPAWNER_MINECART
