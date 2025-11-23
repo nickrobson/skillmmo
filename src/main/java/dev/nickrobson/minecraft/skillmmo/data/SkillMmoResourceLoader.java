@@ -77,40 +77,40 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
                             boolean valid = true;
 
                             if (skillData.enabled().isEmpty()) {
-                                errors.add(Text.translatable("").getString());
+                                errors.add(Text.translatable("skillmmo.data.skill.missing.enabled", skillId).getString());
                                 valid = false;
                             }
                             if (skillData.nameKey().isEmpty()) {
-                                errors.add(Text.translatable("").getString());
+                                errors.add(Text.translatable("skillmmo.data.skill.missing.namekey", skillId).getString());
                                 valid = false;
                             }
                             if (skillData.descriptionKey().isEmpty()) {
-                                errors.add(Text.translatable("").getString());
+                                errors.add(Text.translatable("skillmmo.data.skill.missing.descriptionkey", skillId).getString());
                                 valid = false;
                             }
                             if (skillData.maxLevel().isEmpty()) {
-                                errors.add(Text.translatable("").getString());
+                                errors.add(Text.translatable("skillmmo.data.skill.missing.maxlevel", skillId).getString());
                                 valid = false;
                             }
 
                             Optional<Item> iconItem = Optional.empty();
                             if (skillData.icon().isEmpty()) {
-                                errors.add(Text.translatable("").getString());
+                                errors.add(Text.translatable("skillmmo.data.skill.missing.icon", skillId).getString());
                                 valid = false;
                             } else if (!"item".equals(skillData.icon().get().type())) {
-                                errors.add(Text.translatable("").getString());
+                                errors.add(Text.translatable("skillmmo.data.skill.invalid.icon.type", skillId, skillData.icon().get().type()).getString());
                                 valid = false;
                             } else {
                                 Identifier itemId = Identifier.tryParse(skillData.icon().get().value());
                                 if (itemId == null) {
-                                    errors.add(Text.translatable("").getString());
+                                    errors.add(Text.translatable("skillmmo.data.skill.invalid.icon.item.id", skillId, skillData.icon().get().value()).getString());
                                     valid = false;
                                 } else {
                                     RegistryWrapper.Impl<Item> itemRegistry = registryWrapperLookup.getOrThrow(RegistryKeys.ITEM);
                                     RegistryKey<Item> itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, itemId);
                                     iconItem = itemRegistry.getOptional(itemRegistryKey).map(RegistryEntry.Reference::value);
                                     if (iconItem.isEmpty()) {
-                                        errors.add(Text.translatable("").getString());
+                                        errors.add(Text.translatable("skillmmo.data.skill.invalid.icon.item", skillId, itemId).getString());
                                         valid = false;
                                     }
                                 }

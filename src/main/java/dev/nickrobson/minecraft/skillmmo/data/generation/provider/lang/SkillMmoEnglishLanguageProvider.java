@@ -43,6 +43,15 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("skillmmo.command.skill.player_is_now_level", "%s is now level %d in %s");
         translationBuilder.add("skillmmo.command.skill.you_are_now_level", "You are now level %d in %s");
 
+        translationBuilder.add("skillmmo.data.skill.missing.enabled", "The '%s' skill is missing the 'enabled' property.");
+        translationBuilder.add("skillmmo.data.skill.missing.namekey", "The '%s' skill is missing the 'nameKey' property.");
+        translationBuilder.add("skillmmo.data.skill.missing.descriptionkey", "The '%s' skill is missing the 'descriptionKey' property.");
+        translationBuilder.add("skillmmo.data.skill.missing.maxlevel", "The '%s' skill is missing the 'maxLevel' property.");
+        translationBuilder.add("skillmmo.data.skill.missing.icon", "The '%s' skill is missing the 'icon' property.");
+        translationBuilder.add("skillmmo.data.skill.invalid.icon.type", "The '%s' skill icon type is '%s' but only 'item' is allowed.");
+        translationBuilder.add("skillmmo.data.skill.invalid.icon.item.id", "The '%s' skill icon has invalid item ID '%s', should be an item name, e.g. 'minecraft:stone'");
+        translationBuilder.add("skillmmo.data.skill.invalid.icon.item", "The '%s' skill icon is set to item '%s', but that item was not found.");
+
         translationBuilder.add("skillmmo.feedback.deny.block.break", "You need %s %d to break this %s");
         translationBuilder.add("skillmmo.feedback.deny.block.interact", "You need %s %d to use this %s");
         translationBuilder.add("skillmmo.feedback.deny.block.place", "You need %s %d to place this %s");
