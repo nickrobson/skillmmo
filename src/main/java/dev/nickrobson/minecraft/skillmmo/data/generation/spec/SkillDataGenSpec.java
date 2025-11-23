@@ -7,6 +7,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 
 import java.util.Map;
+import java.util.Optional;
 
 public record SkillDataGenSpec(
         Identifier id,
@@ -16,15 +17,16 @@ public record SkillDataGenSpec(
         Map<Integer, SkillLevelDataGenSpec> levels
 ) {
     public SkillData toSkillData() {
-        SkillData result = new SkillData();
-        result.replace = true;
-        result.enabled = true;
-        result.nameKey = nameKey;
-        result.descriptionKey = descriptionKey;
-        result.maxLevel = levels.keySet().stream().max(Integer::compareTo).orElse(-1);
-        result.icon = new SkillIconData();
-        result.icon.type = "item";
-        result.icon.value = Registries.ITEM.getId(iconItem).toString();
-        return result;
+        return new SkillData(
+                true,
+                Optional.of(true),
+                Optional.of(nameKey),
+                Optional.of(descriptionKey),
+                Optional.of(levels.keySet().stream().max(Integer::compareTo).orElse(-1)),
+                Optional.of(new SkillIconData(
+                        "item",
+                        Registries.ITEM.getId(iconItem).toString()
+                ))
+        );
     }
 }

@@ -1,35 +1,49 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.mojang.serialization.DynamicOps;
+import com.mojang.serialization.JsonOps;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.resource.JsonDataLoader;
 import net.minecraft.resource.Resource;
+import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.message.StringFormattedMessage;
 
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadListener {
     private static final Logger logger = LogManager.getLogger(SkillMmoResourceLoader.class);
 
-    private final Gson gson = new GsonBuilder().create();
+    private final RegistryWrapper.WrapperLookup registryWrapperLookup;
+    private final DynamicOps<JsonElement> ops;
+
+    public SkillMmoResourceLoader(RegistryWrapper.WrapperLookup registryWrapperLookup) {
+        this.registryWrapperLookup = registryWrapperLookup;
+        this.ops = registryWrapperLookup.getOps(JsonOps.INSTANCE);
+    }
 
     @Override
     public Identifier getFabricId() {
-        return Identifier.of("skillmmo", "skills");
+        return Identifier.of("skillmmo", "resources");
     }
 
     @Override
@@ -39,85 +53,103 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
         Map<Identifier, SkillData> skillDataBySkillId = new HashMap<>();
         skillsData.forEach((id, skillData) ->
                 skillDataBySkillId.compute(id, (k, v) -> {
-                    if (v == null || skillData.replace) {
+                    if (v == null || skillData.replace()) {
                         return skillData;
                     }
-                    if (skillData.enabled != null) {
-                        v.enabled = skillData.enabled;
-                    }
-                    if (skillData.nameKey != null) {
-                        v.nameKey = skillData.nameKey;
-                    }
-                    if (skillData.descriptionKey != null) {
-                        v.descriptionKey = skillData.descriptionKey;
-                    }
-                    return v;
+                    return new SkillData(
+                            v.replace(),
+                            skillData.enabled().isPresent() ? skillData.enabled() : v.enabled(),
+                            skillData.nameKey().isPresent() ? skillData.nameKey() : v.nameKey(),
+                            skillData.descriptionKey().isPresent() ? skillData.descriptionKey() : v.descriptionKey(),
+                            skillData.maxLevel().isPresent() ? skillData.maxLevel() : v.maxLevel(),
+                            skillData.icon().isPresent() ? skillData.icon() : v.icon()
+                    );
                 }));
+
+        List<String> errors = new ArrayList<>();
 
         Set<Skill> skills = skillDataBySkillId.entrySet()
                 .stream()
-                .filter(skillData -> skillData.getValue().enabled != Boolean.FALSE)
-                .map(skillData ->
-                        new Skill(
-                                skillData.getKey(),
-                                Text.translatable(skillData.getValue().nameKey),
-                                Text.translatable(skillData.getValue().descriptionKey),
-                                skillData.getValue().maxLevel,
-                                skillData.getValue().icon.iconItem
-                        ))
+                .flatMap(skillDataPair -> {
+                            Identifier skillId = skillDataPair.getKey();
+                            SkillData skillData = skillDataPair.getValue();
+
+                            boolean valid = true;
+
+                            if (skillData.enabled().isEmpty()) {
+                                errors.add(Text.translatable("").getString());
+                                valid = false;
+                            }
+                            if (skillData.nameKey().isEmpty()) {
+                                errors.add(Text.translatable("").getString());
+                                valid = false;
+                            }
+                            if (skillData.descriptionKey().isEmpty()) {
+                                errors.add(Text.translatable("").getString());
+                                valid = false;
+                            }
+                            if (skillData.maxLevel().isEmpty()) {
+                                errors.add(Text.translatable("").getString());
+                                valid = false;
+                            }
+
+                            Optional<Item> iconItem = Optional.empty();
+                            if (skillData.icon().isEmpty()) {
+                                errors.add(Text.translatable("").getString());
+                                valid = false;
+                            } else if (!"item".equals(skillData.icon().get().type())) {
+                                errors.add(Text.translatable("").getString());
+                                valid = false;
+                            } else {
+                                Identifier itemId = Identifier.tryParse(skillData.icon().get().value());
+                                if (itemId == null) {
+                                    errors.add(Text.translatable("").getString());
+                                    valid = false;
+                                } else {
+                                    RegistryWrapper.Impl<Item> itemRegistry = registryWrapperLookup.getOrThrow(RegistryKeys.ITEM);
+                                    RegistryKey<Item> itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, itemId);
+                                    iconItem = itemRegistry.getOptional(itemRegistryKey).map(RegistryEntry.Reference::value);
+                                    if (iconItem.isEmpty()) {
+                                        errors.add(Text.translatable("").getString());
+                                        valid = false;
+                                    }
+                                }
+                            }
+
+                            if (valid) {
+                                return Stream.of(
+                                        new Skill(
+                                                skillId,
+                                                Text.translatable(skillData.nameKey().get()),
+                                                Text.translatable(skillData.descriptionKey().get()),
+                                                skillData.maxLevel().get(),
+                                                iconItem.get()
+                                        )
+                                );
+                            }
+
+                            return Stream.empty();
+                        }
+                )
                 .collect(Collectors.toUnmodifiableSet());
+
+        if (!errors.isEmpty()) {
+            throw new IllegalStateException(String.join("\n", errors));
+        }
 
         SkillManager.getInstance().initInstalledSkills(skills);
     }
 
-    private <T extends DataValidatable> Map<Identifier, T> loadResources(ResourceManager manager, SkillMmoDataType<T> type) {
-        Map<Identifier, Resource> resourceMap = manager.findResources(
-                type.getResourceCategory(),
-                path -> path.getPath().endsWith(".json")
-        );
+    private <T> Map<Identifier, T> loadResources(ResourceManager resourceManager, SkillMmoDataType<T> type) {
+        ResourceFinder resourceFinder = ResourceFinder.json(type.getResourceCategory());
+        Map<Identifier, Resource> resourceMap = resourceFinder.findResources(resourceManager);
 
         Map<Identifier, T> resourcesMap = new HashMap<>();
-        boolean errored = false;
-        for (Map.Entry<Identifier, Resource> resourceEntry : resourceMap.entrySet()) {
-            Identifier resourceIdentifier = resourceEntry.getKey();
-            Resource resource = resourceEntry.getValue();
-            try (InputStreamReader resourceReader = new InputStreamReader(resource.getInputStream())) {
-                T resourceValue = gson.fromJson(resourceReader, type.getResourceClass());
-                Collection<String> errors = new ArrayList<>();
-                resourceValue.validate(errors);
-                if (errors.isEmpty()) {
-                    Identifier resourceId = Identifier.of(
-                            resourceIdentifier.getNamespace(),
-                            // e.g. skills/abc.json -> abc
-                            resourceIdentifier.getPath().substring(type.getResourceCategory().length() + 1, resourceIdentifier.getPath().lastIndexOf("."))
-                    );
-                    resourcesMap.put(resourceId, resourceValue);
-                } else {
-                    logger.error(
-                            "Failed to load resource '{}' for type '{}' due to errors:{}",
-                            resourceIdentifier,
-                            type.getResourceCategory(),
-                            errors.stream().map("\n\t- %s"::formatted).collect(Collectors.joining())
-                    );
-                    errored = true;
-                }
-            } catch (Exception ex) {
-                logger.error(new StringFormattedMessage("Failed to load resource '{}' for type '{}'", resourceIdentifier, type.getResourceCategory()).getFormattedMessage(), ex);
-                errored = true;
-            }
-        }
-
-        if (errored) {
-            throw new IllegalStateException("Failed to start due to datapack validation errors! (See above)");
-        }
+        JsonDataLoader.load(resourceManager, resourceFinder, this.ops, type.getCodec(), resourcesMap);
 
         Set<Identifier> successfullyLoaded = new TreeSet<>(resourcesMap.keySet());
         logger.info("Loaded resources for {}: {}", type.getResourceCategory(), successfullyLoaded);
 
         return resourcesMap;
-    }
-
-    public Gson getGson() {
-        return gson;
     }
 }

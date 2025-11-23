@@ -1,14 +1,18 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
-public final class SkillMmoDataType<T extends DataValidatable> {
-    public static final SkillMmoDataType<SkillData> SKILLS = new SkillMmoDataType<>("skills", SkillData.class);
+import com.mojang.serialization.Codec;
+
+public final class SkillMmoDataType<T> {
+    public static final SkillMmoDataType<SkillData> SKILLS = new SkillMmoDataType<>("skills", SkillData.class, SkillData.CODEC);
 
     private final String resourceCategory;
     private final Class<T> resourceClass;
+    private final Codec<T> codec;
 
-    private SkillMmoDataType(String resourceCategory, Class<T> resourceClass) {
+    private SkillMmoDataType(String resourceCategory, Class<T> resourceClass, Codec<T> codec) {
         this.resourceCategory = resourceCategory;
         this.resourceClass = resourceClass;
+        this.codec = codec;
     }
 
     public String getResourceCategory() {
@@ -17,5 +21,9 @@ public final class SkillMmoDataType<T extends DataValidatable> {
 
     public Class<T> getResourceClass() {
         return resourceClass;
+    }
+
+    public Codec<T> getCodec() {
+        return codec;
     }
 }

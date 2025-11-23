@@ -1,73 +1,53 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
-import com.google.gson.annotations.SerializedName;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
-import javax.annotation.Nonnull;
-import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Data shape for a skill in a datapack
  */
 @FieldsAreNonnullByDefault
-public class SkillData implements DataValidatable {
-    /**
-     * Whether this skill definition should replace an existing skill with the same ID
-     */
-    @SerializedName("replace")
-    public boolean replace = false;
+public record SkillData(
+        /*
+         * Whether this skill definition should replace an existing skill with the same ID
+         */
+        boolean replace,
 
-    /**
-     * Whether this skill is enabled
-     */
-    @SerializedName("enabled")
-    public Boolean enabled = true;
+        /*
+          Whether this skill is enabled
+         */
+        Optional<Boolean> enabled,
 
-    /**
-     * Translation key for this skill's name
-     */
-    @SerializedName("nameKey")
-    public String nameKey;
+        /*
+         * Translation key for this skill's name
+         */
+        Optional<String> nameKey,
 
-    /**
-     * Translation key for this skill's description
-     */
-    @SerializedName("descriptionKey")
-    public String descriptionKey;
+        /*
+         * Translation key for this skill's description
+         */
+        Optional<String> descriptionKey,
 
-    /**
-     * Maximum level this skill goes to (must be below the global level limit)
-     *
-     * @see Skill#MAX_LEVEL
-     */
-    @SerializedName("maxLevel")
-    public int maxLevel;
+        /*
+         * Maximum level this skill goes to (must be below the global level limit), see Skill#MAX_LEVEL
+         */
+        Optional<Integer> maxLevel,
 
-    /**
-     * The icon representing this skill in the Skills GUI
-     */
-    @SerializedName("icon")
-    public SkillIconData icon;
-
-    @Override
-    public void validate(@Nonnull Collection<String> errors) {
-        if (nameKey == null) {
-            errors.add("'nameKey' is not defined");
-        }
-
-        if (descriptionKey == null) {
-            errors.add("'descriptionKey' is not defined");
-        }
-
-        if (maxLevel <= Skill.MIN_LEVEL || maxLevel > Skill.MAX_LEVEL) {
-            errors.add("'maxLevel' is %d, should be between %d and %d".formatted(maxLevel, Skill.MIN_LEVEL + 1, Skill.MAX_LEVEL));
-        }
-
-        if (icon == null) {
-            errors.add("'icon' is not set, should be a JSON object with keys 'type' and 'value'");
-        } else {
-            icon.validate(errors);
-        }
-    }
+        /*
+         * The icon representing this skill in the Skills GUI
+         */
+        Optional<SkillIconData> icon
+) {
+    public static final Codec<SkillData> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            Codec.BOOL.optionalFieldOf("replace", false).forGetter(SkillData::replace),
+            Codec.BOOL.optionalFieldOf("enabled").forGetter(SkillData::enabled),
+            Codec.STRING.optionalFieldOf("nameKey").forGetter(SkillData::nameKey),
+            Codec.STRING.optionalFieldOf("descriptionKey").forGetter(SkillData::descriptionKey),
+            Codec.intRange(Skill.MIN_LEVEL + 1, Skill.MAX_LEVEL).optionalFieldOf("maxLevel").forGetter(SkillData::maxLevel),
+            SkillIconData.CODEC.optionalFieldOf("icon").forGetter(SkillData::icon)
+    ).apply(instance, SkillData::new));
 }
