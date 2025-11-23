@@ -326,9 +326,6 @@ public final class SkillMmoDefaultSkills {
                                     .withBlocks(
                                             Blocks.SMOKER
                                     )
-                                    .withItems(
-                                            Items.WOLF_ARMOR
-                                    )
                                     .withEntityTypes(
                                             EntityType.CAT,
                                             EntityType.FOX,
@@ -792,6 +789,11 @@ public final class SkillMmoDefaultSkills {
                                             Items.CHAINMAIL_CHESTPLATE,
                                             Items.CHAINMAIL_LEGGINGS,
                                             Items.CHAINMAIL_BOOTS
+                                    )
+                            )
+                            .put(6, new SkillLevelDataGenSpec()
+                                    .withItems(
+                                            Items.WOLF_ARMOR
                                     )
                             )
                             .put(7, new SkillLevelDataGenSpec()
