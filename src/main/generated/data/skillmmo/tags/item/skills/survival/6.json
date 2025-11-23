@@ -1,6 +1,6 @@
 {
   "replace": true,
   "values": [
-    "#minecraft:eggs"
+    "minecraft:resin_brick"
   ]
 }

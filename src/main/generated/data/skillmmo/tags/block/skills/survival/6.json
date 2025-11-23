@@ -1,6 +1,11 @@
 {
   "replace": true,
   "values": [
-    "minecraft:spawner"
+    "minecraft:spawner",
+    "minecraft:creaking_heart",
+    "minecraft:closed_eyeblossom",
+    "minecraft:open_eyeblossom",
+    "minecraft:resin_block",
+    "minecraft:resin_clump"
   ]
 }

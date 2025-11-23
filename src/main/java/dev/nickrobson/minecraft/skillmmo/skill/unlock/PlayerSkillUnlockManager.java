@@ -36,7 +36,6 @@ import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Set;
@@ -198,7 +197,7 @@ public class PlayerSkillUnlockManager {
                 : skillLevelSet.stream().anyMatch(hasSkillLevel);
     }
 
-    public boolean hasRecipeUnlock(@Nonnull PlayerEntity player, RecipeEntry<?> recipe) {
+    public boolean hasRecipeUnlock(PlayerEntity player, RecipeEntry<?> recipe) {
         // FIXME: relying on recipe displays probably isn't the right way to do this
         //  but, I think the "right" way would be to fake a craft, and that seems to be really difficult to implement
         //  buuuut... it works... so... that'll be what we do for now

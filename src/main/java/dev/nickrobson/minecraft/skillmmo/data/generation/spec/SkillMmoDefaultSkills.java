@@ -28,7 +28,6 @@ public final class SkillMmoDefaultSkills {
                                             Blocks.ACACIA_SAPLING,
                                             Blocks.DARK_OAK_SAPLING,
                                             Blocks.CHERRY_SAPLING,
-                                            Blocks.PINK_PETALS,
                                             Blocks.PALE_OAK_SAPLING,
                                             Blocks.MANGROVE_PROPAGULE
                                     )
@@ -224,8 +223,8 @@ public final class SkillMmoDefaultSkills {
                     Items.SADDLE,
                     levelsBuilder()
                             .put(2, new SkillLevelDataGenSpec()
-                                    .withItems(
-                                            Items.EGG
+                                    .withItemTags(
+                                            ItemTags.EGGS
                                     )
                                     .withEntityTypes(
                                             EntityType.BAT,

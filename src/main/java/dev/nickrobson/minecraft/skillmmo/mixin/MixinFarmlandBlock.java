@@ -29,7 +29,7 @@ public abstract class MixinFarmlandBlock {
                     shift = At.Shift.BEFORE
             )
     )
-    public void skillMmo$onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance, CallbackInfo ci) {
+    public void skillMmo$onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {
         // We only care if there's a crop AND it's a player doing the trampling
         if (!hasCrop(world, pos) || !(entity instanceof PlayerEntity player)) {
             return;
