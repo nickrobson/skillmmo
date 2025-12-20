@@ -40,3 +40,10 @@ hs_err_pid*
 
 # macOS
 .DS_Store
+
+# Build files
+/.factorypath
+/.classpath
+/.project
+/.settings/
+/bin/
