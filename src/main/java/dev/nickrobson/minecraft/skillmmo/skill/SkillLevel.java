@@ -5,6 +5,7 @@ import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
+
 import java.util.Objects;
 import java.util.StringJoiner;
 

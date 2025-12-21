@@ -11,6 +11,7 @@ public interface InGameHudAccess {
     static Identifier getExperienceBarBackgroundTexture() {
         throw new AssertionError("mixin");
     }
+
     @Accessor("EXPERIENCE_BAR_PROGRESS_TEXTURE")
     static Identifier getExperienceBarProgressTexture() {
         throw new AssertionError("mixin");

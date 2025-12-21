@@ -8,12 +8,12 @@ import net.minecraft.registry.tag.TagKey;
 import java.util.List;
 
 public record SkillLevelDataGenSpec(
-    List<Block> blocks,
-    List<TagKey<Block>> blockTags,
-    List<Item> items,
-    List<TagKey<Item>> itemTags,
-    List<EntityType<?>> entityTypes,
-    List<TagKey<EntityType<?>>> entityTypeTags
+        List<Block> blocks,
+        List<TagKey<Block>> blockTags,
+        List<Item> items,
+        List<TagKey<Item>> itemTags,
+        List<EntityType<?>> entityTypes,
+        List<TagKey<EntityType<?>>> entityTypeTags
 ) {
     public SkillLevelDataGenSpec() {
         this(List.of(), List.of(), List.of(), List.of(), List.of(), List.of());

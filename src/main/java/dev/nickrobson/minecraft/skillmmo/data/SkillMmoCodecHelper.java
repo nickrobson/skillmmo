@@ -7,7 +7,8 @@ import javax.annotation.Nonnull;
 import java.util.function.Function;
 
 public final class SkillMmoCodecHelper {
-    private SkillMmoCodecHelper() {}
+    private SkillMmoCodecHelper() {
+    }
 
     public static <T> Codec<T> constant(Codec<T> base, @Nonnull T constantValue) {
         return base.comapFlatMap(
