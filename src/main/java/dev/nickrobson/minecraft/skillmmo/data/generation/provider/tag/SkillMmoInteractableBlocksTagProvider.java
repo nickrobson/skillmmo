@@ -21,7 +21,7 @@ public class SkillMmoInteractableBlocksTagProvider extends FabricTagProvider.Blo
 
     @Override
     protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
-        this.getOrCreateTagBuilder(SkillMmoTags.interactableBlocks)
+        valueLookupBuilder(SkillMmoTags.interactableBlocks)
                 .setReplace(false)
                 .add(
                         Blocks.BARREL,
@@ -60,8 +60,7 @@ public class SkillMmoInteractableBlocksTagProvider extends FabricTagProvider.Blo
                         Blocks.LECTERN,
                         Blocks.LOOM,
                         Blocks.SMITHING_TABLE,
-                        Blocks.STONECUTTER
-                )
+                        Blocks.STONECUTTER)
                 .forceAddTag(BlockTags.SHULKER_BOXES)
                 .forceAddTag(BlockTags.CAULDRONS)
                 .forceAddTag(BlockTags.BUTTONS)

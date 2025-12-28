@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.recipe;
 
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.util.SkillMmoRecipeBookAccessor;
 import net.minecraft.recipe.RecipeEntry;
@@ -21,7 +21,7 @@ public class PlayerLockedRecipeManager {
 
     public void syncLockedRecipes(ServerPlayerEntity player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        ServerRecipeManager recipeManager = player.server.getRecipeManager();
+        ServerRecipeManager recipeManager = player.getServer().getRecipeManager();
 
         if (SkillMmoConfig.getConfig().lockRecipesUntilIngredientsAndOutputAreUnlocked) {
             // Unlock the recipes that have been unlocked since this was last synced (i.e. player has gained levels)

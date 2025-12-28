@@ -6,6 +6,7 @@ import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSki
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
+import net.minecraft.data.tag.ProvidedTagBuilder;
 import net.minecraft.registry.RegistryWrapper;
 
 import java.util.concurrent.CompletableFuture;
@@ -25,7 +26,7 @@ public class SkillMmoSkillLevelBlockTagProvider extends FabricTagProvider.BlockT
         SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(skillSpec -> {
             skillSpec.levels().forEach((level, levelSpec) -> {
                 if (levelSpec.hasBlocks()) {
-                    FabricTagBuilder tagBuilder = this.getOrCreateTagBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.BLOCK)).setReplace(true);
+                    ProvidedTagBuilder<Block, Block> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.BLOCK)).setReplace(true);
                     levelSpec.blocks().forEach(tagBuilder::add);
                     levelSpec.blockTags().forEach(tagBuilder::forceAddTag);
                 }

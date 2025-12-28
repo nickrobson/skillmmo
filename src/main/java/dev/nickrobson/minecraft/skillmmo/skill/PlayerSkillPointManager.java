@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 

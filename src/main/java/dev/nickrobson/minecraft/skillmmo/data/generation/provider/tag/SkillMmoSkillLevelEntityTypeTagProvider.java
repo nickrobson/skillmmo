@@ -5,6 +5,7 @@ import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.data.tag.ProvidedTagBuilder;
 import net.minecraft.entity.EntityType;
 import net.minecraft.registry.RegistryWrapper;
 
@@ -25,7 +26,7 @@ public class SkillMmoSkillLevelEntityTypeTagProvider extends FabricTagProvider.E
         SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(skillSpec -> {
             skillSpec.levels().forEach((level, levelSpec) -> {
                 if (levelSpec.hasEntityTypes()) {
-                    FabricTagBuilder tagBuilder = this.getOrCreateTagBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.ENTITY_TYPE)).setReplace(true);
+                    ProvidedTagBuilder<EntityType<?>, EntityType<?>> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.ENTITY_TYPE)).setReplace(true);
                     levelSpec.entityTypes().forEach(tagBuilder::add);
                     levelSpec.entityTypeTags().forEach(tagBuilder::forceAddTag);
                 }

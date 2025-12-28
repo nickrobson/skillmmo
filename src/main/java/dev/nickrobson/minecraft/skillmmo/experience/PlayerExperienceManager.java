@@ -1,7 +1,8 @@
 package dev.nickrobson.minecraft.skillmmo.experience;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
@@ -37,7 +38,7 @@ public class PlayerExperienceManager {
 
     public void giveExperience(ServerPlayerEntity player, long experience) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        SkillMmoPlayerDataHolder.SkillMmoPlayerData playerData = skillMmoPlayerDataHolder.skillMmo$getPlayerData();
+        SkillMmoPlayerData playerData = skillMmoPlayerDataHolder.skillMmo$getPlayerData();
         long oldExperience = playerData.getExperience();
         long newExperience = playerData.addExperience(experience);
 

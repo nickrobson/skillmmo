@@ -2,7 +2,6 @@ package dev.nickrobson.minecraft.skillmmo.compat.waila;
 
 import mcp.mobius.waila.api.IClientRegistrar;
 import mcp.mobius.waila.api.IWailaClientPlugin;
-import mcp.mobius.waila.api.TooltipPosition;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 

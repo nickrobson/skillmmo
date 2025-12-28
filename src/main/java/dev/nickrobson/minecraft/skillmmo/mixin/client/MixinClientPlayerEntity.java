@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.mixin.client;
 
-import dev.nickrobson.minecraft.skillmmo.skill.SkillMmoPlayerDataHolder;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;

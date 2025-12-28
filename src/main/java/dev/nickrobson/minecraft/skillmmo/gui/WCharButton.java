@@ -74,14 +74,8 @@ public class WCharButton extends WWidget {
 
         Text text = Text.literal(String.valueOf(this.text));
         int textWidth = MinecraftClient.getInstance().textRenderer.getWidth(text);
-        int color = enabled ? 0xE0E0E0 : 0xA0A0A0;
-        drawContext.drawTextWithShadow(
-                MinecraftClient.getInstance().textRenderer,
-                text,
-                x + (width - textWidth) / 2,
-                y + (getHeight() - 8) / 2,
-                color
-        );
+        int color = enabled ? 0xFFE0E0E0 : 0xFFA0A0A0;
+        drawContext.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, text, x + (width - textWidth) / 2, y + (getHeight() - 8) / 2, color);
     }
 
     @Environment(EnvType.CLIENT)
