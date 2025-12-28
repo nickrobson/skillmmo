@@ -623,8 +623,6 @@ public final class SkillMmoDefaultSkills {
                                     15,
                                     new SkillLevelDataGenSpec()
                                             .withBlocks(
-                                                    Blocks.IRON_BARS,
-                                                    Blocks.IRON_CHAIN,
                                                     Blocks.CUT_COPPER,
                                                     Blocks.CUT_COPPER_STAIRS,
                                                     Blocks.CUT_COPPER_SLAB,
@@ -667,9 +665,11 @@ public final class SkillMmoDefaultSkills {
                                                     Blocks.WAXED_OXIDIZED_COPPER_GRATE
                                             )
                                             .withBlockSets(
-                                                    Blocks.COPPER_BARS,
-                                                    Blocks.COPPER_CHAINS,
                                                     Blocks.COPPER_LANTERNS
+                                            )
+                                            .withBlockTags(
+                                                    BlockTags.BARS,
+                                                    BlockTags.CHAINS
                                             )
                             )
                             .put(
@@ -1013,12 +1013,13 @@ public final class SkillMmoDefaultSkills {
                             .put(16, new SkillLevelDataGenSpec().withBlocks(Blocks.CRAFTER))
                             .put(
                                     18,
-                                    new SkillLevelDataGenSpec().withBlocks(
-                                            Blocks.DAYLIGHT_DETECTOR,
-                                            Blocks.LIGHTNING_ROD,
-                                            Blocks.SCULK_SENSOR,
-                                            Blocks.CALIBRATED_SCULK_SENSOR
-                                    )
+                                    new SkillLevelDataGenSpec()
+                                            .withBlocks(
+                                                    Blocks.DAYLIGHT_DETECTOR,
+                                                    Blocks.SCULK_SENSOR,
+                                                    Blocks.CALIBRATED_SCULK_SENSOR
+                                            )
+                                            .withBlockTags(BlockTags.LIGHTNING_RODS)
                             )
                             .build()
             ),
@@ -1245,6 +1246,11 @@ public final class SkillMmoDefaultSkills {
                                                     EntityType.ZOMBIE_VILLAGER
                                             )
                             )
+                            .put(6,
+                                    new SkillLevelDataGenSpec()
+                                            .withBlockTags(BlockTags.COPPER_GOLEM_STATUES)
+                                            .withEntityTypes(EntityType.COPPER_GOLEM)
+                            )
                             .put(
                                     8,
                                     new SkillLevelDataGenSpec()
@@ -1309,16 +1315,27 @@ public final class SkillMmoDefaultSkills {
                             )
                             .put(
                                     3,
-                                    new SkillLevelDataGenSpec().withItems(
-                                            Items.ITEM_FRAME,
-                                            Items.GLOW_ITEM_FRAME
-                                    )
+                                    new SkillLevelDataGenSpec()
+                                            .withItems(
+                                                    Items.ITEM_FRAME,
+                                                    Items.GLOW_ITEM_FRAME
+                                            )
+                                            .withEntityTypes(
+                                                    EntityType.ITEM_FRAME,
+                                                    EntityType.GLOW_ITEM_FRAME
+                                            )
                             )
-                            .put(5, new SkillLevelDataGenSpec().withItems(Items.BARREL))
+                            .put(5, new SkillLevelDataGenSpec()
+                                    .withBlockTags(BlockTags.WOODEN_SHELVES)
+                            )
+                            .put(7, new SkillLevelDataGenSpec()
+                                    .withBlocks(Blocks.BARREL)
+                            )
                             .put(
                                     10,
                                     new SkillLevelDataGenSpec()
                                             .withBlocks(Blocks.CHEST, Blocks.TRAPPED_CHEST)
+                                            .withBlockTags(BlockTags.COPPER_CHESTS)
                                             .withItemTags(ItemTags.CHEST_BOATS)
                                             .withEntityTypes(
                                                     EntityType.CHEST_MINECART,
@@ -1354,7 +1371,10 @@ public final class SkillMmoDefaultSkills {
                     levelsBuilder()
                             .put(
                                     1,
-                                    new SkillLevelDataGenSpec().withBlockTags(BlockTags.BEDS)
+                                    new SkillLevelDataGenSpec()
+                                            .withBlocks(Blocks.COPPER_TORCH)
+                                            .withBlocks(Blocks.COPPER_WALL_TORCH)
+                                            .withBlockTags(BlockTags.BEDS)
                             )
                             .put(
                                     2,

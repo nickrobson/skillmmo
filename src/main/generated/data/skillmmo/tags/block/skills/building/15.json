@@ -1,8 +1,6 @@
 {
   "replace": true,
   "values": [
-    "minecraft:iron_bars",
-    "minecraft:iron_chain",
     "minecraft:cut_copper",
     "minecraft:cut_copper_stairs",
     "minecraft:cut_copper_slab",
@@ -43,22 +41,6 @@
     "minecraft:waxed_exposed_copper_grate",
     "minecraft:waxed_weathered_copper_grate",
     "minecraft:waxed_oxidized_copper_grate",
-    "minecraft:copper_bars",
-    "minecraft:waxed_copper_bars",
-    "minecraft:exposed_copper_bars",
-    "minecraft:waxed_exposed_copper_bars",
-    "minecraft:weathered_copper_bars",
-    "minecraft:waxed_weathered_copper_bars",
-    "minecraft:oxidized_copper_bars",
-    "minecraft:waxed_oxidized_copper_bars",
-    "minecraft:copper_chain",
-    "minecraft:waxed_copper_chain",
-    "minecraft:exposed_copper_chain",
-    "minecraft:waxed_exposed_copper_chain",
-    "minecraft:weathered_copper_chain",
-    "minecraft:waxed_weathered_copper_chain",
-    "minecraft:oxidized_copper_chain",
-    "minecraft:waxed_oxidized_copper_chain",
     "minecraft:copper_lantern",
     "minecraft:waxed_copper_lantern",
     "minecraft:exposed_copper_lantern",
@@ -66,6 +48,8 @@
     "minecraft:weathered_copper_lantern",
     "minecraft:waxed_weathered_copper_lantern",
     "minecraft:oxidized_copper_lantern",
-    "minecraft:waxed_oxidized_copper_lantern"
+    "minecraft:waxed_oxidized_copper_lantern",
+    "#minecraft:bars",
+    "#minecraft:chains"
   ]
 }
