@@ -956,6 +956,7 @@ public final class SkillMmoDefaultSkills {
                                                     Items.MUSIC_DISC_CREATOR,
                                                     Items.MUSIC_DISC_CREATOR_MUSIC_BOX,
                                                     Items.MUSIC_DISC_FAR,
+                                                    Items.MUSIC_DISC_LAVA_CHICKEN,
                                                     Items.MUSIC_DISC_MALL,
                                                     Items.MUSIC_DISC_MELLOHI,
                                                     Items.MUSIC_DISC_OTHERSIDE,
@@ -964,6 +965,7 @@ public final class SkillMmoDefaultSkills {
                                                     Items.MUSIC_DISC_RELIC,
                                                     Items.MUSIC_DISC_STAL,
                                                     Items.MUSIC_DISC_STRAD,
+                                                    Items.MUSIC_DISC_TEARS,
                                                     Items.MUSIC_DISC_WAIT,
                                                     Items.MUSIC_DISC_WARD
                                             )
