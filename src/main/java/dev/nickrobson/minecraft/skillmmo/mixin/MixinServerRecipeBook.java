@@ -50,9 +50,9 @@ public class MixinServerRecipeBook implements SkillMmoRecipeBookAccessor {
 
         recipes.removeAll(lockedRecipes);
 
-        ((SkillMmoPlayerDataHolder) player).skillMmo$getPlayerData()
+        SkillMmoPlayerDataHolder.getPlayerDataHolder(player).skillMmo$getPlayerData()
                 .addLockedRecipes(lockedRecipes);
-        ((SkillMmoPlayerDataHolder) player).skillMmo$getPlayerData()
+        SkillMmoPlayerDataHolder.getPlayerDataHolder(player).skillMmo$getPlayerData()
                 .removeLockedRecipes(recipes);
     }
 

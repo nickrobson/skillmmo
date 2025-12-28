@@ -1,10 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.CopperBlockSet;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public record SkillLevelDataGenSpec(
@@ -33,6 +35,14 @@ public record SkillLevelDataGenSpec(
 
     public SkillLevelDataGenSpec withBlocks(Block... blocks) {
         return new SkillLevelDataGenSpec(List.of(blocks), this.blockTags, this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
+    }
+
+    public SkillLevelDataGenSpec withBlockSets(CopperBlockSet... blockSets) {
+        List<Block> newBlocks = new ArrayList<>(this.blocks);
+        for (CopperBlockSet blockSet : blockSets) {
+            newBlocks.addAll(blockSet.getAll());
+        }
+        return new SkillLevelDataGenSpec(newBlocks, this.blockTags, this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
     }
 
     @SafeVarargs

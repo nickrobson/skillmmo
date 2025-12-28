@@ -1,0 +1,7 @@
+{
+  "replace": true,
+  "values": [
+    "minecraft:copper_shovel",
+    "minecraft:copper_pickaxe"
+  ]
+}

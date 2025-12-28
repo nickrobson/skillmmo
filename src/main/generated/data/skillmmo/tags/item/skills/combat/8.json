@@ -1,6 +1,12 @@
 {
   "replace": true,
   "values": [
+    "minecraft:copper_sword",
+    "minecraft:copper_helmet",
+    "minecraft:copper_chestplate",
+    "minecraft:copper_leggings",
+    "minecraft:copper_boots",
+    "minecraft:copper_horse_armor",
     "minecraft:golden_sword",
     "minecraft:golden_helmet",
     "minecraft:golden_chestplate",

@@ -69,7 +69,7 @@ public class SkillMmoServerNetworking {
                 sendPlayerData(player);
             });
 
-            logger.debug("Received skill choice from {}: {}", player.getGameProfile().getName(), skillId);
+            logger.debug("Received skill choice from {}: {}", player.getGameProfile().name(), skillId);
         });
     }
 
@@ -78,14 +78,14 @@ public class SkillMmoServerNetworking {
         int availableSkillPoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
 
         ServerPlayNetworking.send(player, new SetPlayerExperienceS2CPacket(experience, availableSkillPoints));
-        logger.debug("Sent player xp to player '{}': {}, available skill points: {}", player.getGameProfile().getName(), experience, availableSkillPoints);
+        logger.debug("Sent player xp to player '{}': {}, available skill points: {}", player.getGameProfile().name(), experience, availableSkillPoints);
     }
 
     public static void sendPlayerSkills(ServerPlayerEntity player) {
         Map<Identifier, Integer> playerSkillLevels = PlayerSkillManager.getInstance().getSkillLevels(player);
 
         ServerPlayNetworking.send(player, new SetPlayerSkillsS2CPacket(playerSkillLevels));
-        logger.debug("Sent player skills to player '{}': {}", player.getGameProfile().getName(), playerSkillLevels);
+        logger.debug("Sent player skills to player '{}': {}", player.getGameProfile().name(), playerSkillLevels);
     }
 
     public static void sendPlayerData(ServerPlayerEntity player) {

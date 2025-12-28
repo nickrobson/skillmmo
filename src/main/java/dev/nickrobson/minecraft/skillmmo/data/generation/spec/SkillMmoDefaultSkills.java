@@ -1,15 +1,14 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
 import com.google.common.collect.ImmutableMap;
-
-import java.util.List;
-
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Items;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
+
+import java.util.List;
 
 /**
  * Defines the default skills and their unlock requirements.
@@ -112,7 +111,7 @@ public final class SkillMmoDefaultSkills {
                                     7,
                                     new SkillLevelDataGenSpec()
                                             .withBlocks(Blocks.CACTUS)
-                                            .withItems(Items.GOLDEN_AXE, Items.STONE_HOE)
+                                            .withItems(Items.COPPER_AXE, Items.GOLDEN_AXE, Items.STONE_HOE)
                             )
                             .put(
                                     8,
@@ -125,7 +124,7 @@ public final class SkillMmoDefaultSkills {
                                     9,
                                     new SkillLevelDataGenSpec()
                                             .withBlockTags(BlockTags.FLOWER_POTS)
-                                            .withItems(Items.GOLDEN_HOE)
+                                            .withItems(Items.COPPER_HOE, Items.GOLDEN_HOE)
                             )
                             .put(
                                     10,
@@ -622,50 +621,56 @@ public final class SkillMmoDefaultSkills {
                             )
                             .put(
                                     15,
-                                    new SkillLevelDataGenSpec().withBlocks(
-                                            Blocks.IRON_BARS,
-                                            Blocks.CHAIN,
-                                            Blocks.CUT_COPPER,
-                                            Blocks.CUT_COPPER_STAIRS,
-                                            Blocks.CUT_COPPER_SLAB,
-                                            Blocks.EXPOSED_CUT_COPPER,
-                                            Blocks.EXPOSED_CUT_COPPER_STAIRS,
-                                            Blocks.EXPOSED_CUT_COPPER_SLAB,
-                                            Blocks.WEATHERED_CUT_COPPER,
-                                            Blocks.WEATHERED_CUT_COPPER_STAIRS,
-                                            Blocks.WEATHERED_CUT_COPPER_SLAB,
-                                            Blocks.OXIDIZED_CUT_COPPER,
-                                            Blocks.OXIDIZED_CUT_COPPER_STAIRS,
-                                            Blocks.OXIDIZED_CUT_COPPER_SLAB,
-                                            Blocks.WAXED_CUT_COPPER,
-                                            Blocks.WAXED_CUT_COPPER_STAIRS,
-                                            Blocks.WAXED_CUT_COPPER_SLAB,
-                                            Blocks.WAXED_EXPOSED_CUT_COPPER,
-                                            Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS,
-                                            Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB,
-                                            Blocks.WAXED_WEATHERED_CUT_COPPER,
-                                            Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS,
-                                            Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB,
-                                            Blocks.WAXED_OXIDIZED_CUT_COPPER,
-                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS,
-                                            Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB,
-                                            Blocks.CHISELED_COPPER,
-                                            Blocks.EXPOSED_CHISELED_COPPER,
-                                            Blocks.WEATHERED_CHISELED_COPPER,
-                                            Blocks.OXIDIZED_CHISELED_COPPER,
-                                            Blocks.WAXED_CHISELED_COPPER,
-                                            Blocks.WAXED_EXPOSED_CHISELED_COPPER,
-                                            Blocks.WAXED_WEATHERED_CHISELED_COPPER,
-                                            Blocks.WAXED_OXIDIZED_CHISELED_COPPER,
-                                            Blocks.COPPER_GRATE,
-                                            Blocks.EXPOSED_COPPER_GRATE,
-                                            Blocks.WEATHERED_COPPER_GRATE,
-                                            Blocks.OXIDIZED_COPPER_GRATE,
-                                            Blocks.WAXED_COPPER_GRATE,
-                                            Blocks.WAXED_EXPOSED_COPPER_GRATE,
-                                            Blocks.WAXED_WEATHERED_COPPER_GRATE,
-                                            Blocks.WAXED_OXIDIZED_COPPER_GRATE
-                                    )
+                                    new SkillLevelDataGenSpec()
+                                            .withBlocks(
+                                                    Blocks.IRON_BARS,
+                                                    Blocks.IRON_CHAIN,
+                                                    Blocks.CUT_COPPER,
+                                                    Blocks.CUT_COPPER_STAIRS,
+                                                    Blocks.CUT_COPPER_SLAB,
+                                                    Blocks.EXPOSED_CUT_COPPER,
+                                                    Blocks.EXPOSED_CUT_COPPER_STAIRS,
+                                                    Blocks.EXPOSED_CUT_COPPER_SLAB,
+                                                    Blocks.WEATHERED_CUT_COPPER,
+                                                    Blocks.WEATHERED_CUT_COPPER_STAIRS,
+                                                    Blocks.WEATHERED_CUT_COPPER_SLAB,
+                                                    Blocks.OXIDIZED_CUT_COPPER,
+                                                    Blocks.OXIDIZED_CUT_COPPER_STAIRS,
+                                                    Blocks.OXIDIZED_CUT_COPPER_SLAB,
+                                                    Blocks.WAXED_CUT_COPPER,
+                                                    Blocks.WAXED_CUT_COPPER_STAIRS,
+                                                    Blocks.WAXED_CUT_COPPER_SLAB,
+                                                    Blocks.WAXED_EXPOSED_CUT_COPPER,
+                                                    Blocks.WAXED_EXPOSED_CUT_COPPER_STAIRS,
+                                                    Blocks.WAXED_EXPOSED_CUT_COPPER_SLAB,
+                                                    Blocks.WAXED_WEATHERED_CUT_COPPER,
+                                                    Blocks.WAXED_WEATHERED_CUT_COPPER_STAIRS,
+                                                    Blocks.WAXED_WEATHERED_CUT_COPPER_SLAB,
+                                                    Blocks.WAXED_OXIDIZED_CUT_COPPER,
+                                                    Blocks.WAXED_OXIDIZED_CUT_COPPER_STAIRS,
+                                                    Blocks.WAXED_OXIDIZED_CUT_COPPER_SLAB,
+                                                    Blocks.CHISELED_COPPER,
+                                                    Blocks.EXPOSED_CHISELED_COPPER,
+                                                    Blocks.WEATHERED_CHISELED_COPPER,
+                                                    Blocks.OXIDIZED_CHISELED_COPPER,
+                                                    Blocks.WAXED_CHISELED_COPPER,
+                                                    Blocks.WAXED_EXPOSED_CHISELED_COPPER,
+                                                    Blocks.WAXED_WEATHERED_CHISELED_COPPER,
+                                                    Blocks.WAXED_OXIDIZED_CHISELED_COPPER,
+                                                    Blocks.COPPER_GRATE,
+                                                    Blocks.EXPOSED_COPPER_GRATE,
+                                                    Blocks.WEATHERED_COPPER_GRATE,
+                                                    Blocks.OXIDIZED_COPPER_GRATE,
+                                                    Blocks.WAXED_COPPER_GRATE,
+                                                    Blocks.WAXED_EXPOSED_COPPER_GRATE,
+                                                    Blocks.WAXED_WEATHERED_COPPER_GRATE,
+                                                    Blocks.WAXED_OXIDIZED_COPPER_GRATE
+                                            )
+                                            .withBlockSets(
+                                                    Blocks.COPPER_BARS,
+                                                    Blocks.COPPER_CHAINS,
+                                                    Blocks.COPPER_LANTERNS
+                                            )
                             )
                             .put(
                                     17,
@@ -798,6 +803,12 @@ public final class SkillMmoDefaultSkills {
                             .put(
                                     8,
                                     new SkillLevelDataGenSpec().withItems(
+                                            Items.COPPER_SWORD,
+                                            Items.COPPER_HELMET,
+                                            Items.COPPER_CHESTPLATE,
+                                            Items.COPPER_LEGGINGS,
+                                            Items.COPPER_BOOTS,
+                                            Items.COPPER_HORSE_ARMOR,
                                             Items.GOLDEN_SWORD,
                                             Items.GOLDEN_HELMET,
                                             Items.GOLDEN_CHESTPLATE,
@@ -1064,7 +1075,18 @@ public final class SkillMmoDefaultSkills {
                                                     Blocks.WAXED_WEATHERED_COPPER,
                                                     Blocks.WAXED_OXIDIZED_COPPER
                                             )
-                                            .withItems(Items.RAW_COPPER, Items.COPPER_INGOT)
+                                            .withItems(
+                                                    Items.RAW_COPPER,
+                                                    Items.COPPER_NUGGET,
+                                                    Items.COPPER_INGOT
+                                            )
+                            )
+                            .put(
+                                    6,
+                                    new SkillLevelDataGenSpec().withItems(
+                                            Items.COPPER_SHOVEL,
+                                            Items.COPPER_PICKAXE
+                                    )
                             )
                             .put(
                                     7,

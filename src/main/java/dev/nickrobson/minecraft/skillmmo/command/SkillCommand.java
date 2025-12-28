@@ -192,7 +192,7 @@ public class SkillCommand {
 
         boolean isSelf = false;
         if (ctx.getSource().getEntity() instanceof PlayerEntity playerSource) {
-            isSelf = playerSource.getGameProfile().getId().equals(player.getGameProfile().getId());
+            isSelf = playerSource.getGameProfile().id().equals(player.getGameProfile().id());
         }
         if (!isSelf) {
             player.sendMessage(

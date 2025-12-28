@@ -83,7 +83,7 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("skillmmo.gui.skill.unlocks.show_unlocked", "Show unlocked");
         translationBuilder.add("skillmmo.gui.skill.unlocks.level", "Level %d");
 
-        translationBuilder.add("skillmmo.keybindings.category", "SkillMMO");
+        translationBuilder.add("key.category.skillmmo.keybindings", "SkillMMO");
         translationBuilder.add("skillmmo.keybindings.binding.open_skills", "Open Skills");
 
         Map<String, SkillTranslationSpec> skillNameTranslations = Map.of(

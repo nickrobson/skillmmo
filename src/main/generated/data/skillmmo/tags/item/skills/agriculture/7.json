@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
+    "minecraft:copper_axe",
     "minecraft:golden_axe",
     "minecraft:stone_hoe"
   ]

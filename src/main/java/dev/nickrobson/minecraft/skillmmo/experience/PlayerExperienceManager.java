@@ -23,7 +23,7 @@ public class PlayerExperienceManager {
     }
 
     public long getExperience(PlayerEntity player) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         return skillMmoPlayerDataHolder.skillMmo$getPlayerData().getExperience();
     }
 
@@ -32,12 +32,12 @@ public class PlayerExperienceManager {
     }
 
     public void setExperience(PlayerEntity player, long experience) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         skillMmoPlayerDataHolder.skillMmo$getPlayerData().setExperience(experience);
     }
 
     public void giveExperience(ServerPlayerEntity player, long experience) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         SkillMmoPlayerData playerData = skillMmoPlayerDataHolder.skillMmo$getPlayerData();
         long oldExperience = playerData.getExperience();
         long newExperience = playerData.addExperience(experience);

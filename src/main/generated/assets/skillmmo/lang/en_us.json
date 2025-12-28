@@ -1,4 +1,5 @@
 {
+  "key.category.skillmmo.keybindings": "SkillMMO",
   "skillmmo.command.skill.acquire.failure_max_level": "You're already at max level in %s!",
   "skillmmo.command.skill.acquire.failure_no_available_points": "You have no available skill points!",
   "skillmmo.command.skill.acquire.success": "You're now level %d in %s",
@@ -52,7 +53,6 @@
   "skillmmo.gui.skills.skill.name": "%s",
   "skillmmo.gui.skills.title": "Skills",
   "skillmmo.keybindings.binding.open_skills": "Open Skills",
-  "skillmmo.keybindings.category": "SkillMMO",
   "skillmmo.skill.agriculture.description": "Master the natural world!",
   "skillmmo.skill.agriculture.name": "Agriculture",
   "skillmmo.skill.animalhusbandry.description": "Domesticate and tame our precious wildlife!",
@@ -119,6 +119,7 @@
   "tag.item.skillmmo.skills/mining/25": "Mining lvl 25",
   "tag.item.skillmmo.skills/mining/4": "Mining lvl 4",
   "tag.item.skillmmo.skills/mining/5": "Mining lvl 5",
+  "tag.item.skillmmo.skills/mining/6": "Mining lvl 6",
   "tag.item.skillmmo.skills/mining/7": "Mining lvl 7",
   "tag.item.skillmmo.skills/mining/8": "Mining lvl 8",
   "tag.item.skillmmo.skills/sorcery/1": "Sorcery lvl 1",

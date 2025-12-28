@@ -20,8 +20,8 @@ public class PlayerLockedRecipeManager {
     }
 
     public void syncLockedRecipes(ServerPlayerEntity player) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
-        ServerRecipeManager recipeManager = player.getServer().getRecipeManager();
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
+        ServerRecipeManager recipeManager = player.getEntityWorld().getServer().getRecipeManager();
 
         if (SkillMmoConfig.getConfig().lockRecipesUntilIngredientsAndOutputAreUnlocked) {
             // Unlock the recipes that have been unlocked since this was last synced (i.e. player has gained levels)

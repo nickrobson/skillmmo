@@ -19,17 +19,17 @@ public class PlayerSkillPointManager {
     }
 
     public int getAvailableSkillPoints(PlayerEntity player) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         return skillMmoPlayerDataHolder.skillMmo$getPlayerData().getAvailableSkillPoints();
     }
 
     public void setAvailableSkillPoints(PlayerEntity player, int availableSkillPoints) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         skillMmoPlayerDataHolder.skillMmo$getPlayerData().setAvailableSkillPoints(availableSkillPoints);
     }
 
     public boolean consumeAvailableSkillPoint(PlayerEntity player) {
-        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = (SkillMmoPlayerDataHolder) player;
+        SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         return skillMmoPlayerDataHolder.skillMmo$getPlayerData().consumeAvailableSkillPoint();
     }
 }

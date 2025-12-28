@@ -1,6 +1,5 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
@@ -8,29 +7,21 @@ import net.minecraft.network.ClientConnection;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.network.ConnectedClientData;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.storage.ReadView;
-import net.minecraft.util.ErrorReporter;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Optional;
 
 @Mixin(PlayerManager.class)
 public abstract class MixinPlayerManager {
     @Inject(
-            method = "loadPlayerData",
-            at = @At("RETURN")
+            method = "onPlayerConnect",
+            at = @At("HEAD")
     )
-    public void skillMmo$loadPlayerData(ServerPlayerEntity player, ErrorReporter errorReporter, CallbackInfoReturnable<Optional<ReadView>> cir, @Local Optional optional) {
-        if (optional.isEmpty()) {
-            // This is the first time the player has joined the server,
-            // so initialise them with empty data
-            ((SkillMmoPlayerDataHolder) player).skillMmo$setPlayerData(
-                    new SkillMmoPlayerData()
-            );
+    public void skillMmo$onPlayerConnect$HEAD(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
+        SkillMmoPlayerDataHolder playerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
+        if (playerDataHolder.skillMmo$getPlayerData() == SkillMmoPlayerData.UNINITIALISED) {
+            playerDataHolder.skillMmo$setPlayerData(new SkillMmoPlayerData());
         }
     }
 
@@ -38,7 +29,7 @@ public abstract class MixinPlayerManager {
             method = "onPlayerConnect",
             at = @At("TAIL")
     )
-    public void skillMmo$onPlayerConnect(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
+    public void skillMmo$onPlayerConnect$TAIL(ClientConnection connection, ServerPlayerEntity player, ConnectedClientData clientData, CallbackInfo ci) {
         PlayerLockedRecipeManager.getInstance().syncLockedRecipes(player);
     }
 }

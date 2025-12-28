@@ -5,7 +5,6 @@ import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
@@ -27,7 +26,7 @@ public class UnlockTooltipHelper {
             return List.of(Text.translatable("skillmmo.feedback.item.locked"));
         }
 
-        if (skillLevelSet.size() == 1 || !Screen.hasShiftDown()) {
+        if (skillLevelSet.size() == 1 || !player.isSneaking()) {
             SkillLevel skillLevel = PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
             return List.of(
                     Text.translatable(

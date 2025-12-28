@@ -7,10 +7,12 @@ import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.Click;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
 import net.minecraft.client.gui.screen.narration.NarrationPart;
 import net.minecraft.client.gui.widget.ClickableWidget;
+import net.minecraft.client.input.KeyInput;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
@@ -80,7 +82,20 @@ public class WCharButton extends WWidget {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public InputResult onClick(int x, int y, int button) {
+    public InputResult onClick(Click click, boolean doubled) {
+        return this.onClick((int) click.x(), (int) click.y());
+    }
+
+    @Environment(EnvType.CLIENT)
+    @Override
+    public InputResult onKeyPressed(KeyInput input) {
+        if (isActivationKey(input.key())) {
+            return this.onClick(0, 0);
+        }
+        return InputResult.IGNORED;
+    }
+
+    private InputResult onClick(int x, int y) {
         if (enabled && isWithinBounds(x, y)) {
             MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.master(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 
@@ -91,16 +106,6 @@ public class WCharButton extends WWidget {
             return InputResult.PROCESSED;
         }
 
-        return InputResult.IGNORED;
-    }
-
-    @Environment(EnvType.CLIENT)
-    @Override
-    public InputResult onKeyPressed(int ch, int key, int modifiers) {
-        if (isActivationKey(ch)) {
-            onClick(0, 0, 0);
-            return InputResult.PROCESSED;
-        }
         return InputResult.IGNORED;
     }
 
