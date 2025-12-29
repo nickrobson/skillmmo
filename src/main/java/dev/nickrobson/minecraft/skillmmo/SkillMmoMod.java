@@ -11,7 +11,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
@@ -37,8 +37,8 @@ public class SkillMmoMod implements ModInitializer {
         SkillMmoNetworking.registerPackets();
         SkillMmoServerNetworking.registerReceivers();
 
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA)
-                .registerReloadListener(Identifier.of("skillmmo", "resources"), SkillMmoResourceLoader::new);
+        ResourceLoader.get(ResourceType.SERVER_DATA)
+                .registerReloader(Identifier.of("skillmmo", "resources"), new SkillMmoResourceLoader());
 
         SkillMmoCommands.register(); // must be after resource loading
 

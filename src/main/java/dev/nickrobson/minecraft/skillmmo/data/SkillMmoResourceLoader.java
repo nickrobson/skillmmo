@@ -1,11 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
-import com.google.gson.JsonElement;
-import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.JsonOps;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+import net.fabricmc.fabric.api.resource.v1.reloader.SimpleResourceReloader;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -30,25 +29,14 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadListener {
+public class SkillMmoResourceLoader extends SimpleResourceReloader<Set<Skill>> {
     private static final Logger logger = LogManager.getLogger(SkillMmoResourceLoader.class);
 
-    private final RegistryWrapper.WrapperLookup registryWrapperLookup;
-    private final DynamicOps<JsonElement> ops;
-
-    public SkillMmoResourceLoader(RegistryWrapper.WrapperLookup registryWrapperLookup) {
-        this.registryWrapperLookup = registryWrapperLookup;
-        this.ops = registryWrapperLookup.getOps(JsonOps.INSTANCE);
-    }
-
     @Override
-    public Identifier getFabricId() {
-        return Identifier.of("skillmmo", "resources");
-    }
-
-    @Override
-    public void reload(ResourceManager manager) {
-        Map<Identifier, SkillData> skillsData = loadResources(manager, SkillMmoDataType.SKILLS);
+    protected Set<Skill> prepare(Store store) {
+        ResourceManager resourceManager = store.getResourceManager();
+        RegistryWrapper.WrapperLookup registryWrapperLookup = store.getOrThrow(ResourceLoader.RELOADER_REGISTRY_LOOKUP_KEY);
+        Map<Identifier, SkillData> skillsData = loadResources(resourceManager, SkillMmoDataType.SKILLS);
 
         Map<Identifier, SkillData> skillDataBySkillId = new HashMap<>();
         skillsData.forEach((id, skillData) ->
@@ -137,7 +125,12 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
             throw new IllegalStateException(String.join("\n", errors));
         }
 
-        SkillManager.getInstance().initInstalledSkills(skills);
+        return skills;
+    }
+
+    @Override
+    protected void apply(Set<Skill> prepared, Store store) {
+        SkillManager.getInstance().initInstalledSkills(prepared);
     }
 
     private <T> Map<Identifier, T> loadResources(ResourceManager resourceManager, SkillMmoDataType<T> type) {
@@ -145,7 +138,7 @@ public class SkillMmoResourceLoader implements SimpleSynchronousResourceReloadLi
         Map<Identifier, Resource> resourceMap = resourceFinder.findResources(resourceManager);
 
         Map<Identifier, T> resourcesMap = new HashMap<>();
-        JsonDataLoader.load(resourceManager, resourceFinder, this.ops, type.getCodec(), resourcesMap);
+        JsonDataLoader.load(resourceManager, resourceFinder, JsonOps.INSTANCE, type.getCodec(), resourcesMap);
 
         Set<Identifier> successfullyLoaded = new TreeSet<>(resourcesMap.keySet());
         logger.info("Loaded resources for {}: {}", type.getResourceCategory(), successfullyLoaded);
