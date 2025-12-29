@@ -9,7 +9,6 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
-import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
@@ -60,7 +59,7 @@ public class Skill {
                 .build(
                         new CacheLoader<>() {
                             @Override
-                            public @NotNull Optional<SkillLevel> load(Unlockable<?> key) {
+                            public Optional<SkillLevel> load(Unlockable<?> key) {
                                 return getSkillLevels()
                                         .stream()
                                         .filter(level -> level.hasUnlock(key.type(), key.targetId()))

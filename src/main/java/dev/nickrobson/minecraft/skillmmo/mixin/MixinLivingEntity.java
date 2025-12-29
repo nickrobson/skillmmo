@@ -59,8 +59,7 @@ public abstract class MixinLivingEntity {
             )
     )
     public boolean skillMmo$canGlide(ItemStack stack, EquipmentSlot slot) {
-        //noinspection ConstantValue
-        if ((Object) this instanceof PlayerEntity player
+        if ((LivingEntity) (Object) this instanceof PlayerEntity player
                 && !PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, stack)) {
             return false;
         }

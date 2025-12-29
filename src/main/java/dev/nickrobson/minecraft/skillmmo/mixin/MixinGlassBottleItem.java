@@ -21,7 +21,6 @@ public class MixinGlassBottleItem {
             method = "use",
             at = @At(
                     value = "INVOKE",
-                    shift = At.Shift.BEFORE,
                     target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"
             ),
             ordinal = 0

@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Documentation of content that is intentionally NOT gated behind skill levels.
@@ -150,13 +151,13 @@ public final class UngatedContent {
      * Useful for validation or documentation purposes.
      */
     public static List<Block> getAllUngatedBlocks() {
-        return List.of(
+        return Stream.of(
                         SPRING_TO_LIFE_DECORATIVE_BLOCKS,
                         TECHNICAL_BLOCKS,
                         OTHER_DECORATIVE_BLOCKS,
                         FLOWERS,
                         MUSHROOMS
-                ).stream()
+                )
                 .flatMap(List::stream)
                 .toList();
     }
