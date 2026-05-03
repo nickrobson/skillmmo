@@ -2,11 +2,7 @@ plugins {
     id 'fabric-loom' version "$loom_version"
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
-
 group = project.mod_group
-archivesBaseName = project.mod_id
 version = project.mod_version
 
 println("Building on Java: ${System.getProperty('java.version')}, JVM: ${System.getProperty('java.vm.version')} (${System.getProperty('java.vendor')}) Arch: ${System.getProperty('os.arch')}")
@@ -14,7 +10,7 @@ println("Minecraft ${project.minecraft_version}, Fabric API ${project.fabric_api
 
 repositories {
     maven {
-        url "https://maven.shedaniel.me/"
+        url = "https://maven.shedaniel.me/"
         content {
             // ClothConfig
             includeModule("me.shedaniel.cloth", "cloth-config-fabric")
@@ -22,7 +18,7 @@ repositories {
         }
     }
     maven {
-        url "https://maven.bai.lol"
+        url = "https://maven.bai.lol"
         content {
             // WTHIT
             includeModule("lol.bai", "badpackets")
@@ -31,7 +27,7 @@ repositories {
         }
     }
     maven {
-        url "https://staging.alexiil.uk/maven/"
+        url = "https://staging.alexiil.uk/maven/"
         content {
             // LibGUI
             includeModule("io.github.cottonmc", "LibGui")
@@ -74,16 +70,16 @@ processResources {
     inputs.property "version", project.version
 
     filesMatching("fabric.mod.json") {
-        expand "mod_id": project.mod_id,
-                "mod_version": project.mod_version,
-                "mod_name": project.mod_name,
-                "mod_description": project.mod_description,
-                "java_version_range": project.java_version_range,
-                "minecraft_version_range": project.minecraft_version_range,
-                "fabric_loader_version_range": project.fabric_loader_version_range,
-                "fabric_api_version_range": project.fabric_api_version_range,
-                "cloth_config_version_range": project.cloth_config_version_range,
-                "wthit_version_range": project.wthit_version_range
+        expand "mod_id": providers.gradleProperty("mod_id").get(),
+                "mod_version": providers.gradleProperty("mod_version").get(),
+                "mod_name": providers.gradleProperty("mod_name").get(),
+                "mod_description": providers.gradleProperty("mod_description").get(),
+                "java_version_range": providers.gradleProperty("java_version_range").get(),
+                "minecraft_version_range": providers.gradleProperty("minecraft_version_range").get(),
+                "fabric_loader_version_range": providers.gradleProperty("fabric_loader_version_range").get(),
+                "fabric_api_version_range": providers.gradleProperty("fabric_api_version_range").get(),
+                "cloth_config_version_range": providers.gradleProperty("cloth_config_version_range").get(),
+                "wthit_version_range": providers.gradleProperty("wthit_version_range").get()
     }
 }
 
@@ -104,7 +100,14 @@ tasks.withType(JavaCompile).configureEach {
     it.options.release = 21
 }
 
+base {
+    archivesName = project.mod_id
+}
+
 java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.
     // If you remove this line, sources will not be generated.
@@ -113,7 +116,7 @@ java {
 
 jar {
     from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
+        rename { "${it}_${providers.gradleProperty("mod_id").get()}" }
     }
 }
 
