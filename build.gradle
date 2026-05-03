@@ -31,7 +31,7 @@ repositories {
         }
     }
     maven {
-        url "https://server.bbkr.space/artifactory/libs-release"
+        url "https://staging.alexiil.uk/maven/"
         content {
             // LibGUI
             includeModule("io.github.cottonmc", "LibGui")
