@@ -5,14 +5,13 @@ import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.RegistryWrapper;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.world.entity.EntityType;
 import java.util.concurrent.CompletableFuture;
 
 public class SkillMmoSkillLevelEntityTypeTagProvider extends FabricTagProvider.EntityTypeTagProvider {
-    public SkillMmoSkillLevelEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+    public SkillMmoSkillLevelEntityTypeTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
         super(output, completableFuture);
     }
 
@@ -22,11 +21,11 @@ public class SkillMmoSkillLevelEntityTypeTagProvider extends FabricTagProvider.E
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
         SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(skillSpec -> {
             skillSpec.levels().forEach((level, levelSpec) -> {
                 if (levelSpec.hasEntityTypes()) {
-                    ProvidedTagBuilder<EntityType<?>, EntityType<?>> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.ENTITY_TYPE)).setReplace(true);
+                    TagAppender<EntityType<?>, EntityType<?>> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.ENTITY_TYPE)).setReplace(true);
                     levelSpec.entityTypes().forEach(tagBuilder::add);
                     levelSpec.entityTypeTags().forEach(tagBuilder::forceAddTag);
                 }

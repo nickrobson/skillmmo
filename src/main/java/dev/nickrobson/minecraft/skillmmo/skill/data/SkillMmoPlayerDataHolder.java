@@ -1,9 +1,8 @@
 package dev.nickrobson.minecraft.skillmmo.skill.data;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import net.minecraft.entity.player.PlayerEntity;
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.world.entity.player.Player;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -12,7 +11,7 @@ public interface SkillMmoPlayerDataHolder {
 
     void skillMmo$setPlayerData(SkillMmoPlayerData playerData);
 
-    static SkillMmoPlayerDataHolder getPlayerDataHolder(PlayerEntity player) {
+    static SkillMmoPlayerDataHolder getPlayerDataHolder(Player player) {
         return (SkillMmoPlayerDataHolder) player;
     }
 }

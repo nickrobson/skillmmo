@@ -1,8 +1,8 @@
 package dev.nickrobson.minecraft.skillmmo.api.interaction;
 
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public abstract class InteractionType<Target> {
     private final UnlockableType<Target> unlockableType;
@@ -20,5 +20,5 @@ public abstract class InteractionType<Target> {
         return new Interaction<>(this, targetId);
     }
 
-    public abstract Text getDenyText(Target target, Text requiredSkillName, int requiredSkillLevel);
+    public abstract Component getDenyText(Target target, Component requiredSkillName, int requiredSkillLevel);
 }

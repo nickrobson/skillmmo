@@ -5,9 +5,8 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
-import net.minecraft.util.Identifier;
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.resources.Identifier;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;

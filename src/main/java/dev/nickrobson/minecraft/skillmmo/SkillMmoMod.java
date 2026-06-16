@@ -13,8 +13,8 @@ import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
-import net.minecraft.resource.ResourceType;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.packs.PackType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -38,8 +38,8 @@ public class SkillMmoMod implements ModInitializer {
         SkillMmoNetworking.registerPackets();
         SkillMmoServerNetworking.registerReceivers();
 
-        ResourceLoader.get(ResourceType.SERVER_DATA)
-                .registerReloader(Identifier.of("skillmmo", "resources"), new SkillMmoResourceLoader());
+        ResourceLoader.get(PackType.SERVER_DATA)
+                .registerReloader(Identifier.fromNamespaceAndPath("skillmmo", "resources"), new SkillMmoResourceLoader());
 
         SkillMmoCommands.register(); // must be after resource loading
 

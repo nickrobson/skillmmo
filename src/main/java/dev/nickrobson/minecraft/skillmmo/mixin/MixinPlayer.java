@@ -6,13 +6,6 @@ import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataRaw;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -23,9 +16,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import javax.annotation.Nonnull;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
-@Mixin(PlayerEntity.class)
-public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
+@Mixin(Player.class)
+public abstract class MixinPlayer implements SkillMmoPlayerDataHolder {
     @Unique
     private static final String SKILLMMO_DATA_KEY = "skillMmo";
 
@@ -34,13 +34,13 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
 
     @Shadow
     @Final
-    PlayerInventory inventory;
+    Inventory inventory;
 
     @Inject(
-            method = "readCustomData",
+            method = "readAdditionalSaveData",
             at = @At(value = "TAIL")
     )
-    public void skillMmo$readNbtData(ReadView view, CallbackInfo ci) {
+    public void skillMmo$readNbtData(ValueInput view, CallbackInfo ci) {
         if (!SkillMmoMod.isModEnabled) {
             return;
         }
@@ -51,16 +51,16 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
     }
 
     @Inject(
-            method = "writeCustomData",
+            method = "addAdditionalSaveData",
             at = @At(value = "TAIL")
     )
-    public void skillMmo$writeNbtData(WriteView view, CallbackInfo ci) {
+    public void skillMmo$writeNbtData(ValueOutput view, CallbackInfo ci) {
         if (!SkillMmoMod.isModEnabled) {
             return;
         }
 
         SkillMmoPlayerData playerData = this.skillMmo$getPlayerData();
-        view.put(SKILLMMO_DATA_KEY, SkillMmoPlayerDataRaw.CODEC, playerData.toRaw());
+        view.store(SKILLMMO_DATA_KEY, SkillMmoPlayerDataRaw.CODEC, playerData.toRaw());
     }
 
     @Unique
@@ -80,13 +80,13 @@ public abstract class MixinPlayerEntity implements SkillMmoPlayerDataHolder {
 
     // This prevents blocks from dropping items when you haven't unlocked them
     @Inject(
-            method = "canHarvest",
+            method = "hasCorrectToolForDrops",
             at = @At("HEAD"),
             cancellable = true
     )
     public void skillMmo$canHarvest(BlockState state, CallbackInfoReturnable<Boolean> cir) {
-        PlayerEntity player = (PlayerEntity) (Object) this; // safe as this is a mixin for PlayerEntity
-        ItemStack itemStackInHand = player.getMainHandStack();
+        Player player = (Player) (Object) this; // safe as this is a mixin for PlayerEntity
+        ItemStack itemStackInHand = player.getMainHandItem();
         if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStackInHand) && !(itemStackInHand.getItem() instanceof BlockItem)) {
             PlayerSkillUnlockManager.getInstance().reportItemUseLocked(player, itemStackInHand.getItem());
             cir.setReturnValue(false);

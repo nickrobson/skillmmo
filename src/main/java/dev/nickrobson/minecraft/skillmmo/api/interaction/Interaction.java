@@ -1,15 +1,14 @@
 package dev.nickrobson.minecraft.skillmmo.api.interaction;
 
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
 import java.util.Objects;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 /**
  * Represents an interaction with something
  *
- * @param <Target> the type of the class of thing, e.g. {@link net.minecraft.item.Item}, {@link net.minecraft.block.Block}, or {@link net.minecraft.entity.EntityType}
+ * @param <Target> the type of the class of thing, e.g. {@link net.minecraft.world.item.Item}, {@link net.minecraft.world.level.block.Block}, or {@link net.minecraft.world.entity.EntityType}
  */
 public final class Interaction<Target> {
     private final InteractionType<Target> type;
@@ -47,7 +46,7 @@ public final class Interaction<Target> {
         return type.getUnlockableType().createUnlockable(targetId);
     }
 
-    public Text getDenyText(Target target, Text requiredSkillName, int requiredSkillLevel) {
+    public Component getDenyText(Target target, Component requiredSkillName, int requiredSkillLevel) {
         return type.getDenyText(target, requiredSkillName, requiredSkillLevel);
     }
 

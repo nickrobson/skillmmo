@@ -1,18 +1,17 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Pair;
-
 import java.util.List;
 import java.util.Map;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 
 /**
  * Documentation of content that is intentionally NOT gated behind skill levels.
@@ -399,9 +398,9 @@ public final class SkillMmoDefaultUngatedContent {
     public static final List<TagKey<EntityType<?>>> UNGATED_BY_DEFAULT_ENTITY_TYPE_TAGS = List.of(
     );
 
-    public static final Map<Registry<?>, Pair<List<?>, List<? extends TagKey<?>>>> UNGATED_THINGS = Map.of(
-            Registries.BLOCK, new Pair<>(UNGATED_BY_DEFAULT_BLOCKS, UNGATED_BY_DEFAULT_BLOCK_TAGS),
-            Registries.ITEM, new Pair<>(UNGATED_BY_DEFAULT_ITEMS, UNGATED_BY_DEFAULT_ITEM_TAGS),
-            Registries.ENTITY_TYPE, new Pair<>(UNGATED_BY_DEFAULT_ENTITY_TYPES, UNGATED_BY_DEFAULT_ENTITY_TYPE_TAGS)
+    public static final Map<Registry<?>, Tuple<List<?>, List<? extends TagKey<?>>>> UNGATED_THINGS = Map.of(
+            BuiltInRegistries.BLOCK, new Tuple<>(UNGATED_BY_DEFAULT_BLOCKS, UNGATED_BY_DEFAULT_BLOCK_TAGS),
+            BuiltInRegistries.ITEM, new Tuple<>(UNGATED_BY_DEFAULT_ITEMS, UNGATED_BY_DEFAULT_ITEM_TAGS),
+            BuiltInRegistries.ENTITY_TYPE, new Tuple<>(UNGATED_BY_DEFAULT_ENTITY_TYPES, UNGATED_BY_DEFAULT_ENTITY_TYPE_TAGS)
     );
 }

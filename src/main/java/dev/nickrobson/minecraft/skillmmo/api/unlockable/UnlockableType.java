@@ -1,9 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.api.unlockable;
 
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 
 public abstract class UnlockableType<Target> {
     private final Registry<Target> registry;
@@ -17,11 +17,11 @@ public abstract class UnlockableType<Target> {
     }
 
     public TagKey<Target> createTag(Identifier tagIdentifier) {
-        return TagKey.of(registry.getKey(), tagIdentifier);
+        return TagKey.create(registry.key(), tagIdentifier);
     }
 
     public Unlockable<Target> createUnlockable(Target targetType) {
-        Identifier targetId = this.registry.getId(targetType);
+        Identifier targetId = this.registry.getKey(targetType);
         return new Unlockable<>(this, targetId);
     }
 
@@ -30,17 +30,17 @@ public abstract class UnlockableType<Target> {
     }
 
     public Target getById(Identifier identifier) {
-        return this.registry.get(identifier);
+        return this.registry.getValue(identifier);
     }
 
     public Identifier getId(Target targetType) {
-        return this.registry.getId(targetType);
+        return this.registry.getKey(targetType);
     }
 
-    public Text getName(Identifier identifier) {
-        Target targetType = registry.get(identifier);
+    public Component getName(Identifier identifier) {
+        Target targetType = registry.getValue(identifier);
         return targetType == null ? null : getName(targetType);
     }
 
-    protected abstract Text getName(Target target);
+    protected abstract Component getName(Target target);
 }

@@ -10,60 +10,58 @@ import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.minecraft.command.DefaultPermissions;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.permission.Permissions;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.server.permissions.Permissions;
+import net.minecraft.world.entity.player.Player;
 import java.util.Comparator;
 import java.util.List;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class SkillsCommand {
     private SkillsCommand() {
     }
 
-    static LiteralArgumentBuilder<ServerCommandSource> defineSkillsCommand() {
+    static LiteralArgumentBuilder<CommandSourceStack> defineSkillsCommand() {
         return literal("skills")
-                .then(argument("player", EntityArgumentType.player())
-                        .requires(source -> source.getPermissions().hasPermission(DefaultPermissions.GAMEMASTERS))
-                        .executes(ctx -> executeSkillsCommand(ctx, EntityArgumentType.getPlayer(ctx, "player"))))
+                .then(argument("player", EntityArgument.player())
+                        .requires(source -> source.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
+                        .executes(ctx -> executeSkillsCommand(ctx, EntityArgument.getPlayer(ctx, "player"))))
                 .executes(ctx -> executeSkillsCommand(ctx, null));
     }
 
-    private static int executeSkillsCommand(@Nonnull CommandContext<ServerCommandSource> ctx, @Nullable PlayerEntity player) {
+    private static int executeSkillsCommand(@Nonnull CommandContext<CommandSourceStack> ctx, @Nullable Player player) {
         List<Skill> skills = SkillManager.getInstance().getSkills()
                 .stream()
                 .sorted(Comparator.comparing(Skill::getId))
                 .toList();
 
-        ctx.getSource().sendFeedback(() -> Text.translatable("skillmmo.command.skills.heading", skills.size())
-                .setStyle(Style.EMPTY.withColor(Formatting.BLUE)), false);
+        ctx.getSource().sendSuccess(() -> Component.translatable("skillmmo.command.skills.heading", skills.size())
+                .setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE)), false);
 
-        if (player == null && ctx.getSource().getEntity() instanceof PlayerEntity sourcePlayer) {
+        if (player == null && ctx.getSource().getEntity() instanceof Player sourcePlayer) {
             player = sourcePlayer;
         }
 
         if (player == null) {
             for (Skill skill : skills) {
-                ctx.getSource().sendFeedback(() -> Text.translatable(
+                ctx.getSource().sendSuccess(() -> Component.translatable(
                         "skillmmo.command.skills.skill_line",
                         skill.getName()
                 ), false);
             }
         } else {
-            Text playerName = player.getName();
+            Component playerName = player.getName();
             for (Skill skill : skills) {
                 int skillLevel = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
-                ctx.getSource().sendFeedback(() -> Text.translatable(
+                ctx.getSource().sendSuccess(() -> Component.translatable(
                         "skillmmo.command.skills.skill_line_with_level",
                         skill.getName(),
                         skillLevel,
@@ -73,13 +71,13 @@ public class SkillsCommand {
 
             int availablePoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
             if (player == ctx.getSource().getEntity()) {
-                ctx.getSource().sendFeedback(
-                        () -> Text.translatable("skillmmo.command.skills.available_points_self", availablePoints),
+                ctx.getSource().sendSuccess(
+                        () -> Component.translatable("skillmmo.command.skills.available_points_self", availablePoints),
                         false
                 );
             } else {
-                ctx.getSource().sendFeedback(
-                        () -> Text.translatable("skillmmo.command.skills.available_points_other", playerName, availablePoints),
+                ctx.getSource().sendSuccess(
+                        () -> Component.translatable("skillmmo.command.skills.available_points_other", playerName, availablePoints),
                         false
                 );
             }
@@ -88,13 +86,13 @@ public class SkillsCommand {
             ExperienceLevel experienceLevel = ExperienceLevelEquation.getInstance().getExperienceLevel(experience);
 
             if (player == ctx.getSource().getEntity()) {
-                ctx.getSource().sendFeedback(
-                        () -> Text.translatable("skillmmo.command.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                ctx.getSource().sendSuccess(
+                        () -> Component.translatable("skillmmo.command.skills.player_experience_self", experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             } else {
-                ctx.getSource().sendFeedback(
-                        () -> Text.translatable("skillmmo.command.skills.player_experience_other", playerName, experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
+                ctx.getSource().sendSuccess(
+                        () -> Component.translatable("skillmmo.command.skills.player_experience_other", playerName, experienceLevel.level(), Math.round(experienceLevel.progressFraction() * 100), experienceLevel.level() + 1),
                         false
                 );
             }

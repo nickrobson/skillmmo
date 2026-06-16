@@ -2,17 +2,17 @@ package dev.nickrobson.minecraft.skillmmo.gui;
 
 import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
 import io.github.cottonmc.cotton.gui.widget.WItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
 
 public class WItemWithTooltip extends WItem {
-    private Text tooltipText;
+    private Component tooltipText;
 
     public WItemWithTooltip(ItemStack stack) {
         super(stack);
     }
 
-    public WItemWithTooltip setTooltipText(Text tooltipText) {
+    public WItemWithTooltip setTooltipText(Component tooltipText) {
         this.tooltipText = tooltipText;
         return this;
     }

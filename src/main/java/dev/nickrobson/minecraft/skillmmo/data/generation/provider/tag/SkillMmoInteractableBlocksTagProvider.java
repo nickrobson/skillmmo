@@ -3,14 +3,13 @@ package dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Blocks;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.world.level.block.Blocks;
 import java.util.concurrent.CompletableFuture;
 
 public class SkillMmoInteractableBlocksTagProvider extends FabricTagProvider.BlockTagProvider {
-    public SkillMmoInteractableBlocksTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registriesFuture) {
+    public SkillMmoInteractableBlocksTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
@@ -20,7 +19,7 @@ public class SkillMmoInteractableBlocksTagProvider extends FabricTagProvider.Blo
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
         valueLookupBuilder(SkillMmoTags.interactableBlocks)
                 .setReplace(false)
                 .add(

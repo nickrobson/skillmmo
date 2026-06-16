@@ -1,11 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.experience;
 
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import net.minecraft.util.math.MathHelper;
-
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
+import net.minecraft.util.Mth;
 
 public class ExperienceLevelEquation {
     private static final int MAX_EXPERIENCE_LEVEL = 10_000;
@@ -94,7 +93,7 @@ public class ExperienceLevelEquation {
     }
 
     private void calculateLevelExperienceUpToLevel(int level) {
-        int target = MathHelper.clamp(level, 0, MAX_EXPERIENCE_LEVEL);
+        int target = Mth.clamp(level, 0, MAX_EXPERIENCE_LEVEL);
         if (target < highestCalculated) {
             return;
         }

@@ -10,15 +10,15 @@ import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.ITooltip;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.state.BlockState;
 
 class SkillMmoBlockUnlockProvider implements IBlockComponentProvider {
     @Override
     @Environment(EnvType.CLIENT)
     public void appendBody(ITooltip tooltip, IBlockAccessor accessor, IPluginConfig config) {
-        PlayerEntity player = accessor.getPlayer();
+        Player player = accessor.getPlayer();
         BlockState blockState = accessor.getBlockState();
 
         if (PlayerSkillUnlockManager.getInstance().hasBlockUnlock(player, blockState)) {
@@ -26,7 +26,7 @@ class SkillMmoBlockUnlockProvider implements IBlockComponentProvider {
         }
 
         Unlockable<?> unlock = VanillaUnlockables.forBlock(blockState);
-        for (Text line : UnlockTooltipHelper.getLockedTooltipText(player, unlock)) {
+        for (Component line : UnlockTooltipHelper.getLockedTooltipText(player, unlock)) {
             tooltip.addLine(line);
         }
     }

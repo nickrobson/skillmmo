@@ -1,23 +1,22 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
-
 import java.util.HashMap;
 import java.util.Map;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
 public record SetPlayerSkillsS2CPacket(
         Map<Identifier, Integer> playerSkillLevels
-) implements CustomPayload {
-    public static final Id<SetPlayerSkillsS2CPacket> PACKET_ID = new Id<>(Identifier.of(SkillMmoMod.MOD_ID, "set_player_skills"));
-    public static final PacketCodec<RegistryByteBuf, SetPlayerSkillsS2CPacket> PACKET_CODEC = PacketCodecs.map(SetPlayerSkillsS2CPacket::toMap, Identifier.PACKET_CODEC, PacketCodecs.VAR_INT).xmap(SetPlayerSkillsS2CPacket::new, SetPlayerSkillsS2CPacket::playerSkillLevels).cast();
+) implements CustomPacketPayload {
+    public static final Type<SetPlayerSkillsS2CPacket> PACKET_ID = new Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "set_player_skills"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetPlayerSkillsS2CPacket> PACKET_CODEC = ByteBufCodecs.map(SetPlayerSkillsS2CPacket::toMap, Identifier.STREAM_CODEC, ByteBufCodecs.VAR_INT).map(SetPlayerSkillsS2CPacket::new, SetPlayerSkillsS2CPacket::playerSkillLevels).cast();
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return PACKET_ID;
     }
 

@@ -6,24 +6,23 @@ import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.Click;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.narration.NarrationMessageBuilder;
-import net.minecraft.client.gui.screen.narration.NarrationPart;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.input.KeyInput;
-import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.text.Text;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarratedElementType;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import javax.annotation.Nullable;
 
 public class WCharButton extends WWidget {
     private final char text;
     private boolean enabled = true;
     @Nullable
-    private Text tooltip;
+    private Component tooltip;
     @Nullable
     private Runnable onClick;
 
@@ -32,7 +31,7 @@ public class WCharButton extends WWidget {
         this.text = text;
     }
 
-    public WCharButton setTooltip(@Nullable Text tooltip) {
+    public WCharButton setTooltip(@Nullable Component tooltip) {
         this.tooltip = tooltip;
         return this;
     }
@@ -59,7 +58,7 @@ public class WCharButton extends WWidget {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void paint(DrawContext drawContext, int x, int y, int mouseX, int mouseY) {
+    public void paint(GuiGraphics drawContext, int x, int y, int mouseX, int mouseY) {
         boolean hovered = (mouseX >= 0 && mouseY >= 0 && mouseX < getWidth() && mouseY < getHeight());
 
         int panel = 0xFF737373;
@@ -74,21 +73,21 @@ public class WCharButton extends WWidget {
         ScreenDrawing.coloredRect(drawContext, x + 1, y, getWidth() - 2, getHeight(), outline);
         ScreenDrawing.coloredRect(drawContext, x + 1, y + 1, getWidth() - 2, getHeight() - 2, panel);
 
-        Text text = Text.literal(String.valueOf(this.text));
-        int textWidth = MinecraftClient.getInstance().textRenderer.getWidth(text);
+        Component text = Component.literal(String.valueOf(this.text));
+        int textWidth = Minecraft.getInstance().font.width(text);
         int color = enabled ? 0xFFE0E0E0 : 0xFFA0A0A0;
-        drawContext.drawTextWithShadow(MinecraftClient.getInstance().textRenderer, text, x + (width - textWidth) / 2, y + (getHeight() - 8) / 2, color);
+        drawContext.drawString(Minecraft.getInstance().font, text, x + (width - textWidth) / 2, y + (getHeight() - 8) / 2, color);
     }
 
     @Environment(EnvType.CLIENT)
     @Override
-    public InputResult onClick(Click click, boolean doubled) {
+    public InputResult onClick(MouseButtonEvent click, boolean doubled) {
         return this.onClick((int) click.x(), (int) click.y());
     }
 
     @Environment(EnvType.CLIENT)
     @Override
-    public InputResult onKeyPressed(KeyInput input) {
+    public InputResult onKeyPressed(KeyEvent input) {
         if (isActivationKey(input.key())) {
             return this.onClick(0, 0);
         }
@@ -97,7 +96,7 @@ public class WCharButton extends WWidget {
 
     private InputResult onClick(int x, int y) {
         if (enabled && isWithinBounds(x, y)) {
-            MinecraftClient.getInstance().getSoundManager().play(PositionedSoundInstance.ui(SoundEvents.UI_BUTTON_CLICK, 1.0F));
+            Minecraft.getInstance().getSoundManager().play(SimpleSoundInstance.forUI(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 
             if (onClick != null) {
                 onClick.run();
@@ -119,16 +118,16 @@ public class WCharButton extends WWidget {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void addNarrations(NarrationMessageBuilder builder) {
+    public void addNarrations(NarrationElementOutput builder) {
         if (tooltip != null) {
-            builder.put(NarrationPart.TITLE, ClickableWidget.getNarrationMessage(tooltip));
+            builder.add(NarratedElementType.TITLE, AbstractWidget.wrapDefaultNarrationMessage(tooltip));
         }
 
         if (enabled) {
             if (isFocused()) {
-                builder.put(NarrationPart.USAGE, Text.translatable("narration.button.usage.focused"));
+                builder.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.focused"));
             } else if (isHovered()) {
-                builder.put(NarrationPart.USAGE, Text.translatable("narration.button.usage.hovered"));
+                builder.add(NarratedElementType.USAGE, Component.translatable("narration.button.usage.hovered"));
             }
         }
     }

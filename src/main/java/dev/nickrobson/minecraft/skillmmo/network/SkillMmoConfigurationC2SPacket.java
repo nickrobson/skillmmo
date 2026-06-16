@@ -1,20 +1,20 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.util.Identifier;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
 
 public record SkillMmoConfigurationC2SPacket(
         String modVersion
-) implements CustomPayload {
-    public static final Id<SkillMmoConfigurationC2SPacket> PACKET_ID = new Id<>(Identifier.of(SkillMmoMod.MOD_ID, "configure_c2s"));
-    public static final PacketCodec<PacketByteBuf, SkillMmoConfigurationC2SPacket> PACKET_CODEC = PacketCodec.tuple(PacketCodecs.STRING, SkillMmoConfigurationC2SPacket::modVersion, SkillMmoConfigurationC2SPacket::new);
+) implements CustomPacketPayload {
+    public static final Type<SkillMmoConfigurationC2SPacket> PACKET_ID = new Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "configure_c2s"));
+    public static final StreamCodec<FriendlyByteBuf, SkillMmoConfigurationC2SPacket> PACKET_CODEC = StreamCodec.composite(ByteBufCodecs.STRING_UTF8, SkillMmoConfigurationC2SPacket::modVersion, SkillMmoConfigurationC2SPacket::new);
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return PACKET_ID;
     }
 }

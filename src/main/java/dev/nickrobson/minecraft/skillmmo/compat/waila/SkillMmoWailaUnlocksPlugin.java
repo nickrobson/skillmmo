@@ -2,8 +2,8 @@ package dev.nickrobson.minecraft.skillmmo.compat.waila;
 
 import mcp.mobius.waila.api.IClientRegistrar;
 import mcp.mobius.waila.api.IWailaClientPlugin;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.Block;
 
 public class SkillMmoWailaUnlocksPlugin implements IWailaClientPlugin {
     @Override

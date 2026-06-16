@@ -1,10 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.util;
 
-import net.minecraft.recipe.Recipe;
-import net.minecraft.registry.RegistryKey;
-
 import java.util.Set;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.Recipe;
 
 public interface SkillMmoRecipeBookAccessor {
-    Set<RegistryKey<Recipe<?>>> skillMmo$getUnlockedRecipes();
+    Set<ResourceKey<Recipe<?>>> skillMmo$getUnlockedRecipes();
 }

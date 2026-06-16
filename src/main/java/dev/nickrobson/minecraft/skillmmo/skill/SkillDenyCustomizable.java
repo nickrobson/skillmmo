@@ -1,16 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
-
 import javax.annotation.Nullable;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.player.Player;
 
 /**
  * When something is denied from being used, and it implements this interface,
- * {@link #skillMmo$onDeny(PlayerEntity, SkillLevel, int)} is called.
+ * {@link #skillMmo$onDeny(Player, SkillLevel, int)} is called.
  * <p>
- * This might be a {@link net.minecraft.block.Block}, {@link net.minecraft.item.Item},
- * or {@link net.minecraft.entity.Entity}.
+ * This might be a {@link net.minecraft.world.level.block.Block}, {@link net.minecraft.world.item.Item},
+ * or {@link net.minecraft.world.entity.Entity}.
  * (Support for other types of things may be added at a later date - see the issue tracker.)
  */
 public interface SkillDenyCustomizable {
@@ -23,5 +22,5 @@ public interface SkillDenyCustomizable {
      * @return a message to send to the player as feedback
      */
     @Nullable
-    Text skillMmo$onDeny(PlayerEntity player, SkillLevel requiredSkillLevel, int actualSkillLevel);
+    Component skillMmo$onDeny(Player player, SkillLevel requiredSkillLevel, int actualSkillLevel);
 }

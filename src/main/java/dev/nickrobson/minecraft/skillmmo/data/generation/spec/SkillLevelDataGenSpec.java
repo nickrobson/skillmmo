@@ -1,15 +1,14 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.CopperBlockSet;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.registry.tag.TagKey;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.WeatheringCopperBlocks;
 
 public record SkillLevelDataGenSpec(
         List<Block> blocks,
@@ -39,10 +38,10 @@ public record SkillLevelDataGenSpec(
         return new SkillLevelDataGenSpec(Stream.concat(this.blocks.stream(), Arrays.stream(blocks)).toList(), this.blockTags, this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
     }
 
-    public SkillLevelDataGenSpec withBlockSets(CopperBlockSet... blockSets) {
+    public SkillLevelDataGenSpec withBlockSets(WeatheringCopperBlocks... blockSets) {
         List<Block> newBlocks = new ArrayList<>(this.blocks);
-        for (CopperBlockSet blockSet : blockSets) {
-            newBlocks.addAll(blockSet.getAll());
+        for (WeatheringCopperBlocks blockSet : blockSets) {
+            newBlocks.addAll(blockSet.asList());
         }
         return new SkillLevelDataGenSpec(newBlocks, this.blockTags, this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
     }

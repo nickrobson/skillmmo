@@ -1,13 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.skill;
 
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
-import net.minecraft.data.DataOutput;
-import net.minecraft.registry.RegistryWrapper;
-
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 
 public class SkillMmoDefaultSkillProvider extends SkillProvider {
-    public SkillMmoDefaultSkillProvider(DataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture) {
+    public SkillMmoDefaultSkillProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
         super(output, registryLookupFuture);
     }
 
@@ -17,7 +16,7 @@ public class SkillMmoDefaultSkillProvider extends SkillProvider {
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup lookup) {
+    protected void configure(HolderLookup.Provider lookup) {
         SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(this::addSkill);
     }
 }

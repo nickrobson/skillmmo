@@ -1,14 +1,13 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
 import com.google.common.collect.ImmutableMap;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Items;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.util.Identifier;
-
 import java.util.List;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 
 /**
  * Defines the default skills and their unlock requirements.
@@ -21,7 +20,7 @@ public final class SkillMmoDefaultSkills {
     public static final List<SkillDataGenSpec> DEFAULT_SKILLS = List.of(
             // AGRICULTURE
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "agriculture"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "agriculture"),
                     "skillmmo.skill.agriculture.name",
                     "skillmmo.skill.agriculture.description",
                     Items.WHEAT,
@@ -270,7 +269,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // ANIMAL_HUSBANDRY
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "animalhusbandry"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "animalhusbandry"),
                     "skillmmo.skill.animalhusbandry.name",
                     "skillmmo.skill.animalhusbandry.description",
                     Items.SADDLE,
@@ -433,7 +432,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // BUILDING
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "building"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "building"),
                     "skillmmo.skill.building.name",
                     "skillmmo.skill.building.description",
                     Items.SCAFFOLDING,
@@ -753,7 +752,7 @@ public final class SkillMmoDefaultSkills {
                                                     Blocks.WAXED_OXIDIZED_COPPER_GRATE
                                             )
                                             .withBlockSets(
-                                                    Blocks.COPPER_LANTERNS
+                                                    Blocks.COPPER_LANTERN
                                             )
                                             .withBlockTags(
                                                     BlockTags.BARS,
@@ -849,7 +848,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // COMBAT
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "combat"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "combat"),
                     "skillmmo.skill.combat.name",
                     "skillmmo.skill.combat.description",
                     Items.DIAMOND_SWORD,
@@ -975,7 +974,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // ENGINEERING
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "engineering"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "engineering"),
                     "skillmmo.skill.engineering.name",
                     "skillmmo.skill.engineering.description",
                     Items.REDSTONE,
@@ -1150,7 +1149,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // MINING
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "mining"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "mining"),
                     "skillmmo.skill.mining.name",
                     "skillmmo.skill.mining.description",
                     Items.GOLD_ORE,
@@ -1355,7 +1354,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // SORCERY
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "sorcery"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "sorcery"),
                     "skillmmo.skill.sorcery.name",
                     "skillmmo.skill.sorcery.description",
                     Items.ENCHANTING_TABLE,
@@ -1476,7 +1475,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // STORAGE
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "storage"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "storage"),
                     "skillmmo.skill.storage.name",
                     "skillmmo.skill.storage.description",
                     Items.CHEST,
@@ -1538,7 +1537,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // SURVIVAL
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "survival"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "survival"),
                     "skillmmo.skill.survival.name",
                     "skillmmo.skill.survival.description",
                     Items.FLINT_AND_STEEL,
@@ -1696,7 +1695,7 @@ public final class SkillMmoDefaultSkills {
             ),
             // TRADING
             new SkillDataGenSpec(
-                    Identifier.of("skillmmo", "trading"),
+                    Identifier.fromNamespaceAndPath("skillmmo", "trading"),
                     "skillmmo.skill.trading.name",
                     "skillmmo.skill.trading.description",
                     Items.EMERALD,

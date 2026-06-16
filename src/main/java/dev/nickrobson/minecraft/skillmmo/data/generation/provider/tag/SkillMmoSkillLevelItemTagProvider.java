@@ -5,14 +5,13 @@ import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryWrapper;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.world.item.Item;
 import java.util.concurrent.CompletableFuture;
 
 public class SkillMmoSkillLevelItemTagProvider extends FabricTagProvider.ItemTagProvider {
-    public SkillMmoSkillLevelItemTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+    public SkillMmoSkillLevelItemTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
         super(output, completableFuture);
     }
 
@@ -22,11 +21,11 @@ public class SkillMmoSkillLevelItemTagProvider extends FabricTagProvider.ItemTag
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
         SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(skillSpec -> {
             skillSpec.levels().forEach((level, levelSpec) -> {
                 if (levelSpec.hasItems()) {
-                    ProvidedTagBuilder<Item, Item> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.ITEM)).setReplace(true);
+                    TagAppender<Item, Item> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.ITEM)).setReplace(true);
                     levelSpec.items().forEach(tagBuilder::add);
                     levelSpec.itemTags().forEach(tagBuilder::forceAddTag);
                 }

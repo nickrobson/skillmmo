@@ -5,49 +5,48 @@ import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.world.entity.player.Player;
 
 public class UnlockTooltipHelper {
     private UnlockTooltipHelper() {
     }
 
-    public static List<Text> getLockedTooltipText(PlayerEntity player, Unlockable<?> unlockable) {
+    public static List<Component> getLockedTooltipText(Player player, Unlockable<?> unlockable) {
         Set<SkillLevel> skillLevelSet = SkillManager.getInstance().getSkillLevelsAffecting(unlockable);
 
         if (skillLevelSet.isEmpty()) {
-            return List.of(Text.translatable("skillmmo.feedback.item.locked"));
+            return List.of(Component.translatable("skillmmo.feedback.item.locked"));
         }
 
-        if (skillLevelSet.size() == 1 || !player.isSneaking()) {
+        if (skillLevelSet.size() == 1 || !player.isShiftKeyDown()) {
             SkillLevel skillLevel = PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
             return List.of(
-                    Text.translatable(
+                    Component.translatable(
                             "skillmmo.feedback.item.locked.basic",
                             skillLevel.getSkill().getName(),
                             skillLevel.getLevel()
-                    ).setStyle(Style.EMPTY.withColor(Formatting.RED))
+                    ).setStyle(Style.EMPTY.withColor(ChatFormatting.RED))
             );
         }
 
-        MutableText text = SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked
-                ? Text.translatable("skillmmo.feedback.item.locked.advanced.heading.all")
-                : Text.translatable("skillmmo.feedback.item.locked.advanced.heading.any");
+        MutableComponent text = SkillMmoConfig.getConfig().requireAllLockingSkillsToBeUnlocked
+                ? Component.translatable("skillmmo.feedback.item.locked.advanced.heading.all")
+                : Component.translatable("skillmmo.feedback.item.locked.advanced.heading.any");
 
-        return Stream.<Text>concat(
-                Stream.of(text.setStyle(Style.EMPTY.withColor(Formatting.RED))),
-                skillLevelSet.stream().map(skillLevel -> Text.translatable(
+        return Stream.<Component>concat(
+                Stream.of(text.setStyle(Style.EMPTY.withColor(ChatFormatting.RED))),
+                skillLevelSet.stream().map(skillLevel -> Component.translatable(
                         "skillmmo.feedback.item.locked.advanced.line",
                         skillLevel.getSkill().getName(),
                         skillLevel.getLevel()
-                ).setStyle(Style.EMPTY.withColor(Formatting.RED)))
+                ).setStyle(Style.EMPTY.withColor(ChatFormatting.RED)))
         ).toList();
     }
 }

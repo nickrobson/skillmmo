@@ -1,31 +1,31 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
-import net.minecraft.entity.AreaEffectCloudEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.GlassBottleItem;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 import java.util.Collections;
 import java.util.List;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.AreaEffectCloud;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BottleItem;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 
-@Mixin(GlassBottleItem.class)
-public class MixinGlassBottleItem {
+@Mixin(BottleItem.class)
+public class MixinBottleItem {
     @ModifyVariable(
             method = "use",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/player/PlayerEntity;getStackInHand(Lnet/minecraft/util/Hand;)Lnet/minecraft/item/ItemStack;"
+                    target = "Lnet/minecraft/world/entity/player/Player;getItemInHand(Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/item/ItemStack;"
             ),
             ordinal = 0
     )
-    public List<AreaEffectCloudEntity> skillMmo$use(List<AreaEffectCloudEntity> original, World world, PlayerEntity player, Hand hand) {
+    public List<AreaEffectCloud> skillMmo$use(List<AreaEffectCloud> original, Level world, Player player, InteractionHand hand) {
         if (PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, Items.DRAGON_BREATH)) {
             return original;
         }
@@ -34,7 +34,7 @@ public class MixinGlassBottleItem {
                 player,
                 Items.DRAGON_BREATH,
                 (deniedPlayer, requiredSkillLevel, actualSkillLevel) ->
-                        Text.translatable(
+                        Component.translatable(
                                 "skillmmo.feedback.deny.item.collect.dragon.breath",
                                 requiredSkillLevel.getSkill().getName(),
                                 requiredSkillLevel.getLevel(),

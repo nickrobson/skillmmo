@@ -10,53 +10,52 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import net.minecraft.command.DefaultPermissions;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.ChatFormatting;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.permissions.Permissions;
+import net.minecraft.world.entity.player.Player;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class SkillCommand {
     private static final DynamicCommandExceptionType ACQUIRE_SKILL_FAILURE_MAX_LEVEL = new DynamicCommandExceptionType(
-            skillName -> Text.translatable("skillmmo.command.skill.acquire.failure_max_level", skillName)
+            skillName -> Component.translatable("skillmmo.command.skill.acquire.failure_max_level", skillName)
     );
     private static final SimpleCommandExceptionType ACQUIRE_SKILL_FAILURE_NO_AVAILABLE_POINTS = new SimpleCommandExceptionType(
-            Text.translatable("skillmmo.command.skill.acquire.failure_no_available_points")
+            Component.translatable("skillmmo.command.skill.acquire.failure_no_available_points")
     );
 
     private SkillCommand() {
     }
 
-    static LiteralArgumentBuilder<ServerCommandSource> defineSkillCommand() {
+    static LiteralArgumentBuilder<CommandSourceStack> defineSkillCommand() {
         return literal("skill")
                 .then(literal("acquire")
-                        .requires(ctx -> ctx.getEntity() instanceof PlayerEntity)
+                        .requires(ctx -> ctx.getEntity() instanceof Player)
                         .then(argument("skill", new SkillArgumentType())
                                 .executes(SkillCommand::executeAcquireSkillCommand)
                         ))
                 .then(literal("admin")
-                        .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.GAMEMASTERS))
+                        .requires(ctx -> ctx.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
                         .then(literal("get")
-                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.GAMEMASTERS))
-                                .then(argument("player", EntityArgumentType.player())
+                                .requires(ctx -> ctx.permissions().hasPermission(Permissions.COMMANDS_GAMEMASTER))
+                                .then(argument("player", EntityArgument.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .executes(SkillCommand::executeGetSkillLevelCommand)
                                         )
                                 ))
                         .then(literal("set")
-                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.ADMINS))
-                                .then(argument("player", EntityArgumentType.player())
+                                .requires(ctx -> ctx.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
+                                .then(argument("player", EntityArgument.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
                                                         .executes(SkillCommand::executeSetSkillLevelCommand)
@@ -65,8 +64,8 @@ public class SkillCommand {
                                 )
                         )
                         .then(literal("add")
-                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.ADMINS))
-                                .then(argument("player", EntityArgumentType.player())
+                                .requires(ctx -> ctx.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
+                                .then(argument("player", EntityArgument.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
                                                         .executes(ctx -> executeAddSkillLevelCommand(ctx, 1))
@@ -75,8 +74,8 @@ public class SkillCommand {
                                 )
                         )
                         .then(literal("remove")
-                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.ADMINS))
-                                .then(argument("player", EntityArgumentType.player())
+                                .requires(ctx -> ctx.permissions().hasPermission(Permissions.COMMANDS_ADMIN))
+                                .then(argument("player", EntityArgument.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
                                                         .executes(ctx -> executeAddSkillLevelCommand(ctx, -1))
@@ -91,22 +90,22 @@ public class SkillCommand {
                 );
     }
 
-    private static int executeSkillInfoCommand(CommandContext<ServerCommandSource> ctx) {
+    private static int executeSkillInfoCommand(CommandContext<CommandSourceStack> ctx) {
         Skill skill = ctx.getArgument("skill", Skill.class);
-        Text skillName = skill.getName();
+        Component skillName = skill.getName();
 
-        ctx.getSource().sendFeedback(
-                () -> Text.translatable(
+        ctx.getSource().sendSuccess(
+                () -> Component.translatable(
                         "skillmmo.command.skill.info.skill",
-                        skillName instanceof MutableText mutableText
-                                ? mutableText.setStyle(Style.EMPTY.withColor(Formatting.BLUE))
+                        skillName instanceof MutableComponent mutableText
+                                ? mutableText.setStyle(Style.EMPTY.withColor(ChatFormatting.BLUE))
                                 : skillName,
                         skill.getMaxLevel()
                 ),
                 false
         );
-        ctx.getSource().sendFeedback(
-                () -> Text.translatable(
+        ctx.getSource().sendSuccess(
+                () -> Component.translatable(
                         "skillmmo.command.skill.info.description",
                         skill.getDescription()
                 ),
@@ -116,8 +115,8 @@ public class SkillCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int executeAcquireSkillCommand(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-        ServerPlayerEntity player = ctx.getSource().getPlayerOrThrow();
+    private static int executeAcquireSkillCommand(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
+        ServerPlayer player = ctx.getSource().getPlayerOrException();
         Skill skill = ctx.getArgument("skill", Skill.class);
 
         PlayerSkillManager.ChooseSkillLevelResult result = PlayerSkillManager.getInstance()
@@ -126,8 +125,8 @@ public class SkillCommand {
         return switch (result) {
             case SUCCESS -> {
                 int level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
-                ctx.getSource().sendFeedback(
-                        () -> Text.translatable("skillmmo.command.skill.acquire.success", level, skill.getName()),
+                ctx.getSource().sendSuccess(
+                        () -> Component.translatable("skillmmo.command.skill.acquire.success", level, skill.getName()),
                         false);
                 yield Command.SINGLE_SUCCESS;
             }
@@ -136,14 +135,14 @@ public class SkillCommand {
         };
     }
 
-    private static int executeGetSkillLevelCommand(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
+    private static int executeGetSkillLevelCommand(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         Skill skill = ctx.getArgument("skill", Skill.class);
-        PlayerEntity player = EntityArgumentType.getPlayer(ctx, "player");
+        Player player = EntityArgument.getPlayer(ctx, "player");
 
         int level = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
 
-        ctx.getSource().sendFeedback(
-                () -> Text.translatable(
+        ctx.getSource().sendSuccess(
+                () -> Component.translatable(
                         "skillmmo.command.skill.player_is_level",
                         player.getName(),
                         level,
@@ -154,15 +153,15 @@ public class SkillCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int executeSetSkillLevelCommand(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
+    private static int executeSetSkillLevelCommand(CommandContext<CommandSourceStack> ctx) throws CommandSyntaxException {
         Skill skill = ctx.getArgument("skill", Skill.class);
-        PlayerEntity player = EntityArgumentType.getPlayer(ctx, "player");
+        Player player = EntityArgument.getPlayer(ctx, "player");
         int level = ctx.getArgument("level", Integer.class);
 
         int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, level);
 
-        ctx.getSource().sendFeedback(
-                () -> Text.translatable(
+        ctx.getSource().sendSuccess(
+                () -> Component.translatable(
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         newLevel,
@@ -173,16 +172,16 @@ public class SkillCommand {
         return Command.SINGLE_SUCCESS;
     }
 
-    private static int executeAddSkillLevelCommand(CommandContext<ServerCommandSource> ctx, int multiplier) throws CommandSyntaxException {
+    private static int executeAddSkillLevelCommand(CommandContext<CommandSourceStack> ctx, int multiplier) throws CommandSyntaxException {
         Skill skill = ctx.getArgument("skill", Skill.class);
-        PlayerEntity player = EntityArgumentType.getPlayer(ctx, "player");
+        Player player = EntityArgument.getPlayer(ctx, "player");
         int levelDelta = ctx.getArgument("level", Integer.class) * multiplier;
 
         int currentLevel = PlayerSkillManager.getInstance().getSkillLevel(player, skill);
         int newLevel = PlayerSkillManager.getInstance().setSkillLevel(player, skill, currentLevel + levelDelta);
 
-        ctx.getSource().sendFeedback(
-                () -> Text.translatable(
+        ctx.getSource().sendSuccess(
+                () -> Component.translatable(
                         "skillmmo.command.skill.player_is_now_level",
                         player.getName(),
                         newLevel,
@@ -192,12 +191,12 @@ public class SkillCommand {
         );
 
         boolean isSelf = false;
-        if (ctx.getSource().getEntity() instanceof PlayerEntity playerSource) {
+        if (ctx.getSource().getEntity() instanceof Player playerSource) {
             isSelf = playerSource.getGameProfile().id().equals(player.getGameProfile().id());
         }
         if (!isSelf) {
-            player.sendMessage(
-                    Text.translatable("skillmmo.command.skill.you_are_now_level", newLevel, skill.getName()),
+            player.displayClientMessage(
+                    Component.translatable("skillmmo.command.skill.you_are_now_level", newLevel, skill.getName()),
                     false
             );
         }

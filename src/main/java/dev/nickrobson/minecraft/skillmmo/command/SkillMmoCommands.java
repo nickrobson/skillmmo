@@ -3,12 +3,12 @@ package dev.nickrobson.minecraft.skillmmo.command;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.Identifier;
 
 public class SkillMmoCommands {
     public static void register() {
         ArgumentTypeRegistry.registerArgumentType(
-                Identifier.of(SkillMmoMod.MOD_ID, "skill"),
+                Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "skill"),
                 SkillArgumentType.class,
                 SkillArgumentType.SERIALIZER
         );

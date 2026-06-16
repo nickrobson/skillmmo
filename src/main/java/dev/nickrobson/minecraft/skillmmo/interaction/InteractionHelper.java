@@ -2,10 +2,10 @@ package dev.nickrobson.minecraft.skillmmo.interaction;
 
 import dev.nickrobson.minecraft.skillmmo.api.interaction.Interaction;
 import dev.nickrobson.minecraft.skillmmo.api.interaction.InteractionType;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Block;
 
 public class InteractionHelper {
     private InteractionHelper() {

@@ -2,12 +2,11 @@ package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
 import dev.nickrobson.minecraft.skillmmo.data.SkillData;
 import dev.nickrobson.minecraft.skillmmo.data.SkillIconData;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
-
 import java.util.Map;
 import java.util.Optional;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 
 public record SkillDataGenSpec(
         Identifier id,
@@ -25,7 +24,7 @@ public record SkillDataGenSpec(
                 Optional.of(levels.keySet().stream().max(Integer::compareTo).orElse(-1)),
                 Optional.of(new SkillIconData(
                         "item",
-                        Registries.ITEM.getId(iconItem).toString()
+                        BuiltInRegistries.ITEM.getKey(iconItem).toString()
                 ))
         );
     }

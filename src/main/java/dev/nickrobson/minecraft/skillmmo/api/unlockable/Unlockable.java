@@ -1,13 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.api.unlockable;
 
-import net.minecraft.util.Identifier;
-
 import java.util.Objects;
+import net.minecraft.resources.Identifier;
 
 /**
  * Represents a thing that is or can be unlocked
  *
- * @param <Target> the type of the class of thing, e.g. {@link net.minecraft.item.Item}, {@link net.minecraft.block.Block}, or {@link net.minecraft.entity.EntityType}
+ * @param <Target> the type of the class of thing, e.g. {@link net.minecraft.world.item.Item}, {@link net.minecraft.world.level.block.Block}, or {@link net.minecraft.world.entity.EntityType}
  */
 public final class Unlockable<Target> {
     private final UnlockableType<Target> type;

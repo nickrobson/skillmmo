@@ -6,11 +6,10 @@ import com.google.common.cache.LoadingCache;
 import com.mojang.logging.annotations.FieldsAreNonnullByDefault;
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
-import net.minecraft.item.Item;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -25,8 +24,8 @@ public class Skill {
     public static final int MAX_LEVEL = 25;
 
     private final Identifier id;
-    private final Text name;
-    private final Text description;
+    private final Component name;
+    private final Component description;
     private final int maxLevel;
     private final Item iconItem;
 
@@ -34,8 +33,8 @@ public class Skill {
 
     public Skill(
             Identifier id,
-            Text name,
-            Text description,
+            Component name,
+            Component description,
             int maxLevel,
             Item iconItem) {
         this.id = id;
@@ -73,12 +72,12 @@ public class Skill {
         return id;
     }
 
-    public Text getName() {
-        return name.copyContentOnly();
+    public Component getName() {
+        return name.plainCopy();
     }
 
-    public Text getDescription() {
-        return description.copyContentOnly();
+    public Component getDescription() {
+        return description.plainCopy();
     }
 
     public int getMaxLevel() {

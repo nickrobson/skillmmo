@@ -2,24 +2,24 @@ package dev.nickrobson.minecraft.skillmmo.mixin;
 
 import dev.nickrobson.minecraft.skillmmo.skill.SkillDenyCustomizable;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.player.Player;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(VillagerEntity.class)
-public abstract class MixinVillagerEntity implements SkillDenyCustomizable {
+@Mixin(Villager.class)
+public abstract class MixinVillager implements SkillDenyCustomizable {
     @Shadow
-    protected abstract void sayNo();
+    protected abstract void setUnhappy();
 
     @Unique
     @Override
-    public Text skillMmo$onDeny(PlayerEntity player, SkillLevel requiredSkillLevel, int actualSkillLevel) {
-        this.sayNo();
+    public Component skillMmo$onDeny(Player player, SkillLevel requiredSkillLevel, int actualSkillLevel) {
+        this.setUnhappy();
 
-        return Text.translatable(
+        return Component.translatable(
                 "skillmmo.feedback.deny.villager.interact",
                 requiredSkillLevel.getSkill().getName(),
                 requiredSkillLevel.getLevel()

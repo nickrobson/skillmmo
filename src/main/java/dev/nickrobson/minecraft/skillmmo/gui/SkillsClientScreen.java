@@ -20,13 +20,12 @@ import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-import net.minecraft.util.Pair;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.item.ItemStack;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -35,17 +34,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Environment(EnvType.CLIENT)
 public class SkillsClientScreen extends CottonClientScreen {
     public static void open() {
-        ClientPlayerEntity player = MinecraftClient.getInstance().player;
+        LocalPlayer player = Minecraft.getInstance().player;
         if (player == null) return;
-        MinecraftClient.getInstance().setScreen(new SkillsClientScreen(player));
+        Minecraft.getInstance().setScreen(new SkillsClientScreen(player));
     }
 
-    private SkillsClientScreen(ClientPlayerEntity player) {
+    private SkillsClientScreen(LocalPlayer player) {
         super(new SkillsGui(player));
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 
@@ -64,7 +63,7 @@ public class SkillsClientScreen extends CottonClientScreen {
 
         private final List<WCharButton> acquireSkillButtons = new ArrayList<>();
 
-        private SkillsGui(ClientPlayerEntity player) {
+        private SkillsGui(LocalPlayer player) {
             WPlainPanel root = new WPlainPanel();
             setRootPanel(root);
             root.setInsets(new Insets(4));
@@ -88,13 +87,13 @@ public class SkillsClientScreen extends CottonClientScreen {
             root.validate(this);
         }
 
-        private WWidget createInfoPanel(ClientPlayerEntity player) {
+        private WWidget createInfoPanel(LocalPlayer player) {
             WPlainPanel infoPanel = new WPlainPanel();
 
             ExperienceLevel experienceLevel = PlayerExperienceManager.getInstance().getExperienceLevel(player);
 
             infoPanel.add(
-                    new WLabel(Text.translatable("skillmmo.gui.skills.info.level", experienceLevel.level()))
+                    new WLabel(Component.translatable("skillmmo.gui.skills.info.level", experienceLevel.level()))
                             .setHorizontalAlignment(HorizontalAlignment.LEFT)
                             .setVerticalAlignment(VerticalAlignment.CENTER),
                     0,
@@ -104,7 +103,7 @@ public class SkillsClientScreen extends CottonClientScreen {
             );
 
             infoPanel.add(
-                    new WLabel(Text.translatable("skillmmo.gui.skills.info.xp_progress", experienceLevel.progress(), experienceLevel.levelExperience()))
+                    new WLabel(Component.translatable("skillmmo.gui.skills.info.xp_progress", experienceLevel.progress(), experienceLevel.levelExperience()))
                             .setHorizontalAlignment(HorizontalAlignment.RIGHT)
                             .setVerticalAlignment(VerticalAlignment.CENTER),
                     GRID_SIZE * LEVEL_TEXT_WIDTH,
@@ -124,10 +123,10 @@ public class SkillsClientScreen extends CottonClientScreen {
             return infoPanel;
         }
 
-        private WWidget createSkillsPanel(ClientPlayerEntity player) {
+        private WWidget createSkillsPanel(LocalPlayer player) {
             WPlainPanel skillsPanel = new WPlainPanel();
             skillsPanel.add(
-                    new WDynamicLabel(() -> I18n.translate("skillmmo.gui.skills.info.available_points", PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player)))
+                    new WDynamicLabel(() -> I18n.get("skillmmo.gui.skills.info.available_points", PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player)))
                             .setHorizontalAlignment(HorizontalAlignment.RIGHT),
                     0,
                     0,
@@ -136,14 +135,14 @@ public class SkillsClientScreen extends CottonClientScreen {
             );
 
             // List of player's skill levels, sorted by skill name in player's language
-            List<Pair<Skill, Integer>> skillLevels = SkillManager.getInstance().getSkills().stream()
-                    .map(skill -> new Pair<>(skill, PlayerSkillManager.getInstance().getSkillLevel(player, skill)))
-                    .sorted(Comparator.comparing(pair -> pair.getLeft().getName().getString()))
+            List<Tuple<Skill, Integer>> skillLevels = SkillManager.getInstance().getSkills().stream()
+                    .map(skill -> new Tuple<>(skill, PlayerSkillManager.getInstance().getSkillLevel(player, skill)))
+                    .sorted(Comparator.comparing(pair -> pair.getA().getName().getString()))
                     .toList();
 
             int availableSkillPoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
-            WListPanel<Pair<Skill, Integer>, WPlainPanel> skillLevelsPanel = new WListPanel<>(skillLevels, WPlainPanel::new, ((skillLevel, skillLevelPanel) -> {
-                Skill skill = skillLevel.getLeft();
+            WListPanel<Tuple<Skill, Integer>, WPlainPanel> skillLevelsPanel = new WListPanel<>(skillLevels, WPlainPanel::new, ((skillLevel, skillLevelPanel) -> {
+                Skill skill = skillLevel.getA();
 
                 skillLevelPanel.add(
                         new WItem(new ItemStack(skill.getIconItem())),
@@ -154,7 +153,7 @@ public class SkillsClientScreen extends CottonClientScreen {
                 );
 
                 skillLevelPanel.add(
-                        new WLabel(Text.translatable("skillmmo.gui.skills.skill.name", skill.getName()))
+                        new WLabel(Component.translatable("skillmmo.gui.skills.skill.name", skill.getName()))
                                 .setVerticalAlignment(VerticalAlignment.CENTER)
                                 .setHorizontalAlignment(HorizontalAlignment.LEFT),
                         GRID_SIZE * ICON_GRID_WIDTH + 6,
@@ -173,8 +172,8 @@ public class SkillsClientScreen extends CottonClientScreen {
                 );
 
                 WCharButton acquireSkillButton = new WCharButton('+')
-                        .setTooltip(Text.translatable("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
-                        .setEnabled(availableSkillPoints > 0 && skillLevel.getRight() < skill.getMaxLevel());
+                        .setTooltip(Component.translatable("skillmmo.gui.skills.info.acquire_skill.narration", skill.getName()))
+                        .setEnabled(availableSkillPoints > 0 && skillLevel.getB() < skill.getMaxLevel());
 
                 AtomicInteger levelUps = new AtomicInteger(0);
                 acquireSkillButton.setOnClick(() -> {
@@ -183,7 +182,7 @@ public class SkillsClientScreen extends CottonClientScreen {
 
                         int updatedAvailableSkillPoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
 
-                        if (skillLevel.getRight() + levelUps.incrementAndGet() >= skill.getMaxLevel()) {
+                        if (skillLevel.getB() + levelUps.incrementAndGet() >= skill.getMaxLevel()) {
                             acquireSkillButton.setEnabled(false);
                             acquireSkillButtons.remove(acquireSkillButton);
                         }
@@ -193,7 +192,7 @@ public class SkillsClientScreen extends CottonClientScreen {
                     }
                 });
 
-                if (skillLevel.getRight() < skill.getMaxLevel()) {
+                if (skillLevel.getB() < skill.getMaxLevel()) {
                     acquireSkillButtons.add(acquireSkillButton);
                 }
 

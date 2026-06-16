@@ -6,16 +6,15 @@ import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSki
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillTranslationSpec;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.TagKey;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
-    public SkillMmoEnglishLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<RegistryWrapper.WrapperLookup> registryLookup) {
+    public SkillMmoEnglishLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, "en_us", registryLookup);
     }
 
@@ -25,7 +24,7 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
     }
 
     @Override
-    public void generateTranslations(RegistryWrapper.WrapperLookup registryLookup, TranslationBuilder translationBuilder) {
+    public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("skillmmo.command.skills.heading", "Skills (%d)");
         translationBuilder.add("skillmmo.command.skills.skill_line", "- %s");
         translationBuilder.add("skillmmo.command.skills.skill_line_with_level", "- %s (level %d/%d)");
@@ -150,7 +149,7 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
                     .forEach((level, spec) -> {
                         if (spec.hasItems()) {
                             TagKey<Item> itemTag = SkillMmoTags.getUnlocksTag(skill.id(), level, VanillaUnlockables.ITEM);
-                            translationBuilder.add("tag.item.%s.%s".formatted(itemTag.id().getNamespace(), itemTag.id().getPath().replace("/", ".")), translationSpec.name() + " lvl " + level);
+                            translationBuilder.add("tag.item.%s.%s".formatted(itemTag.location().getNamespace(), itemTag.location().getPath().replace("/", ".")), translationSpec.name() + " lvl " + level);
                         }
                     });
         });

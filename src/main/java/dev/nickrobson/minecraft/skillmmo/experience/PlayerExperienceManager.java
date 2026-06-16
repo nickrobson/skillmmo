@@ -4,11 +4,10 @@ import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -22,21 +21,21 @@ public class PlayerExperienceManager {
     private PlayerExperienceManager() {
     }
 
-    public long getExperience(PlayerEntity player) {
+    public long getExperience(Player player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         return skillMmoPlayerDataHolder.skillMmo$getPlayerData().getExperience();
     }
 
-    public ExperienceLevel getExperienceLevel(PlayerEntity player) {
+    public ExperienceLevel getExperienceLevel(Player player) {
         return ExperienceLevelEquation.getInstance().getExperienceLevel(getExperience(player));
     }
 
-    public void setExperience(PlayerEntity player, long experience) {
+    public void setExperience(Player player, long experience) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         skillMmoPlayerDataHolder.skillMmo$getPlayerData().setExperience(experience);
     }
 
-    public void giveExperience(ServerPlayerEntity player, long experience) {
+    public void giveExperience(ServerPlayer player, long experience) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         SkillMmoPlayerData playerData = skillMmoPlayerDataHolder.skillMmo$getPlayerData();
         long oldExperience = playerData.getExperience();
@@ -49,7 +48,7 @@ public class PlayerExperienceManager {
             int availableSkillPoints = playerData.addAvailableSkillPoints(getTotalSkillPoints(newLevel) - getTotalSkillPoints(oldLevel));
 
 
-            player.sendMessage(Text.translatable("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
+            player.displayClientMessage(Component.translatable("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
         }
 
         SkillMmoServerNetworking.sendPlayerXpInfo(player);

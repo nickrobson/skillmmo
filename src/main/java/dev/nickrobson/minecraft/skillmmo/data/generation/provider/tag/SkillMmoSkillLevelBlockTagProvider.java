@@ -5,14 +5,13 @@ import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
-import net.minecraft.block.Block;
-import net.minecraft.data.tag.ProvidedTagBuilder;
-import net.minecraft.registry.RegistryWrapper;
-
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.tags.TagAppender;
+import net.minecraft.world.level.block.Block;
 import java.util.concurrent.CompletableFuture;
 
 public class SkillMmoSkillLevelBlockTagProvider extends FabricTagProvider.BlockTagProvider {
-    public SkillMmoSkillLevelBlockTagProvider(FabricDataOutput output, CompletableFuture<RegistryWrapper.WrapperLookup> completableFuture) {
+    public SkillMmoSkillLevelBlockTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
         super(output, completableFuture);
     }
 
@@ -22,11 +21,11 @@ public class SkillMmoSkillLevelBlockTagProvider extends FabricTagProvider.BlockT
     }
 
     @Override
-    protected void configure(RegistryWrapper.WrapperLookup wrapperLookup) {
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
         SkillMmoDefaultSkills.DEFAULT_SKILLS.forEach(skillSpec -> {
             skillSpec.levels().forEach((level, levelSpec) -> {
                 if (levelSpec.hasBlocks()) {
-                    ProvidedTagBuilder<Block, Block> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.BLOCK)).setReplace(true);
+                    TagAppender<Block, Block> tagBuilder = this.valueLookupBuilder(SkillMmoTags.getUnlocksTag(skillSpec.id(), level, VanillaUnlockables.BLOCK)).setReplace(true);
                     levelSpec.blocks().forEach(tagBuilder::add);
                     levelSpec.blockTags().forEach(tagBuilder::forceAddTag);
                 }

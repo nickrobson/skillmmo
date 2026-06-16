@@ -5,17 +5,17 @@ import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.fabricmc.fabric.api.resource.v1.reloader.SimpleResourceReloader;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.resource.JsonDataLoader;
-import net.minecraft.resource.Resource;
-import net.minecraft.resource.ResourceFinder;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.FileToIdConverter;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.packs.resources.Resource;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
+import net.minecraft.world.item.Item;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,9 +33,9 @@ public class SkillMmoResourceLoader extends SimpleResourceReloader<Set<Skill>> {
     private static final Logger logger = LogManager.getLogger(SkillMmoResourceLoader.class);
 
     @Override
-    protected Set<Skill> prepare(Store store) {
-        ResourceManager resourceManager = store.getResourceManager();
-        RegistryWrapper.WrapperLookup registryWrapperLookup = store.getOrThrow(ResourceLoader.RELOADER_REGISTRY_LOOKUP_KEY);
+    protected Set<Skill> prepare(SharedState store) {
+        ResourceManager resourceManager = store.resourceManager();
+        HolderLookup.Provider registryWrapperLookup = store.get(ResourceLoader.RELOADER_REGISTRY_LOOKUP_KEY);
         Map<Identifier, SkillData> skillsData = loadResources(resourceManager, SkillMmoDataType.SKILLS);
 
         Map<Identifier, SkillData> skillDataBySkillId = new HashMap<>();
@@ -65,40 +65,40 @@ public class SkillMmoResourceLoader extends SimpleResourceReloader<Set<Skill>> {
                             boolean valid = true;
 
                             if (skillData.enabled().isEmpty()) {
-                                errors.add(Text.translatable("skillmmo.data.skill.missing.enabled", skillId).getString());
+                                errors.add(Component.translatable("skillmmo.data.skill.missing.enabled", skillId).getString());
                                 valid = false;
                             }
                             if (skillData.nameKey().isEmpty()) {
-                                errors.add(Text.translatable("skillmmo.data.skill.missing.namekey", skillId).getString());
+                                errors.add(Component.translatable("skillmmo.data.skill.missing.namekey", skillId).getString());
                                 valid = false;
                             }
                             if (skillData.descriptionKey().isEmpty()) {
-                                errors.add(Text.translatable("skillmmo.data.skill.missing.descriptionkey", skillId).getString());
+                                errors.add(Component.translatable("skillmmo.data.skill.missing.descriptionkey", skillId).getString());
                                 valid = false;
                             }
                             if (skillData.maxLevel().isEmpty()) {
-                                errors.add(Text.translatable("skillmmo.data.skill.missing.maxlevel", skillId).getString());
+                                errors.add(Component.translatable("skillmmo.data.skill.missing.maxlevel", skillId).getString());
                                 valid = false;
                             }
 
                             Optional<Item> iconItem = Optional.empty();
                             if (skillData.icon().isEmpty()) {
-                                errors.add(Text.translatable("skillmmo.data.skill.missing.icon", skillId).getString());
+                                errors.add(Component.translatable("skillmmo.data.skill.missing.icon", skillId).getString());
                                 valid = false;
                             } else if (!"item".equals(skillData.icon().get().type())) {
-                                errors.add(Text.translatable("skillmmo.data.skill.invalid.icon.type", skillId, skillData.icon().get().type()).getString());
+                                errors.add(Component.translatable("skillmmo.data.skill.invalid.icon.type", skillId, skillData.icon().get().type()).getString());
                                 valid = false;
                             } else {
                                 Identifier itemId = Identifier.tryParse(skillData.icon().get().value());
                                 if (itemId == null) {
-                                    errors.add(Text.translatable("skillmmo.data.skill.invalid.icon.item.id", skillId, skillData.icon().get().value()).getString());
+                                    errors.add(Component.translatable("skillmmo.data.skill.invalid.icon.item.id", skillId, skillData.icon().get().value()).getString());
                                     valid = false;
                                 } else {
-                                    RegistryWrapper.Impl<Item> itemRegistry = registryWrapperLookup.getOrThrow(RegistryKeys.ITEM);
-                                    RegistryKey<Item> itemRegistryKey = RegistryKey.of(RegistryKeys.ITEM, itemId);
-                                    iconItem = itemRegistry.getOptional(itemRegistryKey).map(RegistryEntry.Reference::value);
+                                    HolderLookup.RegistryLookup<Item> itemRegistry = registryWrapperLookup.lookupOrThrow(Registries.ITEM);
+                                    ResourceKey<Item> itemRegistryKey = ResourceKey.create(Registries.ITEM, itemId);
+                                    iconItem = itemRegistry.get(itemRegistryKey).map(Holder.Reference::value);
                                     if (iconItem.isEmpty()) {
-                                        errors.add(Text.translatable("skillmmo.data.skill.invalid.icon.item", skillId, itemId).getString());
+                                        errors.add(Component.translatable("skillmmo.data.skill.invalid.icon.item", skillId, itemId).getString());
                                         valid = false;
                                     }
                                 }
@@ -108,8 +108,8 @@ public class SkillMmoResourceLoader extends SimpleResourceReloader<Set<Skill>> {
                                 return Stream.of(
                                         new Skill(
                                                 skillId,
-                                                Text.translatable(skillData.nameKey().get()),
-                                                Text.translatable(skillData.descriptionKey().get()),
+                                                Component.translatable(skillData.nameKey().get()),
+                                                Component.translatable(skillData.descriptionKey().get()),
                                                 skillData.maxLevel().get(),
                                                 iconItem.get()
                                         )
@@ -129,16 +129,16 @@ public class SkillMmoResourceLoader extends SimpleResourceReloader<Set<Skill>> {
     }
 
     @Override
-    protected void apply(Set<Skill> prepared, Store store) {
+    protected void apply(Set<Skill> prepared, SharedState store) {
         SkillManager.getInstance().initInstalledSkills(prepared);
     }
 
     private <T> Map<Identifier, T> loadResources(ResourceManager resourceManager, SkillMmoDataType<T> type) {
-        ResourceFinder resourceFinder = ResourceFinder.json(type.getResourceCategory());
-        Map<Identifier, Resource> resourceMap = resourceFinder.findResources(resourceManager);
+        FileToIdConverter resourceFinder = FileToIdConverter.json(type.getResourceCategory());
+        Map<Identifier, Resource> resourceMap = resourceFinder.listMatchingResources(resourceManager);
 
         Map<Identifier, T> resourcesMap = new HashMap<>();
-        JsonDataLoader.load(resourceManager, resourceFinder, JsonOps.INSTANCE, type.getCodec(), resourcesMap);
+        SimpleJsonResourceReloadListener.scanDirectory(resourceManager, resourceFinder, JsonOps.INSTANCE, type.getCodec(), resourcesMap);
 
         Set<Identifier> successfullyLoaded = new TreeSet<>(resourcesMap.keySet());
         logger.info("Loaded resources for {}: {}", type.getResourceCategory(), successfullyLoaded);

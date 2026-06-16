@@ -4,19 +4,19 @@
   "package": "dev.nickrobson.minecraft.skillmmo.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MixinFarmlandBlock",
+    "MixinBottleItem",
+    "MixinFarmBlock",
     "MixinGameRules",
-    "MixinGlassBottleItem",
     "MixinLivingEntity",
-    "MixinPlayerEntity",
-    "MixinPlayerManager",
-    "MixinServerPlayerEntity",
+    "MixinPlayer",
+    "MixinPlayerList",
+    "MixinServerPlayer",
     "MixinServerRecipeBook",
-    "MixinVillagerEntity"
+    "MixinVillager"
   ],
   "client": [
-    "client.ExperienceBarAccess",
-    "client.MixinClientPlayerEntity",
+    "client.ExperienceBarRendererAccess",
+    "client.MixinLocalPlayer",
     "client.MixinItemStack"
   ],
   "server": [],

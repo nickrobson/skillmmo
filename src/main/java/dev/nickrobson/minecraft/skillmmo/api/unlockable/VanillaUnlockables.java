@@ -1,35 +1,35 @@
 package dev.nickrobson.minecraft.skillmmo.api.unlockable;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.Text;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public class VanillaUnlockables {
-    public static final UnlockableType<Block> BLOCK = new UnlockableType<>(Registries.BLOCK) {
+    public static final UnlockableType<Block> BLOCK = new UnlockableType<>(BuiltInRegistries.BLOCK) {
         @Override
-        protected Text getName(Block block) {
+        protected Component getName(Block block) {
             return block.getName();
         }
     };
 
-    public static final UnlockableType<Item> ITEM = new UnlockableType<>(Registries.ITEM) {
+    public static final UnlockableType<Item> ITEM = new UnlockableType<>(BuiltInRegistries.ITEM) {
         @Override
-        protected Text getName(Item item) {
+        protected Component getName(Item item) {
             return item.getName();
         }
     };
 
-    public static final UnlockableType<EntityType<?>> ENTITY_TYPE = new UnlockableType<>(Registries.ENTITY_TYPE) {
+    public static final UnlockableType<EntityType<?>> ENTITY_TYPE = new UnlockableType<>(BuiltInRegistries.ENTITY_TYPE) {
         @Override
-        protected Text getName(EntityType<?> entityType) {
-            return entityType.getName();
+        protected Component getName(EntityType<?> entityType) {
+            return entityType.getDescription();
         }
     };
 
@@ -56,7 +56,7 @@ public class VanillaUnlockables {
 
     public static Unlockable<?> forEntity(Entity entity) {
         return entity instanceof ItemEntity itemEntity
-                ? forItemStack(itemEntity.getStack())
+                ? forItemStack(itemEntity.getItem())
                 : ENTITY_TYPE.createUnlockable(entity.getType());
     }
 

@@ -4,10 +4,6 @@ import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +11,10 @@ import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 
 import static dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultUngatedContent.UNGATED_THINGS;
 
@@ -26,9 +26,9 @@ public class SkillMmoDebugger {
 
     public static void printDebugInfo() {
         if (Boolean.getBoolean("skillmmo.debug.unassigned")) {
-            printUnassignedUnlockables(Registries.BLOCK::stream, VanillaUnlockables::forBlock);
-            printUnassignedUnlockables(Registries.ITEM::stream, VanillaUnlockables::forItem);
-            printUnassignedUnlockables(Registries.ENTITY_TYPE::stream, VanillaUnlockables::forEntityType);
+            printUnassignedUnlockables(BuiltInRegistries.BLOCK::stream, VanillaUnlockables::forBlock);
+            printUnassignedUnlockables(BuiltInRegistries.ITEM::stream, VanillaUnlockables::forItem);
+            printUnassignedUnlockables(BuiltInRegistries.ENTITY_TYPE::stream, VanillaUnlockables::forEntityType);
         }
     }
 
@@ -38,16 +38,16 @@ public class SkillMmoDebugger {
             Registry<?> registry = unlockable.type().getRegistry();
 
             var ungatedThings = UNGATED_THINGS.get(registry);
-            boolean isDefaultUnlockedByEntry = ungatedThings != null && ungatedThings.getLeft().contains(registry.get(unlockable.targetId()));
+            boolean isDefaultUnlockedByEntry = ungatedThings != null && ungatedThings.getA().contains(registry.getValue(unlockable.targetId()));
             //noinspection unchecked
-            boolean isDefaultUnlockedByTag = ungatedThings != null && ungatedThings.getRight().stream().anyMatch(
-                    tag -> registry.getEntry(unlockable.targetId()).orElseThrow().isIn((TagKey) tag)
+            boolean isDefaultUnlockedByTag = ungatedThings != null && ungatedThings.getB().stream().anyMatch(
+                    tag -> registry.get(unlockable.targetId()).orElseThrow().is((TagKey) tag)
             );
             boolean isDefaultUnlocked = isDefaultUnlockedByEntry || isDefaultUnlockedByTag;
 
             Set<Skill> skillSet = SkillManager.getInstance().getSkillsAffecting(unlockable);
 
-            Identifier registryId = unlockable.type().getRegistry().getKey().getValue();
+            Identifier registryId = unlockable.type().getRegistry().key().identifier();
             Identifier thingId = unlockable.targetId();
 
             if (skillSet.isEmpty() && !isDefaultUnlocked) {

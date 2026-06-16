@@ -2,12 +2,11 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
-
 import java.util.Objects;
 import java.util.StringJoiner;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.TagKey;
 
 public class SkillLevel {
     private final Skill skill;
@@ -36,8 +35,8 @@ public class SkillLevel {
             return false;
         }
 
-        for (RegistryEntry<Target> entry : unlockableType.getRegistry().iterateEntries(getUnlocksTag(unlockableType))) {
-            if (entry.matchesId(identifier)) {
+        for (Holder<Target> entry : unlockableType.getRegistry().getTagOrEmpty(getUnlocksTag(unlockableType))) {
+            if (entry.is(identifier)) {
                 return true;
             }
         }

@@ -9,31 +9,30 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.minecraft.command.CommandSource;
-import net.minecraft.command.argument.serialize.ConstantArgumentSerializer;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import net.minecraft.commands.SharedSuggestionProvider;
+import net.minecraft.commands.synchronization.SingletonArgumentInfo;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 
 public class SkillArgumentType implements ArgumentType<Skill> {
-    public static final ConstantArgumentSerializer<SkillArgumentType> SERIALIZER =
-            ConstantArgumentSerializer.of(SkillArgumentType::new);
+    public static final SingletonArgumentInfo<SkillArgumentType> SERIALIZER =
+            SingletonArgumentInfo.contextFree(SkillArgumentType::new);
 
     @Override
     public Skill parse(StringReader reader) throws CommandSyntaxException {
-        Identifier skillId = Identifier.fromCommandInput(reader);
+        Identifier skillId = Identifier.read(reader);
         return SkillManager.getInstance().getSkill(skillId)
-                .orElseThrow(() -> new SimpleCommandExceptionType(Text.literal("No such skill!")).createWithContext(reader));
+                .orElseThrow(() -> new SimpleCommandExceptionType(Component.literal("No such skill!")).createWithContext(reader));
     }
 
     @Override
     public <S> CompletableFuture<Suggestions> listSuggestions(CommandContext<S> context, SuggestionsBuilder builder) {
         Set<Skill> skillSet = SkillManager.getInstance().getSkills();
-        return CommandSource.suggestMatching(
+        return SharedSuggestionProvider.suggest(
                 skillSet.stream()
                         .map(Skill::getId)
                         .map(Identifier::toString)

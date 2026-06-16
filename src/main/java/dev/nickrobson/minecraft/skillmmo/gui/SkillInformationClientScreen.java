@@ -20,20 +20,19 @@ import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.resource.language.I18n;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemConvertible;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.text.Text;
-
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
@@ -44,31 +43,31 @@ import java.util.stream.Stream;
 
 @Environment(EnvType.CLIENT)
 public class SkillInformationClientScreen extends CottonClientScreen {
-    public static void open(ClientPlayerEntity player, Skill skill) {
-        open(player, skill, MinecraftClient.getInstance().currentScreen);
+    public static void open(LocalPlayer player, Skill skill) {
+        open(player, skill, Minecraft.getInstance().screen);
     }
 
-    public static void open(ClientPlayerEntity player, Skill skill, @Nullable Screen parent) {
-        MinecraftClient.getInstance().setScreen(new SkillInformationClientScreen(player, skill, parent));
+    public static void open(LocalPlayer player, Skill skill, @Nullable Screen parent) {
+        Minecraft.getInstance().setScreen(new SkillInformationClientScreen(player, skill, parent));
     }
 
     @Nullable
     private final Screen parent;
 
-    public SkillInformationClientScreen(ClientPlayerEntity player, Skill skill, @Nullable Screen parent) {
+    public SkillInformationClientScreen(LocalPlayer player, Skill skill, @Nullable Screen parent) {
         super(new SkillInformationGui(player, skill));
         this.parent = parent;
     }
 
     @Override
-    public boolean shouldPause() {
+    public boolean isPauseScreen() {
         return false;
     }
 
     @Override
-    public void close() {
-        if (this.client != null) {
-            this.client.setScreen(parent);
+    public void onClose() {
+        if (this.minecraft != null) {
+            this.minecraft.setScreen(parent);
         }
     }
 
@@ -81,7 +80,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
         private static final int ICON_GRID_SIZE = 1;
         private static final int ITEMS_PER_ROW = ROOT_WIDTH - 1;
 
-        public SkillInformationGui(ClientPlayerEntity player, Skill skill) {
+        public SkillInformationGui(LocalPlayer player, Skill skill) {
             WBox root = new WBox(Axis.VERTICAL);
             setRootPanel(root);
             root.setInsets(new Insets(4));
@@ -101,7 +100,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
             root.validate(this);
         }
 
-        private WWidget createSkillInfoPanel(ClientPlayerEntity player, Skill skill) {
+        private WWidget createSkillInfoPanel(LocalPlayer player, Skill skill) {
             WPlainPanel infoPanel = new WPlainPanel();
             infoPanel.setInsets(new Insets(2, 4));
 
@@ -124,7 +123,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
             );
 
             infoPanel.add(
-                    new WDynamicLabel(() -> I18n.translate("skillmmo.gui.skill.info.current_level", PlayerSkillManager.getInstance().getSkillLevel(player, skill), skill.getMaxLevel()))
+                    new WDynamicLabel(() -> I18n.get("skillmmo.gui.skill.info.current_level", PlayerSkillManager.getInstance().getSkillLevel(player, skill), skill.getMaxLevel()))
                             .setHorizontalAlignment(HorizontalAlignment.RIGHT),
                     GRID_SIZE * (ROOT_WIDTH - SKILL_LEVEL_WIDTH),
                     5,
@@ -145,7 +144,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
             return infoPanel;
         }
 
-        private WWidget createUnlocksPanel(ClientPlayerEntity player, Skill skill) {
+        private WWidget createUnlocksPanel(LocalPlayer player, Skill skill) {
             WPlainPanel skillUnlocksPanel = new WPlainPanel();
 
             WWidget skillLevelsPanel = createSkillLevelsPanel(skill.getSkillLevels());
@@ -166,10 +165,10 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
             for (SkillLevel skillLevel : skillLevels) {
                 List<ItemStack> items = Stream.concat(
-                                explodeTagItems(Registries.BLOCK, skillLevel.getUnlocksTag(VanillaUnlockables.BLOCK)),
-                                explodeTagItems(Registries.ITEM, skillLevel.getUnlocksTag(VanillaUnlockables.ITEM))
+                                explodeTagItems(BuiltInRegistries.BLOCK, skillLevel.getUnlocksTag(VanillaUnlockables.BLOCK)),
+                                explodeTagItems(BuiltInRegistries.ITEM, skillLevel.getUnlocksTag(VanillaUnlockables.ITEM))
                         )
-                        .sorted(Comparator.comparing(Registries.ITEM::getRawId))
+                        .sorted(Comparator.comparing(BuiltInRegistries.ITEM::getId))
                         .distinct()
                         .map(ItemStack::new)
                         .filter(itemStack -> !itemStack.isEmpty())
@@ -181,7 +180,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
                 WPlainPanel skillLevelUnlocksPanel = new WPlainPanel();
                 skillLevelUnlocksPanel.add(
-                        new WLabel(Text.translatable("skillmmo.gui.skill.unlocks.level", skillLevel.getLevel()))
+                        new WLabel(Component.translatable("skillmmo.gui.skill.unlocks.level", skillLevel.getLevel()))
                                 .setVerticalAlignment(VerticalAlignment.TOP)
                                 .setHorizontalAlignment(HorizontalAlignment.LEFT),
                         0,
@@ -198,7 +197,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
                     skillLevelUnlocksPanel.add(
                             new WItemWithTooltip(itemStack)
-                                    .setTooltipText(itemStack.getName()),
+                                    .setTooltipText(itemStack.getHoverName()),
                             GRID_SIZE * columnOffset,
                             GRID_SIZE * (rowOffset + 1) - 4,
                             GRID_SIZE * ICON_GRID_SIZE,
@@ -214,17 +213,17 @@ public class SkillInformationClientScreen extends CottonClientScreen {
                     .setScrollingVertically(TriState.DEFAULT);
         }
 
-        private <T extends ItemConvertible> Stream<Item> explodeTagItems(Registry<T> registry, TagKey<T> tag) {
-            Optional<RegistryEntryList.Named<T>> entryListOpt = registry.getOptional(tag);
+        private <T extends ItemLike> Stream<Item> explodeTagItems(Registry<T> registry, TagKey<T> tag) {
+            Optional<HolderSet.Named<T>> entryListOpt = registry.get(tag);
 
             if (entryListOpt.isEmpty()) {
                 return Stream.empty();
             }
 
             return entryListOpt.get().stream()
-                    .map(RegistryEntry::value)
+                    .map(Holder::value)
                     .filter(Objects::nonNull)
-                    .map(ItemConvertible::asItem);
+                    .map(ItemLike::asItem);
         }
     }
 }

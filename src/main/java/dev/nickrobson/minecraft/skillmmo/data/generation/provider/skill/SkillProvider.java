@@ -2,38 +2,37 @@ package dev.nickrobson.minecraft.skillmmo.data.generation.provider.skill;
 
 import dev.nickrobson.minecraft.skillmmo.data.SkillData;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillDataGenSpec;
-import net.minecraft.data.DataOutput;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
-import net.minecraft.data.DataWriter;
-import net.minecraft.registry.RegistryWrapper;
-
+import net.minecraft.data.PackOutput;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class SkillProvider implements DataProvider {
-    private final DataOutput.PathResolver pathResolver;
-    private final CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture;
+    private final PackOutput.PathProvider pathResolver;
+    private final CompletableFuture<HolderLookup.Provider> registryLookupFuture;
     private final List<SkillDataGenSpec> skillSpecs;
 
     public SkillProvider(
-            DataOutput output,
-            CompletableFuture<RegistryWrapper.WrapperLookup> registryLookupFuture
+            PackOutput output,
+            CompletableFuture<HolderLookup.Provider> registryLookupFuture
     ) {
-        this.pathResolver = output.getResolver(DataOutput.OutputType.DATA_PACK, "skills");
+        this.pathResolver = output.createPathProvider(PackOutput.Target.DATA_PACK, "skills");
         this.registryLookupFuture = registryLookupFuture;
         this.skillSpecs = new ArrayList<>();
     }
 
-    protected abstract void configure(RegistryWrapper.WrapperLookup lookup);
+    protected abstract void configure(HolderLookup.Provider lookup);
 
     protected final void addSkill(SkillDataGenSpec spec) {
         this.skillSpecs.add(spec);
     }
 
     @Override
-    public CompletableFuture<?> run(DataWriter writer) {
+    public CompletableFuture<?> run(CachedOutput writer) {
         return registryLookupFuture
                 .thenCompose(registryWrapper -> {
                             skillSpecs.clear();
@@ -43,8 +42,8 @@ public abstract class SkillProvider implements DataProvider {
                                             .stream()
                                             .map(
                                                     spec -> {
-                                                        Path path = this.pathResolver.resolveJson(spec.id());
-                                                        return DataProvider.writeCodecToPath(writer, registryWrapper, SkillData.CODEC, spec.toSkillData(), path);
+                                                        Path path = this.pathResolver.json(spec.id());
+                                                        return DataProvider.saveStable(writer, registryWrapper, SkillData.CODEC, spec.toSkillData(), path);
                                                     }
                                             )
                                             .toArray(CompletableFuture[]::new)

@@ -10,15 +10,15 @@ import mcp.mobius.waila.api.IPluginConfig;
 import mcp.mobius.waila.api.ITooltip;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 class SkillMmoEntityUnlockProvider implements IEntityComponentProvider {
     @Override
     @Environment(EnvType.CLIENT)
     public void appendBody(ITooltip tooltip, IEntityAccessor accessor, IPluginConfig config) {
-        PlayerEntity player = accessor.getPlayer();
+        Player player = accessor.getPlayer();
         Entity entity = accessor.getEntity();
 
         if (PlayerSkillUnlockManager.getInstance().hasEntityUnlock(player, entity)) {
@@ -26,7 +26,7 @@ class SkillMmoEntityUnlockProvider implements IEntityComponentProvider {
         }
 
         Unlockable<?> unlockable = VanillaUnlockables.forEntity(entity);
-        for (Text line : UnlockTooltipHelper.getLockedTooltipText(player, unlockable)) {
+        for (Component line : UnlockTooltipHelper.getLockedTooltipText(player, unlockable)) {
             tooltip.addLine(line);
         }
     }

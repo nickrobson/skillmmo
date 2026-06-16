@@ -4,13 +4,6 @@ import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.MutableText;
-import net.minecraft.text.Style;
-import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
-import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,24 +13,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.damagesource.DamageSource;
 
-@Mixin(ServerPlayerEntity.class)
-public class MixinServerPlayerEntity {
+@Mixin(ServerPlayer.class)
+public class MixinServerPlayer {
     @Inject(
-            method = "addExperience",
+            method = "giveExperiencePoints",
             at = @At("TAIL")
     )
     public void skillMmo$addExperience(int experience, CallbackInfo ci) {
         PlayerExperienceManager.getInstance()
-                .giveExperience((ServerPlayerEntity) (Object) this, experience);
+                .giveExperience((ServerPlayer) (Object) this, experience);
     }
 
     @Inject(
-            method = "onDeath",
+            method = "die",
             at = @At("TAIL")
     )
     public void skillMmo$onDeath(DamageSource source, CallbackInfo ci) {
-        ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
+        ServerPlayer player = (ServerPlayer) (Object) this;
 
         int levelsLostOnDeath = SkillMmoConfig.getConfig().loseAllLevelsOnDeath
                 ? Integer.MAX_VALUE
@@ -73,23 +73,23 @@ public class MixinServerPlayerEntity {
                     .mapToInt(id -> skillLevels.get(id) - newSkillLevels.get(id))
                     .sum();
 
-            MutableText message;
+            MutableComponent message;
             if (skillId == null) {
                 // Lost levels in all skills
                 message = totalLostLevels == 1
-                        ? Text.translatable("skillmmo.feedback.player.death.lost_level", totalLostLevels)
-                        : Text.translatable("skillmmo.feedback.player.death.lost_levels", totalLostLevels);
+                        ? Component.translatable("skillmmo.feedback.player.death.lost_level", totalLostLevels)
+                        : Component.translatable("skillmmo.feedback.player.death.lost_levels", totalLostLevels);
             } else {
                 // Lost levels in one skill
-                Text skillName = SkillManager.getInstance().getSkill(skillId).orElseThrow().getName();
+                Component skillName = SkillManager.getInstance().getSkill(skillId).orElseThrow().getName();
                 message = totalLostLevels == 1
-                        ? Text.translatable("skillmmo.feedback.player.death.lost_level.in.skill", totalLostLevels, skillName)
-                        : Text.translatable("skillmmo.feedback.player.death.lost_levels.in.skill", totalLostLevels, skillName);
+                        ? Component.translatable("skillmmo.feedback.player.death.lost_level.in.skill", totalLostLevels, skillName)
+                        : Component.translatable("skillmmo.feedback.player.death.lost_levels.in.skill", totalLostLevels, skillName);
             }
 
 
-            player.sendMessage(
-                    message.setStyle(Style.EMPTY.withFormatting(Formatting.RED)),
+            player.displayClientMessage(
+                    message.setStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)),
                     false
             );
         }

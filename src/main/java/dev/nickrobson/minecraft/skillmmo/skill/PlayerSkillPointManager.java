@@ -2,9 +2,8 @@ package dev.nickrobson.minecraft.skillmmo.skill;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
-import net.minecraft.entity.player.PlayerEntity;
-
 import javax.annotation.ParametersAreNonnullByDefault;
+import net.minecraft.world.entity.player.Player;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
@@ -18,17 +17,17 @@ public class PlayerSkillPointManager {
     private PlayerSkillPointManager() {
     }
 
-    public int getAvailableSkillPoints(PlayerEntity player) {
+    public int getAvailableSkillPoints(Player player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         return skillMmoPlayerDataHolder.skillMmo$getPlayerData().getAvailableSkillPoints();
     }
 
-    public void setAvailableSkillPoints(PlayerEntity player, int availableSkillPoints) {
+    public void setAvailableSkillPoints(Player player, int availableSkillPoints) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         skillMmoPlayerDataHolder.skillMmo$getPlayerData().setAvailableSkillPoints(availableSkillPoints);
     }
 
-    public boolean consumeAvailableSkillPoint(PlayerEntity player) {
+    public boolean consumeAvailableSkillPoint(Player player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         return skillMmoPlayerDataHolder.skillMmo$getPlayerData().consumeAvailableSkillPoint();
     }

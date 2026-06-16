@@ -6,11 +6,10 @@ import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
-
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Comparator;
@@ -48,39 +47,39 @@ public class PlayerSkillManager {
     private PlayerSkillManager() {
     }
 
-    public Map<Identifier, Integer> getSkillLevels(PlayerEntity player) {
+    public Map<Identifier, Integer> getSkillLevels(Player player) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         return skillMmoPlayerDataHolder.skillMmo$getPlayerData().getSkillLevels();
     }
 
-    public int getSkillLevel(PlayerEntity player, Skill skill) {
+    public int getSkillLevel(Player player, Skill skill) {
         return getSkillLevels(player).getOrDefault(skill.getId(), Skill.MIN_LEVEL);
     }
 
-    public boolean hasSkillLevel(PlayerEntity player, Skill skill, int level) {
+    public boolean hasSkillLevel(Player player, Skill skill, int level) {
         int playerSkillLevel = getSkillLevel(player, skill);
         return playerSkillLevel >= level;
     }
 
-    public int setSkillLevel(PlayerEntity player, Skill skill, int level) {
-        int newLevel = MathHelper.clamp(level, Skill.MIN_LEVEL, Math.min(skill.getMaxLevel(), Skill.MAX_LEVEL));
+    public int setSkillLevel(Player player, Skill skill, int level) {
+        int newLevel = Mth.clamp(level, Skill.MIN_LEVEL, Math.min(skill.getMaxLevel(), Skill.MAX_LEVEL));
         this.updateSkillLevels(player, Map.of(skill.getId(), newLevel));
         return newLevel;
     }
 
-    public void updateSkillLevels(PlayerEntity player, Map<Identifier, Integer> changedSkillLevels) {
+    public void updateSkillLevels(Player player, Map<Identifier, Integer> changedSkillLevels) {
         SkillMmoPlayerDataHolder skillMmoPlayerDataHolder = SkillMmoPlayerDataHolder.getPlayerDataHolder(player);
         changedSkillLevels.forEach((skillId, level) ->
                 skillMmoPlayerDataHolder.skillMmo$getPlayerData().setSkillLevel(skillId, level));
 
-        if (player instanceof ServerPlayerEntity serverPlayer) {
+        if (player instanceof ServerPlayer serverPlayer) {
             SkillMmoServerNetworking.sendPlayerSkills(serverPlayer);
 
             PlayerLockedRecipeManager.getInstance().syncLockedRecipes(serverPlayer);
         }
     }
 
-    public ChooseSkillLevelResult chooseSkillLevel(PlayerEntity player, Skill skill) {
+    public ChooseSkillLevelResult chooseSkillLevel(Player player, Skill skill) {
         int currentLevel = getSkillLevel(player, skill);
         if (currentLevel >= skill.getMaxLevel()) {
             return ChooseSkillLevelResult.FAILURE_AT_MAX_LEVEL;
@@ -94,7 +93,7 @@ public class PlayerSkillManager {
         return ChooseSkillLevelResult.SUCCESS;
     }
 
-    public SkillLevel getClosestLevel(PlayerEntity player, Collection<SkillLevel> skillLevelSet) {
+    public SkillLevel getClosestLevel(Player player, Collection<SkillLevel> skillLevelSet) {
         if (skillLevelSet.isEmpty()) {
             throw new IllegalArgumentException("Expected a non-empty set of skill levels");
         }

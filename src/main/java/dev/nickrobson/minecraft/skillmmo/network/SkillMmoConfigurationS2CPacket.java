@@ -3,17 +3,16 @@ package dev.nickrobson.minecraft.skillmmo.network;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import net.minecraft.item.Item;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.Text;
-import net.minecraft.text.TextCodecs;
-import net.minecraft.util.Identifier;
-
 import javax.annotation.Nonnull;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,16 +20,16 @@ public record SkillMmoConfigurationS2CPacket(
         String modVersion,
         Set<Skill> skills,
         ExperienceLevelEquation experienceLevelEquation
-) implements CustomPayload {
-    public static final CustomPayload.Id<SkillMmoConfigurationS2CPacket> PACKET_ID = new CustomPayload.Id<>(Identifier.of(SkillMmoMod.MOD_ID, "configure_s2c"));
+) implements CustomPacketPayload {
+    public static final CustomPacketPayload.Type<SkillMmoConfigurationS2CPacket> PACKET_ID = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "configure_s2c"));
 
-    private static final PacketCodec<PacketByteBuf, Skill> SKILL_PACKET_CODEC = PacketCodec.ofStatic(SkillMmoConfigurationS2CPacket::writeSkill, SkillMmoConfigurationS2CPacket::readSkill);
-    private static final PacketCodec<PacketByteBuf, ExperienceLevelEquation> EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC = PacketCodec.ofStatic(SkillMmoConfigurationS2CPacket::writeExperienceLevelEquation, SkillMmoConfigurationS2CPacket::readExperienceLevelEquation);
+    private static final StreamCodec<FriendlyByteBuf, Skill> SKILL_PACKET_CODEC = StreamCodec.of(SkillMmoConfigurationS2CPacket::writeSkill, SkillMmoConfigurationS2CPacket::readSkill);
+    private static final StreamCodec<FriendlyByteBuf, ExperienceLevelEquation> EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC = StreamCodec.of(SkillMmoConfigurationS2CPacket::writeExperienceLevelEquation, SkillMmoConfigurationS2CPacket::readExperienceLevelEquation);
 
-    public static final PacketCodec<PacketByteBuf, SkillMmoConfigurationS2CPacket> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.STRING,
+    public static final StreamCodec<FriendlyByteBuf, SkillMmoConfigurationS2CPacket> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.STRING_UTF8,
             SkillMmoConfigurationS2CPacket::modVersion,
-            SKILL_PACKET_CODEC.collect(PacketCodecs.toCollection(SkillMmoConfigurationS2CPacket::newSet)),
+            SKILL_PACKET_CODEC.apply(ByteBufCodecs.collection(SkillMmoConfigurationS2CPacket::newSet)),
             SkillMmoConfigurationS2CPacket::skills,
             EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC,
             SkillMmoConfigurationS2CPacket::experienceLevelEquation,
@@ -38,7 +37,7 @@ public record SkillMmoConfigurationS2CPacket(
     );
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return PACKET_ID;
     }
 
@@ -46,25 +45,25 @@ public record SkillMmoConfigurationS2CPacket(
         return new HashSet<>(capacity);
     }
 
-    private static Skill readSkill(@Nonnull PacketByteBuf packetByteBuf) {
+    private static Skill readSkill(@Nonnull FriendlyByteBuf packetByteBuf) {
         Identifier id = packetByteBuf.readIdentifier();
-        Text nameText = TextCodecs.PACKET_CODEC.decode(packetByteBuf);
-        Text descriptionText = TextCodecs.PACKET_CODEC.decode(packetByteBuf);
+        Component nameText = ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.decode(packetByteBuf);
+        Component descriptionText = ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.decode(packetByteBuf);
         int maxLevel = packetByteBuf.readVarInt();
-        Item iconItem = Registries.ITEM.get(packetByteBuf.readIdentifier());
+        Item iconItem = BuiltInRegistries.ITEM.getValue(packetByteBuf.readIdentifier());
 
         return new Skill(id, nameText, descriptionText, maxLevel, iconItem);
     }
 
-    private static void writeSkill(@Nonnull PacketByteBuf packetByteBuf, @Nonnull Skill skill) {
+    private static void writeSkill(@Nonnull FriendlyByteBuf packetByteBuf, @Nonnull Skill skill) {
         packetByteBuf.writeIdentifier(skill.getId());
-        TextCodecs.PACKET_CODEC.encode(packetByteBuf, skill.getName());
-        TextCodecs.PACKET_CODEC.encode(packetByteBuf, skill.getDescription());
+        ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.encode(packetByteBuf, skill.getName());
+        ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.encode(packetByteBuf, skill.getDescription());
         packetByteBuf.writeVarInt(skill.getMaxLevel());
-        packetByteBuf.writeIdentifier(Registries.ITEM.getId(skill.getIconItem()));
+        packetByteBuf.writeIdentifier(BuiltInRegistries.ITEM.getKey(skill.getIconItem()));
     }
 
-    private static ExperienceLevelEquation readExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf) {
+    private static ExperienceLevelEquation readExperienceLevelEquation(@Nonnull FriendlyByteBuf packetByteBuf) {
         long baseCost = packetByteBuf.readLong();
         double multiplier = packetByteBuf.readDouble();
         double levelExponent = packetByteBuf.readDouble();
@@ -72,7 +71,7 @@ public record SkillMmoConfigurationS2CPacket(
         return new ExperienceLevelEquation(baseCost, multiplier, levelExponent);
     }
 
-    private static void writeExperienceLevelEquation(@Nonnull PacketByteBuf packetByteBuf, @Nonnull ExperienceLevelEquation equation) {
+    private static void writeExperienceLevelEquation(@Nonnull FriendlyByteBuf packetByteBuf, @Nonnull ExperienceLevelEquation equation) {
         packetByteBuf.writeLong(equation.getBaseCost());
         packetByteBuf.writeDouble(equation.getMultiplier());
         packetByteBuf.writeDouble(equation.getLevelExponent());

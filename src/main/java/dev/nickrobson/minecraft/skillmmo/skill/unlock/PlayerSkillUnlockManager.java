@@ -16,23 +16,23 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.block.AirBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.ItemEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.RecipeEntry;
-import net.minecraft.recipe.display.SlotDisplay;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.registry.entry.RegistryEntryList;
-import net.minecraft.text.Text;
-import net.minecraft.util.ActionResult;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.display.SlotDisplay;
+import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -58,7 +58,7 @@ public class PlayerSkillUnlockManager {
     public void register() {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
             BlockState blockState = world.getBlockState(hitResult.getBlockPos());
-            ItemStack itemStack = player.getStackInHand(hand);
+            ItemStack itemStack = player.getItemInHand(hand);
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction.
             // This isn't the most correct check for this, since there's no reason why you shouldn't able to
@@ -72,65 +72,65 @@ public class PlayerSkillUnlockManager {
             // In the future, this could be improved to allow e.g. opening blocks with inventories with whatever items (since they don't affect the interaction)
             if (!hasItemUnlock(player, itemStack)) {
                 reportItemUseLocked(player, itemStack.getItem());
-                return ActionResult.FAIL;
+                return InteractionResult.FAIL;
             }
 
             // If the player doesn't have the necessary skill for the block, check what the player is trying to do
             if (!hasBlockUnlock(player, blockState)) {
                 if (itemStack.getItem() instanceof BlockItem) {
                     // If the player is trying to place a block against a block, allow the interaction
-                    if (player.shouldCancelInteraction()) {
-                        return ActionResult.PASS;
+                    if (player.isSecondaryUseActive()) {
+                        return InteractionResult.PASS;
                     }
 
                     // Deny interaction with blocks that have been marked as interaction-restricted
-                    if (blockState.isIn(SkillMmoTags.interactableBlocks)) {
+                    if (blockState.is(SkillMmoTags.interactableBlocks)) {
                         reportBlockInteractLocked(player, blockState.getBlock());
-                        return ActionResult.FAIL;
+                        return InteractionResult.FAIL;
                     }
 
-                    return ActionResult.PASS;
+                    return InteractionResult.PASS;
                 }
 
                 reportBlockInteractLocked(player, blockState.getBlock());
-                return ActionResult.FAIL;
+                return InteractionResult.FAIL;
             }
 
-            return ActionResult.PASS;
+            return InteractionResult.PASS;
         });
 
         UseItemCallback.EVENT.register((player, world, hand) -> {
-            ItemStack itemStack = player.getStackInHand(hand);
+            ItemStack itemStack = player.getItemInHand(hand);
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!hasItemUnlock(player, itemStack)) {
                 reportItemUseLocked(player, itemStack.getItem());
-                return ActionResult.FAIL;
+                return InteractionResult.FAIL;
             }
 
-            return ActionResult.PASS;
+            return InteractionResult.PASS;
         });
 
         UseEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            ItemStack itemStack = player.getStackInHand(hand);
+            ItemStack itemStack = player.getItemInHand(hand);
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!hasItemUnlock(player, itemStack)) {
                 reportItemUseLocked(player, itemStack.getItem());
-                return ActionResult.FAIL;
+                return InteractionResult.FAIL;
             }
 
             // If the player doesn't have the necessary skill for the entity, deny the interaction
             if (!hasEntityUnlock(player, entity)) {
                 reportEntityInteractLocked(player, entity);
-                return ActionResult.FAIL;
+                return InteractionResult.FAIL;
             }
 
-            return ActionResult.PASS;
+            return InteractionResult.PASS;
         });
     }
 
-    public boolean hasBlockUnlock(@Nullable PlayerEntity player, BlockState blockState) {
+    public boolean hasBlockUnlock(@Nullable Player player, BlockState blockState) {
         if (blockState.isAir()) {
             return true;
         }
@@ -138,7 +138,7 @@ public class PlayerSkillUnlockManager {
         return hasBlockUnlock(player, blockState.getBlock());
     }
 
-    public boolean hasBlockUnlock(@Nullable PlayerEntity player, Block block) {
+    public boolean hasBlockUnlock(@Nullable Player player, Block block) {
         if (block instanceof AirBlock) {
             return true;
         }
@@ -146,7 +146,7 @@ public class PlayerSkillUnlockManager {
         return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forBlock(block));
     }
 
-    public boolean hasItemUnlock(@Nullable PlayerEntity player, ItemStack itemStack) {
+    public boolean hasItemUnlock(@Nullable Player player, ItemStack itemStack) {
         if (itemStack.isEmpty()) {
             return true;
         }
@@ -154,7 +154,7 @@ public class PlayerSkillUnlockManager {
         return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forItemStack(itemStack));
     }
 
-    public boolean hasItemUnlock(@Nullable PlayerEntity player, Item item) {
+    public boolean hasItemUnlock(@Nullable Player player, Item item) {
         if (item == Items.AIR) {
             return true;
         }
@@ -162,15 +162,15 @@ public class PlayerSkillUnlockManager {
         return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forItem(item));
     }
 
-    public boolean hasEntityUnlock(@Nullable PlayerEntity player, Entity entity) {
+    public boolean hasEntityUnlock(@Nullable Player player, Entity entity) {
         if (entity instanceof ItemEntity itemEntity) {
-            return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemEntity.getStack());
+            return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemEntity.getItem());
         }
 
         return PlayerSkillUnlockManager.getInstance().hasUnlock(player, VanillaUnlockables.forEntity(entity));
     }
 
-    private boolean hasUnlock(@Nullable PlayerEntity player, Unlockable<?> unlockable) {
+    private boolean hasUnlock(@Nullable Player player, Unlockable<?> unlockable) {
         if (!SkillMmoMod.isModEnabled) {
             return true;
         }
@@ -197,34 +197,34 @@ public class PlayerSkillUnlockManager {
                 : skillLevelSet.stream().anyMatch(hasSkillLevel);
     }
 
-    public boolean hasRecipeUnlock(PlayerEntity player, RecipeEntry<?> recipe) {
+    public boolean hasRecipeUnlock(Player player, RecipeHolder<?> recipe) {
         // FIXME: relying on recipe displays probably isn't the right way to do this
         //  but, I think the "right" way would be to fake a craft, and that seems to be really difficult to implement
         //  buuuut... it works... so... that'll be what we do for now
-        boolean anyIngredientIsFullyLocked = recipe.value().getIngredientPlacement().getIngredients().stream()
+        boolean anyIngredientIsFullyLocked = recipe.value().placementInfo().ingredients().stream()
                 .anyMatch(ingredient ->
-                        !ingredient.getMatchingItems()
-                                .map(RegistryEntry::value)
+                        !ingredient.items()
+                                .map(Holder::value)
                                 .allMatch(item -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, item)));
-        boolean outputIsLocked = recipe.value().getDisplays().stream()
+        boolean outputIsLocked = recipe.value().display().stream()
                 .anyMatch(recipeDisplay -> !hasSlotDisplayUnlocked(player, recipeDisplay.result()));
 
         return !anyIngredientIsFullyLocked && !outputIsLocked;
     }
 
-    private boolean hasSlotDisplayUnlocked(PlayerEntity player, SlotDisplay slotDisplay) {
+    private boolean hasSlotDisplayUnlocked(Player player, SlotDisplay slotDisplay) {
         switch (slotDisplay) {
             case SlotDisplay.ItemSlotDisplay itemSlotDisplay -> {
                 return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemSlotDisplay.item().value());
             }
-            case SlotDisplay.StackSlotDisplay stackSlotDisplay -> {
+            case SlotDisplay.ItemStackSlotDisplay stackSlotDisplay -> {
                 return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, stackSlotDisplay.stack());
             }
-            case SlotDisplay.WithRemainderSlotDisplay withRemainderSlotDisplay -> {
+            case SlotDisplay.WithRemainder withRemainderSlotDisplay -> {
                 // we only care about the input, not the remainder here
                 return hasSlotDisplayUnlocked(player, withRemainderSlotDisplay.input());
             }
-            case SlotDisplay.CompositeSlotDisplay compositeSlotDisplay -> {
+            case SlotDisplay.Composite compositeSlotDisplay -> {
                 // CompositeSlotDisplay represents "one of many items"
                 return compositeSlotDisplay.contents().stream().anyMatch(
                         innerSlotDisplay -> hasSlotDisplayUnlocked(player, innerSlotDisplay)
@@ -232,19 +232,19 @@ public class PlayerSkillUnlockManager {
             }
             case SlotDisplay.TagSlotDisplay tagSlotDisplay -> {
                 // TagSlotDisplay represents "one of many items"
-                return Registries.ITEM.getOptional(tagSlotDisplay.tag()).stream()
-                        .flatMap(RegistryEntryList.ListBacked::stream)
+                return BuiltInRegistries.ITEM.get(tagSlotDisplay.tag()).stream()
+                        .flatMap(HolderSet.ListBacked::stream)
                         .anyMatch(
                                 item -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, item.value())
                         );
             }
-            case SlotDisplay.EmptySlotDisplay ignored -> {
+            case SlotDisplay.Empty ignored -> {
                 return true; // empty slots don't matter
             }
-            case SlotDisplay.AnyFuelSlotDisplay ignored -> {
+            case SlotDisplay.AnyFuel ignored -> {
                 return true; // fuel slots don't count towards unlocks
             }
-            case SlotDisplay.SmithingTrimSlotDisplay smithingTrimSlotDisplay -> {
+            case SlotDisplay.SmithingTrimDemoSlotDisplay smithingTrimSlotDisplay -> {
                 return true; // smithing trim slots don't count towards unlocks
             }
             default -> {
@@ -254,19 +254,19 @@ public class PlayerSkillUnlockManager {
         }
     }
 
-    public void reportBlockBreakLocked(@Nullable PlayerEntity player, Block block) {
+    public void reportBlockBreakLocked(@Nullable Player player, Block block) {
         reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_BREAK), block, block);
     }
 
-    public void reportBlockInteractLocked(@Nullable PlayerEntity player, Block block) {
+    public void reportBlockInteractLocked(@Nullable Player player, Block block) {
         reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_INTERACT), block, block);
     }
 
-    public void reportItemUseLocked(@Nullable PlayerEntity player, Item item) {
+    public void reportItemUseLocked(@Nullable Player player, Item item) {
         reportItemUseLocked(player, item, null);
     }
 
-    public void reportItemUseLocked(@Nullable PlayerEntity player, Item item, @Nullable SkillDenyCustomizable skillDenyCustomizable) {
+    public void reportItemUseLocked(@Nullable Player player, Item item, @Nullable SkillDenyCustomizable skillDenyCustomizable) {
         if (item instanceof BlockItem blockItem) {
             Block block = blockItem.getBlock();
             reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_PLACE), block, skillDenyCustomizable != null ? skillDenyCustomizable : block);
@@ -275,7 +275,7 @@ public class PlayerSkillUnlockManager {
         }
     }
 
-    public void reportEntityInteractLocked(@Nullable PlayerEntity player, Entity entity) {
+    public void reportEntityInteractLocked(@Nullable Player player, Entity entity) {
         reportInteractLocked(
                 player,
                 InteractionHelper.forEntity(entity, VanillaInteractionTypes.ENTITY_INTERACT),
@@ -285,7 +285,7 @@ public class PlayerSkillUnlockManager {
     }
 
     private <T> void reportInteractLocked(
-            @Nullable PlayerEntity player,
+            @Nullable Player player,
             Interaction<T> interaction,
             T target,
             @Nullable Object maybeSkillDenyCustomizable) {
@@ -301,16 +301,16 @@ public class PlayerSkillUnlockManager {
         // Find the level the player is closest to reaching
         SkillLevel skillLevel = PlayerSkillManager.getInstance().getClosestLevel(player, skillLevelSet);
 
-        Text text = null;
+        Component text = null;
         if (maybeSkillDenyCustomizable instanceof SkillDenyCustomizable skillDenyCustomizable) {
             int playerLevel = PlayerSkillManager.getInstance().getSkillLevel(player, skillLevel.getSkill());
             text = skillDenyCustomizable.skillMmo$onDeny(player, skillLevel, playerLevel);
         }
         if (text == null) {
-            Text skillName = skillLevel.getSkill().getName();
+            Component skillName = skillLevel.getSkill().getName();
             int level = skillLevel.getLevel();
             text = interaction.getDenyText(target, skillName, level);
         }
-        player.sendMessage(text, true);
+        player.displayClientMessage(text, true);
     }
 }
