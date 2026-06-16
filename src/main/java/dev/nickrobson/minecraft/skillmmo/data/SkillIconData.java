@@ -1,8 +1,8 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
+import com.mojang.logging.annotations.FieldsAreNonnullByDefault;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.annotation.FieldsAreNonnullByDefault;
 
 import static dev.nickrobson.minecraft.skillmmo.data.SkillMmoCodecHelper.constant;
 

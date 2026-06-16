@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
-    "minecraft:stone_sword"
+    "minecraft:stone_sword",
+    "minecraft:stone_spear"
   ]
 }

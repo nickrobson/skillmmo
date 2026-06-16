@@ -1,7 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.skill.data;
 
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 

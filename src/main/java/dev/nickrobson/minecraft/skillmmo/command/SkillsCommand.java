@@ -10,7 +10,9 @@ import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
+import net.minecraft.command.DefaultPermissions;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.permission.Permissions;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Style;
@@ -32,7 +34,7 @@ public class SkillsCommand {
     static LiteralArgumentBuilder<ServerCommandSource> defineSkillsCommand() {
         return literal("skills")
                 .then(argument("player", EntityArgumentType.player())
-                        .requires(source -> source.hasPermissionLevel(2))
+                        .requires(source -> source.getPermissions().hasPermission(DefaultPermissions.GAMEMASTERS))
                         .executes(ctx -> executeSkillsCommand(ctx, EntityArgumentType.getPlayer(ctx, "player"))))
                 .executes(ctx -> executeSkillsCommand(ctx, null));
     }

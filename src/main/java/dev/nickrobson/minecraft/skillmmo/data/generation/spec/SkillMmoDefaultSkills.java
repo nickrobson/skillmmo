@@ -397,7 +397,10 @@ public final class SkillMmoDefaultSkills {
                                                     EntityType.MULE,
                                                     EntityType.SKELETON_HORSE,
                                                     EntityType.ZOMBIE_HORSE,
-                                                    EntityType.CAMEL
+                                                    EntityType.CAMEL,
+                                                    EntityType.CAMEL_HUSK,
+                                                    EntityType.NAUTILUS,
+                                                    EntityType.ZOMBIE_NAUTILUS
                                             )
                             )
                             .put(
@@ -856,7 +859,8 @@ public final class SkillMmoDefaultSkills {
                                     new SkillLevelDataGenSpec()
                                             .withItems(
                                                     Items.ARMOR_STAND,
-                                                    Items.WOODEN_SWORD
+                                                    Items.WOODEN_SWORD,
+                                                    Items.WOODEN_SPEAR
                                             )
                                             .withEntityTypes(
                                                     EntityType.ARMOR_STAND
@@ -874,7 +878,11 @@ public final class SkillMmoDefaultSkills {
                             )
                             .put(
                                     4,
-                                    new SkillLevelDataGenSpec().withItems(Items.STONE_SWORD)
+                                    new SkillLevelDataGenSpec()
+                                            .withItems(
+                                                    Items.STONE_SWORD,
+                                                    Items.STONE_SPEAR
+                                            )
                             )
                             .put(
                                     5,
@@ -885,7 +893,13 @@ public final class SkillMmoDefaultSkills {
                                             Items.CHAINMAIL_BOOTS
                                     )
                             )
-                            .put(6, new SkillLevelDataGenSpec().withItems(Items.WOLF_ARMOR))
+                            .put(
+                                    6,
+                                    new SkillLevelDataGenSpec()
+                                            .withItems(
+                                                    Items.WOLF_ARMOR
+                                            )
+                            )
                             .put(
                                     7,
                                     new SkillLevelDataGenSpec().withItems(
@@ -897,28 +911,34 @@ public final class SkillMmoDefaultSkills {
                                     8,
                                     new SkillLevelDataGenSpec().withItems(
                                             Items.COPPER_SWORD,
+                                            Items.COPPER_SPEAR,
                                             Items.COPPER_HELMET,
                                             Items.COPPER_CHESTPLATE,
                                             Items.COPPER_LEGGINGS,
                                             Items.COPPER_BOOTS,
                                             Items.COPPER_HORSE_ARMOR,
+                                            Items.COPPER_NAUTILUS_ARMOR,
                                             Items.GOLDEN_SWORD,
+                                            Items.GOLDEN_SPEAR,
                                             Items.GOLDEN_HELMET,
                                             Items.GOLDEN_CHESTPLATE,
                                             Items.GOLDEN_LEGGINGS,
                                             Items.GOLDEN_BOOTS,
-                                            Items.GOLDEN_HORSE_ARMOR
+                                            Items.GOLDEN_HORSE_ARMOR,
+                                            Items.GOLDEN_NAUTILUS_ARMOR
                                     )
                             )
                             .put(
                                     10,
                                     new SkillLevelDataGenSpec().withItems(
                                             Items.IRON_SWORD,
+                                            Items.IRON_SPEAR,
                                             Items.IRON_HELMET,
                                             Items.IRON_CHESTPLATE,
                                             Items.IRON_LEGGINGS,
                                             Items.IRON_BOOTS,
                                             Items.IRON_HORSE_ARMOR,
+                                            Items.IRON_NAUTILUS_ARMOR,
                                             Items.SHIELD
                                     )
                             )
@@ -927,11 +947,13 @@ public final class SkillMmoDefaultSkills {
                                     15,
                                     new SkillLevelDataGenSpec().withItems(
                                             Items.DIAMOND_SWORD,
+                                            Items.DIAMOND_SPEAR,
                                             Items.DIAMOND_HELMET,
                                             Items.DIAMOND_CHESTPLATE,
                                             Items.DIAMOND_LEGGINGS,
                                             Items.DIAMOND_BOOTS,
                                             Items.DIAMOND_HORSE_ARMOR,
+                                            Items.DIAMOND_NAUTILUS_ARMOR,
                                             Items.TRIDENT
                                     )
                             )
@@ -939,10 +961,13 @@ public final class SkillMmoDefaultSkills {
                                     20,
                                     new SkillLevelDataGenSpec().withItems(
                                             Items.NETHERITE_SWORD,
+                                            Items.NETHERITE_SPEAR,
                                             Items.NETHERITE_HELMET,
                                             Items.NETHERITE_CHESTPLATE,
                                             Items.NETHERITE_LEGGINGS,
-                                            Items.NETHERITE_BOOTS
+                                            Items.NETHERITE_BOOTS,
+                                            Items.NETHERITE_HORSE_ARMOR,
+                                            Items.NETHERITE_NAUTILUS_ARMOR
                                     )
                             )
                             .put(25, new SkillLevelDataGenSpec().withItems(Items.MACE))

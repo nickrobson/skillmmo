@@ -1,5 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill.unlock;
 
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.api.interaction.Interaction;
@@ -32,7 +33,6 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

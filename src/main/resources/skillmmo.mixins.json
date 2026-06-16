@@ -6,7 +6,6 @@
   "mixins": [
     "MixinFarmlandBlock",
     "MixinGameRules",
-    "MixinGameRules$MixinBooleanRule",
     "MixinGlassBottleItem",
     "MixinLivingEntity",
     "MixinPlayerEntity",

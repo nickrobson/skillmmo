@@ -7,8 +7,10 @@ import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import net.minecraft.command.DefaultPermissions;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
@@ -17,7 +19,6 @@ import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.annotation.MethodsReturnNonnullByDefault;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -45,16 +46,16 @@ public class SkillCommand {
                                 .executes(SkillCommand::executeAcquireSkillCommand)
                         ))
                 .then(literal("admin")
-                        .requires(ctx -> ctx.hasPermissionLevel(2))
+                        .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.GAMEMASTERS))
                         .then(literal("get")
-                                .requires(ctx -> ctx.hasPermissionLevel(2))
+                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.GAMEMASTERS))
                                 .then(argument("player", EntityArgumentType.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .executes(SkillCommand::executeGetSkillLevelCommand)
                                         )
                                 ))
                         .then(literal("set")
-                                .requires(ctx -> ctx.hasPermissionLevel(3))
+                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.ADMINS))
                                 .then(argument("player", EntityArgumentType.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
@@ -64,7 +65,7 @@ public class SkillCommand {
                                 )
                         )
                         .then(literal("add")
-                                .requires(ctx -> ctx.hasPermissionLevel(3))
+                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.ADMINS))
                                 .then(argument("player", EntityArgumentType.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
@@ -74,7 +75,7 @@ public class SkillCommand {
                                 )
                         )
                         .then(literal("remove")
-                                .requires(ctx -> ctx.hasPermissionLevel(3))
+                                .requires(ctx -> ctx.getPermissions().hasPermission(DefaultPermissions.ADMINS))
                                 .then(argument("player", EntityArgumentType.player())
                                         .then(argument("skill", new SkillArgumentType())
                                                 .then(argument("level", IntegerArgumentType.integer(Skill.MIN_LEVEL, Skill.MAX_LEVEL))
