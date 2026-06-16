@@ -11,6 +11,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
@@ -44,6 +45,10 @@ public class SkillMmoMod implements ModInitializer {
 
         PlayerSkillManager.getInstance().register();
         PlayerSkillUnlockManager.getInstance().register();
+
+        ServerLifecycleEvents.SERVER_STARTED.register((server) -> {
+            SkillMmoDebugger.printDebugInfo();
+        });
 
         logger.info("Ready! Time to test your mettle!");
     }

@@ -73,7 +73,7 @@ You can find plenty of examples in [this mod's datapack](src/main/resources/data
 Block, item, and entity unlocks are configured using tags, with the Vanilla resource location formats:
 - Blocks: `data/<group>/tags/blocks/skills/<id>/<level>.json`
 - Items: `data/<group>/tags/items/skills/<id>/<level>.json`
-- Entities: `data/<group>/tags/entity_types/skills/<id>/<level>.json`
+- Entity types: `data/<group>/tags/entity_types/skills/<id>/<level>.json`
 
 You can read about the tag format over on [the Minecraft wiki](https://minecraft.fandom.com/wiki/Tag#JSON_format).
 
@@ -81,6 +81,9 @@ All levels up to and including the `maxLevel` defined in the skill's datapack en
 Players will/won't be able to use the items in the tags until they reach at least the given level.
 
 You can find plenty of examples in [this mod's datapack](src/main/resources/data/skillmmo/tags).
+
+To print a debug log of unregistered blocks, items, and entity types, set `-Dskillmmo.debug.unassigned=true` in your start up flags.
+This is particularly useful for modpack creators.
 
 ---
 

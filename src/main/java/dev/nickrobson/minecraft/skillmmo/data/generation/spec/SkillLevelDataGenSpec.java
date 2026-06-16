@@ -7,7 +7,9 @@ import net.minecraft.item.Item;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public record SkillLevelDataGenSpec(
         List<Block> blocks,
@@ -34,7 +36,7 @@ public record SkillLevelDataGenSpec(
     }
 
     public SkillLevelDataGenSpec withBlocks(Block... blocks) {
-        return new SkillLevelDataGenSpec(List.of(blocks), this.blockTags, this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
+        return new SkillLevelDataGenSpec(Stream.concat(this.blocks.stream(), Arrays.stream(blocks)).toList(), this.blockTags, this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
     }
 
     public SkillLevelDataGenSpec withBlockSets(CopperBlockSet... blockSets) {
@@ -47,24 +49,24 @@ public record SkillLevelDataGenSpec(
 
     @SafeVarargs
     public final SkillLevelDataGenSpec withBlockTags(TagKey<Block>... blockTags) {
-        return new SkillLevelDataGenSpec(this.blocks, List.of(blockTags), this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
+        return new SkillLevelDataGenSpec(this.blocks, Stream.concat(this.blockTags.stream(), Arrays.stream(blockTags)).toList(), this.items, this.itemTags, this.entityTypes, this.entityTypeTags);
     }
 
     public SkillLevelDataGenSpec withItems(Item... items) {
-        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, List.of(items), this.itemTags, this.entityTypes, this.entityTypeTags);
+        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, Stream.concat(this.items.stream(), Arrays.stream(items)).toList(), this.itemTags, this.entityTypes, this.entityTypeTags);
     }
 
     @SafeVarargs
     public final SkillLevelDataGenSpec withItemTags(TagKey<Item>... itemTags) {
-        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, this.items, List.of(itemTags), this.entityTypes, this.entityTypeTags);
+        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, this.items, Stream.concat(this.itemTags.stream(), Arrays.stream(itemTags)).toList(), this.entityTypes, this.entityTypeTags);
     }
 
     public SkillLevelDataGenSpec withEntityTypes(EntityType<?>... entityTypes) {
-        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, this.items, this.itemTags, List.of(entityTypes), this.entityTypeTags);
+        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, this.items, this.itemTags, Stream.concat(this.entityTypes.stream(), Arrays.stream(entityTypes)).toList(), this.entityTypeTags);
     }
 
     @SafeVarargs
     public final SkillLevelDataGenSpec withEntityTypeTags(TagKey<EntityType<?>>... entityTypeTags) {
-        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, this.items, this.itemTags, this.entityTypes, List.of(entityTypeTags));
+        return new SkillLevelDataGenSpec(this.blocks, this.blockTags, this.items, this.itemTags, this.entityTypes, Stream.concat(this.entityTypeTags.stream(), Arrays.stream(entityTypeTags)).toList());
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
  * Defines the default skills and their unlock requirements.
  * <p>
  * For blocks and items that are intentionally NOT gated behind skill levels,
- * see {@link UngatedContent} for documentation of what has been deliberately excluded.
+ * see {@link SkillMmoDefaultUngatedContent} for documentation of what has been deliberately excluded.
  */
 public final class SkillMmoDefaultSkills {
 

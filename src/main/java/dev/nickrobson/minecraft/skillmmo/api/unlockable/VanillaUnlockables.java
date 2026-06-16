@@ -59,4 +59,8 @@ public class VanillaUnlockables {
                 ? forItemStack(itemEntity.getStack())
                 : ENTITY_TYPE.createUnlockable(entity.getType());
     }
+
+    public static Unlockable<?> forEntityType(EntityType<?> entityType) {
+        return ENTITY_TYPE.createUnlockable(entityType);
+    }
 }
