@@ -150,7 +150,7 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
                     .forEach((level, spec) -> {
                         if (spec.hasItems()) {
                             TagKey<Item> itemTag = SkillMmoTags.getUnlocksTag(skill.id(), level, VanillaUnlockables.ITEM);
-                            translationBuilder.add("tag.item.%s.%s".formatted(itemTag.id().getNamespace(), itemTag.id().getPath()), translationSpec.name() + " lvl " + level);
+                            translationBuilder.add("tag.item.%s.%s".formatted(itemTag.id().getNamespace(), itemTag.id().getPath().replace("/", ".")), translationSpec.name() + " lvl " + level);
                         }
                     });
         });
