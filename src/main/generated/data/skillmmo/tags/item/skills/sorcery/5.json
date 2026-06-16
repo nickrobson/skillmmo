@@ -3,6 +3,11 @@
   "values": [
     "minecraft:enchanted_book",
     "minecraft:enchanted_golden_apple",
-    "minecraft:potion"
+    "minecraft:potion",
+    "minecraft:fermented_spider_eye",
+    "minecraft:blaze_rod",
+    "minecraft:blaze_powder",
+    "minecraft:ghast_tear",
+    "minecraft:magma_cream"
   ]
 }

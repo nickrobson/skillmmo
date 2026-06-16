@@ -4,6 +4,9 @@
     "minecraft:bookshelf",
     "minecraft:chiseled_bookshelf",
     "minecraft:ladder",
-    "#minecraft:wooden_fences"
+    "minecraft:glass",
+    "minecraft:glass_pane",
+    "#minecraft:wooden_fences",
+    "#minecraft:banners"
   ]
 }

@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
+    "minecraft:dried_ghast",
     "minecraft:sniffer_egg"
   ]
 }

@@ -3,6 +3,7 @@
   "values": [
     "minecraft:raw_gold",
     "minecraft:gold_ingot",
+    "minecraft:gold_nugget",
     "minecraft:golden_shovel",
     "minecraft:golden_pickaxe"
   ]

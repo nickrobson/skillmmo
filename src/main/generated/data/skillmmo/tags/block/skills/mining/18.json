@@ -10,6 +10,7 @@
     "minecraft:nether_quartz_ore",
     "minecraft:quartz_block",
     "minecraft:blackstone",
-    "minecraft:gilded_blackstone"
+    "minecraft:gilded_blackstone",
+    "minecraft:end_stone"
   ]
 }

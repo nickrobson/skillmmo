@@ -1,7 +1,13 @@
 {
   "replace": true,
   "values": [
+    "minecraft:sugar",
+    "minecraft:pumpkin_pie",
     "minecraft:cookie",
-    "minecraft:paper"
+    "minecraft:paper",
+    "minecraft:book",
+    "minecraft:writable_book",
+    "minecraft:written_book",
+    "minecraft:dried_kelp"
   ]
 }

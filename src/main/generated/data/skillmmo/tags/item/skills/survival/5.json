@@ -4,10 +4,14 @@
     "minecraft:filled_map",
     "minecraft:fishing_rod",
     "minecraft:map",
+    "minecraft:filled_map",
     "minecraft:name_tag",
     "minecraft:brush",
     "minecraft:spyglass",
     "minecraft:flint_and_steel",
-    "minecraft:shears"
+    "minecraft:shears",
+    "minecraft:charcoal",
+    "minecraft:nautilus_shell",
+    "minecraft:heart_of_the_sea"
   ]
 }

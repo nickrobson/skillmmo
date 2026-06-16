@@ -1,7 +1,7 @@
 {
   "replace": true,
   "values": [
-    "minecraft:saddle",
-    "minecraft:lead"
+    "minecraft:warped_fungus_on_a_stick",
+    "#minecraft:harnesses"
   ]
 }

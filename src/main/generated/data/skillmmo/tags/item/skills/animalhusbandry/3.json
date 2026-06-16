@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
-    "minecraft:goat_horn"
+    "minecraft:goat_horn",
+    "minecraft:carrot_on_a_stick"
   ]
 }

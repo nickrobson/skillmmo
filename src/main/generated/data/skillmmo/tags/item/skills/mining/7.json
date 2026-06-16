@@ -2,6 +2,7 @@
   "replace": true,
   "values": [
     "minecraft:raw_iron",
-    "minecraft:iron_ingot"
+    "minecraft:iron_ingot",
+    "minecraft:iron_nugget"
   ]
 }

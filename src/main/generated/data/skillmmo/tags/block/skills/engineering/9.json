@@ -1,6 +1,7 @@
 {
   "replace": true,
   "values": [
+    "minecraft:tripwire",
     "minecraft:tripwire_hook"
   ]
 }

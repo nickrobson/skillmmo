@@ -3,9 +3,16 @@
   "values": [
     "minecraft:wooden_hoe",
     "minecraft:bone_meal",
+    "minecraft:wheat",
     "minecraft:wheat_seeds",
+    "minecraft:bread",
     "minecraft:carrot",
     "minecraft:potato",
-    "minecraft:beetroot_seeds"
+    "minecraft:baked_potato",
+    "minecraft:beetroot",
+    "minecraft:beetroot_seeds",
+    "minecraft:beetroot_soup",
+    "minecraft:sweet_berries",
+    "minecraft:glow_berries"
   ]
 }

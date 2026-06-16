@@ -2,9 +2,12 @@
   "replace": true,
   "values": [
     "minecraft:wheat",
+    "minecraft:hay_block",
     "minecraft:carrots",
     "minecraft:potatoes",
     "minecraft:beetroots",
-    "minecraft:composter"
+    "minecraft:sweet_berry_bush",
+    "minecraft:composter",
+    "minecraft:bone_block"
   ]
 }

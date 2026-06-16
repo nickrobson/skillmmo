@@ -1,13 +1,14 @@
 {
   "replace": true,
   "values": [
-    "minecraft:azalea",
-    "minecraft:flowering_azalea",
-    "minecraft:azalea_leaves",
-    "minecraft:flowering_azalea_leaves",
     "minecraft:spore_blossom",
     "minecraft:moss_carpet",
     "minecraft:moss_block",
+    "minecraft:pale_moss_carpet",
+    "minecraft:pale_moss_block",
+    "minecraft:pale_hanging_moss",
+    "minecraft:azalea",
+    "minecraft:flowering_azalea",
     "minecraft:big_dripleaf",
     "minecraft:big_dripleaf_stem",
     "minecraft:small_dripleaf",
