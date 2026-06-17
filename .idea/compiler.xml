@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel target="21" />
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="-AoutRefMapFile=$PROJECT_DIR$/build/classes/java/main/skillmmo-refmap.json -AdefaultObfuscationEnv=named:intermediary -Aquiet=true" />
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="dev.nickrobson.minecraft.SkillMMO" options="" />
+      <module name="dev.nickrobson.minecraft.SkillMMO.main" options="" />
+      <module name="dev.nickrobson.minecraft.SkillMMO.test" options="" />
+    </option>
+  </component>
+</project>
