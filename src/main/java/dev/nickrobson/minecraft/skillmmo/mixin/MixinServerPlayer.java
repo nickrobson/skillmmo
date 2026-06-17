@@ -89,10 +89,8 @@ public class MixinServerPlayer {
                         : Component.translatable("skillmmo.feedback.player.death.lost_levels.in.skill", totalLostLevels, skillName);
             }
 
-
-            player.displayClientMessage(
-                    message.setStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)),
-                    false
+            player.sendOverlayMessage(
+                    message.setStyle(Style.EMPTY.applyFormat(ChatFormatting.RED))
             );
         }
     }

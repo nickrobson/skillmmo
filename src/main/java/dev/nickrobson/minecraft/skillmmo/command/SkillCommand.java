@@ -197,9 +197,8 @@ public class SkillCommand {
             isSelf = playerSource.getGameProfile().id().equals(player.getGameProfile().id());
         }
         if (!isSelf) {
-            player.displayClientMessage(
-                    Component.translatable("skillmmo.command.skill.you_are_now_level", newLevel, skill.getName()),
-                    false
+            player.sendOverlayMessage(
+                    Component.translatable("skillmmo.command.skill.you_are_now_level", newLevel, skill.getName())
             );
         }
         return Command.SINGLE_SUCCESS;

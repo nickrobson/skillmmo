@@ -8,11 +8,11 @@ import net.minecraft.resources.Identifier;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 
-public record SkillMmoConfigurationC2SPacket(
+public record SkillMmoConfigurationServerboundPacket(
         String modVersion
 ) implements CustomPacketPayload {
-    public static final Type<SkillMmoConfigurationC2SPacket> PACKET_ID = new Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "configure_c2s"));
-    public static final StreamCodec<FriendlyByteBuf, SkillMmoConfigurationC2SPacket> PACKET_CODEC = StreamCodec.composite(ByteBufCodecs.STRING_UTF8, SkillMmoConfigurationC2SPacket::modVersion, SkillMmoConfigurationC2SPacket::new);
+    public static final Type<SkillMmoConfigurationServerboundPacket> PACKET_ID = new Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "configure_serverbound"));
+    public static final StreamCodec<FriendlyByteBuf, SkillMmoConfigurationServerboundPacket> PACKET_CODEC = StreamCodec.composite(ByteBufCodecs.STRING_UTF8, SkillMmoConfigurationServerboundPacket::modVersion, SkillMmoConfigurationServerboundPacket::new);
 
     @Override
     public Type<? extends CustomPacketPayload> type() {

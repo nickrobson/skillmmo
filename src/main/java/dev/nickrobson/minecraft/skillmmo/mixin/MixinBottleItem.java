@@ -32,15 +32,15 @@ public class MixinBottleItem {
             return original;
         }
 
-        PlayerSkillUnlockManager.getInstance().reportItemUseLocked(
+        PlayerSkillUnlockManager.getInstance().reportItemStackUseLocked(
                 player,
-                Items.DRAGON_BREATH,
+                Items.DRAGON_BREATH.getDefaultInstance(),
                 (deniedPlayer, requiredSkillLevel, actualSkillLevel) ->
                         Component.translatable(
                                 "skillmmo.feedback.deny.item.collect.dragon.breath",
                                 requiredSkillLevel.getSkill().getName(),
                                 requiredSkillLevel.getLevel(),
-                                Items.DRAGON_BREATH.getName()
+                                Items.DRAGON_BREATH.getDefaultInstance().getItemName()
                         ));
 
         return Collections.emptyList();

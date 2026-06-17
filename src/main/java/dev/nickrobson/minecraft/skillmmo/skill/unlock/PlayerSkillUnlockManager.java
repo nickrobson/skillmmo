@@ -74,7 +74,7 @@ public class PlayerSkillUnlockManager {
             //     blocking everything (this solution) and aiming for perfect correctness with weird edge cases.
             // In the future, this could be improved to allow e.g. opening blocks with inventories with whatever items (since they don't affect the interaction)
             if (!hasItemUnlock(player, itemStack)) {
-                reportItemUseLocked(player, itemStack.getItem());
+                reportItemStackUseLocked(player, itemStack);
                 return InteractionResult.FAIL;
             }
 
@@ -107,7 +107,7 @@ public class PlayerSkillUnlockManager {
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!hasItemUnlock(player, itemStack)) {
-                reportItemUseLocked(player, itemStack.getItem());
+                reportItemStackUseLocked(player, itemStack);
                 return InteractionResult.FAIL;
             }
 
@@ -119,7 +119,7 @@ public class PlayerSkillUnlockManager {
 
             // If the player doesn't have the necessary skill for the item they're holding, deny the interaction
             if (!hasItemUnlock(player, itemStack)) {
-                reportItemUseLocked(player, itemStack.getItem());
+                reportItemStackUseLocked(player, itemStack);
                 return InteractionResult.FAIL;
             }
 
@@ -221,7 +221,7 @@ public class PlayerSkillUnlockManager {
                 return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemSlotDisplay.item().value());
             }
             case SlotDisplay.ItemStackSlotDisplay stackSlotDisplay -> {
-                return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, stackSlotDisplay.stack());
+                return PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, stackSlotDisplay.stack().create());
             }
             case SlotDisplay.WithRemainder withRemainderSlotDisplay -> {
                 // we only care about the input, not the remainder here
@@ -265,16 +265,16 @@ public class PlayerSkillUnlockManager {
         reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_INTERACT), block, block);
     }
 
-    public void reportItemUseLocked(@Nullable Player player, Item item) {
-        reportItemUseLocked(player, item, null);
+    public void reportItemStackUseLocked(@Nullable Player player, ItemStack itemStack) {
+        reportItemStackUseLocked(player, itemStack, null);
     }
 
-    public void reportItemUseLocked(@Nullable Player player, Item item, @Nullable SkillDenyCustomizable skillDenyCustomizable) {
-        if (item instanceof BlockItem blockItem) {
+    public void reportItemStackUseLocked(@Nullable Player player, ItemStack itemStack, @Nullable SkillDenyCustomizable skillDenyCustomizable) {
+        if (itemStack.getItem() instanceof BlockItem blockItem) {
             Block block = blockItem.getBlock();
             reportInteractLocked(player, InteractionHelper.forBlock(block, VanillaInteractionTypes.BLOCK_PLACE), block, skillDenyCustomizable != null ? skillDenyCustomizable : block);
         } else {
-            reportInteractLocked(player, InteractionHelper.forItem(item, VanillaInteractionTypes.ITEM_USE), item, skillDenyCustomizable != null ? skillDenyCustomizable : item);
+            reportInteractLocked(player, InteractionHelper.forItem(itemStack.getItem(), VanillaInteractionTypes.ITEM_USE), itemStack.getItem(), skillDenyCustomizable != null ? skillDenyCustomizable : itemStack);
         }
     }
 
@@ -314,6 +314,6 @@ public class PlayerSkillUnlockManager {
             int level = skillLevel.getLevel();
             text = interaction.getDenyText(target, skillName, level);
         }
-        player.displayClientMessage(text, true);
+        player.sendOverlayMessage(text);
     }
 }

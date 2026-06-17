@@ -12,7 +12,7 @@ import net.minecraft.resources.Identifier;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.keymapping.v1.KeyMappingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationConnectionEvents;
 
 import dev.nickrobson.minecraft.skillmmo.gui.SkillsClientScreen;
@@ -22,8 +22,8 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 public class SkillMmoClientInitializer implements ClientModInitializer {
     private static final Logger logger = LogManager.getLogger(SkillMmoClientInitializer.class);
 
-    private static final KeyMapping.Category SKILLMMO_KEYBINDING_CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("skillmmo", "keybindings"));
-    private static final KeyMapping OPEN_SKILLS_KEYBINDING = new KeyMapping("skillmmo.keybindings.binding.open_skills", GLFW.GLFW_KEY_K, SKILLMMO_KEYBINDING_CATEGORY);
+    private static final KeyMapping.Category SKILLMMO_KEYMAPPING_CATEGORY = KeyMapping.Category.register(Identifier.fromNamespaceAndPath("skillmmo", "keymappings"));
+    private static final KeyMapping OPEN_SKILLS_KEYMAPPING = new KeyMapping("skillmmo.keymappings.mapping.open_skills", GLFW.GLFW_KEY_K, SKILLMMO_KEYMAPPING_CATEGORY);
 
     @Override
     public void onInitializeClient() {
@@ -34,10 +34,10 @@ public class SkillMmoClientInitializer implements ClientModInitializer {
             SkillMmoMod.isModEnabled = false;
         });
 
-        KeyMapping openSkillsKeyBinding = KeyBindingHelper.registerKeyBinding(OPEN_SKILLS_KEYBINDING);
+        KeyMapping openSkillsKeyMapping = KeyMappingHelper.registerKeyMapping(OPEN_SKILLS_KEYMAPPING);
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            while (openSkillsKeyBinding.consumeClick()) {
+            while (openSkillsKeyMapping.consumeClick()) {
                 if (SkillMmoMod.isModEnabled && Minecraft.getInstance().screen == null) {
                     SkillsClientScreen.open();
                 }

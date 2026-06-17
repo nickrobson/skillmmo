@@ -5,7 +5,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.FarmBlock;
+import net.minecraft.world.level.block.FarmlandBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,8 +16,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 
-@Mixin(FarmBlock.class)
-public abstract class MixinFarmBlock {
+@Mixin(FarmlandBlock.class)
+public abstract class MixinFarmlandBlock {
     @Shadow
     private static boolean shouldMaintainFarmland(BlockGetter world, BlockPos pos) {
         return false;
@@ -27,7 +27,7 @@ public abstract class MixinFarmBlock {
             method = "fallOn",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/block/FarmBlock;turnToDirt(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
+                    target = "Lnet/minecraft/world/level/block/FarmlandBlock;turnToDirt(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;)V"
             )
     )
     public void skillMmo$onLandedUpon(Level world, BlockState state, BlockPos pos, Entity entity, double fallDistance, CallbackInfo ci) {

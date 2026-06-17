@@ -6,15 +6,15 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.world.level.block.Block;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 
-public class SkillMmoSkillLevelBlockTagProvider extends FabricTagProvider.BlockTagProvider {
-    public SkillMmoSkillLevelBlockTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
+public class SkillMmoSkillLevelBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
+    public SkillMmoSkillLevelBlockTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {
         super(output, completableFuture);
     }
 

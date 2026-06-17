@@ -8,7 +8,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
@@ -17,7 +17,7 @@ import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSki
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillTranslationSpec;
 
 public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
-    public SkillMmoEnglishLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+    public SkillMmoEnglishLanguageProvider(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(dataOutput, "en_us", registryLookup);
     }
 
@@ -85,8 +85,8 @@ public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
         translationBuilder.add("skillmmo.gui.skill.unlocks.show_unlocked", "Show unlocked");
         translationBuilder.add("skillmmo.gui.skill.unlocks.level", "Level %d");
 
-        translationBuilder.add("key.category.skillmmo.keybindings", "SkillMMO");
-        translationBuilder.add("skillmmo.keybindings.binding.open_skills", "Open Skills");
+        translationBuilder.add("key.category.skillmmo.keymappings", "SkillMMO");
+        translationBuilder.add("skillmmo.keymappings.mapping.open_skills", "Open Skills");
 
         Map<String, SkillTranslationSpec> skillNameTranslations = Map.of(
                 "agriculture",

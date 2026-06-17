@@ -4,17 +4,17 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 
 public interface SkillMmoNetworking {
     static void registerPackets() {
-        // Configuration - S2C
-        PayloadTypeRegistry.configurationS2C().register(SkillMmoConfigurationS2CPacket.PACKET_ID, SkillMmoConfigurationS2CPacket.PACKET_CODEC);
+        // Configuration - clientbound
+        PayloadTypeRegistry.clientboundConfiguration().register(SkillMmoConfigurationClientboundPacket.PACKET_ID, SkillMmoConfigurationClientboundPacket.PACKET_CODEC);
 
-        // Configuration - C2S
-        PayloadTypeRegistry.configurationC2S().register(SkillMmoConfigurationC2SPacket.PACKET_ID, SkillMmoConfigurationC2SPacket.PACKET_CODEC);
+        // Configuration - serverbound
+        PayloadTypeRegistry.serverboundConfiguration().register(SkillMmoConfigurationServerboundPacket.PACKET_ID, SkillMmoConfigurationServerboundPacket.PACKET_CODEC);
 
-        // Play - S2C
-        PayloadTypeRegistry.playS2C().register(SetPlayerSkillsS2CPacket.PACKET_ID, SetPlayerSkillsS2CPacket.PACKET_CODEC);
-        PayloadTypeRegistry.playS2C().register(SetPlayerExperienceS2CPacket.PACKET_ID, SetPlayerExperienceS2CPacket.PACKET_CODEC);
+        // Play - clientbound
+        PayloadTypeRegistry.clientboundPlay().register(SetPlayerSkillsClientboundPacket.PACKET_ID, SetPlayerSkillsClientboundPacket.PACKET_CODEC);
+        PayloadTypeRegistry.clientboundPlay().register(SetPlayerExperienceClientboundPacket.PACKET_ID, SetPlayerExperienceClientboundPacket.PACKET_CODEC);
 
-        // Play - C2S
-        PayloadTypeRegistry.playC2S().register(PlayerSkillChoiceC2SPacket.PACKET_ID, PlayerSkillChoiceC2SPacket.PACKET_CODEC);
+        // Play - serverbound
+        PayloadTypeRegistry.serverboundPlay().register(PlayerSkillChoiceServerboundPacket.PACKET_ID, PlayerSkillChoiceServerboundPacket.PACKET_CODEC);
     }
 }

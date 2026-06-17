@@ -5,7 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "MixinBottleItem",
-    "MixinFarmBlock",
+    "MixinFarmlandBlock",
     "MixinGameRules",
     "MixinLivingEntity",
     "MixinPlayer",

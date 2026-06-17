@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityLevelChangeEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
 
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
@@ -36,8 +36,8 @@ public class PlayerSkillManager {
             SkillMmoServerNetworking.sendPlayerData(newPlayer);
         });
 
-        // When players change world, their ClientPlayerEntity is recreated so loses its data
-        ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> {
+        // When players change world, their player entity is recreated so loses its data
+        ServerEntityLevelChangeEvents.AFTER_PLAYER_CHANGE_LEVEL.register((player, origin, destination) -> {
             SkillMmoServerNetworking.sendPlayerData(player);
         });
 

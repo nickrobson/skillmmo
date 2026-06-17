@@ -31,7 +31,7 @@ public class SkillMmoServerNetworking {
     public static void registerReceivers() {
         // Configuration
         ServerConfigurationConnectionEvents.CONFIGURE.register((handler, server) -> {
-            if (ServerConfigurationNetworking.canSend(handler, SkillMmoConfigurationS2CPacket.PACKET_ID)) {
+            if (ServerConfigurationNetworking.canSend(handler, SkillMmoConfigurationClientboundPacket.PACKET_ID)) {
                 Set<Skill> skillSet = SkillManager.getInstance().getInstalledSkills();
                 ExperienceLevelEquation experienceLevelEquation = ExperienceLevelEquation.getInstance();
                 handler.addTask(new SkillMmoConfigurationTask(SkillMmoMod.MOD_VERSION_STRING, skillSet, experienceLevelEquation));
@@ -40,11 +40,11 @@ public class SkillMmoServerNetworking {
             }
         });
 
-        ServerConfigurationNetworking.registerGlobalReceiver(SkillMmoConfigurationC2SPacket.PACKET_ID, (payload, context) -> {
+        ServerConfigurationNetworking.registerGlobalReceiver(SkillMmoConfigurationServerboundPacket.PACKET_ID, (payload, context) -> {
             if (SkillMmoMod.MOD_VERSION_STRING.equals(payload.modVersion())) {
-                context.networkHandler().completeTask(SkillMmoConfigurationTask.KEY);
+                context.packetListener().completeTask(SkillMmoConfigurationTask.KEY);
             } else {
-                context.networkHandler().disconnect(Component.literal("This server is running %s but you are using %s. Please install the same mod version as the server.".formatted(SkillMmoMod.MOD_VERSION_STRING, payload.modVersion())));
+                context.packetListener().disconnect(Component.literal("This server is running %s but you are using %s. Please install the same mod version as the server.".formatted(SkillMmoMod.MOD_VERSION_STRING, payload.modVersion())));
             }
         });
 
@@ -53,21 +53,21 @@ public class SkillMmoServerNetworking {
             sendPlayerData(handler.player);
         }));
 
-        ServerPlayNetworking.registerGlobalReceiver(PlayerSkillChoiceC2SPacket.PACKET_ID, (payload, context) -> {
+        ServerPlayNetworking.registerGlobalReceiver(PlayerSkillChoiceServerboundPacket.PACKET_ID, (payload, context) -> {
             Identifier skillId = payload.skillId();
             ServerPlayer player = context.player();
 
             SkillManager.getInstance().getSkill(skillId).ifPresent(skill -> {
                 PlayerSkillManager.ChooseSkillLevelResult result = PlayerSkillManager.getInstance().chooseSkillLevel(player, skill);
                 switch (result) {
-                    case FAILURE_AT_MAX_LEVEL -> player.displayClientMessage(
+                    case FAILURE_AT_MAX_LEVEL -> player.sendOverlayMessage(
                             Component.translatable("skillmmo.feedback.player.skill_choice.failed_max_level", skill.getMaxLevel())
-                                    .setStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)),
-                            false);
-                    case FAILURE_NO_AVAILABLE_POINTS -> player.displayClientMessage(
+                                    .setStyle(Style.EMPTY.applyFormat(ChatFormatting.RED))
+                    );
+                    case FAILURE_NO_AVAILABLE_POINTS -> player.sendOverlayMessage(
                             Component.translatable("skillmmo.feedback.player.skill_choice.failed_no_points")
-                                    .setStyle(Style.EMPTY.applyFormat(ChatFormatting.RED)),
-                            false);
+                                    .setStyle(Style.EMPTY.applyFormat(ChatFormatting.RED))
+                    );
                 }
                 sendPlayerData(player);
             });
@@ -80,14 +80,14 @@ public class SkillMmoServerNetworking {
         long experience = PlayerExperienceManager.getInstance().getExperience(player);
         int availableSkillPoints = PlayerSkillPointManager.getInstance().getAvailableSkillPoints(player);
 
-        ServerPlayNetworking.send(player, new SetPlayerExperienceS2CPacket(experience, availableSkillPoints));
+        ServerPlayNetworking.send(player, new SetPlayerExperienceClientboundPacket(experience, availableSkillPoints));
         logger.debug("Sent player xp to player '{}': {}, available skill points: {}", player.getGameProfile().name(), experience, availableSkillPoints);
     }
 
     public static void sendPlayerSkills(ServerPlayer player) {
         Map<Identifier, Integer> playerSkillLevels = PlayerSkillManager.getInstance().getSkillLevels(player);
 
-        ServerPlayNetworking.send(player, new SetPlayerSkillsS2CPacket(playerSkillLevels));
+        ServerPlayNetworking.send(player, new SetPlayerSkillsClientboundPacket(playerSkillLevels));
         logger.debug("Sent player skills to player '{}': {}", player.getGameProfile().name(), playerSkillLevels);
     }
 

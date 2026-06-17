@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.util.Mth;
 
 import net.fabricmc.api.EnvType;
@@ -10,6 +10,7 @@ import dev.nickrobson.minecraft.skillmmo.mixin.client.ExperienceBarRendererAcces
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.Texture;
+import org.jspecify.annotations.NonNull;
 
 public class WExperienceBar extends WWidget {
     private static final Texture TEXTURE_EMPTY_BAR = new Texture(ExperienceBarRendererAccess.getBackgroundTexture(), Texture.Type.GUI_SPRITE);
@@ -30,8 +31,8 @@ public class WExperienceBar extends WWidget {
 
     @Override
     @Environment(EnvType.CLIENT)
-    public void paint(GuiGraphics drawContext, int x, int y, int mouseX, int mouseY) {
-        ScreenDrawing.texturedRect(drawContext, x, y, getWidth(), getHeight(), TEXTURE_EMPTY_BAR, 0xFF_FFFFFF);
-        ScreenDrawing.texturedRect(drawContext, x, y, (int) (getWidth() * progress), getHeight(), textureFilledBar, 0xFF_D7F01D);
+    public void paint(@NonNull GuiGraphicsExtractor context, int x, int y, int mouseX, int mouseY) {
+        ScreenDrawing.texturedRect(context, x, y, getWidth(), getHeight(), TEXTURE_EMPTY_BAR, 0xFF_FFFFFF);
+        ScreenDrawing.texturedRect(context, x, y, (int) (getWidth() * progress), getHeight(), textureFilledBar, 0xFF_D7F01D);
     }
 }

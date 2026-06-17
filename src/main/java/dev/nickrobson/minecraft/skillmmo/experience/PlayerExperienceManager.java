@@ -49,8 +49,7 @@ public class PlayerExperienceManager {
         if (oldLevel < newLevel) {
             int availableSkillPoints = playerData.addAvailableSkillPoints(getTotalSkillPoints(newLevel) - getTotalSkillPoints(oldLevel));
 
-
-            player.displayClientMessage(Component.translatable("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints), true);
+            player.sendOverlayMessage(Component.translatable("skillmmo.feedback.player.level_up", newLevel, availableSkillPoints));
         }
 
         SkillMmoServerNetworking.sendPlayerXpInfo(player);

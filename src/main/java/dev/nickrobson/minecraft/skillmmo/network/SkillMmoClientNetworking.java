@@ -23,30 +23,30 @@ public class SkillMmoClientNetworking {
 
     public static void registerReceivers() {
         // Configuration
-        ClientConfigurationNetworking.registerGlobalReceiver(SkillMmoConfigurationS2CPacket.PACKET_ID, (packet, context) -> {
+        ClientConfigurationNetworking.registerGlobalReceiver(SkillMmoConfigurationClientboundPacket.PACKET_ID, (packet, context) -> {
             if (SkillMmoMod.MOD_VERSION_STRING.equals(packet.modVersion())) {
                 SkillMmoMod.isModEnabled = true;
                 SkillManager.getInstance().initSkills(packet.skills());
                 ExperienceLevelEquation.setInstance(packet.experienceLevelEquation());
             }
-            context.responseSender().sendPacket(new SkillMmoConfigurationC2SPacket(SkillMmoMod.MOD_VERSION_STRING));
+            context.responseSender().sendPacket(new SkillMmoConfigurationServerboundPacket(SkillMmoMod.MOD_VERSION_STRING));
         });
 
         // Play
-        ClientPlayNetworking.registerGlobalReceiver(SetPlayerSkillsS2CPacket.PACKET_ID, (payload, context) -> {
+        ClientPlayNetworking.registerGlobalReceiver(SetPlayerSkillsClientboundPacket.PACKET_ID, (payload, context) -> {
             Map<Identifier, Integer> playerSkillLevels = payload.playerSkillLevels();
             logger.debug("Received player skills: {}", playerSkillLevels);
 
             context.client().execute(() -> {
                 if (context.player() == null) {
-                    logger.warn("Client player is null on {}", SetPlayerSkillsS2CPacket.PACKET_ID.id());
+                    logger.warn("Client player is null on {}", SetPlayerSkillsClientboundPacket.PACKET_ID.id());
                 } else {
                     PlayerSkillManager.getInstance().updateSkillLevels(context.player(), playerSkillLevels);
                 }
             });
         });
 
-        ClientPlayNetworking.registerGlobalReceiver(SetPlayerExperienceS2CPacket.PACKET_ID, (payload, context) -> {
+        ClientPlayNetworking.registerGlobalReceiver(SetPlayerExperienceClientboundPacket.PACKET_ID, (payload, context) -> {
             long experience = payload.experience();
             int availableSkillPoints = payload.availableSkillPoints();
 
@@ -54,7 +54,7 @@ public class SkillMmoClientNetworking {
 
             context.client().execute(() -> {
                 if (context.player() == null) {
-                    logger.warn("Client player is null on {}", SetPlayerExperienceS2CPacket.PACKET_ID.id());
+                    logger.warn("Client player is null on {}", SetPlayerExperienceClientboundPacket.PACKET_ID.id());
                 } else {
                     PlayerExperienceManager.getInstance().setExperience(context.player(), experience);
                     PlayerSkillPointManager.getInstance().setAvailableSkillPoints(context.player(), availableSkillPoints);
@@ -64,7 +64,7 @@ public class SkillMmoClientNetworking {
     }
 
     public static void sendChoosePlayerSkill(Skill skill) {
-        ClientPlayNetworking.send(new PlayerSkillChoiceC2SPacket(skill.getId()));
+        ClientPlayNetworking.send(new PlayerSkillChoiceServerboundPacket(skill.getId()));
         logger.debug("Sent player skill choice: {}", skill.getId());
     }
 }

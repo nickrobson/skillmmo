@@ -22,7 +22,7 @@ public class VanillaUnlockables {
     public static final UnlockableType<Item> ITEM = new UnlockableType<>(BuiltInRegistries.ITEM) {
         @Override
         protected Component getName(Item item) {
-            return item.getName();
+            return item.getDefaultInstance().getItemName();
         }
     };
 

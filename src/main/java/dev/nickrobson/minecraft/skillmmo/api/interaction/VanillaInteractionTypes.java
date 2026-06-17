@@ -32,7 +32,7 @@ public class VanillaInteractionTypes {
     public static final InteractionType<Item> ITEM_USE = new InteractionType<>(VanillaUnlockables.ITEM) {
         @Override
         public Component getDenyText(Item item, Component requiredSkillName, int requiredSkillLevel) {
-            return Component.translatable("skillmmo.feedback.deny.item.use", requiredSkillName, requiredSkillLevel, item.getName());
+            return Component.translatable("skillmmo.feedback.deny.item.use", requiredSkillName, requiredSkillLevel, item.getDefaultInstance().getItemName());
         }
     };
 

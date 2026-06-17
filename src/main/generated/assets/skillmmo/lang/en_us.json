@@ -1,5 +1,5 @@
 {
-  "key.category.skillmmo.keybindings": "SkillMMO",
+  "key.category.skillmmo.keymappings": "SkillMMO",
   "skillmmo.command.skill.acquire.failure_max_level": "You're already at max level in %s!",
   "skillmmo.command.skill.acquire.failure_no_available_points": "You have no available skill points!",
   "skillmmo.command.skill.acquire.success": "You're now level %d in %s",
@@ -52,7 +52,7 @@
   "skillmmo.gui.skills.info.xp_progress": "XP %d/%d",
   "skillmmo.gui.skills.skill.name": "%s",
   "skillmmo.gui.skills.title": "Skills",
-  "skillmmo.keybindings.binding.open_skills": "Open Skills",
+  "skillmmo.keymappings.mapping.open_skills": "Open Skills",
   "skillmmo.skill.agriculture.description": "Master the natural world!",
   "skillmmo.skill.agriculture.name": "Agriculture",
   "skillmmo.skill.animalhusbandry.description": "Domesticate and tame our precious wildlife!",

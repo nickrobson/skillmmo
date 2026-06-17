@@ -18,24 +18,24 @@ import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
-public record SkillMmoConfigurationS2CPacket(
+public record SkillMmoConfigurationClientboundPacket(
         String modVersion,
         Set<Skill> skills,
         ExperienceLevelEquation experienceLevelEquation
 ) implements CustomPacketPayload {
-    public static final CustomPacketPayload.Type<SkillMmoConfigurationS2CPacket> PACKET_ID = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "configure_s2c"));
+    public static final CustomPacketPayload.Type<SkillMmoConfigurationClientboundPacket> PACKET_ID = new CustomPacketPayload.Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "configure_clientbound"));
 
-    private static final StreamCodec<FriendlyByteBuf, Skill> SKILL_PACKET_CODEC = StreamCodec.of(SkillMmoConfigurationS2CPacket::writeSkill, SkillMmoConfigurationS2CPacket::readSkill);
-    private static final StreamCodec<FriendlyByteBuf, ExperienceLevelEquation> EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC = StreamCodec.of(SkillMmoConfigurationS2CPacket::writeExperienceLevelEquation, SkillMmoConfigurationS2CPacket::readExperienceLevelEquation);
+    private static final StreamCodec<FriendlyByteBuf, Skill> SKILL_PACKET_CODEC = StreamCodec.of(SkillMmoConfigurationClientboundPacket::writeSkill, SkillMmoConfigurationClientboundPacket::readSkill);
+    private static final StreamCodec<FriendlyByteBuf, ExperienceLevelEquation> EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC = StreamCodec.of(SkillMmoConfigurationClientboundPacket::writeExperienceLevelEquation, SkillMmoConfigurationClientboundPacket::readExperienceLevelEquation);
 
-    public static final StreamCodec<FriendlyByteBuf, SkillMmoConfigurationS2CPacket> PACKET_CODEC = StreamCodec.composite(
+    public static final StreamCodec<FriendlyByteBuf, SkillMmoConfigurationClientboundPacket> PACKET_CODEC = StreamCodec.composite(
             ByteBufCodecs.STRING_UTF8,
-            SkillMmoConfigurationS2CPacket::modVersion,
-            SKILL_PACKET_CODEC.apply(ByteBufCodecs.collection(SkillMmoConfigurationS2CPacket::newSet)),
-            SkillMmoConfigurationS2CPacket::skills,
+            SkillMmoConfigurationClientboundPacket::modVersion,
+            SKILL_PACKET_CODEC.apply(ByteBufCodecs.collection(SkillMmoConfigurationClientboundPacket::newSet)),
+            SkillMmoConfigurationClientboundPacket::skills,
             EXPERIENCE_LEVEL_EQUATION_PACKET_CODEC,
-            SkillMmoConfigurationS2CPacket::experienceLevelEquation,
-            SkillMmoConfigurationS2CPacket::new
+            SkillMmoConfigurationClientboundPacket::experienceLevelEquation,
+            SkillMmoConfigurationClientboundPacket::new
     );
 
     @Override

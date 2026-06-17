@@ -3,7 +3,7 @@ package dev.nickrobson.minecraft.skillmmo.gui;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarratedElementType;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
@@ -61,7 +61,7 @@ public class WCharButton extends WWidget {
 
     @Environment(EnvType.CLIENT)
     @Override
-    public void paint(GuiGraphics drawContext, int x, int y, int mouseX, int mouseY) {
+    public void paint(GuiGraphicsExtractor context, int x, int y, int mouseX, int mouseY) {
         boolean hovered = (mouseX >= 0 && mouseY >= 0 && mouseX < getWidth() && mouseY < getHeight());
 
         int panel = 0xFF737373;
@@ -72,14 +72,14 @@ public class WCharButton extends WWidget {
             outline = 0xFFF5F5F5;
         }
 
-        ScreenDrawing.coloredRect(drawContext, x, y + 1, getWidth(), getHeight() - 2, outline);
-        ScreenDrawing.coloredRect(drawContext, x + 1, y, getWidth() - 2, getHeight(), outline);
-        ScreenDrawing.coloredRect(drawContext, x + 1, y + 1, getWidth() - 2, getHeight() - 2, panel);
+        ScreenDrawing.coloredRect(context, x, y + 1, getWidth(), getHeight() - 2, outline);
+        ScreenDrawing.coloredRect(context, x + 1, y, getWidth() - 2, getHeight(), outline);
+        ScreenDrawing.coloredRect(context, x + 1, y + 1, getWidth() - 2, getHeight() - 2, panel);
 
         Component text = Component.literal(String.valueOf(this.text));
         int textWidth = Minecraft.getInstance().font.width(text);
         int color = enabled ? 0xFFE0E0E0 : 0xFFA0A0A0;
-        drawContext.drawString(Minecraft.getInstance().font, text, x + (width - textWidth) / 2, y + (getHeight() - 8) / 2, color);
+        context.text(Minecraft.getInstance().font, text, x + (width - textWidth) / 2, y + (getHeight() - 8) / 2, color);
     }
 
     @Environment(EnvType.CLIENT)

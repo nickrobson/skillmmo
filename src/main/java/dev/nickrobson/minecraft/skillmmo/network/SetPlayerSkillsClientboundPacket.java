@@ -11,11 +11,11 @@ import net.minecraft.resources.Identifier;
 
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 
-public record SetPlayerSkillsS2CPacket(
+public record SetPlayerSkillsClientboundPacket(
         Map<Identifier, Integer> playerSkillLevels
 ) implements CustomPacketPayload {
-    public static final Type<SetPlayerSkillsS2CPacket> PACKET_ID = new Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "set_player_skills"));
-    public static final StreamCodec<RegistryFriendlyByteBuf, SetPlayerSkillsS2CPacket> PACKET_CODEC = ByteBufCodecs.map(SetPlayerSkillsS2CPacket::toMap, Identifier.STREAM_CODEC, ByteBufCodecs.VAR_INT).map(SetPlayerSkillsS2CPacket::new, SetPlayerSkillsS2CPacket::playerSkillLevels).cast();
+    public static final Type<SetPlayerSkillsClientboundPacket> PACKET_ID = new Type<>(Identifier.fromNamespaceAndPath(SkillMmoMod.MOD_ID, "set_player_skills"));
+    public static final StreamCodec<RegistryFriendlyByteBuf, SetPlayerSkillsClientboundPacket> PACKET_CODEC = ByteBufCodecs.map(SetPlayerSkillsClientboundPacket::toMap, Identifier.STREAM_CODEC, ByteBufCodecs.VAR_INT).map(SetPlayerSkillsClientboundPacket::new, SetPlayerSkillsClientboundPacket::playerSkillLevels).cast();
 
     @Override
     public Type<? extends CustomPacketPayload> type() {

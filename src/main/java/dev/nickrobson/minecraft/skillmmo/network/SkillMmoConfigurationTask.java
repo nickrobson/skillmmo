@@ -25,8 +25,8 @@ public record SkillMmoConfigurationTask(
 
     @Override
     public void start(Consumer<Packet<?>> sender) {
-        sender.accept(ServerConfigurationNetworking.createS2CPacket(
-                new SkillMmoConfigurationS2CPacket(version, skills, experienceLevelEquation)
+        sender.accept(ServerConfigurationNetworking.createClientboundPacket(
+                new SkillMmoConfigurationClientboundPacket(version, skills, experienceLevelEquation)
         ));
     }
 }

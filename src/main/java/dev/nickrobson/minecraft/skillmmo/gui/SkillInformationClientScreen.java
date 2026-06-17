@@ -200,7 +200,7 @@ public class SkillInformationClientScreen extends CottonClientScreen {
 
                     skillLevelUnlocksPanel.add(
                             new WItemWithTooltip(itemStack)
-                                    .setTooltipText(itemStack.getHoverName()),
+                                    .setTooltipText(itemStack.getStyledHoverName()),
                             GRID_SIZE * columnOffset,
                             GRID_SIZE * (rowOffset + 1) - 4,
                             GRID_SIZE * ICON_GRID_SIZE,

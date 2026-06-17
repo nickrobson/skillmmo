@@ -90,7 +90,7 @@ public abstract class MixinPlayer implements SkillMmoPlayerDataHolder {
         Player player = (Player) (Object) this; // safe as this is a mixin for PlayerEntity
         ItemStack itemStackInHand = player.getMainHandItem();
         if (!PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, itemStackInHand) && !(itemStackInHand.getItem() instanceof BlockItem)) {
-            PlayerSkillUnlockManager.getInstance().reportItemUseLocked(player, itemStackInHand.getItem());
+            PlayerSkillUnlockManager.getInstance().reportItemStackUseLocked(player, itemStackInHand);
             cir.setReturnValue(false);
         } else if (!PlayerSkillUnlockManager.getInstance().hasBlockUnlock(player, state)) {
             if (SkillMmoConfig.getConfig().announceRequiredSkillWhenBreakingBlock) {

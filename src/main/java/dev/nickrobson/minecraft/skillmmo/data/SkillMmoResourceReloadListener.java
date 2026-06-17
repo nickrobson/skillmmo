@@ -27,18 +27,18 @@ import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.world.item.Item;
 
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
-import net.fabricmc.fabric.api.resource.v1.reloader.SimpleResourceReloader;
+import net.fabricmc.fabric.api.resource.v1.reloader.SimpleReloadListener;
 
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
-public class SkillMmoResourceLoader extends SimpleResourceReloader<Set<Skill>> {
-    private static final Logger logger = LogManager.getLogger(SkillMmoResourceLoader.class);
+public class SkillMmoResourceReloadListener extends SimpleReloadListener<Set<Skill>> {
+    private static final Logger logger = LogManager.getLogger(SkillMmoResourceReloadListener.class);
 
     @Override
     protected Set<Skill> prepare(SharedState store) {
         ResourceManager resourceManager = store.resourceManager();
-        HolderLookup.Provider registryWrapperLookup = store.get(ResourceLoader.RELOADER_REGISTRY_LOOKUP_KEY);
+        HolderLookup.Provider registryWrapperLookup = store.get(ResourceLoader.REGISTRY_LOOKUP_KEY);
         Map<Identifier, SkillData> skillsData = loadResources(resourceManager, SkillMmoDataType.SKILLS);
 
         Map<Identifier, SkillData> skillDataBySkillId = new HashMap<>();

@@ -12,7 +12,7 @@ import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
 
 import dev.nickrobson.minecraft.skillmmo.command.SkillMmoCommands;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceLoader;
+import dev.nickrobson.minecraft.skillmmo.data.SkillMmoResourceReloadListener;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoNetworking;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
@@ -42,7 +42,7 @@ public class SkillMmoMod implements ModInitializer {
         SkillMmoServerNetworking.registerReceivers();
 
         ResourceLoader.get(PackType.SERVER_DATA)
-                .registerReloader(Identifier.fromNamespaceAndPath("skillmmo", "resources"), new SkillMmoResourceLoader());
+                .registerReloadListener(Identifier.fromNamespaceAndPath("skillmmo", "resources"), new SkillMmoResourceReloadListener());
 
         SkillMmoCommands.register(); // must be after resource loading
 
