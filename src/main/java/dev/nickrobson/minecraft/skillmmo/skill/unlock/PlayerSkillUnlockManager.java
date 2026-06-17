@@ -205,7 +205,7 @@ public class PlayerSkillUnlockManager {
                 .anyMatch(ingredient ->
                         !ingredient.items()
                                 .map(Holder::value)
-                                .allMatch(item -> PlayerSkillUnlockManager.getInstance().hasItemUnlock(player, item)));
+                                .allMatch(item -> hasItemUnlock(player, item)));
         boolean outputIsLocked = recipe.value().display().stream()
                 .anyMatch(recipeDisplay -> !hasSlotDisplayUnlocked(player, recipeDisplay.result()));
 
