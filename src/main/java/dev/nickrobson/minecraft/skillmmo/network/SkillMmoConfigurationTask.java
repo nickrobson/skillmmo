@@ -1,12 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
-import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.server.network.ConfigurationTask;
 import java.util.Set;
 import java.util.function.Consumer;
+
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.network.ConfigurationTask;
+
+import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
+
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
 public record SkillMmoConfigurationTask(
         String version,

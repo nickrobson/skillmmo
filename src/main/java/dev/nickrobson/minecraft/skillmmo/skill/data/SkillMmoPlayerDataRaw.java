@@ -1,10 +1,11 @@
 package dev.nickrobson.minecraft.skillmmo.skill.data;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.Identifier;
 
 public record SkillMmoPlayerDataRaw(

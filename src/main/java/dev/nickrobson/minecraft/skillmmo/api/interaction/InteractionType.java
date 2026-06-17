@@ -1,8 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.api.interaction;
 
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 
 public abstract class InteractionType<Target> {
     private final UnlockableType<Target> unlockableType;

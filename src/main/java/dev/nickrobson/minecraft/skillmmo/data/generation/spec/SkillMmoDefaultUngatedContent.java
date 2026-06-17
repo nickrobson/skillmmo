@@ -2,6 +2,7 @@ package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
 import java.util.List;
 import java.util.Map;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.tags.BlockTags;

@@ -1,20 +1,22 @@
 package dev.nickrobson.minecraft.skillmmo;
 
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 import static dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultUngatedContent.UNGATED_THINGS;
 

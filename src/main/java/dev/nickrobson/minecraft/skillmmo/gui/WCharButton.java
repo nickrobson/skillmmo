@@ -1,11 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
-import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
-import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
-import io.github.cottonmc.cotton.gui.widget.WWidget;
-import io.github.cottonmc.cotton.gui.widget.data.InputResult;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
+import javax.annotation.Nullable;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -16,7 +12,14 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
-import javax.annotation.Nullable;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
+import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
+import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
+import io.github.cottonmc.cotton.gui.widget.WWidget;
+import io.github.cottonmc.cotton.gui.widget.data.InputResult;
 
 public class WCharButton extends WWidget {
     private final char text;

@@ -1,14 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation;
 
+import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.JsonKeySortOrderCallback;
+
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.lang.SkillMmoEnglishLanguageProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.skill.SkillMmoDefaultSkillProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoInteractableBlocksTagProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoSkillLevelBlockTagProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoSkillLevelEntityTypeTagProvider;
 import dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag.SkillMmoSkillLevelItemTagProvider;
-import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.JsonKeySortOrderCallback;
 
 public class SkillMmoDataGenerator implements DataGeneratorEntrypoint {
     @Override

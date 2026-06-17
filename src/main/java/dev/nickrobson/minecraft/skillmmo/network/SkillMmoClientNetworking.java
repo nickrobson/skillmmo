@@ -1,5 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
+import java.util.Map;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import net.minecraft.resources.Identifier;
+
+import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationNetworking;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
+
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
@@ -7,13 +17,6 @@ import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationNetworking;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.resources.Identifier;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.Map;
 
 public class SkillMmoClientNetworking {
     private static final Logger logger = LogManager.getLogger(SkillMmoClientNetworking.class);

@@ -1,13 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill.data;
 
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,6 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

@@ -1,10 +1,19 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mojang.serialization.JsonOps;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
-import net.fabricmc.fabric.api.resource.v1.reloader.SimpleResourceReloader;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -16,18 +25,12 @@ import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.world.item.Item;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+import net.fabricmc.fabric.api.resource.v1.reloader.SimpleResourceReloader;
+
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 public class SkillMmoResourceLoader extends SimpleResourceReloader<Set<Skill>> {
     private static final Logger logger = LogManager.getLogger(SkillMmoResourceLoader.class);

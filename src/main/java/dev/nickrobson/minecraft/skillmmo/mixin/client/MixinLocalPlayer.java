@@ -1,14 +1,16 @@
 package dev.nickrobson.minecraft.skillmmo.mixin.client;
 
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
+import javax.annotation.Nonnull;
+
+import net.minecraft.client.player.LocalPlayer;
+
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-import javax.annotation.Nonnull;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @Environment(EnvType.CLIENT)
 @Mixin(LocalPlayer.class)

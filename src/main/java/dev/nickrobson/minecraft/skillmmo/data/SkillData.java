@@ -1,11 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
+import java.util.Optional;
+
 import com.mojang.logging.annotations.FieldsAreNonnullByDefault;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
-import java.util.Optional;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
 /**
  * Data shape for a skill in a datapack

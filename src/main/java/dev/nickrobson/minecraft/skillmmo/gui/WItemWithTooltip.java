@@ -1,9 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
-import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
-import io.github.cottonmc.cotton.gui.widget.WItem;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+
+import io.github.cottonmc.cotton.gui.widget.TooltipBuilder;
+import io.github.cottonmc.cotton.gui.widget.WItem;
 
 public class WItemWithTooltip extends WItem {
     private Component tooltipText;

@@ -1,5 +1,20 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.item.ItemStack;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevel;
 import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoClientNetworking;
@@ -18,18 +33,6 @@ import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.network.chat.Component;
-import net.minecraft.util.Tuple;
-import net.minecraft.world.item.ItemStack;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 @Environment(EnvType.CLIENT)
 public class SkillsClientScreen extends CottonClientScreen {

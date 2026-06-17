@@ -1,12 +1,14 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 import java.util.Objects;
 import java.util.StringJoiner;
+
 import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
 
 public class SkillLevel {
     private final Skill skill;

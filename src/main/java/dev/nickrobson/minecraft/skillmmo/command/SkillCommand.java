@@ -1,5 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.command;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -8,9 +10,6 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.DynamicCommandExceptionType;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import javax.annotation.ParametersAreNonnullByDefault;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -20,6 +19,9 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.entity.player.Player;
+
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;

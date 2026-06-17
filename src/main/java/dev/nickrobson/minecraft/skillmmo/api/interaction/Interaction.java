@@ -1,9 +1,11 @@
 package dev.nickrobson.minecraft.skillmmo.api.interaction;
 
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 import java.util.Objects;
+
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 
 /**
  * Represents an interaction with something

@@ -1,20 +1,23 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.mojang.logging.annotations.FieldsAreNonnullByDefault;
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
-import net.minecraft.world.item.Item;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
 import java.util.stream.IntStream;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+import com.mojang.logging.annotations.FieldsAreNonnullByDefault;
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.Item;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 
 @FieldsAreNonnullByDefault
 @MethodsReturnNonnullByDefault

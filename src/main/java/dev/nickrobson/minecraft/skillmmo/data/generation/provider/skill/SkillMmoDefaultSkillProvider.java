@@ -1,9 +1,11 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.skill;
 
-import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+
+import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 
 public class SkillMmoDefaultSkillProvider extends SkillProvider {
     public SkillMmoDefaultSkillProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {

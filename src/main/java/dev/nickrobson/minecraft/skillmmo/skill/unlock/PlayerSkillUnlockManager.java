@@ -1,21 +1,14 @@
 package dev.nickrobson.minecraft.skillmmo.skill.unlock;
 
+import javax.annotation.Nullable;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
-import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
-import dev.nickrobson.minecraft.skillmmo.api.interaction.Interaction;
-import dev.nickrobson.minecraft.skillmmo.api.interaction.VanillaInteractionTypes;
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
-import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.interaction.InteractionHelper;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillDenyCustomizable;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
-import net.fabricmc.fabric.api.event.player.UseEntityCallback;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -33,13 +26,23 @@ import net.minecraft.world.item.crafting.display.SlotDisplay;
 import net.minecraft.world.level.block.AirBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.Set;
-import java.util.function.Predicate;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
+import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
+import dev.nickrobson.minecraft.skillmmo.api.interaction.Interaction;
+import dev.nickrobson.minecraft.skillmmo.api.interaction.VanillaInteractionTypes;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
+import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
+import dev.nickrobson.minecraft.skillmmo.interaction.InteractionHelper;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillDenyCustomizable;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

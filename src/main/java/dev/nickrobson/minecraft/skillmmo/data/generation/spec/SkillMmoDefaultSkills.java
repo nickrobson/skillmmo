@@ -1,7 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.spec;
 
-import com.google.common.collect.ImmutableMap;
 import java.util.List;
+
+import com.google.common.collect.ImmutableMap;
+
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;

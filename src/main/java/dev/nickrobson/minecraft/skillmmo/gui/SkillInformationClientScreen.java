@@ -1,5 +1,31 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
+import javax.annotation.Nullable;
+import java.util.Comparator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Stream;
+
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
+
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.util.TriState;
+
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
@@ -17,29 +43,6 @@ import io.github.cottonmc.cotton.gui.widget.data.Axis;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.Holder;
-import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ItemLike;
-import javax.annotation.Nullable;
-import java.util.Comparator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Environment(EnvType.CLIENT)
 public class SkillInformationClientScreen extends CottonClientScreen {

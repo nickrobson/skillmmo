@@ -1,11 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo;
 
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.UnlockableType;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 
 public class SkillMmoTags {
     private SkillMmoTags() {

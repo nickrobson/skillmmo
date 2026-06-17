@@ -1,13 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.experience;
 
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+
+import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

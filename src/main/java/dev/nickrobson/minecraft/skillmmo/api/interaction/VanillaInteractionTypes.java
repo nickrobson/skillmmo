@@ -1,10 +1,11 @@
 package dev.nickrobson.minecraft.skillmmo.api.interaction;
 
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 
 public class VanillaInteractionTypes {
     public static final InteractionType<Block> BLOCK_BREAK = new InteractionType<>(VanillaUnlockables.BLOCK) {

@@ -1,17 +1,20 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.lang;
 
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
+
 import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillTranslationSpec;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
 
 public class SkillMmoEnglishLanguageProvider extends FabricLanguageProvider {
     public SkillMmoEnglishLanguageProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {

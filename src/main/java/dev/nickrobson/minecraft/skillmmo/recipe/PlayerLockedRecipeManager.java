@@ -1,15 +1,17 @@
 package dev.nickrobson.minecraft.skillmmo.recipe;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 import dev.nickrobson.minecraft.skillmmo.util.SkillMmoRecipeBookAccessor;
-import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
 
 public class PlayerLockedRecipeManager {
     private static final PlayerLockedRecipeManager instance = new PlayerLockedRecipeManager();

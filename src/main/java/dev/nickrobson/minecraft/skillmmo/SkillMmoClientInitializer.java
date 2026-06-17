@@ -1,20 +1,23 @@
 package dev.nickrobson.minecraft.skillmmo;
 
-import dev.nickrobson.minecraft.skillmmo.gui.SkillsClientScreen;
-import dev.nickrobson.minecraft.skillmmo.network.SkillMmoClientNetworking;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
-import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationConnectionEvents;
-import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.Identifier;
+import java.util.Collections;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.Collections;
+import net.minecraft.client.KeyMapping;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.Identifier;
+
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
+import net.fabricmc.fabric.api.client.networking.v1.ClientConfigurationConnectionEvents;
+
+import dev.nickrobson.minecraft.skillmmo.gui.SkillsClientScreen;
+import dev.nickrobson.minecraft.skillmmo.network.SkillMmoClientNetworking;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 public class SkillMmoClientInitializer implements ClientModInitializer {
     private static final Logger logger = LogManager.getLogger(SkillMmoClientInitializer.class);

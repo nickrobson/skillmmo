@@ -1,6 +1,7 @@
 package dev.nickrobson.minecraft.skillmmo.api.unlockable;
 
 import java.util.Objects;
+
 import net.minecraft.resources.Identifier;
 
 /**

@@ -1,10 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-
 import javax.annotation.Nonnull;
 import java.util.function.Function;
+
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 
 public final class SkillMmoCodecHelper {
     private SkillMmoCodecHelper() {

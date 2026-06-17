@@ -1,16 +1,18 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import net.minecraft.network.Connection;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.CommonListenerCookie;
 import net.minecraft.server.players.PlayerList;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @Mixin(PlayerList.class)
 public abstract class MixinPlayerList {

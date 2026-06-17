@@ -1,9 +1,11 @@
 package dev.nickrobson.minecraft.skillmmo.command;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
+import net.minecraft.resources.Identifier;
+
 import net.fabricmc.fabric.api.command.v2.ArgumentTypeRegistry;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.resources.Identifier;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 
 public class SkillMmoCommands {
     public static void register() {

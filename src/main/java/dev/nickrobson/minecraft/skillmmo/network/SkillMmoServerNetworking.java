@@ -1,5 +1,22 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+
+import net.fabricmc.fabric.api.networking.v1.ServerConfigurationConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+
 import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
 import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
@@ -7,20 +24,6 @@ import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
 import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import net.fabricmc.fabric.api.networking.v1.ServerConfigurationConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerConfigurationNetworking;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.ChatFormatting;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
-import java.util.Map;
-import java.util.Set;
 
 public class SkillMmoServerNetworking {
     private static final Logger logger = LogManager.getLogger(SkillMmoServerNetworking.class);

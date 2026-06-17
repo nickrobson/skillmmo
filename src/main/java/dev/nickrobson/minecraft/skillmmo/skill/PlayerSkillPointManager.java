@@ -1,9 +1,11 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 import javax.annotation.ParametersAreNonnullByDefault;
+
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.world.entity.player.Player;
+
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

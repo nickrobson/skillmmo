@@ -1,18 +1,20 @@
 package dev.nickrobson.minecraft.skillmmo.util;
 
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
-import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.player.Player;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
+import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 public class UnlockTooltipHelper {
     private UnlockTooltipHelper() {

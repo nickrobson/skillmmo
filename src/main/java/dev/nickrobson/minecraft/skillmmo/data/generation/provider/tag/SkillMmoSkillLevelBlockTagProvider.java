@@ -1,14 +1,17 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
-import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.world.level.block.Block;
-import java.util.concurrent.CompletableFuture;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.VanillaUnlockables;
+import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillMmoDefaultSkills;
 
 public class SkillMmoSkillLevelBlockTagProvider extends FabricTagProvider.BlockTagProvider {
     public SkillMmoSkillLevelBlockTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> completableFuture) {

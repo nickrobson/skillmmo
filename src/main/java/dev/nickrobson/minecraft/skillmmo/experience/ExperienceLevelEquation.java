@@ -1,10 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.experience;
 
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
+
 import net.minecraft.util.Mth;
+
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
 public class ExperienceLevelEquation {
     private static final int MAX_EXPERIENCE_LEVEL = 10_000;

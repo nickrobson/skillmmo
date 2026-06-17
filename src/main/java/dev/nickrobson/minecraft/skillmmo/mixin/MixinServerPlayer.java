@@ -1,18 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
+
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -20,6 +12,16 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
+import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 @Mixin(ServerPlayer.class)
 public class MixinServerPlayer {

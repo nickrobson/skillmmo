@@ -1,19 +1,22 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
-import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
-import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
-import net.minecraft.resources.Identifier;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Player;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
+
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
+import net.minecraft.resources.Identifier;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityWorldChangeEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerPlayerEvents;
+
+import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
+import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

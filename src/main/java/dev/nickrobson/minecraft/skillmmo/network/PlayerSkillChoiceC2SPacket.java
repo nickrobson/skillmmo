@@ -1,10 +1,11 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
 
 public record PlayerSkillChoiceC2SPacket(
         Identifier skillId

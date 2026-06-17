@@ -1,15 +1,17 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.skill;
 
-import dev.nickrobson.minecraft.skillmmo.data.SkillData;
-import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillDataGenSpec;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.CachedOutput;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.PackOutput;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.CachedOutput;
+import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
+
+import dev.nickrobson.minecraft.skillmmo.data.SkillData;
+import dev.nickrobson.minecraft.skillmmo.data.generation.spec.SkillDataGenSpec;
 
 public abstract class SkillProvider implements DataProvider {
     private final PackOutput.PathProvider pathResolver;

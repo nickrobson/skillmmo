@@ -1,12 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
-import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 import javax.annotation.ParametersAreNonnullByDefault;
-import net.minecraft.resources.Identifier;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,6 +10,15 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+
+import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
+import net.minecraft.resources.Identifier;
+
+import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault

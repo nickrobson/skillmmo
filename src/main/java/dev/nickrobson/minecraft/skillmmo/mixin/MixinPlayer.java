@@ -1,11 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
-import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
-import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataRaw;
-import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
+import javax.annotation.Nonnull;
+
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,14 +19,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import javax.annotation.Nonnull;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
+import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
+import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataRaw;
+import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
 
 @Mixin(Player.class)
 public abstract class MixinPlayer implements SkillMmoPlayerDataHolder {

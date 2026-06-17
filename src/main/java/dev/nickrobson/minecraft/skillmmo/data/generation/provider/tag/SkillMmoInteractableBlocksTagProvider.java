@@ -1,12 +1,15 @@
 package dev.nickrobson.minecraft.skillmmo.data.generation.provider.tag;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import java.util.concurrent.CompletableFuture;
+
 import net.minecraft.core.HolderLookup;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Blocks;
-import java.util.concurrent.CompletableFuture;
+
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoTags;
 
 public class SkillMmoInteractableBlocksTagProvider extends FabricTagProvider.BlockTagProvider {
     public SkillMmoInteractableBlocksTagProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {

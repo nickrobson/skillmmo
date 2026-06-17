@@ -1,17 +1,13 @@
 package dev.nickrobson.minecraft.skillmmo.command;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Comparator;
+import java.util.List;
+
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
-import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevel;
-import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
-import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
@@ -19,8 +15,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.entity.player.Player;
-import java.util.Comparator;
-import java.util.List;
+
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevel;
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
+import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;

@@ -1,9 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
-import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
+
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -13,8 +13,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import java.util.HashSet;
-import java.util.Set;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevelEquation;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
 public record SkillMmoConfigurationS2CPacket(
         String modVersion,
