@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
@@ -66,7 +66,7 @@ public abstract class MixinPlayer implements SkillMmoPlayerDataHolder {
     }
 
     @Unique
-    @Nonnull
+    @NonNull
     @Override
     public SkillMmoPlayerData skillMmo$getPlayerData() {
         return skillMmo$playerData != null
@@ -76,7 +76,7 @@ public abstract class MixinPlayer implements SkillMmoPlayerDataHolder {
 
     @Unique
     @Override
-    public void skillMmo$setPlayerData(@Nonnull SkillMmoPlayerData playerData) {
+    public void skillMmo$setPlayerData(@NonNull SkillMmoPlayerData playerData) {
         this.skillMmo$playerData = playerData;
     }
 

@@ -1,6 +1,5 @@
 package dev.nickrobson.minecraft.skillmmo.skill.data;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -9,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -19,9 +20,8 @@ import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
-public
-class SkillMmoPlayerData implements Cloneable {
+@NullMarked
+public class SkillMmoPlayerData implements Cloneable {
     public static final SkillMmoPlayerData UNINITIALISED = new SkillMmoPlayerData(0, 0, Collections.emptyMap(), Collections.emptyMap());
 
     private long experience;

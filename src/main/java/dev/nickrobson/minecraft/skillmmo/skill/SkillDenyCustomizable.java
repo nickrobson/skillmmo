@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import javax.annotation.Nullable;
+import org.jspecify.annotations.Nullable;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;

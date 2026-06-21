@@ -1,6 +1,5 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -10,6 +9,7 @@ import java.util.stream.IntStream;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.logging.annotations.FieldsAreNonnullByDefault;
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
@@ -21,7 +21,7 @@ import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 
 @FieldsAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NullMarked
 public class Skill {
     public static final int MIN_LEVEL = 0;
     public static final int MAX_LEVEL = 25;

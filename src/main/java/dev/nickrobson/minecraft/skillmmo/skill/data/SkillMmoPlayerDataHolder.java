@@ -1,12 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.skill.data;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.world.entity.player.Player;
 
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NullMarked
 public interface SkillMmoPlayerDataHolder {
     SkillMmoPlayerData skillMmo$getPlayerData();
 

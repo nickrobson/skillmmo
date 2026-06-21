@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.command;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -26,7 +26,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
-@ParametersAreNonnullByDefault
+@NullMarked
 @MethodsReturnNonnullByDefault
 public class SkillCommand {
     private static final DynamicCommandExceptionType ACQUIRE_SKILL_FAILURE_MAX_LEVEL = new DynamicCommandExceptionType(

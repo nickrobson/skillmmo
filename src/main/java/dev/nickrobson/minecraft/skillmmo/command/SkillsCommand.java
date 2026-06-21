@@ -1,9 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.command;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Comparator;
 import java.util.List;
+
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -39,7 +40,7 @@ public class SkillsCommand {
                 .executes(ctx -> executeSkillsCommand(ctx, null));
     }
 
-    private static int executeSkillsCommand(@Nonnull CommandContext<CommandSourceStack> ctx, @Nullable Player player) {
+    private static int executeSkillsCommand(@NonNull CommandContext<CommandSourceStack> ctx, @Nullable Player player) {
         List<Skill> skills = SkillManager.getInstance().getSkills()
                 .stream()
                 .sorted(Comparator.comparing(Skill::getId))

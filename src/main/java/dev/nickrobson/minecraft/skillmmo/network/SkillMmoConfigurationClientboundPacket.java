@@ -1,8 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.network;
 
-import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
+
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.FriendlyByteBuf;
@@ -47,7 +48,7 @@ public record SkillMmoConfigurationClientboundPacket(
         return new HashSet<>(capacity);
     }
 
-    private static Skill readSkill(@Nonnull FriendlyByteBuf packetByteBuf) {
+    private static Skill readSkill(@NonNull FriendlyByteBuf packetByteBuf) {
         Identifier id = packetByteBuf.readIdentifier();
         Component nameText = ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.decode(packetByteBuf);
         Component descriptionText = ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.decode(packetByteBuf);
@@ -57,7 +58,7 @@ public record SkillMmoConfigurationClientboundPacket(
         return new Skill(id, nameText, descriptionText, maxLevel, iconItem);
     }
 
-    private static void writeSkill(@Nonnull FriendlyByteBuf packetByteBuf, @Nonnull Skill skill) {
+    private static void writeSkill(@NonNull FriendlyByteBuf packetByteBuf, @NonNull Skill skill) {
         packetByteBuf.writeIdentifier(skill.getId());
         ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.encode(packetByteBuf, skill.getName());
         ComponentSerialization.TRUSTED_CONTEXT_FREE_STREAM_CODEC.encode(packetByteBuf, skill.getDescription());
@@ -65,7 +66,7 @@ public record SkillMmoConfigurationClientboundPacket(
         packetByteBuf.writeIdentifier(BuiltInRegistries.ITEM.getKey(skill.getIconItem()));
     }
 
-    private static ExperienceLevelEquation readExperienceLevelEquation(@Nonnull FriendlyByteBuf packetByteBuf) {
+    private static ExperienceLevelEquation readExperienceLevelEquation(@NonNull FriendlyByteBuf packetByteBuf) {
         long baseCost = packetByteBuf.readLong();
         double multiplier = packetByteBuf.readDouble();
         double levelExponent = packetByteBuf.readDouble();
@@ -73,7 +74,7 @@ public record SkillMmoConfigurationClientboundPacket(
         return new ExperienceLevelEquation(baseCost, multiplier, levelExponent);
     }
 
-    private static void writeExperienceLevelEquation(@Nonnull FriendlyByteBuf packetByteBuf, @Nonnull ExperienceLevelEquation equation) {
+    private static void writeExperienceLevelEquation(@NonNull FriendlyByteBuf packetByteBuf, @NonNull ExperienceLevelEquation equation) {
         packetByteBuf.writeLong(equation.getBaseCost());
         packetByteBuf.writeDouble(equation.getMultiplier());
         packetByteBuf.writeDouble(equation.getLevelExponent());

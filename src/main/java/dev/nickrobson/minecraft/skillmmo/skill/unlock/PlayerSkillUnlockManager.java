@@ -1,12 +1,12 @@
 package dev.nickrobson.minecraft.skillmmo.skill.unlock;
 
-import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Set;
 import java.util.function.Predicate;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Holder;
@@ -45,7 +45,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.SkillLevel;
 import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PlayerSkillUnlockManager {
     private static final Logger logger = LogManager.getLogger(PlayerSkillUnlockManager.class);
 

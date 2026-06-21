@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.mixin.client;
 
-import javax.annotation.Nonnull;
+import org.jspecify.annotations.NonNull;
 
 import net.minecraft.client.player.LocalPlayer;
 
@@ -19,7 +19,7 @@ public class MixinLocalPlayer implements SkillMmoPlayerDataHolder {
     private SkillMmoPlayerData skillMmo$clientPlayerData = new SkillMmoPlayerData();
 
     @Unique
-    @Nonnull
+    @NonNull
     @Override
     public SkillMmoPlayerData skillMmo$getPlayerData() {
         return skillMmo$clientPlayerData;
@@ -27,7 +27,7 @@ public class MixinLocalPlayer implements SkillMmoPlayerDataHolder {
 
     @Unique
     @Override
-    public void skillMmo$setPlayerData(@Nonnull SkillMmoPlayerData playerData) {
+    public void skillMmo$setPlayerData(@NonNull SkillMmoPlayerData playerData) {
         this.skillMmo$clientPlayerData = playerData;
     }
 }

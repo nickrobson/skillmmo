@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.world.entity.player.Player;
@@ -8,7 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PlayerSkillPointManager {
     private static final PlayerSkillPointManager instance = new PlayerSkillPointManager();
 

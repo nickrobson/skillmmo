@@ -1,7 +1,8 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
-import javax.annotation.Nonnull;
 import java.util.function.Function;
+
+import org.jspecify.annotations.NonNull;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
@@ -10,7 +11,7 @@ public final class SkillMmoCodecHelper {
     private SkillMmoCodecHelper() {
     }
 
-    public static <T> Codec<T> constant(Codec<T> base, @Nonnull T constantValue) {
+    public static <T> Codec<T> constant(Codec<T> base, @NonNull T constantValue) {
         return base.comapFlatMap(
                 parsedValue -> {
                     if (constantValue.equals(parsedValue)) {

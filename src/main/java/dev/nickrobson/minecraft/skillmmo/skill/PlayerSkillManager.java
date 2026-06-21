@@ -1,9 +1,10 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
+
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.resources.Identifier;
@@ -19,7 +20,7 @@ import dev.nickrobson.minecraft.skillmmo.recipe.PlayerLockedRecipeManager;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PlayerSkillManager {
     private static final PlayerSkillManager instance = new PlayerSkillManager();
 

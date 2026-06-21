@@ -1,16 +1,17 @@
 package dev.nickrobson.minecraft.skillmmo.gui;
 
+import org.jspecify.annotations.NonNull;
+
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.util.Mth;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import dev.nickrobson.minecraft.skillmmo.mixin.client.ExperienceBarRendererAccess;
 import io.github.cottonmc.cotton.gui.client.ScreenDrawing;
 import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.Texture;
-import org.jspecify.annotations.NonNull;
+
+import dev.nickrobson.minecraft.skillmmo.mixin.client.ExperienceBarRendererAccess;
 
 public class WExperienceBar extends WWidget {
     private static final Texture TEXTURE_EMPTY_BAR = new Texture(ExperienceBarRendererAccess.getBackgroundTexture(), Texture.Type.GUI_SPRITE);

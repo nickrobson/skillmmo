@@ -5,10 +5,12 @@ import org.apache.logging.log4j.Logger;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackType;
-
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.resource.v1.ResourceLoader;
+
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 
 import dev.nickrobson.minecraft.skillmmo.command.SkillMmoCommands;
 import dev.nickrobson.minecraft.skillmmo.config.SkillMmoConfig;
@@ -18,8 +20,6 @@ import dev.nickrobson.minecraft.skillmmo.network.SkillMmoNetworking;
 import dev.nickrobson.minecraft.skillmmo.network.SkillMmoServerNetworking;
 import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
 import dev.nickrobson.minecraft.skillmmo.skill.unlock.PlayerSkillUnlockManager;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 
 public class SkillMmoMod implements ModInitializer {
     private static final Logger logger = LogManager.getLogger(SkillMmoMod.class);

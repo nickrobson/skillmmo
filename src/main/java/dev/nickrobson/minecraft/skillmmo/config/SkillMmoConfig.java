@@ -1,12 +1,13 @@
 package dev.nickrobson.minecraft.skillmmo.config;
 
-import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
+
+import dev.nickrobson.minecraft.skillmmo.SkillMmoMod;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
 
 @SuppressWarnings("CanBeFinal")
 @Config(name = SkillMmoMod.MOD_ID)

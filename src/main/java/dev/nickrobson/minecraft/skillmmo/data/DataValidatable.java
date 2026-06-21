@@ -1,8 +1,9 @@
 package dev.nickrobson.minecraft.skillmmo.data;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 
+import org.jspecify.annotations.NonNull;
+
 public interface DataValidatable {
-    void validate(@Nonnull Collection<String> errors);
+    void validate(@NonNull Collection<String> errors);
 }

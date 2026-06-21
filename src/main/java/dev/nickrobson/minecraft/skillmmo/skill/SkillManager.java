@@ -1,6 +1,5 @@
 package dev.nickrobson.minecraft.skillmmo.skill;
 
-import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -14,6 +13,7 @@ import java.util.stream.Collectors;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.resources.Identifier;
@@ -21,7 +21,7 @@ import net.minecraft.resources.Identifier;
 import dev.nickrobson.minecraft.skillmmo.api.unlockable.Unlockable;
 
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NullMarked
 public class SkillManager {
     private static final SkillManager instance = new SkillManager();
 

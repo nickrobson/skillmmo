@@ -1,6 +1,6 @@
 package dev.nickrobson.minecraft.skillmmo.experience;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jspecify.annotations.NullMarked;
 
 import com.mojang.logging.annotations.MethodsReturnNonnullByDefault;
 import net.minecraft.network.chat.Component;
@@ -12,7 +12,7 @@ import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerData;
 import dev.nickrobson.minecraft.skillmmo.skill.data.SkillMmoPlayerDataHolder;
 
 @MethodsReturnNonnullByDefault
-@ParametersAreNonnullByDefault
+@NullMarked
 public class PlayerExperienceManager {
     private static final PlayerExperienceManager instance = new PlayerExperienceManager();
 

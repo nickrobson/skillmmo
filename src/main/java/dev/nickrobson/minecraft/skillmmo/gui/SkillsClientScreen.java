@@ -11,17 +11,9 @@ import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Tuple;
 import net.minecraft.world.item.ItemStack;
-
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 
-import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevel;
-import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
-import dev.nickrobson.minecraft.skillmmo.network.SkillMmoClientNetworking;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
-import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
-import dev.nickrobson.minecraft.skillmmo.skill.Skill;
-import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 import io.github.cottonmc.cotton.gui.client.CottonClientScreen;
 import io.github.cottonmc.cotton.gui.client.LightweightGuiDescription;
 import io.github.cottonmc.cotton.gui.widget.WDynamicLabel;
@@ -33,6 +25,14 @@ import io.github.cottonmc.cotton.gui.widget.WWidget;
 import io.github.cottonmc.cotton.gui.widget.data.HorizontalAlignment;
 import io.github.cottonmc.cotton.gui.widget.data.Insets;
 import io.github.cottonmc.cotton.gui.widget.data.VerticalAlignment;
+
+import dev.nickrobson.minecraft.skillmmo.experience.ExperienceLevel;
+import dev.nickrobson.minecraft.skillmmo.experience.PlayerExperienceManager;
+import dev.nickrobson.minecraft.skillmmo.network.SkillMmoClientNetworking;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillManager;
+import dev.nickrobson.minecraft.skillmmo.skill.PlayerSkillPointManager;
+import dev.nickrobson.minecraft.skillmmo.skill.Skill;
+import dev.nickrobson.minecraft.skillmmo.skill.SkillManager;
 
 @Environment(EnvType.CLIENT)
 public class SkillsClientScreen extends CottonClientScreen {
